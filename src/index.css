@@ -10,7 +10,7 @@ body {
 .icon {
   filter:invert(1)
 }
-.nav-item:hover img {
+.nav-link:hover img {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }
 h1 {
@@ -50,10 +50,11 @@ img.nsf, img.usf {
 #logo {
   height: 2.75rem;
 }
-.navbar.bg-light li.nav-item .nav-link {
+.nav-link {
   font-size: 0.9rem;
+  color: white !important;
 }
-.navbar.bg-light li.nav-item .nav-link:hover {
+.nav-link:hover {
   color: #00bc8c !important;
 }
 @media screen and (max-width: 992px) {

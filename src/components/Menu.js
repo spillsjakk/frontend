@@ -7,14 +7,17 @@ class Menu extends Component {
     return (
       <Navbar expand="lg">
         <Navbar.Brand as={Link} to="/">
-          <img src="/icons/logos/platform.png" id="logo" />
+          <img src="/icons/logos/platform.png" id="logo" />&nbsp;
           Spill<b>Sjakk</b>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="collapsible-navbar" />
         <Navbar.Collapse id="collapsible-navbar">
           <Nav className="mr-auto"></Nav>
           <Nav className="mr-1">
-          <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
+          <Nav.Link as={Link} to="/contact">
+            <img src="/icons/envelope.svg" alt="" width="32" height="32" class="icon" />&nbsp;
+            Contact
+          </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
