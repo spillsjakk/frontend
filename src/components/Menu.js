@@ -6,7 +6,10 @@ class Menu extends Component {
   render() {
     return (
       <Navbar expand="lg">
-        <Navbar.Brand as={Link} to="/">Spill<b>Sjakk</b></Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          <img src="/icons/logos/platform.png" id="logo" />
+          Spill<b>Sjakk</b>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="collapsible-navbar" />
         <Navbar.Collapse id="collapsible-navbar">
           <Nav className="mr-auto"></Nav>

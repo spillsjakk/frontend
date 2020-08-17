@@ -1,0 +1,66 @@
+html {
+  height: 100%;
+}
+body {
+  position: relative;
+  padding-bottom: 195px;
+  min-height: 100%;
+  font-family:Roboto,"Open Sans",sans-serif;
+}
+.icon {
+  filter:invert(1)
+}
+.nav-item:hover img {
+  filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
+}
+h1 {
+  border-left:2px solid white
+}
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-bottom: 15px;
+}
+footer img {
+  height: 120px;
+}
+img.nsf, img.usf {
+  filter: invert(1);
+}
+#main-container {
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.container {
+  max-width: 100%;
+}
+#content-container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.navbar.bg-light {
+  background: rgba(0, 0, 0, 0) !important;
+}
+.navbar-brand {
+  font-size: 2rem;
+}
+#logo {
+  height: 2.75rem;
+}
+.navbar.bg-light li.nav-item .nav-link {
+  font-size: 0.9rem;
+}
+.navbar.bg-light li.nav-item .nav-link:hover {
+  color: #00bc8c !important;
+}
+@media screen and (max-width: 992px) {
+  .navbar-brand {
+    font-size: 4.5vh;
+  }
+  #logo {
+    height: 6vh;
+  }
+}
