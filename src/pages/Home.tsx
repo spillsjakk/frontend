@@ -16,7 +16,7 @@ class Home extends Component {
         </Helmet>
 
         <div className="mt-5 carousel-container">
-          <Carousel autoPlay={true} interval={10000}>
+          <Carousel autoPlay={true} interval={10000} showThumbs={false}>
             <div>
               <div className="carousel-image-container">
                 <img src="/icons/carousel/management-svgrepo-com.svg" />
