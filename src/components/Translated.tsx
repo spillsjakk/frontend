@@ -175,6 +175,7 @@ const STRINGS = {
     "carousel4Desc": "Online results automatically updated, manual overrides let the organiser handle disputes and appeals. Search past, current and future events, and find specific games from players profiles.",
     "rating": "Rating",
     "weighted": "Weighted",
+    "pageNotFound": "This page has not been found."
   },
   "NO": {
     "login": "Logg inn",
