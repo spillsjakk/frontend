@@ -41,3 +41,32 @@ a.btn { font-size: 2rem }
 .big-btn:hover img {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }
+
+@-webkit-keyframes ga {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes ga {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-o-keyframes ga {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes ga {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+body {
+  background: linear-gradient(145deg, #222222, #375a75);
+  background-size: 400% 400%;
+  -webkit-animation: ga 60s ease infinite;
+  -moz-animation: ga 60s ease infinite;
+  -o-animation: ga 60s ease infinite;
+  animation: ga 60s ease infinite;
+}
