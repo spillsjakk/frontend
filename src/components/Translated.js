@@ -3,7 +3,7 @@ import { PureComponent } from "react";
 class Translated extends PureComponent {
   render() {
     let str = this.props.str;
-    let lang = "EN";
+    let lang = localStorage.getItem("lang") ?? "EN";
     if (str in STRINGS[lang]) {
       return STRINGS[lang][str];
     } else if (str in STRINGS.EN) {
