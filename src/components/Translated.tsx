@@ -12,7 +12,7 @@ class Translated extends PureComponent<TranslatedProps, {}> {
   context!: React.ContextType<typeof LangContext>;
 
   static byKey(key: string) {
-    return ReactDOMServer.renderToString(<Translated str={key} />);
+    return <Translated str={key} />;
   }
 
   render() {
