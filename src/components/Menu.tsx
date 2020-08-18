@@ -22,6 +22,10 @@ class Menu extends Component {
               <img src="/icons/envelope.svg" alt="" width="32" height="32" className="icon" />&nbsp;
               <Translated str="contact" />
             </Nav.Link>
+            <Nav.Link as={Link} to="/about">
+              <img src="/icons/info.svg" alt="" width="32" height="32" className="icon" />&nbsp;
+              <Translated str="about" />
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
