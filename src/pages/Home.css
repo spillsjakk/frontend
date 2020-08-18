@@ -1,0 +1,29 @@
+.carousel-container {
+  max-width: 650px;
+  text-align: center;
+  margin: auto;
+}
+.carousel {
+  padding-bottom: 35px;
+}
+.carousel .slide {
+  padding-left: 35px;
+  padding-right: 35px;
+  background: transparent;
+}
+.carousel-image-container {
+  margin: auto;
+  width: 5.6rem;
+  height: 5.6rem;
+  padding: 1.3rem;
+  border-radius: 50%;
+  background: #081023;
+}
+.carousel-image-container img {
+  margin: auto;
+  height: 100%;
+  filter: invert(1);
+}
+.carousel-status {
+  visibility: hidden;
+}
