@@ -5,7 +5,7 @@ import LangContext from './LangContext';
 class Translated extends PureComponent {
   render() {
     let str = this.props.str;
-    let lang = this.context;
+    let lang = this.context.lang;
     if (str in STRINGS[lang]) {
       return STRINGS[lang][str];
     } else if (str in STRINGS.EN) {

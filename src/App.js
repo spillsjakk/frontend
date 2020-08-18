@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Main from './Main';
 
 import { Container } from "react-bootstrap";
@@ -8,10 +8,15 @@ import LogoFooter from './components/LogoFooter';
 import LangContext from './components/LangContext';
 
 function App() {
-  let lang = localStorage.getItem("lang") ?? "EN";
+  const [lang, setLang] = useState(localStorage.getItem("lang") ?? "EN");
+  const setLangWithLocalStorage = (newLang) => {
+    setLang(newLang);
+    localStorage.setItem("lang", newLang);
+  };
+  const langProviderValue = { lang, setLang: setLangWithLocalStorage };
   return (
     <>
-      <LangContext.Provider value={lang}>
+      <LangContext.Provider value={langProviderValue}>
         <Container id="main-container">
           <Menu />
           <Container id="content-container">
