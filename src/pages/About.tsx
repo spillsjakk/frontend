@@ -9,7 +9,7 @@ class NotFound extends PureComponent {
         <Helmet>
           <title>About</title>
         </Helmet>
-        <h1>
+        <h1 className="mt-4 p-3">
           <Translated str="about" />
         </h1>
         <p className="mt-5">
