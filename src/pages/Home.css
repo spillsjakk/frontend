@@ -27,3 +27,17 @@
 .carousel-status {
   visibility: hidden;
 }
+
+a.btn { font-size: 2rem }
+.icon { width:2rem; height:2rem }
+.big-btn {
+  border-color: white;
+  transition: none;
+}
+.big-btn:hover {
+  border-color: #00bc8c;
+  color: #00bc8c;
+}
+.big-btn:hover img {
+  filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
+}

@@ -6,8 +6,12 @@ import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 
 import Translated from '../components/Translated';
+import { UserContext, Levels } from "../components/UserContext";
 
 class Home extends Component {
+  static contextType = UserContext;
+  context!: React.ContextType<typeof UserContext>;
+
   render() {
     return (
       <>
@@ -66,6 +70,21 @@ class Home extends Component {
               </p>
             </div>
           </Carousel>
+        </div>
+
+        <div className="d-flex flex-row align-items-center justify-content-around mt-5 pt-5">
+          <div>
+            <Link to={(this.context.user.info?.level || 0) >= Levels.TournamentOrganizer ? "/tournament/build" : "/contact"} className="btn p-4 big-btn">
+              <img className="icon" src="/icons/trophy.svg" alt="" />&nbsp;
+              <Translated str="buildTournament" />
+            </Link>
+          </div>
+          <div>
+            <Link to="/tournament/find" className="btn p-4 big-btn">
+              <img className="icon" src="/icons/search.svg" alt="" />&nbsp;
+              <Translated str="findTournament" />
+            </Link>
+          </div>
         </div>
       </>
     );
