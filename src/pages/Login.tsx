@@ -22,6 +22,10 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
     this.doLogin = this.doLogin.bind(this);
   }
 
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].id = "Login";
+  }
+
   doLogin(event: FormEvent) {
     event.preventDefault();
     fetchJson("/s/account/login", "POST", {

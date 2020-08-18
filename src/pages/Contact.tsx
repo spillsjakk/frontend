@@ -2,6 +2,10 @@ import React, { PureComponent } from "react";
 import { Helmet } from 'react-helmet';
 
 class Contact extends PureComponent {
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].id = "Contact";
+  }
+
   render() {
     return (
       <>

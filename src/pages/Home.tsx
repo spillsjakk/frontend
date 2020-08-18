@@ -12,6 +12,10 @@ class Home extends Component {
   static contextType = UserContext;
   context!: React.ContextType<typeof UserContext>;
 
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].id = "Home";
+  }
+
   render() {
     return (
       <>

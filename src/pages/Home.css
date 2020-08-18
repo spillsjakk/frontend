@@ -1,17 +1,17 @@
-.carousel-container {
+body#Home .carousel-container {
   max-width: 650px;
   text-align: center;
   margin: auto;
 }
-.carousel {
+body#Home .carousel {
   padding-bottom: 35px;
 }
-.carousel .slide {
+body#Home .carousel .slide {
   padding-left: 35px;
   padding-right: 35px;
   background: transparent;
 }
-.carousel-image-container {
+body#Home .carousel-image-container {
   margin: auto;
   width: 5.6rem;
   height: 5.6rem;
@@ -19,26 +19,26 @@
   border-radius: 50%;
   background: #081023;
 }
-.carousel-image-container img {
+body#Home .carousel-image-container img {
   margin: auto;
   height: 100%;
   filter: invert(1);
 }
-.carousel-status {
+body#Home .carousel-status {
   visibility: hidden;
 }
 
-a.btn { font-size: 2rem }
-.icon { width:2rem; height:2rem }
-.big-btn {
+body#Home a.btn { font-size: 2rem }
+body#Home .icon { width:2rem; height:2rem }
+body#Home .big-btn {
   border-color: white;
   transition: none;
 }
-.big-btn:hover {
+body#Home .big-btn:hover {
   border-color: #00bc8c;
   color: #00bc8c;
 }
-.big-btn:hover img {
+body#Home .big-btn:hover img {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }
 
@@ -62,7 +62,7 @@ a.btn { font-size: 2rem }
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
-body {
+body#Home {
   background: linear-gradient(145deg, #222222, #375a75);
   background-size: 400% 400%;
   -webkit-animation: ga 60s ease infinite;

@@ -3,6 +3,10 @@ import { Helmet } from 'react-helmet';
 import Translated from "../components/Translated";
 
 class NotFound extends PureComponent {
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].id = "About";
+  }
+
   render() {
     return (
       <>
