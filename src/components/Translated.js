@@ -1,9 +1,11 @@
 import { PureComponent } from "react";
 
+import LangContext from './LangContext';
+
 class Translated extends PureComponent {
   render() {
     let str = this.props.str;
-    let lang = localStorage.getItem("lang") ?? "EN";
+    let lang = this.context;
     if (str in STRINGS[lang]) {
       return STRINGS[lang][str];
     } else if (str in STRINGS.EN) {
@@ -13,6 +15,7 @@ class Translated extends PureComponent {
     }
   }
 }
+Translated.contextType = LangContext;
 
 const STRINGS = {
   "EN": {
