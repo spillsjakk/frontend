@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Helmet } from 'react-helmet';
 import Translated from "../components/Translated";
 
-class NotFound extends PureComponent {
+class About extends PureComponent {
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "About";
   }
@@ -24,4 +24,4 @@ class NotFound extends PureComponent {
   }
 }
 
-export default NotFound;
+export default About;
