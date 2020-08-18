@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import TournamentView from './pages/Tournament/View';
 
 const Main = () => {
   return (
@@ -16,6 +17,7 @@ const Main = () => {
       <Route exact path='/contact' component={Contact}></Route>
       <Route exact path='/login' component={Login}></Route>
       <Route exact path='/profile/:uid' component={Profile}></Route>
+      <Route exact path='/tournament/view/:tid' component={TournamentView}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );
