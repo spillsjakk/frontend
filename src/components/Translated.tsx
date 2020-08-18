@@ -2,20 +2,26 @@ import { PureComponent } from "react";
 
 import LangContext from './LangContext';
 
-class Translated extends PureComponent {
+type TranslatedProps = {
+  str: string
+}
+
+class Translated extends PureComponent<TranslatedProps, {}> {
+  static contextType = LangContext;
+  context!: React.ContextType<typeof LangContext>;
+
   render() {
     let str = this.props.str;
     let lang = this.context.lang;
-    if (str in STRINGS[lang]) {
-      return STRINGS[lang][str];
+    if (str in (STRINGS as any)[lang]) {
+      return (STRINGS as any)[lang][str];
     } else if (str in STRINGS.EN) {
-      return STRINGS.EN[str];
+      return (STRINGS as any).EN[str];
     } else {
       return str;
     }
   }
 }
-Translated.contextType = LangContext;
 
 const STRINGS = {
   "EN": {

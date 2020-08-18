@@ -9,7 +9,7 @@ import LangContext from './components/LangContext';
 
 function App() {
   const [lang, setLang] = useState(localStorage.getItem("lang") ?? "EN");
-  const setLangWithLocalStorage = (newLang) => {
+  const setLangWithLocalStorage = (newLang: string) => {
     setLang(newLang);
     localStorage.setItem("lang", newLang);
   };

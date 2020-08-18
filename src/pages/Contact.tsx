@@ -8,7 +8,7 @@ class Contact extends PureComponent {
         <Helmet>
           <title>Home page</title>
         </Helmet>
-        <p class="mt-5">
+        <p className="mt-5">
           <strong>Kontakt SkoleSjakken</strong>
         </p>
         <p>

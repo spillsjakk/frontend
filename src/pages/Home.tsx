@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Helmet } from 'react-helmet';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Home.css";
