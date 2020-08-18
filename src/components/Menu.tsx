@@ -11,8 +11,8 @@ class Menu extends Component {
   static contextType = UserContext;
   context!: React.ContextType<typeof UserContext>;
 
-  constructor() {
-    super({});
+  constructor(props: {}) {
+    super(props);
 
     this.doLogout = this.doLogout.bind(this);
   }
