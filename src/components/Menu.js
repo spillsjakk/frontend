@@ -9,7 +9,7 @@ class Menu extends Component {
     return (
       <Navbar expand="lg">
         <Navbar.Brand as={Link} to="/">
-          <img src="/icons/logos/platform.png" id="logo" />&nbsp;
+          <img src="/icons/logos/platform.png" id="logo" alt="logo" />&nbsp;
           Spill<b>Sjakk</b>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="collapsible-navbar" />
