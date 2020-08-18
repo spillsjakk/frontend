@@ -1,4 +1,5 @@
-import { PureComponent } from "react";
+import React, { PureComponent } from "react";
+import ReactDOMServer from "react-dom/server";
 
 import LangContext from './LangContext';
 
@@ -9,6 +10,10 @@ type TranslatedProps = {
 class Translated extends PureComponent<TranslatedProps, {}> {
   static contextType = LangContext;
   context!: React.ContextType<typeof LangContext>;
+
+  static byKey(key: string) {
+    return ReactDOMServer.renderToString(<Translated str={key} />);
+  }
 
   render() {
     let str = this.props.str;

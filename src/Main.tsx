@@ -6,6 +6,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 
 const Main = () => {
   return (
@@ -14,6 +15,7 @@ const Main = () => {
       <Route exact path='/about' component={About}></Route>
       <Route exact path='/contact' component={Contact}></Route>
       <Route exact path='/login' component={Login}></Route>
+      <Route exact path='/profile/:uid' component={Profile}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );
