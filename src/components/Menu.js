@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { Navbar, Nav } from "react-bootstrap";
 
+import Translated from './Translated';
+
 class Menu extends Component {
   render() {
     return (
@@ -16,7 +18,7 @@ class Menu extends Component {
           <Nav className="mr-1">
           <Nav.Link as={Link} to="/contact">
             <img src="/icons/envelope.svg" alt="" width="32" height="32" class="icon" />&nbsp;
-            Contact
+            <Translated str="contact" />
           </Nav.Link>
           </Nav>
         </Navbar.Collapse>
