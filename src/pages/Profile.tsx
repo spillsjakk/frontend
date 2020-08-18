@@ -115,14 +115,14 @@ class Profile extends Component<RouteComponentProps<ProfileParams>, ProfileState
           data={this.state.tournamentData}
           columns={this.state.tournamentColumns}
           bootstrap4={true}
-          pagination={ paginationFactory() } />
+          pagination={ paginationFactory({}) } />
         <div className="mt-5"></div>
         <BootstrapTable
           keyField="id"
           data={this.state.gameData}
           columns={this.state.gameColumns}
           bootstrap4={true}
-          pagination={ paginationFactory() } />
+          pagination={ paginationFactory({}) } />
       </>
     );
   }
