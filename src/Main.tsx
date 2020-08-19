@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import TournamentView from './pages/Tournament/View';
 import TournamentBuild from './pages/Tournament/Build';
+import TournamentPlayers from './pages/Tournament/Players';
 
 const Main = () => {
   return (
@@ -20,6 +21,7 @@ const Main = () => {
       <Route exact path='/profile/:uid' component={Profile}></Route>
       <Route exact path='/tournament/view/:tid' component={TournamentView}></Route>
       <Route exact path='/tournament/build' component={TournamentBuild}></Route>
+      <Route exact path='/tournament/players/:tid' component={TournamentPlayers}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );

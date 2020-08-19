@@ -12,92 +12,11 @@ import ToolkitProvider, { Search, SearchMatchProps } from 'react-bootstrap-table
 import UserLink from "../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
 import { UserContext } from "../../components/UserContext";
+import { Tournament, Participant, TeamParticipant, Pairing, Team, LightGame, TKOSeparation } from './Types';
 
 import './View.css';
 
 const { SearchBar } = Search;
-
-type Tournament = {
-  id: string,
-  name: string,
-  organizer: string,
-  description: string,
-  start_date: string,
-  end_date: string,
-  kind: string,
-  default_otb: boolean,
-  rounds?: number,
-  publicly_viewable: boolean,
-  random_seeding: boolean,
-  per_team_limit?: number,
-  first_online_pairing: string,
-  online_pairing_interval: number,
-  initial_time: number,
-  increment: number,
-  current_online_pairing_time: string,
-  self_joinable: boolean
-}
-
-type Participant = {
-  account: string,
-  first_name?: string,
-  last_name?: string,
-  title?: string,
-  fide_rating?: number,
-  federation?: string,
-  score: number,
-  eliminated: boolean,
-  seed: number,
-  ghost?: boolean,
-  team?: string,
-  team_name?: string
-}
-
-type TeamParticipant = {
-  team_id: string,
-  name?: string,
-  match_score: number,
-  game_score: number,
-  eliminated: boolean,
-  seed: number
-}
-
-type Team = {
-  id: string,
-  name: string,
-  description: string,
-  manager: string
-}
-
-type Pairing = {
-  round: number,
-  white: string,
-  white_name?: string,
-  black: string,
-  black_name?: string,
-  outcome?: number,
-  forfeit: boolean,
-  white_ghost?: boolean,
-  white_title?: string,
-  black_ghost?: boolean,
-  black_title?: string,
-  online: boolean
-}
-
-type LightGame = {
-  id: string,
-  start: string,
-  finished: boolean,
-}
-
-type TKOSeparation = {
-  tournament: string,
-  round: number,
-  player_one: string,
-  player_two: string,
-  game1?: number,
-  game2?: number
-}
 
 type FullTournamentInfo = {
   tournament: Tournament,
@@ -210,8 +129,8 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
       { dataField: "game_score", text: "gameScore", sort: true, headerFormatter }
     ];
 
-    let sswFormatter = (function(v: View) {
-      return function(_: any, __: any, rowIndex: number, ___: any) {
+    let sswFormatter = (function (v: View) {
+      return function (_: any, __: any, rowIndex: number, ___: any) {
         return v.state.info?.ssw?.[rowIndex];
       }
     })(this);
@@ -463,6 +382,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
             <Button variant="primary" className="p-3 mb-3" disabled={!info.can_start} onClick={this.onPressStart}>
               <Translated str="start" />
             </Button>
+            <Link className="p-3 btn btn-primary ml-5 mb-3" to={"/tournament/players/" + info.tournament.id}><Translated str="manageParticipants" /></Link>
             {info.managed_teams && info.managed_teams?.map(t =>
               <Link key={t.id} className="p-3 btn btn-primary ml-5 mb-3" to={"/tournament/manage-team/" + info.tournament.id + "/" + t.id}>
                 <Translated str="manage" /> &quot;{t.name}&quot;
