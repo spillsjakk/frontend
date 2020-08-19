@@ -1,0 +1,8 @@
+#Tournament-Build .form-check label {
+  margin-left: 0.3rem;
+  margin-right: 1.5rem;
+}
+
+#Tournament-Build label:not(.form-check-label) {
+  font-weight: bold;
+}
