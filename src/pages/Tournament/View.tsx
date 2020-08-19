@@ -168,6 +168,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
     this.onClickSelfLeave = this.onClickSelfLeave.bind(this);
     this.onClickSelfJoin = this.onClickSelfJoin.bind(this);
     this.onUpdatePairingTime = this.onUpdatePairingTime.bind(this);
+    this.loadState = this.loadState.bind(this);
 
     this.participantColumns = [
       { dataField: "seed", text: "seed", sort: true, headerFormatter },
