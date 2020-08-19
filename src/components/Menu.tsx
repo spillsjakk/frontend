@@ -50,9 +50,9 @@ class Menu extends Component {
                 <img src="/icons/person.svg" alt="" width="32" height="32" className="icon" />&nbsp;
               <Translated str="login" />
               </Nav.Link> :
-              <><Nav.Link as={Link} to="/">
+              <><Nav.Link as={Link} to={"/profile/" + this.context.user.info?.id}>
                 <img src="/icons/person.svg" alt="" width="32" height="32" className="icon" />&nbsp;
-              {this.context.user.info?.name}
+                {this.context.user.info?.name}
               </Nav.Link>
                 <Nav.Item>
                   <form className="form-inline" onSubmit={this.doLogout}>
