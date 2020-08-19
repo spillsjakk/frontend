@@ -150,7 +150,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
 
   participantColumns: any[];
   teamParticipantColumns: any[];
-  //sswColumn: any[];
+  sswColumn: any;
 
   constructor(props: RouteComponentProps<TournamentParams>) {
     super(props);
@@ -208,6 +208,17 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
       { dataField: "match_score", text: "matchScore", sort: true, headerFormatter },
       { dataField: "game_score", text: "gameScore", sort: true, headerFormatter }
     ];
+
+    let sswFormatter = (function(v: View) {
+      return function(_: any, __: any, rowIndex: number, ___: any) {
+        return v.state.info?.ssw?.[rowIndex];
+      }
+    })(this);
+
+    this.sswColumn = {
+      dataField: "none", isDummyField: true, text: "weighted", headerFormatter,
+      formatter: sswFormatter
+    };
   }
 
   onParticipantsColumnMatch({
@@ -552,7 +563,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
                 <ToolkitProvider
                   keyField="team_id"
                   data={info.teams}
-                  columns={this.teamParticipantColumns}
+                  columns={info.ssw ? this.teamParticipantColumns.concat([this.sswColumn]) : this.teamParticipantColumns}
                   bootstrap4={true}
                   search>
                   {props =>
