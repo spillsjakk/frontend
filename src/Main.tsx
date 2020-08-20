@@ -17,6 +17,7 @@ import TeamView from './pages/Team/View';
 import TeamMine from './pages/Team/Mine';
 import TeamCreate from './pages/Team/Create';
 import TeamManage from './pages/Team/Manage';
+import AccountCreate from './pages/Account/Create';
 
 const Main = () => {
   return (
@@ -39,6 +40,8 @@ const Main = () => {
       <Route exact path='/team/mine' component={TeamMine}></Route>
       <Route exact path='/team/create' component={TeamCreate}></Route>
       <Route exact path='/team/manage/:tid' component={TeamManage}></Route>
+
+      <Route exact path='/account/create' component={AccountCreate}></Route>
 
       <Route component={NotFound}></Route>
     </Switch>

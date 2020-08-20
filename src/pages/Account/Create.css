@@ -1,0 +1,7 @@
+#Account-Create table input {
+  width: 100%;
+}
+
+#Account-Create #addButton {
+  margin-top: -4px;
+}

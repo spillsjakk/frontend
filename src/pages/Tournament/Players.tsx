@@ -312,7 +312,7 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
                     <td><input type="text" id="lastNameInput" name="last_name" value={this.state.newAcc.last_name} onChange={this.changeNewAccValue} /></td>
                     <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.newAcc.fide_number} onChange={this.changeNewAccValue} onBlur={this.fideNumberBlur} /></td>
                     <td><input type="text" id="titleInput" name="title" value={this.state.newAcc.title} onChange={this.changeNewAccValue} /></td>
-                    <td><input type="number" id="fideRatingInput" name="rating" value={this.state.newAcc.fide_rating} onChange={this.changeNewAccValue} /></td>
+                    <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.newAcc.fide_rating} onChange={this.changeNewAccValue} /></td>
                     <td><input type="text" id="fideFederationInput" name="fide_federation" value={this.state.newAcc.fide_federation} onChange={this.changeNewAccValue} /></td>
                     <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.newAcc.birth_date} onChange={this.changeNewAccValue} /></td>
                     <td><input type="text" id="sexInput" name="sex" value={this.state.newAcc.sex} onChange={this.changeNewAccValue} /></td>
