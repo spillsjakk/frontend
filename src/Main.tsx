@@ -11,6 +11,7 @@ import TournamentView from './pages/Tournament/View';
 import TournamentBuild from './pages/Tournament/Build';
 import TournamentPlayers from './pages/Tournament/Players';
 import TournamentSearch from './pages/Tournament/Search';
+import TournamentFind from './pages/Tournament/Find';
 
 const Main = () => {
   return (
@@ -24,6 +25,7 @@ const Main = () => {
       <Route exact path='/tournament/build' component={TournamentBuild}></Route>
       <Route exact path='/tournament/players/:tid' component={TournamentPlayers}></Route>
       <Route exact path='/tournament/search' component={TournamentSearch}></Route>
+      <Route exact path='/tournament/find' component={TournamentFind}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );
