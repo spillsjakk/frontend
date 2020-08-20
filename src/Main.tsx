@@ -13,6 +13,7 @@ import TournamentPlayers from './pages/Tournament/Players';
 import TournamentSearch from './pages/Tournament/Search';
 import TournamentFind from './pages/Tournament/Find';
 import TournamentTeamPlayers from './pages/Tournament/TeamPlayers';
+import TeamView from './pages/Team/View';
 
 const Main = () => {
   return (
@@ -21,13 +22,17 @@ const Main = () => {
       <Route exact path='/about' component={About}></Route>
       <Route exact path='/contact' component={Contact}></Route>
       <Route exact path='/login' component={Login}></Route>
+
       <Route exact path='/profile/:uid' component={Profile}></Route>
+
       <Route exact path='/tournament/view/:tid' component={TournamentView}></Route>
       <Route exact path='/tournament/build' component={TournamentBuild}></Route>
       <Route exact path='/tournament/players/:tid' component={TournamentPlayers}></Route>
       <Route exact path='/tournament/search' component={TournamentSearch}></Route>
       <Route exact path='/tournament/find' component={TournamentFind}></Route>
       <Route exact path='/tournament/manage-team/:tournamentId/:teamId' component={TournamentTeamPlayers}></Route>
+
+      <Route exact path='/team/view/:tid' component={TeamView}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );

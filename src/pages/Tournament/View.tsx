@@ -106,7 +106,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
       {
         dataField: "team_name", sort: true,
         text: "team", headerFormatter, formatter: function (_: any, row: Participant, __: any, ___: any) {
-          return row.team ? <Link to={"/teams/view/" + row.team}>{row.team_name}</Link> : <></>;
+          return row.team ? <Link to={"/team/view/" + row.team}>{row.team_name}</Link> : <></>;
         }
       },
       { dataField: "fide_rating", text: "rating", sort: true, headerFormatter },
@@ -119,9 +119,9 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
       {
         dataField: "name", text: "team", sort: true, headerFormatter, formatter: function (_: any, row: TeamParticipant, __: any, ___: any) {
           if (!row.eliminated) {
-            return <Link to={"/teams/view/" + row.team_id}>{row.name}</Link>;
+            return <Link to={"/team/view/" + row.team_id}>{row.name}</Link>;
           } else {
-            return <s><Link to={"/teams/view/" + row.team_id}>{row.name}</Link></s>;
+            return <s><Link to={"/team/view/" + row.team_id}>{row.name}</Link></s>;
           }
         }
       },
