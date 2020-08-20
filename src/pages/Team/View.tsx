@@ -6,14 +6,7 @@ import { UserContext } from "../../components/UserContext";
 import UserLink from "../../components/UserLink";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { fetchJson } from "../../functions";
-
-type TeamMember = {
-  team_id: string
-  account_id: string
-  role: string
-  first_name?: string
-  last_name?: string
-}
+import { TeamMember } from "./Types";
 
 type ViewProps = {
   tid: string;
