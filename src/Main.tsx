@@ -12,6 +12,7 @@ import TournamentBuild from './pages/Tournament/Build';
 import TournamentPlayers from './pages/Tournament/Players';
 import TournamentSearch from './pages/Tournament/Search';
 import TournamentFind from './pages/Tournament/Find';
+import TournamentTeamPlayers from './pages/Tournament/TeamPlayers';
 
 const Main = () => {
   return (
@@ -26,6 +27,7 @@ const Main = () => {
       <Route exact path='/tournament/players/:tid' component={TournamentPlayers}></Route>
       <Route exact path='/tournament/search' component={TournamentSearch}></Route>
       <Route exact path='/tournament/find' component={TournamentFind}></Route>
+      <Route exact path='/tournament/manage-team/:tournamentId/:teamId' component={TournamentTeamPlayers}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );
