@@ -15,6 +15,7 @@ import TournamentFind from './pages/Tournament/Find';
 import TournamentTeamPlayers from './pages/Tournament/TeamPlayers';
 import TeamView from './pages/Team/View';
 import TeamMine from './pages/Team/Mine';
+import TeamCreate from './pages/Team/Create';
 
 const Main = () => {
   return (
@@ -35,6 +36,7 @@ const Main = () => {
 
       <Route exact path='/team/view/:tid' component={TeamView}></Route>
       <Route exact path='/team/mine' component={TeamMine}></Route>
+      <Route exact path='/team/create' component={TeamCreate}></Route>
 
       <Route component={NotFound}></Route>
     </Switch>
