@@ -1,6 +1,6 @@
 import React, { Component, FormEvent } from "react";
 import { Link } from 'react-router-dom';
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Dropdown } from "react-bootstrap";
 
 import Translated from './Translated';
 import LangSwitcher from './LangSwitcher';
@@ -37,6 +37,37 @@ class Menu extends Component {
           <Nav className="mr-auto"></Nav>
           <Nav className="mr-1">
             <LangSwitcher />
+            {this.context.user.authenticated && (this.context.user.info?.level || 0) > 0 &&
+              <Dropdown>
+                <Dropdown.Toggle style={{ marginTop: "3px" }}>
+                  <Translated str="manage" />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item as={Link} to="/account/create">
+                    <Translated str="createAccounts" />
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item as={Link} to="/team/create">
+                    <Translated str="createATeam" />
+                  </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/team/mine">
+                    <Translated str="myTeams" />
+                  </Dropdown.Item>
+                  {(this.context.user.info?.level || 0) > 1 && <>
+                    <Dropdown.Divider />
+                    <Dropdown.Item as={Link} to="/tournament/build">
+                      <Translated str="buildTournament" />
+                    </Dropdown.Item>
+                    {this.context.user.info?.level === 4 && <>
+                      <Dropdown.Divider></Dropdown.Divider>
+                      <Dropdown.Item as={Link} to="/account/csv_import">
+                        CSV account import
+                      </Dropdown.Item>
+                    </>}
+                  </>}
+                </Dropdown.Menu>
+              </Dropdown>
+            }
             <Nav.Link as={Link} to="/contact">
               <img src="/icons/envelope.svg" alt="" width="32" height="32" className="icon" />&nbsp;
               <Translated str="contact" />
