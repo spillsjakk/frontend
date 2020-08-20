@@ -19,7 +19,7 @@ class Mine extends Component<{}, MineState> {
   }
 
   componentDidMount() {
-    document.getElementsByTagName("body")[0].id = "Team-View";
+    document.getElementsByTagName("body")[0].id = "Team-Mine";
 
     fetchJson(`/s/team/mine`, "GET", undefined, result => this.setState(result));
   }
