@@ -18,6 +18,8 @@ import TeamMine from './pages/Team/Mine';
 import TeamCreate from './pages/Team/Create';
 import TeamManage from './pages/Team/Manage';
 import AccountCreate from './pages/Account/Create';
+import GameLobby from './pages/Game/Lobby';
+import GamePlay from './pages/Game/Play';
 
 const Main = () => {
   return (
@@ -42,6 +44,9 @@ const Main = () => {
       <Route exact path='/team/manage/:tid' component={TeamManage}></Route>
 
       <Route exact path='/account/create' component={AccountCreate}></Route>
+
+      <Route exact path='/game/lobby' component={GameLobby}></Route>
+      <Route exact path='/game/play/:id' component={GamePlay}></Route>
 
       <Route component={NotFound}></Route>
     </Switch>
