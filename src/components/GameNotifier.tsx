@@ -60,7 +60,7 @@ class GameNotifier extends PureComponent<RouteComponentProps, GameNotifierState>
         return;
       }
 
-      if (result.next !== -1 && result.next <= 600) {
+      if (result.next !== -1 && result.next <= 600000) {
         this.setState({
           shouldPlay: true, gameId: result.id,
           mayShowNotification: !(this.props.location.pathname === "/game/lobby" || this.props.location.pathname === "/game/play/" + result.id)
