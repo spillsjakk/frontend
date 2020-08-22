@@ -9,6 +9,7 @@ import LangContext from './components/LangContext';
 import { UserContext, UserContextDataType } from './components/UserContext';
 
 import { fetchJson } from './functions';
+import GameNotifier from './components/GameNotifier';
 
 type AppState = {
   lang: string,
@@ -43,6 +44,7 @@ class App extends Component<{}, AppState> {
           <UserContext.Provider value={userProviderValue}>
             <Container id="main-container">
               <Menu />
+              <GameNotifier />
               <Container id="content-container">
                 <Main />
               </Container>
