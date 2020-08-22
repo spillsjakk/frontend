@@ -415,7 +415,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 ref={this.groundRef}
                 style={this.state.isPromoting && { pointerEvents: "none", filter: "blur(3px)" }}
                 movable={{ free: this.state.isPlayer, color: this.state.turn }}
-                lastMove={this.state.lastMove} />
+                lastMove={this.state.lastMove}/>
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between">
