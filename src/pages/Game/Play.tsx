@@ -424,7 +424,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         <div className="d-flex flex-row justify-content-between">
           <div id="move-div">
             <table id="move-table" ref={this.moveTableRef}>
-              {rows}
+              <tbody>
+                {rows}
+              </tbody>
             </table>
           </div>
 
