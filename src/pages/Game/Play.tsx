@@ -246,6 +246,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       }
 
       if (!data.finished) {
+        newState.dests = chessgroundDests(opsGame);
+
         if (this.state.isPlayer) {
           if ((this.state.turn === this.state.myColor && this.state.pendingDrawOffer === 1)
             || (this.state.turn !== this.state.myColor && this.state.pendingDrawOffer === 2)) {
@@ -256,8 +258,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
             fetchJson(`/s/game/move/${this.gameId}/draw/auto`, "POST", undefined, _ => { });
           }
         }
-
-        newState.dests = this.state.isPlayer && newState.turn === this.state.myColor ? chessgroundDests(opsGame) : undefined;
       } else {
         if (data.result === 1) {
           newState.outcome = GameOutcome.WhiteWins;
