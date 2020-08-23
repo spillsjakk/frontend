@@ -36,7 +36,7 @@
 #Game-Play #resign-btn, #Game-Play #draw-btn, #Game-Play #yes-resign-btn, #Game-Play #yes-draw-btn, #Game-Play #no-resign-btn, #Game-Play #no-draw-btn {
   display: inline;
 }
-#Game-Play div.cg-wrap {
+#Game-Play div.cg-wrap, #Game-Play cg-container {
   width: 90vh !important; /* Firefox mobile compat */
   width: min(525px, 90vh) !important;
   height: 90vw !important;
