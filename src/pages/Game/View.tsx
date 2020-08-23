@@ -125,7 +125,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   }
 
   render() {
-    const splitMovePgn = this.state.pgn.trim().split(" ");
+    const splitMovePgn = this.state.pgn.trim().replace(/N/g, "♞").replace(/B/g, "♝").replace(/R/g, "♜").replace(/Q/g, "♛").replace(/K/g, "♚").split(" ");
     let rows = [];
     if (this.state.pgn !== "") {
       for (let i = 0; i < splitMovePgn.length; i += 3) {
