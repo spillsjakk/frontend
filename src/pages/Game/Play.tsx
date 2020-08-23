@@ -119,6 +119,7 @@ type PlayState = {
   clocksInterval?: number
   lastMove?: string[]
   check: boolean
+  shapes: any[]
 }
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -155,7 +156,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       showDrawConfirm: false,
       outcome: GameOutcome.Ongoing,
       game: new Chess(),
-      check: false
+      check: false,
+      shapes: []
     };
     this.groundRef = React.createRef();
     this.whiteClockRef = React.createRef();
@@ -182,7 +184,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, json => {
-      if (json.redirect) {
+      if (json.redirect || (json.game_info && json.game_info.outcome !== null)) {
         this.props.history.push("/game/view/" + this.gameId);
         return;
       }
@@ -268,6 +270,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         }
       }
 
+      newState.shapes = this.groundRef.current?.cg?.state?.drawable?.shapes || [];
+
       this.setState(newState);
       this.moveTableRef.current?.scrollIntoView(false);
     } else if (data.t === "draw") {
@@ -279,6 +283,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         this.setState({ pendingDrawOffer: 0, showDrawConfirm: false });
       }
     }
+  }
+
+  componentDidUpdate() {
+    this.groundRef.current?.cg?.setShapes(this.state.shapes);
   }
 
   onWsMessage(msg: string) {
@@ -432,8 +440,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 movable={{ free: false, color: this.state.myColor, dests: this.state.dests, showDests: true }}
                 premovable={{ enabled: false }}
                 lastMove={this.state.lastMove}
-                check={this.state.check}
-                drawable={{ enabled: false }} />
+                check={this.state.check} />
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between">
