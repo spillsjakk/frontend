@@ -11,6 +11,9 @@ import './chessground-theme.css';
 import Websocket from 'react-websocket';
 import Chessground from 'react-chessground';
 import Chess from 'chess.js';
+import { Chess as OpsChess } from 'chessops';
+import { parseFen } from 'chessops/fen';
+import { chessgroundDests } from "chessops/compat";
 
 type ClockState = {
   cache: number
@@ -97,7 +100,7 @@ type PlayState = {
   isPromoting: boolean
   promotionTempSource: string
   promotionTempTarget: string
-  moves: string[]
+  dests: any
   whiteId: string
   whiteName: string
   blackId: string
@@ -109,6 +112,7 @@ type PlayState = {
   game: typeof Chess
   clocksInterval?: number
   lastMove?: string[]
+  check: boolean
 }
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -124,7 +128,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.gameId = props.match.params.id;
 
     this.state = {
-      fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      fen: "8/8/8/8/8/8/8/8 w KQkq - 0 1",
       orientation: "white",
       isPlayer: false,
       pendingDrawOffer: 0,
@@ -135,7 +139,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       isPromoting: false,
       promotionTempSource: "",
       promotionTempTarget: "",
-      moves: [],
+      dests: {},
       whiteId: "",
       whiteName: "",
       blackId: "",
@@ -144,7 +148,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       showResignConfirm: false,
       showDrawConfirm: false,
       outcome: GameOutcome.Ongoing,
-      game: new Chess()
+      game: new Chess(),
+      check: false
     };
     this.groundRef = React.createRef();
     this.whiteClockRef = React.createRef();
@@ -221,6 +226,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       newState.fen = game.fen();
       newState.clocksRunning = !data.finished && atob(data.moves).length / 3 > 1;
       newState.lastMove = lastMove;
+      newState.turn = game.turn() === "w" ? "white" : "black";
+
+      const opsGame = OpsChess.fromSetup(parseFen(newState.fen).unwrap()).unwrap();
+
+      newState.check = opsGame.isCheck();
 
       this.whiteClockRef.current?.updateAndCache(data.wc);
       this.blackClockRef.current?.updateAndCache(data.bc);
@@ -242,7 +252,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           }
         }
 
-        newState.turn = game.turn() === "w" ? "white" : "black";
+        newState.dests = this.state.isPlayer && newState.turn === this.state.myColor ? chessgroundDests(opsGame) : undefined;
       } else {
         if (data.result === 1) {
           newState.outcome = GameOutcome.WhiteWins;
@@ -414,8 +424,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 onMove={this.onMove}
                 ref={this.groundRef}
                 style={this.state.isPromoting && { pointerEvents: "none", filter: "blur(3px)" }}
-                movable={{ free: this.state.isPlayer, color: this.state.turn }}
-                lastMove={this.state.lastMove}/>
+                movable={{ free: false, color: this.state.myColor, dests: this.state.dests, showDests: true }}
+                premovable={{ enabled: false }}
+                lastMove={this.state.lastMove}
+                check={this.state.check}
+                drawable={{ enabled: false }} />
             </div>
           </div>
           <div className="d-flex flex-column justify-content-between">

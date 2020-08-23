@@ -1148,6 +1148,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@badrap/result@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@badrap/result/-/result-0.2.6.tgz#868d1bc98145f346c465f3e3be45aea42d87aa66"
+  integrity sha512-YmdWUHsWqsduDKt2sjzR+DFg+NriN+J6GAtDp5GpTC5wjqFnArY4V/00xdYNy9kJ0YlrBpN6OQZeM2dN0Kr1jw==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -3007,6 +3012,13 @@ chessground@^7.6.12:
   version "7.9.1"
   resolved "https://registry.yarnpkg.com/chessground/-/chessground-7.9.1.tgz#7d3dce7dbfe1554c3d696482da0a7216ddf9cd62"
   integrity sha512-aAUqnmIcrBOi67F7UnvSvS7yL6yZ82XU6nTdqo642JzxGDGSjmo9VPZqJlHal1cBUWMLjN4TLbBIl2IGS7TohQ==
+
+chessops@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/chessops/-/chessops-0.6.0.tgz#6c01536bd029c66c588ddce74ccd96da6dc39f4d"
+  integrity sha512-U3A5X2aUM/siFi/xCDXpR2YoUrLdRXNNgm3Ybjx9cVqVcaCr/mGrF4i7g2UQZXlwHLY7Ljj4eXbDpL7K8Sc9pA==
+  dependencies:
+    "@badrap/result" "^0.2.6"
 
 chokidar@^2.1.8:
   version "2.1.8"
