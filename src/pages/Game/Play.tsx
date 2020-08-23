@@ -15,6 +15,12 @@ import { Chess as OpsChess } from 'chessops';
 import { parseFen } from 'chessops/fen';
 import { chessgroundDests } from "chessops/compat";
 
+export function numToSquare(num: number) {
+  let file = "abcdefgh"[num % 8];
+  let rank = Math.floor(num / 8) + 1;
+  return file + rank.toString();
+}
+
 type ClockState = {
   cache: number
   checkpoint: Date
@@ -80,7 +86,7 @@ type PlayProps = {
   id: string
 }
 
-enum GameOutcome {
+export enum GameOutcome {
   Ongoing,
   WhiteWins,
   Draw,
@@ -176,6 +182,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, json => {
+      if (json.redirect) {
+        this.props.history.push("/game/view/" + this.gameId);
+        return;
+      }
+
       this.setState({
         isPlayer: json.is_player,
         myColor: json.my_color,
@@ -192,19 +203,13 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     window.clearInterval(this.state.clocksInterval);
   }
 
-  numToSquare(num: number) {
-    let file = "abcdefgh"[num % 8];
-    let rank = Math.floor(num / 8) + 1;
-    return file + rank.toString();
-  }
-
   reconstructGame(b64moves: string) {
     const game = new Chess();
     let bstr = atob(b64moves);
     let lastMove = undefined;
     for (let i = 0; i < bstr.length; i += 3) {
-      let from = this.numToSquare(bstr.charCodeAt(i));
-      let to = this.numToSquare(bstr.charCodeAt(i + 1));
+      let from = numToSquare(bstr.charCodeAt(i));
+      let to = numToSquare(bstr.charCodeAt(i + 1));
       let prom: string | null = "-nbrq"[bstr.charCodeAt(i + 2)];
       if (prom === "-") {
         prom = null;
