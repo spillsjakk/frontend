@@ -191,9 +191,21 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
     let round = e.target.dataset.round;
     let white = e.target.dataset.white;
     let black = e.target.dataset.black;
-    let checked = e.target.checked.toString();
+    let checkedBool = e.target.checked;
+    let checked = checkedBool.toString();
     fetchJson(`/s/tournament/set-online/${this.props.match.params.tid}/${round}/${white}/${black}/${checked}`,
-      "POST", undefined, _ => { });
+      "POST", undefined, _ => {
+        const pairings = this.state.info!.pairings;
+        for (let p of pairings) {
+          if (p.round.toString() === round && p.white === white && p.black === black) {
+            p.online = checkedBool;
+            break;
+          }
+        }
+        const info = { ...this.state.info! };
+        info.pairings = pairings;
+        this.setState({ info });
+      });
   }
 
   onPressStart() {
@@ -285,6 +297,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
             type="checkbox"
             className="chk-online"
             checked={pairing.online}
+            onChange={this.onChangeOnline}
             disabled={!this.context.user.authenticated || info.tournament.organizer != this.context.user.info?.id} />
         </td>;
 
