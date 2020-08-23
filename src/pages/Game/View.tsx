@@ -121,6 +121,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
   componentDidUpdate() {
     document.querySelector(".highlight-blue")?.scrollIntoView(false);
+    window.dispatchEvent(new Event("resize")); // apparently sometimes needed for chessground
   }
 
   render() {

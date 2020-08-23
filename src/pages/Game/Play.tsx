@@ -287,6 +287,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   componentDidUpdate() {
     this.groundRef.current?.cg?.setShapes(this.state.shapes);
+    window.dispatchEvent(new Event("resize")); // apparently sometimes needed for chessground
   }
 
   onWsMessage(msg: string) {
