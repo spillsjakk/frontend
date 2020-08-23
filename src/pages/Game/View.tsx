@@ -160,11 +160,11 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             <Chessground
               fen={this.state.fen}
               orientation={this.state.myColor || "white"}
-              viewOnly={true}
+              movable={{ free: false, color: undefined }}
               lastMove={this.state.lastMove}
               turnColor={this.state.turn}
               check={this.state.check}
-              drawable={{ enabled: false }} />
+              drawable={{ enabled: true }} />
           </div>
           <div className="d-flex flex-row mt-4" id="controls">
             <div id="controls-begin" className="flex-fill p-3" onClick={() => this.updateBoard(0, false)}>|&lt;&lt;</div>
