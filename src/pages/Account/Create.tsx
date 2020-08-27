@@ -158,7 +158,7 @@ class Create extends Component<{}, CreateState> {
               <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.birth_date} onChange={this.handleChange} /></td>
               <td><input type="text" id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
               <td>
-                <select id="level" name="level" value={this.state.level}>
+                <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
                   <option value="0" selected>Participant</option>
                   {(this.context.user.info?.level || 0) > 1 && <>
                     <option value="1">Team Manager</option>
