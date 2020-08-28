@@ -20,9 +20,8 @@ export const UserContext = React.createContext({
 });
 
 export const Levels = {
-  Participant: 0,
-  TeamManager: 1,
-  TournamentOrganizer: 2,
-  Federation: 3,
-  Admin: 4
+  Player: 0,
+  ClubManager: 1,
+  OrganizationManager: 2,
+  Admin: 3
 };

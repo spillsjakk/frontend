@@ -78,7 +78,7 @@ class Home extends Component {
 
         <div className="d-flex flex-row align-items-center justify-content-around mt-5 pt-5">
           <div>
-            <Link to={(this.context.user.info?.level || 0) >= Levels.TournamentOrganizer ? "/tournament/build" : "/contact"} className="btn p-4 big-btn">
+            <Link to={(this.context.user.info?.level || 0) >= Levels.ClubManager ? "/tournament/build" : "/contact"} className="btn p-4 big-btn">
               <img className="icon" src="/icons/trophy.svg" alt="" />&nbsp;
               <Translated str="buildTournament" />
             </Link>
