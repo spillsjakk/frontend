@@ -158,7 +158,7 @@ class Manage extends PureComponent<{}, ManageState> {
             {this.state.teams.map(team =>
               <tr key={team.id}>
                 <td><Link to={"/team/view/" + team.id}>{team.name}</Link></td>
-                <td><Link to={"/team/edit/" + team.id}><img src="/icons/gear.svg" width={32} height={32} /></Link></td>
+                <td><Link to={"/team/manage/" + team.id}><img src="/icons/gear.svg" width={32} height={32} /></Link></td>
               </tr>
             )}
           </tbody>
