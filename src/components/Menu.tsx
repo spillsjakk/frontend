@@ -4,7 +4,7 @@ import { Navbar, Nav, Dropdown } from "react-bootstrap";
 
 import Translated from './Translated';
 import LangSwitcher from './LangSwitcher';
-import { UserContext } from "./UserContext";
+import { UserContext, Levels } from "./UserContext";
 import { fetchJson } from "../functions";
 
 class Menu extends Component {
@@ -53,12 +53,15 @@ class Menu extends Component {
                   <Dropdown.Item as={Link} to="/team/mine">
                     <Translated str="myTeams" />
                   </Dropdown.Item>
-                  {(this.context.user.info?.level || 0) > 1 && <>
+                  {(this.context.user.info?.level || 0) >= Levels.ClubManager && <>
                     <Dropdown.Divider />
                     <Dropdown.Item as={Link} to="/tournament/build">
                       <Translated str="buildTournament" />
                     </Dropdown.Item>
-                    {this.context.user.info?.level === 4 && <>
+                    <Dropdown.Item as={Link} to="/club/manage">
+                      <Translated str="manageClub" />
+                    </Dropdown.Item>
+                    {this.context.user.info?.level === Levels.Admin && <>
                       <Dropdown.Divider></Dropdown.Divider>
                       <Dropdown.Item as={Link} to="/account/csv_import">
                         CSV account import

@@ -40,7 +40,8 @@ class Manage extends PureComponent<{}, ManageState> {
           name: result[0].name,
           description: result[0].description,
           country: result[0].country,
-          region: result[0].region
+          region: result[0].region,
+          exists: true
         });
       }
     });
@@ -70,15 +71,15 @@ class Manage extends PureComponent<{}, ManageState> {
         <form className="mt-5" onSubmit={this.submit}>
           <div className="form-group">
             <label htmlFor="description"><Translated str="name" />:</label>
-            <input type="text" className="form-control" id="name" name="name" required value={this.state.name} onChange={this.handleChange} />
+            <input type="text" className="form-control w-50" id="name" name="name" required value={this.state.name} onChange={this.handleChange} />
           </div>
           <div className="form-group mt-4">
             <label htmlFor="id"><Translated str="id" />:</label>
-            <input type="text" id="id" className="form-control w-25" name="id" required value={this.state.id} disabled={this.state.exists} onChange={this.handleChange} />
+            <input type="text" id="id" className="form-control w-50" name="id" required value={this.state.id} disabled={this.state.exists} onChange={this.handleChange} />
           </div>
           <div className="form-group mt-4">
             <label htmlFor="description"><Translated str="description" />:</label>
-            <textarea id="description" className="form-control w-25" name="description" required value={this.state.description} onChange={this.handleChange} />
+            <textarea id="description" className="form-control w-50" name="description" required value={this.state.description} onChange={this.handleChange} />
           </div>
           <div className="form-group mt-4">
             <label htmlFor="country"><Translated str="country" />:</label>
