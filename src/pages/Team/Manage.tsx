@@ -144,15 +144,6 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
             )}
           </tbody>
         </table>
-
-        <h3 className="mt-4"><Translated str="addOtherAccount" /></h3>
-
-        <p><strong><Translated str="id" />:</strong></p>
-
-        <div className="mb-5">
-          <input type="text" className="form-control w-25 d-inline" ref={this.customAccRef} />
-          <a className="btn btn-primary" onClick={() => { this.addMember(this.customAccRef.current?.value || ""); this.customAccRef.current!.value = ""; }}>+</a>
-        </div>
       </>
     );
   }
