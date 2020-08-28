@@ -47,26 +47,17 @@ class Menu extends Component {
                     <Translated str="createAccounts" />
                   </Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item as={Link} to="/team/create">
-                    <Translated str="createATeam" />
+                  <Dropdown.Item as={Link} to="/tournament/build">
+                    <Translated str="buildTournament" />
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/team/mine">
-                    <Translated str="myTeams" />
+                  <Dropdown.Item as={Link} to="/club/manage">
+                    <Translated str="manageClub" />
                   </Dropdown.Item>
-                  {(this.context.user.info?.level || 0) >= Levels.ClubManager && <>
-                    <Dropdown.Divider />
-                    <Dropdown.Item as={Link} to="/tournament/build">
-                      <Translated str="buildTournament" />
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/club/manage">
-                      <Translated str="manageClub" />
-                    </Dropdown.Item>
-                    {this.context.user.info?.level === Levels.Admin && <>
-                      <Dropdown.Divider></Dropdown.Divider>
-                      <Dropdown.Item as={Link} to="/account/csv_import">
-                        CSV account import
+                  {this.context.user.info?.level === Levels.Admin && <>
+                    <Dropdown.Divider></Dropdown.Divider>
+                    <Dropdown.Item as={Link} to="/account/csv_import">
+                      CSV account import
                       </Dropdown.Item>
-                    </>}
                   </>}
                 </Dropdown.Menu>
               </Dropdown>
@@ -97,7 +88,7 @@ class Menu extends Component {
             }
           </Nav>
         </Navbar.Collapse>
-      </Navbar>
+      </Navbar >
     );
   }
 }
