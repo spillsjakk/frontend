@@ -89,7 +89,7 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
           </tbody>
         </table>
 
-        <h3 className="mt-4"><Translated str="suggestedAccounts" /></h3>
+        <h3 className="mt-4"><Translated str="otherClubMembers" /></h3>
 
         <table className="table">
           <thead>
