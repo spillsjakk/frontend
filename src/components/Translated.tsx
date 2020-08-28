@@ -184,7 +184,8 @@ const STRINGS = {
     "manageClub": "Manage club",
     "country": "Country",
     "region": "Region",
-    "submit": "Submit"
+    "submit": "Submit",
+    "addMember": "Add member"
   },
   "NO": {
     "login": "Logg inn",

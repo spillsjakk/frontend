@@ -12,7 +12,8 @@ type ManageState = {
   description: string
   country: string
   region: string,
-  members: any[]
+  members: any[],
+  newMemberId: string
 }
 
 class Manage extends PureComponent<{}, ManageState> {
@@ -26,12 +27,15 @@ class Manage extends PureComponent<{}, ManageState> {
       description: "",
       country: "",
       region: "",
-      members: []
+      members: [],
+      newMemberId: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
     this.removeMember = this.removeMember.bind(this);
+    this.addMember = this.addMember.bind(this);
+    this.loadMembers = this.loadMembers.bind(this);
   }
 
   componentDidMount() {
@@ -46,12 +50,14 @@ class Manage extends PureComponent<{}, ManageState> {
           country: result[0].country,
           region: result[0].region,
           exists: true
-        }, () => {
-          fetchJson(`/s/club/members/${result[0].id}`, "GET", undefined, members => {
-            this.setState({ members });
-          })
-        });
+        }, this.loadMembers);
       }
+    });
+  }
+
+  loadMembers() {
+    fetchJson(`/s/club/members/${this.state.id}`, "GET", undefined, members => {
+      this.setState({ members });
     });
   }
 
@@ -75,6 +81,14 @@ class Manage extends PureComponent<{}, ManageState> {
       members.splice(members.findIndex(m => m.account_id === uid), 1);
       this.setState({ members });
     });
+  }
+
+  addMember(e: FormEvent) {
+    e.preventDefault();
+
+    fetchJson(`/s/club/add-member/${this.state.id}/${this.state.newMemberId}`, "POST", undefined, _ => {
+      this.setState({ newMemberId: "" }, this.loadMembers);
+    })
   }
 
   render() {
@@ -110,7 +124,16 @@ class Manage extends PureComponent<{}, ManageState> {
           </div>
         </form>
 
-        <h3 className="mt-5 p-3"><Translated str="members" /></h3>
+        <h3 className="mt-5"><Translated str="addMember" /></h3>
+        <form className="mt-4" onSubmit={this.addMember}>
+          <div className="form-group">
+            <label htmlFor="newMemberId"><Translated str="id" />:</label>&nbsp;
+            <input type="text" id="newMemberId" name="newMemberId" required value={this.state.newMemberId} onChange={this.handleChange} />&nbsp;
+            <button className="btn btn-primary" type="submit">+</button>
+          </div>
+        </form>
+
+        <h3 className="mt-5"><Translated str="members" /></h3>
         <table className="mt-4 table">
           <tbody>
             {this.state.members.map(member =>
