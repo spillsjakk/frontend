@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Container } from 'react-bootstrap';
 import Translated from "../../components/Translated";
 import { fetchJson } from "../../functions";
+import UserLink from "../../components/UserLink";
 
 type ManageState = {
   exists: boolean
@@ -10,7 +11,8 @@ type ManageState = {
   name: string
   description: string
   country: string
-  region: string
+  region: string,
+  members: any[]
 }
 
 class Manage extends PureComponent<{}, ManageState> {
@@ -23,11 +25,13 @@ class Manage extends PureComponent<{}, ManageState> {
       name: "",
       description: "",
       country: "",
-      region: ""
+      region: "",
+      members: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.submit = this.submit.bind(this);
+    this.removeMember = this.removeMember.bind(this);
   }
 
   componentDidMount() {
@@ -42,6 +46,10 @@ class Manage extends PureComponent<{}, ManageState> {
           country: result[0].country,
           region: result[0].region,
           exists: true
+        }, () => {
+          fetchJson(`/s/club/members/${result[0].id}`, "GET", undefined, members => {
+            this.setState({ members });
+          })
         });
       }
     });
@@ -55,9 +63,17 @@ class Manage extends PureComponent<{}, ManageState> {
 
   submit(e: FormEvent) {
     e.preventDefault();
-  
+
     fetchJson(`/s/club/edit`, "POST", this.state, _ => {
       this.setState({ exists: true });
+    });
+  }
+
+  removeMember(uid: string) {
+    fetchJson(`/s/club/remove-member/${this.state.id}/${uid}`, "POST", undefined, _ => {
+      const members = [...this.state.members];
+      members.splice(members.findIndex(m => m.account_id === uid), 1);
+      this.setState({ members });
     });
   }
 
@@ -93,6 +109,18 @@ class Manage extends PureComponent<{}, ManageState> {
             <button type="submit" className="btn btn-primary"><Translated str="submit" /></button>
           </div>
         </form>
+
+        <h3 className="mt-5 p-3"><Translated str="members" /></h3>
+        <table className="mt-4 table">
+          <tbody>
+            {this.state.members.map(member =>
+              <tr key={member.account_id}>
+                <td><UserLink id={member.account_id} name={member.first_name + " " + member.last_name} ghost={false} /></td>
+                <td><a className="btn btn-danger" onClick={() => this.removeMember(member.account_id)}>X</a></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </>
     );
   }
