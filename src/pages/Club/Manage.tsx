@@ -4,6 +4,8 @@ import { Container } from 'react-bootstrap';
 import Translated from "../../components/Translated";
 import { fetchJson } from "../../functions";
 import UserLink from "../../components/UserLink";
+import TeamPlayers from "../Tournament/TeamPlayers";
+import { Link } from "react-router-dom";
 
 type ManageState = {
   exists: boolean
@@ -13,7 +15,9 @@ type ManageState = {
   country: string
   region: string,
   members: any[],
-  newMemberId: string
+  newMemberId: string,
+  teams: any[],
+  newTeamName: string
 }
 
 class Manage extends PureComponent<{}, ManageState> {
@@ -28,7 +32,9 @@ class Manage extends PureComponent<{}, ManageState> {
       country: "",
       region: "",
       members: [],
-      newMemberId: ""
+      newMemberId: "",
+      teams: [],
+      newTeamName: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -36,6 +42,7 @@ class Manage extends PureComponent<{}, ManageState> {
     this.removeMember = this.removeMember.bind(this);
     this.addMember = this.addMember.bind(this);
     this.loadMembers = this.loadMembers.bind(this);
+    this.addTeam = this.addTeam.bind(this);
   }
 
   componentDidMount() {
@@ -50,7 +57,11 @@ class Manage extends PureComponent<{}, ManageState> {
           country: result[0].country,
           region: result[0].region,
           exists: true
-        }, this.loadMembers);
+        }, () => {
+          fetchJson(`/s/club/teams/${this.state.id}`, "GET", undefined, teams => {
+            this.setState({ teams }, this.loadMembers);
+          });
+        });
       }
     });
   }
@@ -91,6 +102,14 @@ class Manage extends PureComponent<{}, ManageState> {
     })
   }
 
+  addTeam(e: FormEvent) {
+    e.preventDefault();
+
+    fetchJson(`/s/club/add-team/${this.state.id}`, "POST", { name: this.state.newTeamName }, team => {
+      this.setState({ teams: this.state.teams.concat([{ id: team.id, name: team.name }]) });
+    })
+  }
+
   render() {
     return (
       <>
@@ -123,6 +142,27 @@ class Manage extends PureComponent<{}, ManageState> {
             <button type="submit" className="btn btn-primary"><Translated str="submit" /></button>
           </div>
         </form>
+
+        <h3 className="mt-5"><Translated str="createATeam" /></h3>
+        <form className="mt-4" onSubmit={this.addTeam}>
+          <div className="form-group">
+            <label htmlFor="newTeamName"><Translated str="name" />:</label>&nbsp;
+            <input type="text" id="newTeamName" name="newTeamName" required value={this.state.newTeamName} onChange={this.handleChange} />&nbsp;
+            <button className="btn btn-primary" type="submit">+</button>
+          </div>
+        </form>
+
+        <h3 className="mt-5"><Translated str="teams" /></h3>
+        <table className="mt-4 table">
+          <tbody>
+            {this.state.teams.map(team =>
+              <tr key={team.id}>
+                <td><Link to={"/team/view/" + team.id}>{team.name}</Link></td>
+                <td><Link to={"/team/edit/" + team.id}><img src="/icons/gear.svg" width={32} height={32} /></Link></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
         <h3 className="mt-5"><Translated str="addMember" /></h3>
         <form className="mt-4" onSubmit={this.addMember}>
