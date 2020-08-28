@@ -16,7 +16,7 @@ type ManageState = {
   info?: {
     team: Team,
     members: TeamMember[]
-    not_members: Account[]
+    not_members: string[][]
   }
 };
 
@@ -101,8 +101,8 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
           <tbody id="notMembers">
             {info.not_members.map(player =>
               <tr>
-                <td><UserLink id={player.id} name={player.first_name + " " + player.last_name} ghost={false} /></td>
-                <td><a className="btn btn-primary" onClick={() => this.addMember(player.id)}>+</a></td>
+                <td><UserLink id={player[0]} name={player[1] + " " + player[2]} ghost={false} /></td>
+                <td><a className="btn btn-primary" onClick={() => this.addMember(player[0])}>+</a></td>
               </tr>
             )}
           </tbody>
