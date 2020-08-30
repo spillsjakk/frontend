@@ -182,7 +182,11 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
   }
 
   addTeam(team: string) {
-    fetchJson(`/s/tournament/add-team/${this.tournamentId}/${team}`, "POST", undefined, (result: Team) => {
+    fetchJson(`/s/tournament/add-team/${this.tournamentId}/${team}`, "POST", undefined, result => {
+      if (result.already) {
+        return;
+      }
+
       const info = { ...this.state.info! };
       info.teams.push({ team_id: result.id, name: result.name, game_score: 0, match_score: 0, eliminated: false, seed: 0 });
       this.setState({ info });
