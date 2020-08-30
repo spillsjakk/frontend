@@ -186,7 +186,15 @@ const STRINGS = {
     "region": "Region",
     "submit": "Submit",
     "addMember": "Add member",
-    "otherClubMembers": "Other club members"
+    "otherClubMembers": "Other club members",
+    "forgotPassword": "Forgot password?",
+    "invalidPasswordRecoveryCode": "The given password recovery code is invalid.",
+    "passwordRecoveryEmailSent": "We sent you an email with a link to recover your password.",
+    "accountHasNoEmail": "There is no email address associated with this account.",
+    "recoverAccount": "Recover account",
+    "recover": "Recover",
+    "newPassword": "New password",
+    "newPasswordAgain": "New password (again)"
   },
   "NO": {
     "login": "Logg inn",

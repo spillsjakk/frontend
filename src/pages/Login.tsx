@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import Translated from '../components/Translated';
 import { fetchJson } from "../functions";
 import { UserContext } from "../components/UserContext";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 
 type LoginState = {
   userId: string,
@@ -67,6 +67,9 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
           </div>
           <button className="btn btn-primary"><Translated str="login" /></button>
         </form>
+        <p className="mt-5">
+          <Link to="/account/recover"><Translated str="forgotPassword" /></Link>
+        </p>
       </>
     );
   }

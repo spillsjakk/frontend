@@ -16,6 +16,7 @@ import TournamentTeamPlayers from './pages/Tournament/TeamPlayers';
 import TeamView from './pages/Team/View';
 import TeamManage from './pages/Team/Manage';
 import AccountCreate from './pages/Account/Create';
+import AccountRecover from './pages/Account/Recover';
 import GameLobby from './pages/Game/Lobby';
 import GamePlay from './pages/Game/Play';
 import GameView from './pages/Game/View';
@@ -42,6 +43,7 @@ const Main = () => {
       <Route exact path='/team/manage/:tid' component={TeamManage}></Route>
 
       <Route exact path='/account/create' component={AccountCreate}></Route>
+      <Route exact path='/account/recover/:b64?' component={AccountRecover}></Route>
 
       <Route exact path='/game/lobby' component={GameLobby}></Route>
       <Route exact path='/game/play/:id' component={GamePlay}></Route>
