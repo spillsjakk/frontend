@@ -15,6 +15,7 @@ import { UserContext } from "../../components/UserContext";
 import { Tournament, Participant, TeamParticipant, Pairing, Team, LightGame, TKOSeparation } from './Types';
 
 import './View.css';
+import { Timestamp } from "../../components/Timestamp";
 
 const { SearchBar } = Search;
 
@@ -427,7 +428,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
 
         <div className="mt-5">
           <p>
-            <Translated str="nextOnlinePairingWillBeAt" />: {info.tournament.current_online_pairing_time.replace("Z", "").replace("T", " ")} (UTC)
+            <Translated str="nextOnlinePairingWillBeAt" />: <Timestamp time={info.tournament.current_online_pairing_time} />
             {this.context.user.authenticated && this.context.user.info?.id === info.tournament.organizer &&
               <form onSubmit={this.onUpdatePairingTime}>
                 <label htmlFor="next_pairing_date"><Translated str="changeNextPairingDateTime" /> (hh:mm, UTC!):</label>

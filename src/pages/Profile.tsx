@@ -9,6 +9,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import ToolkitProvider, { Search, SearchMatchProps } from 'react-bootstrap-table2-toolkit';
+import { TimestampString } from "../components/Timestamp";
 
 const { SearchBar } = Search;
 
@@ -90,7 +91,7 @@ class Profile extends Component<RouteComponentProps<ProfileParams>, ProfileState
         return {
           id: g.id,
           name: g.white_name + " - " + g.black_name,
-          start: g.start.replace("T", " ").replace("Z", "").split(".")[0],
+          start: TimestampString(g.start),
           tournament: g.tournament_name,
           timeControl: g.initial_time.toString() + "+" + g.increment.toString(),
           result: (function (r: number | undefined) {
