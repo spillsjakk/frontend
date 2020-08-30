@@ -155,7 +155,7 @@ class Manage extends PureComponent<{}, ManageState> {
         <h3 className="mt-5"><Translated str="teams" /></h3>
         <table className="mt-4 table">
           <tbody>
-            {this.state.teams.map(team =>
+            {this.state.teams.filter(t => t.id[0] !== "_").map(team =>
               <tr key={team.id}>
                 <td><Link to={"/team/view/" + team.id}>{team.name}</Link></td>
                 <td><Link to={"/team/manage/" + team.id}><img src="/icons/gear.svg" width={32} height={32} /></Link></td>
