@@ -194,7 +194,10 @@ const STRINGS = {
     "recoverAccount": "Recover account",
     "recover": "Recover",
     "newPassword": "New password",
-    "newPasswordAgain": "New password (again)"
+    "newPasswordAgain": "New password (again)",
+    "manageOrganization": "Manage organization",
+    "addClub": "Add a club",
+    "clubs": "Clubs"
   },
   "NO": {
     "login": "Logg inn",

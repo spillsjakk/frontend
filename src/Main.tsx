@@ -21,6 +21,7 @@ import GameLobby from './pages/Game/Lobby';
 import GamePlay from './pages/Game/Play';
 import GameView from './pages/Game/View';
 import ClubManage from './pages/Club/Manage';
+import OrgManage from './pages/Organization/Manage';
 
 const Main = () => {
   return (
@@ -49,7 +50,9 @@ const Main = () => {
       <Route exact path='/game/play/:id' component={GamePlay}></Route>
       <Route exact path='/game/view/:id' component={GameView}></Route>
 
-      <Route exact path='/club/manage' component={ClubManage}></Route>      
+      <Route exact path='/club/manage' component={ClubManage}></Route>
+
+      <Route exact path='/organization/manage' component={OrgManage}></Route>   
 
       <Route component={NotFound}></Route>
     </Switch>
