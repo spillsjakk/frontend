@@ -203,7 +203,14 @@ const STRINGS = {
     "manageOrganization": "Manage organization",
     "addClub": "Add a club",
     "clubs": "Clubs",
-    "accountList": "Account list"
+    "accountList": "Account list",
+    "organizationStatistics": "Organization statistics",
+    "totalClubCount": "Total club count",
+    "totalPlayerCount": "Total player count",
+    "clubCount": "Club count",
+    "playerCount": "Player count",
+    "averageAge": "Average age",
+    "mfRatio": "M/F ratio"
   },
   "NO": {
     "login": "Logg inn",

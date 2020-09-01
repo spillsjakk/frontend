@@ -24,6 +24,7 @@ import ClubManage from './pages/Club/Manage';
 import ClubView from './pages/Club/View';
 import OrgManage from './pages/Organization/Manage';
 import OrgAllAccounts from './pages/Organization/AllAccounts';
+import OrgStatistics from './pages/Organization/Statistics';
 
 const Main = () => {
   return (
@@ -57,6 +58,7 @@ const Main = () => {
 
       <Route exact path='/organization/manage' component={OrgManage}></Route>
       <Route exact path='/organization/all-accounts/:oid' component={OrgAllAccounts}></Route>
+      <Route exact path='/organization/statistics/:oid' component={OrgStatistics}></Route>
 
       <Route component={NotFound}></Route>
     </Switch>
