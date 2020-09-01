@@ -210,7 +210,8 @@ const STRINGS = {
     "clubCount": "Club count",
     "playerCount": "Player count",
     "averageAge": "Average age",
-    "mfRatio": "M/F ratio"
+    "mfRatio": "M/F ratio",
+    "age": "Age"
   },
   "NO": {
     "login": "Logg inn",

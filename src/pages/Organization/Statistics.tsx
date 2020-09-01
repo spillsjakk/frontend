@@ -5,6 +5,7 @@ import { title, fetchJson } from "../../functions";
 import { RouteComponentProps } from "react-router-dom";
 import { Account } from "../Tournament/Types";
 import lodash from "lodash";
+import { PieChart, Pie, Tooltip, Legend, Cell, BarChart, Bar, XAxis, YAxis } from "recharts";
 
 type StatisticsProps = {
   oid: string
@@ -13,12 +14,14 @@ type StatisticsProps = {
 type StatisticsState = {
   clubCount: number,
   playerCount: number
-  regionInfo: [string, RegionInfo][]
+  regionInfo: RegionInfo[],
+  ageHistogram: { age: number, count: number }[]
 };
 
 type RegionInfo = {
+  name: string
   clubCount: number
-  playerCount: number,
+  playerCount: number
   ageInfo: {
     total: number
     count: number
@@ -50,7 +53,8 @@ class Statistics extends Component<RouteComponentProps<StatisticsProps>, Statist
     this.state = {
       clubCount: 0,
       playerCount: 0,
-      regionInfo: []
+      regionInfo: [],
+      ageHistogram: []
     };
   }
 
@@ -95,14 +99,30 @@ class Statistics extends Component<RouteComponentProps<StatisticsProps>, Statist
             }
           }
 
-          const regionInfoArray = Object.entries(regionInfo);
-          regionInfoArray.sort((a, b) => a[0] < b[0] ? -1 : 1);
-
+          const ageHistogram: { [age: string]: number } = {};
+          for (const account of accounts) {
+            if (account.birth_date) {
+              const age = Math.floor((new Date().getTime() - new Date(account.birth_date!).getTime()) / 1000 / 60 / 60 / 24 / 365).toString();
+              if (Object.keys(ageHistogram).includes(age)) {
+                ageHistogram[age]++;
+              } else {
+                ageHistogram[age] = 1;
+              }
+            }
+          }
+          const sortedAges = Object.keys(ageHistogram).map(Number).sort((a, b) => a - b);
+          const minAge = sortedAges[0];
+          const maxAge = sortedAges[sortedAges.length - 1];
+          const ageHistogramRecharts = [];
+          for (let a = minAge; a <= maxAge; a++) {
+            ageHistogramRecharts.push({ age: a, count: ageHistogram[a] || 0 });
+          }
 
           this.setState({
             clubCount,
             playerCount,
-            regionInfo: regionInfoArray
+            regionInfo: Object.keys(regionInfo).map(k => { return { name: k, ...regionInfo[k] }; }).sort((a, b) => a.name < b.name ? -1 : 1),
+            ageHistogram: ageHistogramRecharts
           })
         });
       });
@@ -141,20 +161,57 @@ class Statistics extends Component<RouteComponentProps<StatisticsProps>, Statist
           </thead>
           <tbody>
             {this.state.regionInfo.map(region =>
-              <tr key={region[0]}>
-                <td>{region[0]}</td>
-                <td>{region[1].clubCount}</td>
-                <td>{region[1].playerCount}</td>
-                <td>{Math.round(region[1].ageInfo.total / region[1].ageInfo.count * 10) / 10 || ""}</td>
-                <td>{Math.round(region[1].mfRatioInfo.males / (region[1].mfRatioInfo.total - region[1].mfRatioInfo.males) * 1000) / 1000 || ""}</td>
+              <tr key={region.name}>
+                <td>{region.name}</td>
+                <td>{region.clubCount}</td>
+                <td>{region.playerCount}</td>
+                <td>{Math.round(region.ageInfo.total / region.ageInfo.count * 10) / 10 || ""}</td>
+                <td>{Math.round(region.mfRatioInfo.males / (region.mfRatioInfo.total - region.mfRatioInfo.males) * 1000) / 1000 || ""}</td>
                 <td></td>
               </tr>
             )}
           </tbody>
         </table>
+
+        <div className="d-inline-flex flex-row flex-wrap mt-4">
+          <div className="m-5">
+            <strong><Translated str="clubCount" />:</strong>
+            <PieChart width={350} height={350}>
+              <Pie data={this.state.regionInfo} dataKey="clubCount" nameKey="name" cx="50%" cy="50%" outerRadius={150}>
+                {this.state.regionInfo.map((_, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="m-5">
+            <strong><Translated str="playerCount" />:</strong>
+            <PieChart width={350} height={350}>
+              <Pie data={this.state.regionInfo} dataKey="playerCount" nameKey="name" cx="50%" cy="50%" outerRadius={150}>
+                {this.state.regionInfo.map((_, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </div>
+          <div className="m-5">
+            <strong><Translated str="age" />:</strong>
+            <BarChart width={750} height={350} data={this.state.ageHistogram}>
+              <XAxis dataKey="age" />
+              <YAxis />
+              <Bar dataKey="count" fill={COLORS[0]} />
+            </BarChart>
+          </div>
+        </div>
       </>
     );
   }
 }
+
+const COLORS: string[] = [
+  "#fff1c9",
+  "#f7b7a3",
+  "#ea5f89",
+  "#9b3192",
+  "#57167e"
+];
 
 export default Statistics;
