@@ -2,7 +2,7 @@ import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from 'react-helmet';
 import { Container } from 'react-bootstrap';
 import Translated from "../../components/Translated";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 import TeamPlayers from "../Tournament/TeamPlayers";
 import { Link } from "react-router-dom";
@@ -114,7 +114,7 @@ class Manage extends PureComponent<{}, ManageState> {
     return (
       <>
         <Helmet>
-          <title>Manage clubs</title>
+          <title>{title("manageClub")}</title>
         </Helmet>
         <h1 className="mt-5 p-3"><Translated str="manageClub" /></h1>
         <form className="mt-5" onSubmit={this.submit}>

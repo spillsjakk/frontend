@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { Tournament } from "./Types";
 import { Link } from "react-router-dom";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 
 type FindState = {
   ongoing: Tournament[],
@@ -27,7 +27,7 @@ class Find extends Component<{}, FindState> {
     return (
       <>
         <Helmet>
-          <title>Find</title>
+          <title>{title("findTournaments")}</title>
         </Helmet>
         <h1 className="mt-4 p-3"><Translated str="findTournaments" /></h1>
 

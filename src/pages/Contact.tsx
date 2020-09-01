@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { Helmet } from 'react-helmet';
+import { title } from "../functions";
 
 class Contact extends PureComponent {
   componentDidMount() {
@@ -10,7 +11,7 @@ class Contact extends PureComponent {
     return (
       <>
         <Helmet>
-          <title>Home page</title>
+          <title>{title("contact")}</title>
         </Helmet>
         <p className="mt-5">
           <strong>Kontakt SkoleSjakken</strong>

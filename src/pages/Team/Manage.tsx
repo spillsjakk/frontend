@@ -76,7 +76,7 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
   }
 
   componentDidMount() {
-    document.getElementsByTagName("body")[0].id = "Team-View";
+    document.getElementsByTagName("body")[0].id = "Team-Manage";
     this.loadState();
   }
 

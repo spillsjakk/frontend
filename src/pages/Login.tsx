@@ -2,7 +2,7 @@ import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from 'react-helmet';
 
 import Translated from '../components/Translated';
-import { fetchJson } from "../functions";
+import { fetchJson, title } from "../functions";
 import { UserContext } from "../components/UserContext";
 import { RouteComponentProps, Link } from "react-router-dom";
 
@@ -54,7 +54,7 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
     return (
       <>
         <Helmet>
-          <title>Log in</title>
+          <title>{title("login")}</title>
         </Helmet>
         <form onSubmit={this.doLogin}>
           <div className="form-group">

@@ -1,7 +1,7 @@
 import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import { Link } from "react-router-dom";
 
 type ManageState = {
@@ -91,7 +91,7 @@ class Manage extends PureComponent<{}, ManageState> {
     return (
       <>
         <Helmet>
-          <title>Manage organization</title>
+          <title>{title("manageOrganization")}</title>
         </Helmet>
         <h1 className="mt-5 p-3"><Translated str="manageOrganization" /></h1>
         <form className="mt-5" onSubmit={this.submit}>

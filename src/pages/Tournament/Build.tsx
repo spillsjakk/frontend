@@ -2,7 +2,7 @@ import React, { PureComponent, SyntheticEvent, ChangeEvent, FormEvent } from "re
 import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import './Build.css';
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import { RouteComponentProps } from "react-router-dom";
 
 type BuildState = {
@@ -80,7 +80,7 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
     return (
       <>
         <Helmet>
-          <title>Build</title>
+          <title>{title("buildTournament")}</title>
         </Helmet>
         <h1 className="mt-5 p-3"><Translated str="buildTournament" /></h1>
 

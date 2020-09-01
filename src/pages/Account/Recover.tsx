@@ -2,7 +2,7 @@ import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/Translated";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 
 type RecoverProps = {
   b64?: string
@@ -96,7 +96,7 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
     return (
       <>
         <Helmet>
-          <title>Recover account</title>
+          <title>{title("recoverAccount")}</title>
         </Helmet>
 
         <h1 className="mt-5 p-3"><Translated str="recoverAccount" /></h1>

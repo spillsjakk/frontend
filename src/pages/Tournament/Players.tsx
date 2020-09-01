@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { Tournament, Participant, Team, TeamParticipant, Account } from './Types';
 import { RouteComponentProps, Link } from "react-router-dom";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import './Players.css';
 
 type PlayersState = {
@@ -203,7 +203,7 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
     return (
       <>
         <Helmet>
-          <title>About</title>
+          <title>{title("manageParticipants")}</title>
         </Helmet>
         <h1 className="mt-5 p-3"><Translated str="manageParticipants" /></h1>
 

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { Tournament } from "./Types";
 import { Link, RouteComponentProps } from "react-router-dom";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 
 type TeamPlayersProps = {
@@ -77,7 +77,7 @@ class TeamPlayers extends Component<RouteComponentProps<TeamPlayersProps>, TeamP
     return (
       <>
         <Helmet>
-          <title>Team players</title>
+          <title>{title("manageTeamPlayers")}</title>
         </Helmet>
 
         <h1 className="mt-4 p-3"><Translated str="manageTeamPlayers" /></h1>

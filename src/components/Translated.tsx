@@ -11,20 +11,25 @@ class Translated extends PureComponent<TranslatedProps, {}> {
   static contextType = LangContext;
   context!: React.ContextType<typeof LangContext>;
 
+  private static getStr(key: string, lang: string) {
+    if (key in (STRINGS as any)[lang]) {
+      return (STRINGS as any)[lang][key];
+    } else if (key in STRINGS.EN) {
+      return (STRINGS as any).EN[key];
+    } else {
+      return key;
+    }
+  }
+
   static byKey(key: string) {
-    return <Translated str={key} />;
+    const lang = localStorage.getItem("lang") ?? "EN";
+    return Translated.getStr(key, lang);
   }
 
   render() {
     let str = this.props.str;
     let lang = this.context.lang;
-    if (str in (STRINGS as any)[lang]) {
-      return (STRINGS as any)[lang][str];
-    } else if (str in STRINGS.EN) {
-      return (STRINGS as any).EN[str];
-    } else {
-      return str;
-    }
+    return Translated.getStr(str, lang);
   }
 }
 

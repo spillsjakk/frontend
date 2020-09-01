@@ -77,7 +77,7 @@ class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
     return (
       <>
         <Helmet>
-          <title>Club</title>
+          <title>{this.state.name}</title>
         </Helmet>
         <h1 className="mt-5 p-3">{this.state.name}</h1>
         <p className="mt-4">

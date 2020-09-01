@@ -1,7 +1,7 @@
 import React, { Component, SyntheticEvent, FormEvent, RefObject } from "react";
 import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import { RouteComponentProps, Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -380,7 +380,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
     return (
       <>
         <Helmet>
-          <title>Tournament</title>
+          <title>{title(this.state.info?.tournament.name || "tournament")}</title>
         </Helmet>
 
         <h1 className="mt-4 p-3">

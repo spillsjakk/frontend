@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { Tournament } from "./Types";
 import { Link } from "react-router-dom";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 
 type SearchState = {
   query: string,
@@ -40,7 +40,7 @@ class Search extends Component<{}, SearchState> {
     return (
       <>
         <Helmet>
-          <title>Search</title>
+          <title>{title("searchTournaments")}</title>
         </Helmet>
         <h1 className="mt-4 p-3">
           <Translated str="searchTournaments" />

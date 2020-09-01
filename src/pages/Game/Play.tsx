@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import Translated from "../../components/Translated";
 import UserLink from "../../components/UserLink";
 import { RouteComponentProps } from "react-router-dom";
-import { fetchJson } from '../../functions';
+import { fetchJson, title } from '../../functions';
 import 'react-chessground/dist/styles/chessground.css';
 import './Play.css';
 import './chessground-theme.css';
@@ -405,7 +405,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     return (
       <>
         <Helmet>
-          <title>Play</title>
+          <title>{title("playGame")}</title>
         </Helmet>
 
         <div className="mt-5"></div>

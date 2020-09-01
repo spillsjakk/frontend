@@ -5,7 +5,7 @@ import { Team } from "../Tournament/Types";
 import { UserContext } from "../../components/UserContext";
 import UserLink from "../../components/UserLink";
 import { RouteComponentProps, Link } from "react-router-dom";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import { TeamMember } from "./Types";
 
 type ViewProps = {
@@ -45,7 +45,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     return (
       <>
         <Helmet>
-          <title>{info.team.name}</title>
+          <title>{title(info.team.name)}</title>
         </Helmet>
 
         <h1 className="mt-4 p-3">{info.team.name}</h1>

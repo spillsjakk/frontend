@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Translated from './components/Translated';
 
 export function fetchJson(url: string, method: string, body: any | undefined, handler: (_: any) => void) {
   return fetch(url, {
@@ -24,4 +25,8 @@ export function fetchJson(url: string, method: string, body: any | undefined, ha
     }).catch(err => {
       ReactDOM.render(<>{err.toString()}</>, document.getElementById("error"));
     })
+}
+
+export function title(key: string) {
+  return Translated.byKey(key) + " | " + Translated.byKey("productName");
 }

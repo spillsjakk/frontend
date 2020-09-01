@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { Helmet } from 'react-helmet';
 import Translated from "../components/Translated";
+import { title } from "../functions";
 
 class About extends PureComponent {
   componentDidMount() {
@@ -11,7 +12,7 @@ class About extends PureComponent {
     return (
       <>
         <Helmet>
-          <title>About</title>
+          <title>{title("about")}</title>
         </Helmet>
         <h1 className="mt-4 p-3">
           <Translated str="about" />

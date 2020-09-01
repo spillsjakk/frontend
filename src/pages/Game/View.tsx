@@ -8,7 +8,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import Chessground from 'react-chessground';
 import 'react-chessground/dist/styles/chessground.css';
 import './chessground-theme.css';
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import Chess from 'chess.js';
 import './View.css';
 
@@ -144,7 +144,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
     return (<>
       <Helmet>
-        <title>View</title>
+        <title>{title("viewGame")}</title>
       </Helmet>
 
       <div className="d-flex flex-row justify-content-between">

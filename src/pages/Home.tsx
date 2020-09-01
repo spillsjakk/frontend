@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import Translated from '../components/Translated';
 import { UserContext, Levels } from "../components/UserContext";
+import { title } from "../functions";
 
 class Home extends Component {
   static contextType = UserContext;
@@ -20,7 +21,7 @@ class Home extends Component {
     return (
       <>
         <Helmet>
-          <title>Home page</title>
+          <title>{title("home")}</title>
         </Helmet>
 
         <div className="mt-5 carousel-container">

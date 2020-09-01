@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from "react-router-dom";
-import { fetchJson } from "../../functions";
+import { fetchJson, title } from "../../functions";
 import Translated from "../../components/Translated";
 import UserLink from "../../components/UserLink";
 import { UserContext } from "../../components/UserContext";
@@ -142,7 +142,7 @@ class Lobby extends Component<RouteComponentProps, LobbyState> {
     return (
       <>
         <Helmet>
-          <title>Lobby</title>
+          <title>{title("lobby")}</title>
         </Helmet>
 
         {this.state.next === -1 ? <>
