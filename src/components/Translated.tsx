@@ -202,7 +202,8 @@ const STRINGS = {
     "newPasswordAgain": "New password (again)",
     "manageOrganization": "Manage organization",
     "addClub": "Add a club",
-    "clubs": "Clubs"
+    "clubs": "Clubs",
+    "accountList": "Account list"
   },
   "NO": {
     "login": "Logg inn",

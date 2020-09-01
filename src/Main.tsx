@@ -23,6 +23,7 @@ import GameView from './pages/Game/View';
 import ClubManage from './pages/Club/Manage';
 import ClubView from './pages/Club/View';
 import OrgManage from './pages/Organization/Manage';
+import OrgAllAccounts from './pages/Organization/AllAccounts';
 
 const Main = () => {
   return (
@@ -54,7 +55,8 @@ const Main = () => {
       <Route exact path='/club/manage' component={ClubManage}></Route>
       <Route exact path='/club/view/:cid' component={ClubView}></Route>
 
-      <Route exact path='/organization/manage' component={OrgManage}></Route>   
+      <Route exact path='/organization/manage' component={OrgManage}></Route>
+      <Route exact path='/organization/all-accounts/:oid' component={OrgAllAccounts}></Route>
 
       <Route component={NotFound}></Route>
     </Switch>
