@@ -116,6 +116,10 @@ class Manage extends PureComponent<{}, ManageState> {
           </div>
         </form>
 
+        <div className="mt-5">
+          <Link to={"/organization/all-accounts/" + this.state.id}><Translated str="accountList" /></Link>
+        </div>
+
         <h3 className="mt-5"><Translated str="addClub" /></h3>
         <form className="mt-4" onSubmit={this.addClub}>
           <div className="form-group">

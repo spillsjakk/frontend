@@ -53,12 +53,19 @@ class Menu extends Component {
                   <Dropdown.Item as={Link} to="/club/manage">
                     <Translated str="manageClub" />
                   </Dropdown.Item>
-                  {this.context.user.info?.level === Levels.Admin && <>
+                  {(this.context.user.info?.level || 0) >= Levels.OrganizationManager && <>
                     <Dropdown.Divider></Dropdown.Divider>
-                    <Dropdown.Item as={Link} to="/account/csv_import">
-                      CSV account import
+                    <Dropdown.Item as={Link} to="/organization/manage">
+                      <Translated str="manageOrganization" />
+                    </Dropdown.Item>
+                    {this.context.user.info?.level === Levels.Admin && <>
+                      <Dropdown.Divider></Dropdown.Divider>
+                      <Dropdown.Item as={Link} to="/account/csv_import">
+                        CSV account import
                       </Dropdown.Item>
-                  </>}
+                    </>}
+                  </>
+                  }
                 </Dropdown.Menu>
               </Dropdown>
             }
