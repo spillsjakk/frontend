@@ -212,7 +212,10 @@ const STRINGS = {
     "averageAge": "Average age",
     "mfRatio": "M/F ratio",
     "age": "Age",
-    "onlyShowScoresOfTop": "Only show scores of individuals and teams in the top"
+    "onlyShowScoresOfTop": "Only show scores of individuals and teams in the top",
+    "winPoints": "Points for a win",
+    "drawPoints": "Points for a draw",
+    "lossPoints": "Points for a loss"
   },
   "NO": {
     "login": "Logg inn",

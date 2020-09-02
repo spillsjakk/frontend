@@ -24,7 +24,10 @@ type BuildState = {
   increment: number,
   self_joinable: boolean,
   show_only_top: boolean,
-  show_only_top_nr: number
+  show_only_top_nr: number,
+  win_points: number,
+  draw_points: number,
+  loss_points: number
 };
 
 class Build extends PureComponent<RouteComponentProps, BuildState> {
@@ -48,7 +51,10 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
       increment: 0,
       self_joinable: false,
       show_only_top: false,
-      show_only_top_nr: 5
+      show_only_top_nr: 5,
+      win_points: 1,
+      draw_points: 0.5,
+      loss_points: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -62,7 +68,15 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
 
   handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const newState: any = {};
-    newState[e.target.name] = (e.target.type === "radio" || e.target.type === "number") ? parseInt(e.target.value, 10) : e.target.value;
+    newState[e.target.name] = (
+      (e.target.type === "radio" || e.target.type === "number") &&
+      e.target.dataset.type !== "float"
+    ) ?
+      parseInt(e.target.value, 10) :
+      (e.target.dataset.type === "float" ?
+        parseFloat(e.target.value) :
+        e.target.value
+      );
     this.setState(newState);
   }
 
@@ -74,7 +88,7 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
 
   submit(e: FormEvent) {
     e.preventDefault();
-  
+
     fetchJson(`/s/tournament/build`, "POST", this.state, result => {
       this.props.history.push(`/tournament/view/${result.id}`);
     });
@@ -205,6 +219,16 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
             <input type="number" id="initial_time" className="form-control" style={{ width: "10%", display: "inline" }} min={1} name="initial_time" required value={this.state.initial_time} onChange={this.handleChange} />
             +
             <input type="number" className="form-control" style={{ width: "10%", display: "inline" }} min="0" name="increment" required value={this.state.increment} onChange={this.handleChange} />
+          </div>
+          <div className="form-group mt-4">
+            <label htmlFor="win_points"><Translated str="winPoints" />:</label>&nbsp;
+            <input type="number" id="win_points" name="win_points" min="0" step="0.5" data-type="float" value={this.state.win_points} onChange={this.handleChange} />
+            <br />
+            <label htmlFor="draw_points"><Translated str="drawPoints" />:</label>&nbsp;
+            <input type="number" id="draw_points" name="draw_points" min="0" step="0.5" data-type="float" value={this.state.draw_points} onChange={this.handleChange} />
+            <br />
+            <label htmlFor="loss_points"><Translated str="lossPoints" />:</label>&nbsp;
+            <input type="number" id="loss_points" name="loss_points" min="0" step="0.5" data-type="float" value={this.state.loss_points} onChange={this.handleChange} />
           </div>
           <div className="form-group mt-4">
             <button type="submit" className="btn btn-success p-3"><strong><Translated str="buildAndInvite" /></strong></button>
