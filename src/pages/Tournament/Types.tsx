@@ -16,7 +16,8 @@ export type Tournament = {
   initial_time: number,
   increment: number,
   current_online_pairing_time: string,
-  self_joinable: boolean
+  self_joinable: boolean,
+  show_only_top_nr?: number,
 }
 
 export type Participant = {

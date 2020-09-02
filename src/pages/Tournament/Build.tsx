@@ -23,6 +23,8 @@ type BuildState = {
   initial_time: number,
   increment: number,
   self_joinable: boolean,
+  show_only_top: boolean,
+  show_only_top_nr: number
 };
 
 class Build extends PureComponent<RouteComponentProps, BuildState> {
@@ -44,7 +46,9 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
       online_pairing_interval_t: 0,
       initial_time: 0,
       increment: 0,
-      self_joinable: false
+      self_joinable: false,
+      show_only_top: false,
+      show_only_top_nr: 5
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -157,6 +161,11 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
               <input className="form-control w-25" type="number" id="per_team" name="per_team" value={this.state.per_team} onChange={this.handleChange} />
             </div>
           }
+          <div className="mt-4">
+            <input type="checkbox" name="show_only_top" checked={this.state.show_only_top} onChange={this.handleChangeCheckbox} />&nbsp;
+            <Translated str="onlyShowScoresOfTop" />&nbsp;
+            <input type="number" name="show_only_top_nr" value={this.state.show_only_top_nr} onChange={this.handleChange} />
+          </div>
           <div className="mt-4">
             <label><Translated str="defaultGameLocation" />:</label>
           </div>

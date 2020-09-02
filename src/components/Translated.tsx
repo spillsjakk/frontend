@@ -211,7 +211,8 @@ const STRINGS = {
     "playerCount": "Player count",
     "averageAge": "Average age",
     "mfRatio": "M/F ratio",
-    "age": "Age"
+    "age": "Age",
+    "onlyShowScoresOfTop": "Only show scores of individuals and teams in the top"
   },
   "NO": {
     "login": "Logg inn",

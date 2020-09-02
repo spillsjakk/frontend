@@ -112,7 +112,21 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
       },
       { dataField: "fide_rating", text: "rating", sort: true, headerFormatter },
       { dataField: "federation", text: "federation", sort: true, headerFormatter },
-      { dataField: "score", text: "score", sort: true, headerFormatter }
+      {
+        dataField: "score", text: "score", sort: true, headerFormatter, formatter: (function (v: View) {
+          return function (_: any, row: Participant, rowIndex: number, ___: any) {
+            if (v.state.info?.tournament?.show_only_top_nr) {
+              if (rowIndex >= v.state.info!.tournament.show_only_top_nr!) {
+                return "";
+              } else {
+                return row.score.toString();
+              }
+            } else {
+              return row.score.toString();
+            }
+          }
+        })(this)
+      }
     ];
 
     this.teamParticipantColumns = [
@@ -126,8 +140,36 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
           }
         }
       },
-      { dataField: "match_score", text: "matchScore", sort: true, headerFormatter },
-      { dataField: "game_score", text: "gameScore", sort: true, headerFormatter }
+      {
+        dataField: "match_score", text: "matchScore", sort: true, headerFormatter, formatter: (function (v: View) {
+          return function (_: any, row: TeamParticipant, rowIndex: number, ___: any) {
+            if (v.state.info?.tournament?.show_only_top_nr) {
+              if (rowIndex >= v.state.info!.tournament.show_only_top_nr!) {
+                return "";
+              } else {
+                return row.match_score.toString();
+              }
+            } else {
+              return row.match_score.toString();
+            }
+          }
+        })(this)
+      },
+      {
+        dataField: "game_score", text: "gameScore", sort: true, headerFormatter, formatter: (function (v: View) {
+          return function (_: any, row: TeamParticipant, rowIndex: number, ___: any) {
+            if (v.state.info?.tournament?.show_only_top_nr) {
+              if (rowIndex >= v.state.info!.tournament.show_only_top_nr!) {
+                return "";
+              } else {
+                return row.game_score.toString();
+              }
+            } else {
+              return row.game_score.toString();
+            }
+          }
+        })(this)
+      }
     ];
 
     let sswFormatter = (function (v: View) {
