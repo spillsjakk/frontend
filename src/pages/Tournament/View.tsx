@@ -469,17 +469,15 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
         }
 
         <div className="mt-5">
-          <p>
-            <Translated str="nextOnlinePairingWillBeAt" />: <Timestamp time={info.tournament.current_online_pairing_time} />
-            {this.context.user.authenticated && this.context.user.info?.id === info.tournament.organizer &&
-              <form onSubmit={this.onUpdatePairingTime}>
-                <label htmlFor="next_pairing_date"><Translated str="changeNextPairingDateTime" /> (hh:mm, UTC!):</label>
-                <input ref={this.pairingDateRef} type="date" id="next_pairing_date" className="form-control" name="next_pairing_date" style={{ display: "inline", width: "13%" }} required min="2000-01-01" max="2099-12-31" />
-                <input ref={this.pairingHourRef} type="input" className="form-control" name="next_pairing_time" style={{ display: "inline", width: "13%" }} required pattern="\d\d?:\d\d" />
-                <button className="p-2 btn btn-primary mb-1" type="submit"><Translated str="update" /></button>
-              </form>
-            }
-          </p>
+          <Translated str="nextOnlinePairingWillBeAt" />: <Timestamp time={info.tournament.current_online_pairing_time} />
+          {this.context.user.authenticated && this.context.user.info?.id === info.tournament.organizer &&
+            <form onSubmit={this.onUpdatePairingTime}>
+              <label htmlFor="next_pairing_date"><Translated str="changeNextPairingDateTime" /> (hh:mm, UTC!):</label>
+              <input ref={this.pairingDateRef} type="date" id="next_pairing_date" className="form-control" name="next_pairing_date" style={{ display: "inline", width: "13%" }} required min="2000-01-01" max="2099-12-31" />
+              <input ref={this.pairingHourRef} type="input" className="form-control" name="next_pairing_time" style={{ display: "inline", width: "13%" }} required pattern="\d\d?:\d\d" />
+              <button className="p-2 btn btn-primary mb-1" type="submit"><Translated str="update" /></button>
+            </form>
+          }
         </div>
 
         <div className="d-flex flex-row mt-5 justify-content-around">
