@@ -4,6 +4,7 @@ import Translated from "../../components/Translated";
 import { fetchJson } from "../../functions";
 import UserLink from "../../components/UserLink";
 import { Link, RouteComponentProps } from "react-router-dom";
+import FederationDisplay from "../../components/FederationDisplay";
 
 type ViewProps = {
   cid: string
@@ -92,7 +93,7 @@ class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
         </Helmet>
         <h1 className="mt-5 p-3">{this.state.name}</h1>
         <p className="mt-4">
-          {this.state.region}, {this.state.country}
+          {this.state.region}, <FederationDisplay value={this.state.country} />
         </p>
         <p>
           {this.state.description}
