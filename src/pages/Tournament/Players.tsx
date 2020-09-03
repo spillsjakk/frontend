@@ -5,6 +5,9 @@ import { Tournament, Participant, Team, TeamParticipant, Account } from './Types
 import { RouteComponentProps, Link } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import './Players.css';
+import FederationDropdown from "../../components/FederationDropdown";
+import TitleDropdown from "../../components/TitleDropdown";
+import SexDropdown from "../../components/SexDropdown";
 
 type PlayersState = {
   loaded: boolean
@@ -48,9 +51,9 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
         fide_number: "",
         title: "",
         fide_rating: "",
-        fide_federation: "",
+        fide_federation: "NOR",
         birth_date: "",
-        sex: ""
+        sex: "M"
       }
     };
     this.tournamentId = this.props.match.params.tid;
@@ -131,7 +134,7 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
     });
   }
 
-  changeNewAccValue(e: ChangeEvent<HTMLInputElement>) {
+  changeNewAccValue(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const newAcc = { ...this.state.newAcc };
     if (e.target.type === "number") {
       if (e.target.value === "" || !isNaN(parseInt(e.target.value, 10))) {
@@ -306,11 +309,11 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
                   <td><input type="text" id="firstNameInput" name="first_name" value={this.state.newAcc.first_name} onChange={this.changeNewAccValue} /></td>
                   <td><input type="text" id="lastNameInput" name="last_name" value={this.state.newAcc.last_name} onChange={this.changeNewAccValue} /></td>
                   <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.newAcc.fide_number} onChange={this.changeNewAccValue} onBlur={this.fideNumberBlur} /></td>
-                  <td><input type="text" id="titleInput" name="title" value={this.state.newAcc.title} onChange={this.changeNewAccValue} /></td>
+                  <td><TitleDropdown id="titleInput" name="title" value={this.state.newAcc.title} onChange={this.changeNewAccValue} /></td>
                   <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.newAcc.fide_rating} onChange={this.changeNewAccValue} /></td>
-                  <td><input type="text" id="fideFederationInput" name="fide_federation" value={this.state.newAcc.fide_federation} onChange={this.changeNewAccValue} /></td>
+                  <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.newAcc.fide_federation} onChange={this.changeNewAccValue} /></td>
                   <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.newAcc.birth_date} onChange={this.changeNewAccValue} /></td>
-                  <td><input type="text" id="sexInput" name="sex" value={this.state.newAcc.sex} onChange={this.changeNewAccValue} /></td>
+                  <td><SexDropdown id="sexInput" name="sex" value={this.state.newAcc.sex} onChange={this.changeNewAccValue} /></td>
                   <td><a className="btn btn-primary" id="addButton" onClick={this.addNewAcc}>+</a></td>
                 </tr>
               </tbody>

@@ -5,6 +5,9 @@ import { UserContext } from "../../components/UserContext";
 import UserLink from "../../components/UserLink";
 import { fetchJson, title } from "../../functions";
 import "./Create.css";
+import FederationDropdown from "../../components/FederationDropdown";
+import TitleDropdown from "../../components/TitleDropdown";
+import SexDropdown from "../../components/SexDropdown";
 
 type CreateState = {
   first_name: string
@@ -34,9 +37,9 @@ class Create extends Component<{}, CreateState> {
       fide_number: "",
       title: "",
       fide_rating: "",
-      fide_federation: "",
+      fide_federation: "NOR",
       birth_date: "",
-      sex: "",
+      sex: "M",
       level: "0",
       accounts: [],
       passwords: [],
@@ -93,7 +96,7 @@ class Create extends Component<{}, CreateState> {
         fide_number: "",
         title: "",
         fide_rating: "",
-        fide_federation: "",
+        fide_federation: "NOR",
         birth_date: "",
         sex: "",
         accounts: this.state.accounts.concat([result]),
@@ -152,11 +155,11 @@ class Create extends Component<{}, CreateState> {
               <td><input type="text" id="firstNameInput" name="first_name" value={this.state.first_name} onChange={this.handleChange} /></td>
               <td><input type="text" id="lastNameInput" name="last_name" value={this.state.last_name} onChange={this.handleChange} /></td>
               <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.fide_number} onChange={this.handleChange} onBlur={this.fideNumberBlur} /></td>
-              <td><input type="text" id="titleInput" name="title" value={this.state.title} onChange={this.handleChange} /></td>
+              <td><TitleDropdown id="titleInput" name="title" value={this.state.title} onChange={this.handleChange} /></td>
               <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.fide_rating} onChange={this.handleChange} /></td>
-              <td><input type="text" id="fideFederationInput" name="fide_federation" value={this.state.fide_federation} onChange={this.handleChange} /></td>
+              <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.fide_federation} onChange={this.handleChange} /></td>
               <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.birth_date} onChange={this.handleChange} /></td>
-              <td><input type="text" id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
+              <td><SexDropdown id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
               <td>
                 <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
                   <option value="0" selected>Participant</option>

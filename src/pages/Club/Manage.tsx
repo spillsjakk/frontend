@@ -6,6 +6,7 @@ import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 import TeamPlayers from "../Tournament/TeamPlayers";
 import { Link } from "react-router-dom";
+import FederationDropdown from "../../components/FederationDropdown";
 
 type ManageState = {
   exists: boolean
@@ -29,7 +30,7 @@ class Manage extends PureComponent<{}, ManageState> {
       id: "",
       name: "",
       description: "",
-      country: "",
+      country: "NOR",
       region: "",
       members: [],
       newMemberId: "",
@@ -72,7 +73,7 @@ class Manage extends PureComponent<{}, ManageState> {
     });
   }
 
-  handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const newState: any = {};
     newState[e.target.name] = e.target.value;
     this.setState(newState);
@@ -132,7 +133,7 @@ class Manage extends PureComponent<{}, ManageState> {
           </div>
           <div className="form-group mt-4">
             <label htmlFor="country"><Translated str="country" />:</label>
-            <input type="text" id="country" className="form-control w-25" name="country" required value={this.state.country} onChange={this.handleChange} />
+            <FederationDropdown value={this.state.country} name="country" id="country" className="form-control w-25" onChange={this.handleChange} />
           </div>
           <div className="form-group mt-4">
             <label htmlFor="region"><Translated str="region" />:</label>

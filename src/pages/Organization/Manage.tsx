@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { fetchJson, title } from "../../functions";
 import { Link } from "react-router-dom";
+import FederationDropdown from "../../components/FederationDropdown";
 
 type ManageState = {
   exists: boolean
@@ -23,7 +24,7 @@ class Manage extends PureComponent<{}, ManageState> {
       id: "",
       name: "",
       description: "",
-      country: "",
+      country: "NOR",
       clubs: [],
       newClubId: ""
     };
@@ -57,7 +58,7 @@ class Manage extends PureComponent<{}, ManageState> {
     });
   }
 
-  handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const newState: any = {};
     newState[e.target.name] = e.target.value;
     this.setState(newState);
@@ -109,7 +110,7 @@ class Manage extends PureComponent<{}, ManageState> {
           </div>
           <div className="form-group mt-4">
             <label htmlFor="country"><Translated str="country" />:</label>
-            <input type="text" id="country" className="form-control w-25" name="country" required value={this.state.country} onChange={this.handleChange} />
+            <FederationDropdown className="form-control w-25" name="country" id="country" value={this.state.country} onChange={this.handleChange} />
           </div>
           <div className='mt-4'>
             <button type="submit" className="btn btn-primary"><Translated str="submit" /></button>
