@@ -1,4 +1,4 @@
-import React, { Component, ChangeEvent } from "react";
+import React, { Component, ChangeEvent, FormEvent } from "react";
 import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { UserContext } from "../../components/UserContext";
@@ -77,7 +77,9 @@ class Create extends Component<{}, CreateState> {
     });
   }
 
-  addNewAcc() {
+  addNewAcc(e: FormEvent) {
+    e.preventDefault();
+
     const data = {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
@@ -122,66 +124,68 @@ class Create extends Component<{}, CreateState> {
         </Helmet>
         <h1 className="mt-5 p-3"><Translated str="createAccounts" /></h1>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col"><Translated str="firstName" /></th>
-              <th scope="col"><Translated str="lastName" /></th>
-              <th scope="col"><Translated str="fideNumber" /></th>
-              <th scope="col"><Translated str="title" /></th>
-              <th scope="col"><Translated str="fideRating" /></th>
-              <th scope="col"><Translated str="fideFederation" /></th>
-              <th scope="col"><Translated str="birthDate" /></th>
-              <th scope="col"><Translated str="sex" /></th>
-              <th scope="col"><Translated str="email" /></th>
-              <th scope="col"><Translated str="permissions" /></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.accounts.map(account =>
+        <form onSubmit={this.addNewAcc}>
+          <table className="table">
+            <thead>
               <tr>
-                <td>
-                  <UserLink id={account.id} name={account.first_name} ghost={false} />
-                </td>
-                <td>
-                  <UserLink id={account.id} name={account.last_name} ghost={false} />
-                </td>
-                <td>{account.fide_number}</td>
-                <td>{account.title}</td>
-                <td>{account.fide_rating}</td>
-                <td>{account.fide_federation}</td>
-                <td>{account.birth_date}</td>
-                <td>{account.sex}</td>
-                <td>{account.email}</td>
-                <td>{account.level}</td>
+                <th scope="col"><Translated str="firstName" /></th>
+                <th scope="col"><Translated str="lastName" /></th>
+                <th scope="col"><Translated str="fideNumber" /></th>
+                <th scope="col"><Translated str="title" /></th>
+                <th scope="col"><Translated str="fideRating" /></th>
+                <th scope="col"><Translated str="fideFederation" /></th>
+                <th scope="col"><Translated str="birthDate" /></th>
+                <th scope="col"><Translated str="sex" /></th>
+                <th scope="col"><Translated str="email" /></th>
+                <th scope="col"><Translated str="permissions" /></th>
+                <th scope="col"></th>
               </tr>
-            )}
-            <tr>
-              <td><input type="text" id="firstNameInput" name="first_name" value={this.state.first_name} onChange={this.handleChange} /></td>
-              <td><input type="text" id="lastNameInput" name="last_name" value={this.state.last_name} onChange={this.handleChange} /></td>
-              <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.fide_number} onChange={this.handleChange} onBlur={this.fideNumberBlur} /></td>
-              <td><TitleDropdown id="titleInput" name="title" value={this.state.title} onChange={this.handleChange} /></td>
-              <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.fide_rating} onChange={this.handleChange} /></td>
-              <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.fide_federation} onChange={this.handleChange} /></td>
-              <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.birth_date} onChange={this.handleChange} /></td>
-              <td><SexDropdown id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
-              <td><input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange} /></td>
-              <td>
-                <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
-                  <option value="0" selected>Player</option>
-                  {(this.context.user.info?.level || 0) > 1 && <>
-                    <option value="1">Club Manager</option>
-                    {(this.context.user.info?.level || 0) > 2 &&
-                      <option value="2">Org Manager</option>
-                    }
-                  </>}
-                </select>
-              </td>
-              <td><a className="btn btn-primary" id="addButton" onClick={this.addNewAcc}>+</a></td>
-            </tr>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.accounts.map(account =>
+                <tr>
+                  <td>
+                    <UserLink id={account.id} name={account.first_name} ghost={false} />
+                  </td>
+                  <td>
+                    <UserLink id={account.id} name={account.last_name} ghost={false} />
+                  </td>
+                  <td>{account.fide_number}</td>
+                  <td>{account.title}</td>
+                  <td>{account.fide_rating}</td>
+                  <td>{account.fide_federation}</td>
+                  <td>{account.birth_date}</td>
+                  <td>{account.sex}</td>
+                  <td>{account.email}</td>
+                  <td>{account.level}</td>
+                </tr>
+              )}
+              <tr>
+                <td><input type="text" id="firstNameInput" name="first_name" value={this.state.first_name} onChange={this.handleChange} required /></td>
+                <td><input type="text" id="lastNameInput" name="last_name" value={this.state.last_name} onChange={this.handleChange} required /></td>
+                <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.fide_number} onChange={this.handleChange} onBlur={this.fideNumberBlur} /></td>
+                <td><TitleDropdown id="titleInput" name="title" value={this.state.title} onChange={this.handleChange} /></td>
+                <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.fide_rating} onChange={this.handleChange} /></td>
+                <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.fide_federation} onChange={this.handleChange} /></td>
+                <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.birth_date} onChange={this.handleChange} required /></td>
+                <td><SexDropdown id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
+                <td><input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange} /></td>
+                <td>
+                  <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
+                    <option value="0" selected>Player</option>
+                    {(this.context.user.info?.level || 0) > 1 && <>
+                      <option value="1">Club Manager</option>
+                      {(this.context.user.info?.level || 0) > 2 &&
+                        <option value="2">Org Manager</option>
+                      }
+                    </>}
+                  </select>
+                </td>
+                <td><button type="submit" className="btn btn-primary" id="addButton">+</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
 
         <h3 className="mt-5"><Translated str="passwords" /></h3>
         <p><Translated str="thisIsTheOnlyTimeYouSeeThesePasswords" /></p>

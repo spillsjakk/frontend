@@ -290,34 +290,36 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
           <>
             <h3 className="mt-4"><Translated str="addParticipantsWithoutAccount" /></h3>
 
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col"><Translated str="firstName" /></th>
-                  <th scope="col"><Translated str="lastName" /></th>
-                  <th scope="col"><Translated str="fideNumber" /></th>
-                  <th scope="col"><Translated str="title" /></th>
-                  <th scope="col"><Translated str="fideRating" /></th>
-                  <th scope="col"><Translated str="fideFederation" /></th>
-                  <th scope="col"><Translated str="birthDate" /></th>
-                  <th scope="col"><Translated str="sex" /></th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="text" id="firstNameInput" name="first_name" value={this.state.newAcc.first_name} onChange={this.changeNewAccValue} /></td>
-                  <td><input type="text" id="lastNameInput" name="last_name" value={this.state.newAcc.last_name} onChange={this.changeNewAccValue} /></td>
-                  <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.newAcc.fide_number} onChange={this.changeNewAccValue} onBlur={this.fideNumberBlur} /></td>
-                  <td><TitleDropdown id="titleInput" name="title" value={this.state.newAcc.title} onChange={this.changeNewAccValue} /></td>
-                  <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.newAcc.fide_rating} onChange={this.changeNewAccValue} /></td>
-                  <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.newAcc.fide_federation} onChange={this.changeNewAccValue} /></td>
-                  <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.newAcc.birth_date} onChange={this.changeNewAccValue} /></td>
-                  <td><SexDropdown id="sexInput" name="sex" value={this.state.newAcc.sex} onChange={this.changeNewAccValue} /></td>
-                  <td><a className="btn btn-primary" id="addButton" onClick={this.addNewAcc}>+</a></td>
-                </tr>
-              </tbody>
-            </table>
+            <form onSubmit={this.addNewAcc}>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col"><Translated str="firstName" /></th>
+                    <th scope="col"><Translated str="lastName" /></th>
+                    <th scope="col"><Translated str="fideNumber" /></th>
+                    <th scope="col"><Translated str="title" /></th>
+                    <th scope="col"><Translated str="fideRating" /></th>
+                    <th scope="col"><Translated str="fideFederation" /></th>
+                    <th scope="col"><Translated str="birthDate" /></th>
+                    <th scope="col"><Translated str="sex" /></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" id="firstNameInput" name="first_name" value={this.state.newAcc.first_name} onChange={this.changeNewAccValue} required /></td>
+                    <td><input type="text" id="lastNameInput" name="last_name" value={this.state.newAcc.last_name} onChange={this.changeNewAccValue} required /></td>
+                    <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.newAcc.fide_number} onChange={this.changeNewAccValue} onBlur={this.fideNumberBlur} /></td>
+                    <td><TitleDropdown id="titleInput" name="title" value={this.state.newAcc.title} onChange={this.changeNewAccValue} /></td>
+                    <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.newAcc.fide_rating} onChange={this.changeNewAccValue} /></td>
+                    <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.newAcc.fide_federation} onChange={this.changeNewAccValue} /></td>
+                    <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.newAcc.birth_date} onChange={this.changeNewAccValue} required /></td>
+                    <td><SexDropdown id="sexInput" name="sex" value={this.state.newAcc.sex} onChange={this.changeNewAccValue} /></td>
+                    <td><button type="submit" className="btn btn-primary" id="addButton">+</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
           </>}
       </>
     );
