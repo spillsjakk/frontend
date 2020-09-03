@@ -17,6 +17,7 @@ type ViewState = {
   region: string,
   members: any[],
   teams: any[],
+  orgs: any[]
 }
 
 class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
@@ -35,7 +36,11 @@ class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
       region: "",
       members: [],
       teams: [],
+      orgs: []
     };
+
+    this.loadOrgs = this.loadOrgs.bind(this);
+    this.loadMembers = this.loadMembers.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +65,13 @@ class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
 
   loadMembers() {
     fetchJson(`/s/club/members/${this.clubId}`, "GET", undefined, members => {
-      this.setState({ members });
+      this.setState({ members }, this.loadOrgs);
+    });
+  }
+
+  loadOrgs() {
+    fetchJson(`/s/club/organizations/${this.clubId}`, "GET", undefined, orgs => {
+      this.setState({ orgs });
     });
   }
 
@@ -86,6 +97,17 @@ class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
         <p>
           {this.state.description}
         </p>
+
+        <h3 className="mt-5"><Translated str="organizations" /></h3>
+        <table className="mt-4 table">
+          <tbody>
+            {this.state.orgs.map(org =>
+              <tr key={org.id}>
+                <td><Link to={"/organization/view/" + org.id}>{org.name}</Link></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
         <h3 className="mt-5"><Translated str="teams" /></h3>
         <table className="mt-4 table">
