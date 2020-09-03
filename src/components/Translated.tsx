@@ -219,7 +219,10 @@ const STRINGS = {
     "email": "Email",
     "500": "500 - Internal Server Error",
     "404": "404 - Resource not found. If it should exist, check that you are logged in.",
-    "403": "403 - Forbidden. You are not logged in, or don't have the permissions to do this."
+    "403": "403 - Forbidden. You are not logged in, or don't have the permissions to do this.",
+    "joinOrganization": "Join organization",
+    "organizations": "Organizations",
+    "suggestedOrganizations": "Suggested organizations"
   },
   "NO": {
     "login": "Logg inn",

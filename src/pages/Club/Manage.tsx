@@ -18,7 +18,11 @@ type ManageState = {
   members: any[],
   newMemberId: string,
   teams: any[],
-  newTeamName: string
+  newTeamName: string,
+  newOrgId: string,
+  orgs: any[],
+  suggestedOrgs: any[],
+  newOrgId2: string
 }
 
 class Manage extends PureComponent<{}, ManageState> {
@@ -35,7 +39,11 @@ class Manage extends PureComponent<{}, ManageState> {
       members: [],
       newMemberId: "",
       teams: [],
-      newTeamName: ""
+      newTeamName: "",
+      newOrgId: "",
+      orgs: [],
+      suggestedOrgs: [],
+      newOrgId2: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,11 +52,19 @@ class Manage extends PureComponent<{}, ManageState> {
     this.addMember = this.addMember.bind(this);
     this.loadMembers = this.loadMembers.bind(this);
     this.addTeam = this.addTeam.bind(this);
+    this.leaveOrg = this.leaveOrg.bind(this);
+    this.joinOrg = this.joinOrg.bind(this);
+    this.joinOrg2 = this.joinOrg2.bind(this);
+    this.loadState = this.loadState.bind(this);
   }
 
   componentDidMount() {
-    document.getElementsByTagName("body")[0].id = "NotFound";
+    document.getElementsByTagName("body")[0].id = "Club-Manage";
 
+    this.loadState();
+  }
+
+  loadState() {
     fetchJson("/s/club/manage", "GET", undefined, result => {
       if (result.length > 0) {
         this.setState({
@@ -60,7 +76,11 @@ class Manage extends PureComponent<{}, ManageState> {
           exists: true
         }, () => {
           fetchJson(`/s/club/teams/${this.state.id}`, "GET", undefined, teams => {
-            this.setState({ teams }, this.loadMembers);
+            this.setState({ teams }, () => {
+              this.loadMembers();
+              this.loadOrgs();
+              this.loadSuggestedOrgs();
+            });
           });
         });
       }
@@ -82,9 +102,7 @@ class Manage extends PureComponent<{}, ManageState> {
   submit(e: FormEvent) {
     e.preventDefault();
 
-    fetchJson(`/s/club/edit`, "POST", this.state, _ => {
-      this.setState({ exists: true });
-    });
+    fetchJson(`/s/club/edit`, "POST", this.state, this.loadState);
   }
 
   removeMember(uid: string) {
@@ -110,6 +128,47 @@ class Manage extends PureComponent<{}, ManageState> {
       this.setState({ teams: this.state.teams.concat([{ id: team.id, name: team.name }]) });
     })
   }
+
+  leaveOrg(oid: string) {
+    fetchJson(`/s/organization/remove-club/${oid}/${this.state.id}`, "POST", undefined, _ => {
+      const orgs = [...this.state.orgs];
+      orgs.splice(orgs.findIndex(o => o.id === oid), 1);
+      this.setState({ orgs });
+    });
+  }
+
+  joinOrg(e: FormEvent) {
+    e.preventDefault();
+
+    if (this.state.newOrgId === "") return;
+
+    fetchJson(`/s/organization/add-club/${this.state.newOrgId}/${this.state.id}`, "POST", undefined, _ => {
+      this.setState({ newOrgId: "" }, this.loadOrgs);
+    })
+  }
+
+  joinOrg2(e: FormEvent) {
+    e.preventDefault();
+
+    if (this.state.newOrgId2 === "") return;
+
+    fetchJson(`/s/organization/add-club/${this.state.newOrgId2}/${this.state.id}`, "POST", undefined, _ => {
+      this.setState({ newOrgId2: "" }, this.loadOrgs);
+    })
+  }
+
+  loadOrgs() {
+    fetchJson(`/s/club/organizations/${this.state.id}`, "GET", undefined, orgs => {
+      this.setState({ orgs });
+    });
+  }
+
+  loadSuggestedOrgs() {
+    fetchJson(`/s/club/suggested-orgs/${this.state.id}`, "GET", undefined, suggestedOrgs => {
+      this.setState({ suggestedOrgs });
+    });
+  }
+
 
   render() {
     return (
@@ -143,6 +202,39 @@ class Manage extends PureComponent<{}, ManageState> {
             <button type="submit" className="btn btn-primary"><Translated str="submit" /></button>
           </div>
         </form>
+
+        <h3 className="mt-5"><Translated str="joinOrganization" /></h3>
+        <form className="mt-4" onSubmit={this.joinOrg}>
+          <div className="form-group">
+            <label htmlFor="newOrgId"><Translated str="id" />:</label>&nbsp;
+            <input type="text" id="newOrgId" name="newOrgId" required value={this.state.newOrgId} onChange={this.handleChange} />&nbsp;
+            <button className="btn btn-primary" type="submit">+</button>
+          </div>
+        </form>
+
+        <form className="mt-4" onSubmit={this.joinOrg2}>
+          <strong><Translated str="suggestedOrganizations" />:</strong>
+          &nbsp;
+          <select name="newOrgId2" value={this.state.newOrgId2} onChange={this.handleChange}>
+            <option value=""></option>
+            {this.state.suggestedOrgs.filter(so => !this.state.orgs.find(o => o.id == so.id)).map(so =>
+              <option key={so.id} value={so.id}>{so.name}</option>
+            )}
+          </select>&nbsp;
+          <button className="btn btn-primary" type="submit">+</button>
+        </form>
+
+        <h3 className="mt-5"><Translated str="organizations" /></h3>
+        <table className="mt-4 table">
+          <tbody>
+            {this.state.orgs.map(org =>
+              <tr key={org.id}>
+                <td><Link to={"/organization/view/" + org.id}>{org.name}</Link></td>
+                <td><a className="btn btn-danger" onClick={() => this.leaveOrg(org.id)}>X</a></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
         <h3 className="mt-5"><Translated str="createATeam" /></h3>
         <form className="mt-4" onSubmit={this.addTeam}>
