@@ -100,7 +100,7 @@ class Create extends Component<{}, CreateState> {
         birth_date: "",
         sex: "",
         accounts: this.state.accounts.concat([result]),
-        passwords: this.state.passwords.concat([ [ result.id, result.password ]]),
+        passwords: this.state.passwords.concat([[result.id, result.password]]),
         passwordCsv: this.state.passwordCsv + encodeURIComponent(`${result.id},${result.password}\n`)
       });
     });
@@ -162,15 +162,12 @@ class Create extends Component<{}, CreateState> {
               <td><SexDropdown id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
               <td>
                 <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
-                  <option value="0" selected>Participant</option>
+                  <option value="0" selected>Player</option>
                   {(this.context.user.info?.level || 0) > 1 && <>
-                    <option value="1">Team Manager</option>
-                    {(this.context.user.info?.level || 0) > 2 && <>
-                      <option value="2">Tournament Organizer</option>
-                      {(this.context.user.info?.level || 0) > 3 &&
-                        <option value="3">Federation</option>
-                      }
-                    </>}
+                    <option value="1">Club Manager</option>
+                    {(this.context.user.info?.level || 0) > 2 &&
+                      <option value="2">Org Manager</option>
+                    }
                   </>}
                 </select>
               </td>
