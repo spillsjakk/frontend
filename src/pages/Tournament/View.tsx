@@ -264,8 +264,8 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
     fetchJson(`/s/tournament/self-leave/${this.props.match.params.tid}`, "POST", undefined, this.loadState);
   }
 
-  onClickSelfJoin(team: string | undefined) {
-    fetchJson(team ? `/s/tournament/self-join/${this.props.match.params.tid}?team=${team}` : `/s/tournament/self-join/${this.props.match.params.tid}`,
+  onClickSelfJoin(team: string) {
+    fetchJson(`/s/tournament/self-join/${this.props.match.params.tid}?team=${team}`,
       "POST", undefined, this.loadState);
   }
 
@@ -456,11 +456,6 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
           <>
             {!info.is_participating ?
               <form>
-                {!info.is_team_tournament &&
-                  <Button className="p-3 mb-3 mr-5" onClick={() => this.onClickSelfJoin(undefined)}>
-                    <Translated str="join" />
-                  </Button>
-                }
                 {info.self_join_teams?.map(t =>
                   <Button className="p-3 mb-3 mr-5" key={t.id} variant="primary" onClick={() => this.onClickSelfJoin(t.id)}>
                     <Translated str="joinFor" /> &quot;{t.name}&quot;
