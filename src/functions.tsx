@@ -6,47 +6,31 @@ type ErrorProps = {
   err: string
 }
 
-type ErrorState = {
-  display: boolean
+function ErrorComponent(props: ErrorProps) {
+  return <div style={{
+    backgroundColor: "darkred",
+    color: "white",
+    padding: "20px",
+    textAlign: "center",
+    fontSize: "1.1em",
+    position: "fixed",
+    top: "0.5em",
+    left: 0,
+    right: 0,
+    marginLeft: "auto",
+    marginRight: "auto",
+    zIndex: 999,
+    borderRadius: "15px",
+    maxWidth: "25%"
+  }}>
+    {props.err}&nbsp;<strong style={{
+      cursor: "pointer",
+      border: "1px solid white",
+      padding: "5px"
+    }} onClick={() => ReactDOM.unmountComponentAtNode(document.getElementById("error")!)}>X</strong>
+  </div>;
 }
 
-class ErrorComponent extends PureComponent<ErrorProps, ErrorState> {
-  constructor(props: ErrorProps) {
-    super(props);
-
-    this.state = {
-      display: true
-    };
-  }
-  render() {
-    return <>
-      {this.state.display &&
-        <div style={{
-          backgroundColor: "darkred",
-          color: "white",
-          padding: "20px",
-          textAlign: "center",
-          fontSize: "1.1em",
-          position: "fixed",
-          top: "0.5em",
-          left: 0,
-          right: 0,
-          marginLeft: "auto",
-          marginRight: "auto",
-          zIndex: 999,
-          borderRadius: "15px",
-          maxWidth: "25%"
-        }}>
-          {this.props.err}&nbsp;<strong style={{
-            cursor: "pointer",
-            border: "1px solid white",
-            padding: "5px"
-          }} onClick={() => this.setState({ display: false })}>X</strong>
-        </div>
-      }
-    </>;
-  }
-}
 
 export function fetchJson(url: string, method: string, body: any | undefined, handler: (_: any) => void) {
   return fetch(url, {
