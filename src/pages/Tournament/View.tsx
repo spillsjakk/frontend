@@ -16,6 +16,7 @@ import { Tournament, Participant, TeamParticipant, Pairing, Team, LightGame, TKO
 
 import './View.css';
 import { Timestamp } from "../../components/Timestamp";
+import FederationDisplay from "../../components/FederationDisplay";
 
 const { SearchBar } = Search;
 
@@ -111,7 +112,11 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
         }
       },
       { dataField: "fide_rating", text: "rating", sort: true, headerFormatter },
-      { dataField: "federation", text: "federation", sort: true, headerFormatter },
+      {
+        dataField: "federation", text: "federation", sort: true, headerFormatter, formatter: function (_: any, row: Participant, __: any, ___: any) {
+          return <FederationDisplay value={row.federation} />;
+        }
+      },
       {
         dataField: "score", text: "score", sort: true, headerFormatter, formatter: (function (v: View) {
           return function (_: any, row: Participant, rowIndex: number, ___: any) {
