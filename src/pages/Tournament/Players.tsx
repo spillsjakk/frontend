@@ -14,7 +14,8 @@ type PlayersState = {
   info?: {
     tournament: Tournament
     participants: Participant[]
-    teams: TeamParticipant[]
+    teams: TeamParticipant[],
+    clubs: { name: string, id: string }[],
     accounts: Account[]
     managed_teams: Team[]
     is_team_tournament: boolean
@@ -28,7 +29,9 @@ type PlayersState = {
     fide_federation: string
     birth_date: string
     sex: string
-  }
+  },
+  newTeamId: string
+  newClubId: string
 }
 
 type PlayersProps = {
@@ -54,7 +57,9 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
         fide_federation: "NOR",
         birth_date: "",
         sex: "M"
-      }
+      },
+      newTeamId: "",
+      newClubId: ""
     };
     this.tournamentId = this.props.match.params.tid;
 
@@ -71,6 +76,7 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
     this.addExistingAcc = this.addExistingAcc.bind(this);
     this.addTeam = this.addTeam.bind(this);
     this.loadState = this.loadState.bind(this);
+    this.handleChangeClubOrTeam = this.handleChangeClubOrTeam.bind(this);
   }
 
   componentDidMount() {
@@ -198,6 +204,12 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
     })
   }
 
+  handleChangeClubOrTeam(e: ChangeEvent<HTMLSelectElement>) {
+    const newState: any = {};
+    newState[e.target.name] = e.target.value;
+    this.setState(newState);
+  }
+
   render() {
     if (!this.state.loaded) {
       return <>Loading...</>;
@@ -279,13 +291,21 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
         <h3 className="mt-4"><Translated str="addATeam" /></h3>
 
         <div className="mt-4">
-          <select id="teamId" ref={this.teamRef} className="w-25">
-            {info.managed_teams.map(managed_team =>
+          {info.clubs.length > 0 && <>
+            <select name="newClubId" value={this.state.newClubId} className="w-25" onChange={this.handleChangeClubOrTeam}>
+              <option value=""></option>
+              {info.clubs.map(club => <option value={club.id}>{club.name}</option>)}
+            </select>
+            &nbsp;&gt;&nbsp;
+          </>}
+          <select id="teamId" name="newTeamId" value={this.state.newTeamId} className="w-25" onChange={this.handleChangeClubOrTeam}>
+            <option value=""></option>
+            {info.managed_teams.filter(t => info.clubs.length === 0 || t.club === this.state.newClubId).map(managed_team =>
               <option value={managed_team.id}>{managed_team.name}</option>
             )}
           </select>&nbsp;
 
-          <a className="btn btn-primary" onClick={() => this.addTeam(this.teamRef.current?.value || "")}>+</a>
+          <a className="btn btn-primary" onClick={() => this.addTeam(this.state.newTeamId)}>+</a>
         </div>
 
         {!info.is_team_tournament &&

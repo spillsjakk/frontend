@@ -48,7 +48,7 @@ export type Team = {
   id: string,
   name: string,
   description: string,
-  manager: string
+  club: string
 }
 
 export type Pairing = {
