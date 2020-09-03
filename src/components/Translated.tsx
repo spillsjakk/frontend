@@ -215,7 +215,8 @@ const STRINGS = {
     "onlyShowScoresOfTop": "Only show scores of individuals and teams in the top",
     "winPoints": "Points for a win",
     "drawPoints": "Points for a draw",
-    "lossPoints": "Points for a loss"
+    "lossPoints": "Points for a loss",
+    "email": "Email"
   },
   "NO": {
     "login": "Logg inn",

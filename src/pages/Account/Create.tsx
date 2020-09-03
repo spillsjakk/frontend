@@ -18,6 +18,7 @@ type CreateState = {
   fide_federation: string
   birth_date: string
   sex: string
+  email: string
   level: string
   accounts: any[]
   passwords: string[][]
@@ -40,6 +41,7 @@ class Create extends Component<{}, CreateState> {
       fide_federation: "NOR",
       birth_date: "",
       sex: "M",
+      email: "",
       level: "0",
       accounts: [],
       passwords: [],
@@ -85,6 +87,7 @@ class Create extends Component<{}, CreateState> {
       fide_federation: this.state.fide_federation || undefined,
       birth_date: this.state.birth_date || undefined,
       sex: this.state.sex || undefined,
+      email: this.state.email || undefined,
       level: parseInt(this.state.level, 10) || 0,
       ghost: false
     };
@@ -98,7 +101,8 @@ class Create extends Component<{}, CreateState> {
         fide_rating: "",
         fide_federation: "NOR",
         birth_date: "",
-        sex: "",
+        sex: "M",
+        email: "",
         accounts: this.state.accounts.concat([result]),
         passwords: this.state.passwords.concat([[result.id, result.password]]),
         passwordCsv: this.state.passwordCsv + encodeURIComponent(`${result.id},${result.password}\n`)
@@ -129,6 +133,7 @@ class Create extends Component<{}, CreateState> {
               <th scope="col"><Translated str="fideFederation" /></th>
               <th scope="col"><Translated str="birthDate" /></th>
               <th scope="col"><Translated str="sex" /></th>
+              <th scope="col"><Translated str="email" /></th>
               <th scope="col"><Translated str="permissions" /></th>
               <th scope="col"></th>
             </tr>
@@ -148,6 +153,7 @@ class Create extends Component<{}, CreateState> {
                 <td>{account.fide_federation}</td>
                 <td>{account.birth_date}</td>
                 <td>{account.sex}</td>
+                <td>{account.email}</td>
                 <td>{account.level}</td>
               </tr>
             )}
@@ -160,6 +166,7 @@ class Create extends Component<{}, CreateState> {
               <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.fide_federation} onChange={this.handleChange} /></td>
               <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.birth_date} onChange={this.handleChange} /></td>
               <td><SexDropdown id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
+              <td><input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange} /></td>
               <td>
                 <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
                   <option value="0" selected>Player</option>

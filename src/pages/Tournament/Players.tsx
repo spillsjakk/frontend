@@ -167,9 +167,9 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
           fide_number: "",
           title: "",
           fide_rating: "",
-          fide_federation: "",
+          fide_federation: "NOR",
           birth_date: "",
-          sex: ""
+          sex: "M"
         }
       });
       this.addExistingAcc(result.id);
