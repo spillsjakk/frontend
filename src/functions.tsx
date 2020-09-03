@@ -1,6 +1,52 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
 import Translated from './components/Translated';
+
+type ErrorProps = {
+  err: string
+}
+
+type ErrorState = {
+  display: boolean
+}
+
+class ErrorComponent extends PureComponent<ErrorProps, ErrorState> {
+  constructor(props: ErrorProps) {
+    super(props);
+
+    this.state = {
+      display: true
+    };
+  }
+  render() {
+    return <>
+      {this.state.display &&
+        <div style={{
+          backgroundColor: "darkred",
+          color: "white",
+          padding: "20px",
+          textAlign: "center",
+          fontSize: "1.1em",
+          position: "fixed",
+          top: "0.5em",
+          left: 0,
+          right: 0,
+          marginLeft: "auto",
+          marginRight: "auto",
+          zIndex: 999,
+          borderRadius: "15px",
+          maxWidth: "25%"
+        }}>
+          {this.props.err}&nbsp;<strong style={{
+            cursor: "pointer",
+            border: "1px solid white",
+            padding: "5px"
+          }} onClick={() => this.setState({ display: false })}>X</strong>
+        </div>
+      }
+    </>;
+  }
+}
 
 export function fetchJson(url: string, method: string, body: any | undefined, handler: (_: any) => void) {
   return fetch(url, {
@@ -20,10 +66,12 @@ export function fetchJson(url: string, method: string, body: any | undefined, ha
         handler(json);
       } else {
         let err: string = json.error;
-        ReactDOM.render(<>{err}</>, document.getElementById("error"));
+        ReactDOM.render(<><ErrorComponent err={Translated.byKey(err)} /></>, document.getElementById("error"));
       }
     }).catch(err => {
-      ReactDOM.render(<>{err.toString()}</>, document.getElementById("error"));
+      ReactDOM.render(<>
+        <ErrorComponent err={err.toString()} />
+      </>, document.getElementById("error"));
     })
 }
 

@@ -216,7 +216,10 @@ const STRINGS = {
     "winPoints": "Points for a win",
     "drawPoints": "Points for a draw",
     "lossPoints": "Points for a loss",
-    "email": "Email"
+    "email": "Email",
+    "500": "500 - Internal Server Error",
+    "404": "404 - Resource not found. If it should exist, check that you are logged in.",
+    "403": "403 - Forbidden. You are not logged in, or don't have the permissions to do this."
   },
   "NO": {
     "login": "Logg inn",
