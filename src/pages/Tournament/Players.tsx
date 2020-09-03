@@ -146,7 +146,9 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
     this.setState({ newAcc });
   }
 
-  addNewAcc() {
+  addNewAcc(e: FormEvent) {
+    e.preventDefault();
+
     const data = {
       first_name: this.state.newAcc.first_name,
       last_name: this.state.newAcc.last_name,
