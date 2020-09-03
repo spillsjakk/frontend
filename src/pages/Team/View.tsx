@@ -16,7 +16,8 @@ type ViewState = {
   loaded: boolean
   info?: {
     team: Team
-    members: TeamMember[]
+    members: TeamMember[],
+    club_manager: string
   }
 }
 
@@ -52,7 +53,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
         <p>{info.team.description}</p>
 
-        {this.context.user.authenticated && this.context.user.info?.id === info.team.manager &&
+        {this.context.user.authenticated && this.context.user.info?.id === info.club_manager &&
           <Link className="mt-4 p-3 btn btn-primary" to={"/team/manage/" + info.team.id}><Translated str="manage" /></Link>
         }
 
