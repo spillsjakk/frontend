@@ -10,6 +10,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import ToolkitProvider, { Search, SearchMatchProps } from 'react-bootstrap-table2-toolkit';
 import { TimestampString } from "../components/Timestamp";
+import { UserContext } from "../components/UserContext";
 
 const { SearchBar } = Search;
 
@@ -44,6 +45,9 @@ type ProfileParams = {
 }
 
 class Profile extends Component<RouteComponentProps<ProfileParams>, ProfileState> {
+  static contextType = UserContext;
+  context!: React.ContextType<typeof UserContext>;
+
   constructor(props: RouteComponentProps<ProfileParams>) {
     super(props);
     this.state = {
@@ -123,6 +127,12 @@ class Profile extends Component<RouteComponentProps<ProfileParams>, ProfileState
         <h1 className="mt-4 p-3">
           {this.state.name}
         </h1>
+
+        {this.props.match.params.uid === this.context.user.info?.id &&
+          <div className="mt-4">
+            <Link to="/account/settings"><Translated str="accountSettings" /></Link>
+          </div>
+        }
 
         <div className="mt-5"></div>
 

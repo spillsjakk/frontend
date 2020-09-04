@@ -222,7 +222,15 @@ const STRINGS = {
     "403": "403 - Forbidden. You are not logged in, or don't have the permissions to do this.",
     "joinOrganization": "Join organization",
     "organizations": "Organizations",
-    "suggestedOrganizations": "Suggested organizations"
+    "suggestedOrganizations": "Suggested organizations",
+    "passwordsAreNotEqual": "The two passwords are not equal.",
+    "passwordChanged": "Your password has been changed.",
+    "emailChanged": "Your email address has been changed.",
+    "currentPassword": "Current password",
+    "accountSettings": "Account settings",
+    "changeEmail": "Change email",
+    "changePassword": "Change password",
+    "incorrectPassword": "Incorrect password"
   },
   "NO": {
     "login": "Logg inn",
