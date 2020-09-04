@@ -98,7 +98,7 @@ class Manage extends PureComponent<{}, ManageState> {
     if (e.target.name !== "id") {
       newState[e.target.name] = e.target.value;
     } else {
-      newState[e.target.name] = e.target.value.toLowerCase().replaceAll(/[^a-z0-9_-]/g, "");
+      newState[e.target.name] = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "");
     }
     this.setState(newState);
   }
