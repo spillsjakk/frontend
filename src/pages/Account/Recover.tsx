@@ -115,11 +115,11 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
             <form onSubmit={this.submitNewPassword}>
               <div className="form-group">
                 <label htmlFor="newPassword1"><Translated str="newPassword" /></label>
-                <input type="password" className="form-control w-25" name="newPassword1" id="newPassword1" value={this.state.newPassword1} onChange={this.handleChange} required />
+                <input type="password" className="form-control w-25" minLength={7} name="newPassword1" id="newPassword1" value={this.state.newPassword1} onChange={this.handleChange} required />
               </div>
               <div className="form-group">
                 <label htmlFor="newPassword2"><Translated str="newPasswordAgain" /></label>
-                <input type="password" className="form-control w-25" name="newPassword2" id="newPassword2" value={this.state.newPassword2} onChange={this.handleChange} required />
+                <input type="password" className="form-control w-25" minLength={7} name="newPassword2" id="newPassword2" value={this.state.newPassword2} onChange={this.handleChange} required />
               </div>
               <button className="btn btn-primary"><Translated str="submit" /></button>
             </form>
