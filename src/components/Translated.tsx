@@ -231,7 +231,8 @@ const STRINGS = {
     "changeEmail": "Change email",
     "changePassword": "Change password",
     "incorrectPassword": "Incorrect password",
-    "localTime": "local time"
+    "localTime": "local time",
+    "statistics": "Statistics"
   },
   "NO": {
     "login": "Logg inn",

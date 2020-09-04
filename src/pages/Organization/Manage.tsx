@@ -122,7 +122,7 @@ class Manage extends PureComponent<{}, ManageState> {
         </form>
 
         <div className="mt-5">
-          <Link to={"/organization/all-accounts/" + this.state.id}><Translated str="accountList" /></Link>
+          <Link to={"/organization/all-accounts/" + this.state.id}><Translated str="accountList" /></Link> | <Link to={"/organization/statistics/" + this.state.id}><Translated str="statistics" /></Link>
         </div>
 
         <h3 className="mt-5"><Translated str="addClub" /></h3>
