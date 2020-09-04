@@ -200,7 +200,23 @@ class Manage extends PureComponent<{}, ManageState> {
           </div>
           <div className="form-group mt-4">
             <label htmlFor="region"><Translated str="region" />:</label>
-            <input type="text" id="region" className="form-control w-25" name="region" required value={this.state.region} onChange={this.handleChange} />
+            {this.state.country !== "NOR" ?
+              <input type="text" id="region" className="form-control w-25" name="region" required value={this.state.region} onChange={this.handleChange} /> :
+              <select id="region" className="form-control w-25" required name="region" value={this.state.region} onChange={this.handleChange}>
+                <option value=""></option>
+                <option value="Oslo">Oslo</option>
+                <option value="Rogaland">Rogaland</option>
+                <option value="Møre og Romsdal">Møre og Romsdal</option>
+                <option value="Nordland">Nordland</option>
+                <option value="Viken">Viken</option>
+                <option value="Innlandet">Innlandet</option>
+                <option value="Vestfold og Telemark">Vestfold og Telemark</option>
+                <option value="Agder">Agder</option>
+                <option value="Vestland">Vestland</option>
+                <option value="Trøndelag">Trøndelag</option>
+                <option value="Troms og Finnmark">Troms og Finnmark</option>
+              </select>
+            }
           </div>
           <div className='mt-4'>
             <button type="submit" className="btn btn-primary"><Translated str="submit" /></button>
