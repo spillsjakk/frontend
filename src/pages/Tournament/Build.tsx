@@ -89,7 +89,13 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
   submit(e: FormEvent) {
     e.preventDefault();
 
-    fetchJson(`/s/tournament/build`, "POST", this.state, result => {
+    const stateCopy = {...this.state};
+    const pairingDateTime = new Date(this.state.first_pairing_date + "T" + this.state.first_pairing_time);
+    const pairingDateIsoParts = pairingDateTime.toISOString().split("T");
+    stateCopy.first_pairing_date = pairingDateIsoParts[0];
+    stateCopy.first_pairing_time = pairingDateIsoParts[1].substr(0, 5);
+
+    fetchJson(`/s/tournament/build`, "POST", stateCopy, result => {
       this.props.history.push(`/tournament/view/${result.id}`);
     });
   }
@@ -197,7 +203,7 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
             <small><Translated str="gameLocationCanBeChanged" /></small>
           </div>
           <div className="form-group mt-4">
-            <label htmlFor="first_pairing_date"><Translated str="firstPairingDateTime" /> (hh:mm, UTC!):</label>
+            <label htmlFor="first_pairing_date"><Translated str="firstPairingDateTime" /> (hh:mm, <Translated str="localTime" />!):</label>
             <input type="date" id="first_pairing_date" className="form-control w-25" name="first_pairing_date" style={{ display: "inline" }} required min="2000-01-01" max="2099-12-31" value={this.state.first_pairing_date} onChange={this.handleChange} />
             <input type="text" id="first_pairing_time" className="form-control w-25" name="first_pairing_time" style={{ display: "inline" }} required pattern="\d\d?:\d\d" value={this.state.first_pairing_time} onChange={this.handleChange} />
             <div className="mt-1">

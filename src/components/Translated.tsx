@@ -230,7 +230,8 @@ const STRINGS = {
     "accountSettings": "Account settings",
     "changeEmail": "Change email",
     "changePassword": "Change password",
-    "incorrectPassword": "Incorrect password"
+    "incorrectPassword": "Incorrect password",
+    "localTime": "local time"
   },
   "NO": {
     "login": "Logg inn",

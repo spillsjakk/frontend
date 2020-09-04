@@ -275,9 +275,14 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
     const date = this.pairingDateRef.current?.value;
     const time = this.pairingHourRef.current?.value;
 
+    const pairingDateTime = new Date(date + "T" + time);
+    const pairingDateIsoParts = pairingDateTime.toISOString().split("T");
+    const dateUtc = pairingDateIsoParts[0];
+    const timeUtc = pairingDateIsoParts[1].substr(0, 5);
+
     fetchJson(`/s/tournament/change-online-pairing/${this.props.match.params.tid}`, "POST", {
-      next_pairing_date: date,
-      next_pairing_time: time
+      next_pairing_date: dateUtc,
+      next_pairing_time: timeUtc
     }, this.loadState);
   }
 
@@ -472,7 +477,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
           <Translated str="nextOnlinePairingWillBeAt" />: <Timestamp time={info.tournament.current_online_pairing_time} />
           {this.context.user.authenticated && this.context.user.info?.id === info.tournament.organizer &&
             <form onSubmit={this.onUpdatePairingTime}>
-              <label htmlFor="next_pairing_date"><Translated str="changeNextPairingDateTime" /> (hh:mm, UTC!):</label>
+              <label htmlFor="next_pairing_date"><Translated str="changeNextPairingDateTime" /> (hh:mm, <Translated str="localTime" />!):</label>
               <input ref={this.pairingDateRef} type="date" id="next_pairing_date" className="form-control" name="next_pairing_date" style={{ display: "inline", width: "13%" }} required min="2000-01-01" max="2099-12-31" />
               <input ref={this.pairingHourRef} type="input" className="form-control" name="next_pairing_time" style={{ display: "inline", width: "13%" }} required pattern="\d\d?:\d\d" />
               <button className="p-2 btn btn-primary mb-1" type="submit"><Translated str="update" /></button>
