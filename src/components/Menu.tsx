@@ -50,9 +50,10 @@ class Menu extends Component {
                   <Dropdown.Item as={Link} to="/tournament/build">
                     <Translated str="buildTournament" />
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/club/manage">
-                    <Translated str="manageClub" />
-                  </Dropdown.Item>
+                  {this.context.user.info?.level !== Levels.OrganizationManager &&
+                    <Dropdown.Item as={Link} to="/club/manage">
+                      <Translated str="manageClub" />
+                    </Dropdown.Item>}
                   {(this.context.user.info?.level || 0) >= Levels.OrganizationManager && <>
                     <Dropdown.Divider></Dropdown.Divider>
                     <Dropdown.Item as={Link} to="/organization/manage">
