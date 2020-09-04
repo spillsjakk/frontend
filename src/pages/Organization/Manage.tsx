@@ -60,7 +60,11 @@ class Manage extends PureComponent<{}, ManageState> {
 
   handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const newState: any = {};
-    newState[e.target.name] = e.target.value;
+    if (e.target.name !== "id") {
+      newState[e.target.name] = e.target.value;
+    } else {
+      newState[e.target.name] = e.target.value.toLowerCase().replaceAll(/[^a-z0-9_-]/g, "");
+    }
     this.setState(newState);
   }
 
@@ -102,7 +106,7 @@ class Manage extends PureComponent<{}, ManageState> {
           </div>
           <div className="form-group mt-4">
             <label htmlFor="id"><Translated str="id" />:</label>
-            <input type="text" id="id" className="form-control w-50" name="id" required value={this.state.id} disabled={this.state.exists} onChange={this.handleChange} />
+            <input type="text" id="id" className="form-control w-50" name="id" required value={this.state.id} disabled={this.state.exists} onChange={this.handleChange} pattern="[a-z0-9_-]+" />
           </div>
           <div className="form-group mt-4">
             <label htmlFor="description"><Translated str="description" />:</label>

@@ -75,7 +75,7 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
       parseInt(e.target.value, 10) :
       (e.target.dataset.type === "float" ?
         parseFloat(e.target.value) :
-        e.target.value
+        (e.target.name !== "id" ? e.target.value : e.target.value.toLowerCase().replaceAll(/[^a-z0-9_-]/g, ""))
       );
     this.setState(newState);
   }
