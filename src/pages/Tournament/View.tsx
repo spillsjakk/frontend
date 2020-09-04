@@ -11,7 +11,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import ToolkitProvider, { Search, SearchMatchProps } from 'react-bootstrap-table2-toolkit';
 import UserLink from "../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
-import { UserContext } from "../../components/UserContext";
+import { UserContext, Levels } from "../../components/UserContext";
 import { Tournament, Participant, TeamParticipant, Pairing, Team, LightGame, TKOSeparation } from './Types';
 
 import './View.css';
@@ -471,6 +471,14 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
                 <Button className="p-3" variant="primary" onClick={this.onClickSelfLeave}><Translated str="leave" /></Button>
               </form>}
           </>
+        }
+
+        {this.context.user.authenticated && (this.context.user.info?.id === info.tournament.organizer
+          || (this.context.user.info?.level || 0) >= Levels.OrganizationManager) &&
+          <div className="mt-4">
+            <a href={"/s/tournament/printout/results/" + info.tournament.id}><Translated str="resultPrintouts" /></a>&nbsp;|&nbsp;
+            <a href={"/s/tournament/printout/pairings/" + info.tournament.id}><Translated str="pairingPrintouts" /></a>
+          </div>
         }
 
         <div className="mt-5">

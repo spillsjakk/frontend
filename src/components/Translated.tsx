@@ -232,7 +232,10 @@ const STRINGS = {
     "changePassword": "Change password",
     "incorrectPassword": "Incorrect password",
     "localTime": "local time",
-    "statistics": "Statistics"
+    "statistics": "Statistics",
+    "privateTournament": "This tournament is private.",
+    "resultPrintouts": "Result printouts",
+    "pairingPrintouts": "Pairing printouts"
   },
   "NO": {
     "login": "Logg inn",
