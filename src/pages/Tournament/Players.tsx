@@ -111,7 +111,7 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
 
   changeSeedingRadio(e: ChangeEvent<HTMLInputElement>) {
     const info = { ...this.state.info! };
-    info.tournament.random_seeding = e.target.id === "ratingSeeding" && !e.target.checked;
+    info.tournament.random_seeding = e.target.id === "randomSeeding" && e.target.checked;
     this.setState({ info });
   }
 
@@ -229,10 +229,10 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
         </div>
 
         <div className="mt-4">
-          <Translated str="seeding" />: <input type="radio" name="seeding" id="ratingSeeding" checked={!info.tournament.random_seeding} onChange={this.changeSeedingRadio} />
-          <label htmlFor="ratingSeeding"><Translated str="byRating" /></label>
-          <input type="radio" name="seeding" id="randomSeeding" className="ml-4" checked={info.tournament.random_seeding} onChange={this.changeSeedingRadio} />
-          <label htmlFor="randomSeeding"><Translated str="random" /></label>
+          <Translated str="seeding" />: <input type="radio" name="seeding" id="ratingSeeding" checked={!info.tournament.random_seeding} onChange={this.changeSeedingRadio} />&nbsp;
+          <label htmlFor="ratingSeeding"><Translated str="byRating" /></label>&nbsp;
+          <input type="radio" name="seeding" id="randomSeeding" className="ml-4" checked={info.tournament.random_seeding} onChange={this.changeSeedingRadio} />&nbsp;
+          <label htmlFor="randomSeeding"><Translated str="random" /></label>&nbsp;
           <button className="btn btn-primary p-3" id="seedingButton" onClick={this.updateSeeding}><Translated str="update" /></button>
         </div>
 
