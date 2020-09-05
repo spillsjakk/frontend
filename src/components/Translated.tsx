@@ -243,7 +243,8 @@ const STRINGS = {
     "medianBuchholz2": "Median Buchholz 2",
     "buchholzCut1": "Buchholz Cut 1",
     "buchholzCut2": "Buchholz Cut 2",
-    "individual": "Individual"
+    "individual": "Individual",
+    "fideRated": "This is a FIDE rated tournament."
   },
   "NO": {
     "login": "Logg inn",

@@ -31,7 +31,8 @@ type BuildState = {
   tb1?: string | number,
   tb2?: string | number,
   tb3?: string | number,
-  tb4?: string | number
+  tb4?: string | number,
+  fide_rated: boolean
 };
 
 function TiebreakerDropdown(props: {
@@ -84,7 +85,8 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
       tb1: "",
       tb2: "",
       tb3: "",
-      tb4: ""
+      tb4: "",
+      fide_rated: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -173,6 +175,10 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
           <div className="form-check mt-4">
             <input className="form-check-input" type="checkbox" id="self_joinable" name="self_joinable" checked={this.state.self_joinable} onChange={this.handleChangeCheckbox} />
             <label className="form-check-label" htmlFor="self_joinable"><Translated str="allowSelfJoining" /></label>
+          </div>
+          <div className="form-check mt-4">
+            <input className="form-check-input" type="checkbox" id="fide_rated" name="fide_rated" checked={this.state.fide_rated} onChange={this.handleChangeCheckbox} />
+            <label className="form-check-label" htmlFor="fide_rated"><Translated str="fideRated" /></label>
           </div>
           <div className="mt-4">
             <label><Translated str="type" />:</label>
