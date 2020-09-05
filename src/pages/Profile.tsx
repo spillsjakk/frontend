@@ -7,7 +7,7 @@ import BootstrapTable from "react-bootstrap-table-next";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-
+import { Account } from './Tournament/Types';
 import ToolkitProvider, { Search, SearchMatchProps } from 'react-bootstrap-table2-toolkit';
 import { TimestampString } from "../components/Timestamp";
 import { UserContext } from "../components/UserContext";
@@ -16,6 +16,7 @@ const { SearchBar } = Search;
 
 type ProfileState = {
   name: string,
+  account?: Account,
   tournamentData: Tournament[],
   tournamentColumns: any[],
   gameData: any[],
@@ -113,7 +114,7 @@ class Profile extends Component<RouteComponentProps<ProfileParams>, ProfileState
         };
       }
       );
-      this.setState({ name: data.name, tournamentData, gameData });
+      this.setState({ name: data.name, tournamentData, gameData, account: data.account });
     });
   }
 
@@ -133,6 +134,11 @@ class Profile extends Component<RouteComponentProps<ProfileParams>, ProfileState
             <Link to="/account/settings"><Translated str="accountSettings" /></Link>
           </div>
         }
+
+        <div className="mt-5">
+          <Translated str="fideRating" />: {this.state.account?.fide_rating || "-"}&nbsp;|&nbsp;
+          <Translated str="provisionalFideRating" />: {this.state.account?.provisional_fide_rating || "-"}
+        </div>
 
         <div className="mt-5"></div>
 

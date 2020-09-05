@@ -95,5 +95,6 @@ export type Account = {
   fide_federation?: string,
   birth_date?: string,
   sex?: string,
-  ghost: boolean
+  ghost: boolean,
+  provisional_fide_rating?: number
 }
