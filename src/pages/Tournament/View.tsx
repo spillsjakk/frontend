@@ -541,7 +541,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
               <ToolkitProvider
                 keyField="account"
                 data={info.participants}
-                columns={info.tournament.kind === "SwissDutch" ? this.participantColumns.concat(this.tbColumns) : this.ParticipantColumns}
+                columns={info.tournament.kind === "SwissDutch" ? this.participantColumns.concat(this.tbColumns) : this.participantColumns}
                 bootstrap4={true}
                 search={{ onColumnMatch: this.onParticipantsColumnMatch }}
               >
