@@ -1,4 +1,4 @@
-import React, { Component, SyntheticEvent, FormEvent, RefObject } from "react";
+import React, { Component, SyntheticEvent, FormEvent, RefObject, ChangeEvent } from "react";
 import { Helmet } from 'react-helmet';
 import Translated from "../../components/Translated";
 import { fetchJson, title } from "../../functions";
@@ -72,6 +72,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
   participantColumns: any[];
   teamParticipantColumns: any[];
   sswColumn: any;
+  tbColumns: any[];
 
   constructor(props: RouteComponentProps<TournamentParams>) {
     super(props);
@@ -187,6 +188,13 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
       dataField: "none", isDummyField: true, text: "weighted", headerFormatter,
       formatter: sswFormatter
     };
+
+    this.tbColumns = [
+      { dataField: "tb1", text: "TB1", sort: true },
+      { dataField: "tb2", text: "TB2", sort: true },
+      { dataField: "tb3", text: "TB3", sort: true },
+      { dataField: "tb4", text: "TB4", sort: true }
+    ];
   }
 
   onParticipantsColumnMatch({
@@ -533,7 +541,7 @@ class View extends Component<RouteComponentProps<TournamentParams>, TournamentSt
               <ToolkitProvider
                 keyField="account"
                 data={info.participants}
-                columns={this.participantColumns}
+                columns={info.tournament.kind === "SwissDutch" ? this.participantColumns.concat(this.tbColumns) : this.ParticipantColumns}
                 bootstrap4={true}
                 search={{ onColumnMatch: this.onParticipantsColumnMatch }}
               >

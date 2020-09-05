@@ -27,8 +27,34 @@ type BuildState = {
   show_only_top_nr: number,
   win_points: number,
   draw_points: number,
-  loss_points: number
+  loss_points: number,
+  tb1?: string | number,
+  tb2?: string | number,
+  tb3?: string | number,
+  tb4?: string | number
 };
+
+function TiebreakerDropdown(props: {
+  value?: string,
+  name?: string,
+  id?: string,
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void
+}) {
+  return <select value={props.value}
+    onChange={props.onChange}
+    className="w-25"
+    name={props.name}
+    id={props.id}
+  >
+    <option value=""></option>
+    <option value="0">{Translated.byKey("averageOpponentRating")}</option>
+    <option value="1">{Translated.byKey("buchholz")}</option>
+    <option value="2">{Translated.byKey("medianBuchholz")}</option>
+    <option value="3">{Translated.byKey("medianBuchholz2")}</option>
+    <option value="4">{Translated.byKey("buchholzCut1")}</option>
+    <option value="5">{Translated.byKey("buchholzCut2")}</option>
+  </select>
+}
 
 class Build extends PureComponent<RouteComponentProps, BuildState> {
   constructor(props: RouteComponentProps) {
@@ -54,7 +80,11 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
       show_only_top_nr: 5,
       win_points: 1,
       draw_points: 0.5,
-      loss_points: 0
+      loss_points: 0,
+      tb1: "",
+      tb2: "",
+      tb3: "",
+      tb4: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -94,6 +124,10 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
     const pairingDateIsoParts = pairingDateTime.toISOString().split("T");
     stateCopy.first_pairing_date = pairingDateIsoParts[0];
     stateCopy.first_pairing_time = pairingDateIsoParts[1].substr(0, 5);
+    stateCopy.tb1 = this.state.tb1 !== "" ? parseInt(this.state.tb1! as string, 10) : undefined;
+    stateCopy.tb2 = this.state.tb1 !== "" ? parseInt(this.state.tb2! as string, 10) : undefined;
+    stateCopy.tb3 = this.state.tb1 !== "" ? parseInt(this.state.tb3! as string, 10) : undefined;
+    stateCopy.tb4 = this.state.tb1 !== "" ? parseInt(this.state.tb4! as string, 10) : undefined;
 
     fetchJson(`/s/tournament/build`, "POST", stateCopy, result => {
       this.props.history.push(`/tournament/view/${result.id}`);
@@ -179,6 +213,22 @@ class Build extends PureComponent<RouteComponentProps, BuildState> {
             <div className="form-group mt-4" id="nbMembers-group">
               <label htmlFor="per_team"><Translated str="membersPerTeam" />:</label>
               <input className="form-control w-25" type="number" id="per_team" name="per_team" value={this.state.per_team} onChange={this.handleChange} />
+            </div>
+          }
+          {this.state.kind === 1 &&
+            <div className="form-group mt-4">
+              <label htmlFor="tb1"><Translated str="tiebreaker" /> 1:</label>&nbsp;
+              <TiebreakerDropdown value={this.state.tb1 as string} onChange={this.handleChange} id="tb1" name="tb1" />
+              <br />
+              <label htmlFor="tb2"><Translated str="tiebreaker" /> 2:</label>&nbsp;
+              <TiebreakerDropdown value={this.state.tb2 as string} onChange={this.handleChange} id="tb2" name="tb2" />
+              <br />
+              <label htmlFor="tb3"><Translated str="tiebreaker" /> 3:</label>&nbsp;
+              <TiebreakerDropdown value={this.state.tb3 as string} onChange={this.handleChange} id="tb3" name="tb3" />
+              <br />
+              <label htmlFor="tb4"><Translated str="tiebreaker" /> 4:</label>&nbsp;
+              <TiebreakerDropdown value={this.state.tb4 as string} onChange={this.handleChange} id="tb4" name="tb4" />
+              <br />
             </div>
           }
           <div className="mt-4">

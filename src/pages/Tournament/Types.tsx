@@ -32,7 +32,11 @@ export type Participant = {
   seed: number,
   ghost?: boolean,
   team?: string,
-  team_name?: string
+  team_name?: string,
+  tb1?: number,
+  tb2?: number,
+  tb3?: number,
+  tb4?: number
 }
 
 export type TeamParticipant = {

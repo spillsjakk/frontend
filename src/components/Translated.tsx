@@ -235,7 +235,14 @@ const STRINGS = {
     "statistics": "Statistics",
     "privateTournament": "This tournament is private.",
     "resultPrintouts": "Result printouts",
-    "pairingPrintouts": "Pairing printouts"
+    "pairingPrintouts": "Pairing printouts",
+    "tiebreaker": "Tiebreaker",
+    "averageOpponentRating": "Average opponent rating",
+    "buchholz": "Buccholz",
+    "medianBuchholz": "Median Buchholz",
+    "medianBuchholz2": "Median Buchholz 2",
+    "buchholzCut1": "Buchholz Cut 1",
+    "buchholzCut2": "Buchholz Cut 2"
   },
   "NO": {
     "login": "Logg inn",
