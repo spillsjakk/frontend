@@ -107,7 +107,7 @@ class Lobby extends Component<RouteComponentProps, LobbyState> {
   load() {
     fetchJson(`/s/game/lobby`, "GET", undefined, json => {
       if (json.authenticated === false) {
-        this.props.history.push("/account/login?path=/game/lobby");
+        this.props.history.push("/login?path=/game/lobby");
         return;
       }
 

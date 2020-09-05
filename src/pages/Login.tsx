@@ -34,6 +34,11 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
     }, user => {
       this.context.setUser(user);
       
+      if (this.props.location.search.startsWith("?path=")) {
+        this.props.history.push(this.props.location.search.split("=")[1] || "/");
+        return;
+      }
+
       if (this.props.location.state && (this.props.location.state as any).canGoBack) {
         this.props.history.goBack();
       } else {
