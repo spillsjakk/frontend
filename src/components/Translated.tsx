@@ -242,7 +242,8 @@ const STRINGS = {
     "medianBuchholz": "Median Buchholz",
     "medianBuchholz2": "Median Buchholz 2",
     "buchholzCut1": "Buchholz Cut 1",
-    "buchholzCut2": "Buchholz Cut 2"
+    "buchholzCut2": "Buchholz Cut 2",
+    "individual": "Individual"
   },
   "NO": {
     "login": "Logg inn",
