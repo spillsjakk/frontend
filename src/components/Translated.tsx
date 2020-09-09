@@ -245,7 +245,9 @@ const STRINGS = {
     "buchholzCut2": "Buchholz Cut 2",
     "individual": "Individual",
     "fideRated": "This is a FIDE rated tournament.",
-    "provisionalFideRating": "Provisional FIDE rating"
+    "provisionalFideRating": "Provisional FIDE rating",
+    "lobby": "Lobby",
+    "playGame": "Play game"
   },
   "NO": {
     "login": "Logg inn",
