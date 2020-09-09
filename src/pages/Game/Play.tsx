@@ -14,6 +14,7 @@ import Chess from 'chess.js';
 import { Chess as OpsChess } from 'chessops';
 import { parseFen } from 'chessops/fen';
 import { chessgroundDests } from "chessops/compat";
+import { Howl, Howler } from 'howler';
 
 export function numToSquare(num: number) {
   let file = "abcdefgh"[num % 8];
@@ -128,6 +129,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   whiteClockRef: RefObject<Clock>;
   blackClockRef: RefObject<Clock>;
   moveTableRef: RefObject<HTMLTableElement>;
+  moveSound: Howl;
 
   constructor(props: RouteComponentProps<PlayProps>) {
     super(props);
@@ -163,6 +165,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.whiteClockRef = React.createRef();
     this.blackClockRef = React.createRef();
     this.moveTableRef = React.createRef();
+    this.moveSound = new Howl({
+      src: ['/sounds/move.mp3']
+    });
 
     this.onWsMessage = this.onWsMessage.bind(this);
     this.updateData = this.updateData.bind(this);
@@ -231,6 +236,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       newState.game = game;
       newState.pgn = game.pgn().replace(/N/g, "♞").replace(/B/g, "♝").replace(/R/g, "♜").replace(/Q/g, "♛").replace(/K/g, "♚");
       newState.fen = game.fen();
+
+      if (newState.fen !== this.state.fen && data.moves.length > 0) {
+        this.moveSound.play();
+      }
+
       newState.clocksRunning = !data.finished && atob(data.moves).length / 3 > 1;
       newState.lastMove = lastMove;
       newState.turn = game.turn() === "w" ? "white" : "black";
