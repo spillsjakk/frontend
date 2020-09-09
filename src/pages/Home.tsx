@@ -3,18 +3,45 @@ import { Helmet } from 'react-helmet';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Home.css";
 import { Carousel } from 'react-responsive-carousel';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import Translated from '../components/Translated';
 import { UserContext, Levels } from "../components/UserContext";
-import { title } from "../functions";
+import { title, fetchJson } from "../functions";
 
-class Home extends Component {
+import FullCalendar, { interactionSettingsStore, EventClickArg } from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+
+type HomeState = {
+  calendar: any[]
+}
+
+class Home extends Component<RouteComponentProps, HomeState> {
   static contextType = UserContext;
   context!: React.ContextType<typeof UserContext>;
 
+  constructor(props: RouteComponentProps) {
+    super(props);
+
+    this.state = { calendar: [] };
+  }
+
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Home";
+
+    fetchJson("/s/tournament/calendar", "GET", undefined, tournaments => {
+      let events = [];
+      for (const tour of tournaments) {
+        events.push({
+          id: tour.id,
+          title: tour.name,
+          allDay: true,
+          start: tour.start_date,
+          end: new Date(new Date(tour.end_date).getTime() + 1000 * 60 * 60 * 24)
+        });
+      }
+      this.setState({ calendar: events });
+    });
   }
 
   render() {
@@ -91,6 +118,18 @@ class Home extends Component {
             </Link>
           </div>
         </div>
+
+        {this.context.user.authenticated &&
+          <div className="mt-5">
+            <FullCalendar
+              plugins={[dayGridPlugin]}
+              initialView="dayGridMonth"
+              events={this.state.calendar}
+              eventClick={(info: EventClickArg) => {
+                this.props.history.push("/tournament/view/" + info.event.id);
+              }}
+            />
+          </div>}
       </>
     );
   }

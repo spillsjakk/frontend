@@ -70,3 +70,6 @@ body#Home {
   -o-animation: ga 60s ease infinite;
   animation: ga 60s ease infinite;
 }
+body#Home .fc-event-title-container {
+  cursor: pointer;
+}
