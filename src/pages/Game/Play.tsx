@@ -137,7 +137,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.gameId = props.match.params.id;
 
     this.state = {
-      fen: "8/8/8/8/8/8/8/8 w KQkq - 0 1",
+      fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
       orientation: "white",
       isPlayer: false,
       pendingDrawOffer: 0,
@@ -148,7 +148,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       isPromoting: false,
       promotionTempSource: "",
       promotionTempTarget: "",
-      dests: {},
+      dests: chessgroundDests(OpsChess.fromSetup(parseFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1").unwrap()).unwrap()),
       whiteId: "",
       whiteName: "",
       blackId: "",
@@ -450,7 +450,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 onMove={this.onMove}
                 ref={this.groundRef}
                 style={this.state.isPromoting && { pointerEvents: "none", filter: "blur(3px)" }}
-                movable={{ free: false, color: this.state.myColor, dests: this.state.dests, showDests: true }}
+                movable={{ free: false, color: this.state.myColor, dests: this.state.dests, showDests: true, rookCastle: false }}
                 premovable={{ enabled: false }}
                 lastMove={this.state.lastMove}
                 check={this.state.check} />
