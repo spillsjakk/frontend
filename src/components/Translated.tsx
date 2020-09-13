@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import ReactDOMServer from "react-dom/server";
 
 import LangContext from './LangContext';
 
