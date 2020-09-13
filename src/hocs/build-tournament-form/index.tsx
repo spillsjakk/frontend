@@ -27,21 +27,23 @@ const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
   const [tb3, setTb3] = useState("");
   const [tb4, setTb4] = useState("");
   const [fideRated, setFideRated] = useState(false);
+  const [rounds, setRounds] = useState<number>();
+  const [perTeam, setPerTeam] = useState<number>();
 
   const changeId = useCallback((value: string) => {
     setId(value);
   }, []);
 
   const changeName = useCallback((value: string) => {
-    setName(name);
+    setName(value);
   }, []);
 
   const changeDescription = useCallback((value: string) => {
-    setDescription(description);
+    setDescription(value);
   }, []);
 
   const changeKind = useCallback((value: number) => {
-    setKind(kind);
+    setKind(value);
   }, []);
 
   const changeDefaultGameLocation = useCallback((value: number) => {
@@ -128,6 +130,14 @@ const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
     setTb4(value);
   }, []);
 
+  const changeRounds = useCallback((value: number) => {
+    setRounds(value);
+  }, []);
+
+  const changePerTeam = useCallback((value: number) => {
+    setPerTeam(value);
+  }, []);
+
   return (
     <FormProvider
       value={{
@@ -181,6 +191,10 @@ const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
         changeTb4,
         fideRated,
         changeFideRated,
+        rounds,
+        changeRounds,
+        perTeam,
+        changePerTeam,
       }}
     >
       {children}

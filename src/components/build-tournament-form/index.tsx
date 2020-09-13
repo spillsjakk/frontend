@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from "react";
+import { useForm } from "../../context/build-tournament-form";
 import Translated from "../Translated";
+import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 
-interface Props {}
-
-const BuildTournamentForm: FunctionComponent<Props> = () => {
+const BuildTournamentForm: FunctionComponent<{}> = () => {
+  const form = useForm();
+  const submit = () => null;
   return (
     <>
-      <form className="mt-5" onSubmit={this.submit}>
+      <form className="mt-5" onSubmit={submit}>
         <div className="form-group">
           <label htmlFor="name">
             <Translated str="tournamentName" />:
@@ -17,8 +19,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             id="name"
             name="name"
             required
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={form.name}
+            onChange={(e) => form.changeName(e.target.value)}
           />
         </div>
         <div className="form-group mt-4">
@@ -30,8 +32,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             name="id"
             required
             pattern="[A-Za-z0-9_-]+"
-            value={this.state.id}
-            onChange={this.handleChange}
+            value={form.id}
+            onChange={(e) => form.changeId(e.target.value)}
           />
           <div className="mt-1">
             <small>
@@ -48,8 +50,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             id="description"
             name="description"
             required
-            value={this.state.description}
-            onChange={this.handleChange}
+            value={form.description}
+            onChange={(e) => form.changeDescription(e.target.value)}
           />
         </div>
         <div className="form-group mt-4">
@@ -64,8 +66,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             required
             min="2000-01-01"
             max="2099-12-31"
-            value={this.state.start_date}
-            onChange={this.handleChange}
+            value={form.startDate}
+            onChange={(e) => form.changeStartDate(e.target.value)}
           />
         </div>
         <div className="form-group mt-4">
@@ -80,8 +82,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             required
             min="2000-01-01"
             max="2099-12-31"
-            value={this.state.end_date}
-            onChange={this.handleChange}
+            value={form.endDate}
+            onChange={(e) => form.changeEndDate(e.target.value)}
           />
         </div>
         <div className="form-check mt-4">
@@ -90,8 +92,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             type="checkbox"
             id="publicly_viewable"
             name="publicly_viewable"
-            checked={this.state.publicly_viewable}
-            onChange={this.handleChangeCheckbox}
+            checked={form.publiclyViewable}
+            onChange={(e) => form.changePubliclyViewable(e.target.checked)}
           />
           <label className="form-check-label" htmlFor="publicly_viewable">
             <Translated str="publiclyViewable" />
@@ -103,8 +105,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             type="checkbox"
             id="self_joinable"
             name="self_joinable"
-            checked={this.state.self_joinable}
-            onChange={this.handleChangeCheckbox}
+            checked={form.selfJoinable}
+            onChange={(e) => form.changeSelfJoinable(e.target.checked)}
           />
           <label className="form-check-label" htmlFor="self_joinable">
             <Translated str="allowSelfJoining" />
@@ -116,8 +118,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             type="checkbox"
             id="fide_rated"
             name="fide_rated"
-            checked={this.state.fide_rated}
-            onChange={this.handleChangeCheckbox}
+            checked={form.fideRated}
+            onChange={(e) => form.changeFideRated(e.target.checked)}
           />
           <label className="form-check-label" htmlFor="fide_rated">
             <Translated str="fideRated" />
@@ -137,8 +139,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               id="kind0"
               value={0}
               required
-              checked={this.state.kind === 0}
-              onChange={this.handleChange}
+              checked={form.kind === 0}
+              onChange={(e) => form.changeKind(0)}
             />
             <label className="form-check-label" htmlFor="kind0">
               <Translated str="knockout" />
@@ -151,8 +153,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               name="kind"
               id="kind1"
               value={1}
-              checked={this.state.kind === 1}
-              onChange={this.handleChange}
+              checked={form.kind === 1}
+              onChange={(e) => form.changeKind(1)}
             />
             <label className="form-check-label" htmlFor="kind1">
               <Translated str="swissDutch" />
@@ -165,8 +167,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               name="kind"
               id="kind2"
               value={2}
-              checked={this.state.kind === 2}
-              onChange={this.handleChange}
+              checked={form.kind === 2}
+              onChange={(e) => form.changeKind(2)}
             />
             <label className="form-check-label" htmlFor="kind2">
               <Translated str="teamKnockout" />
@@ -179,8 +181,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               name="kind"
               id="kind3"
               value={3}
-              checked={this.state.kind === 3}
-              onChange={this.handleChange}
+              checked={form.kind === 3}
+              onChange={(e) => form.changeKind(3)}
             />
             <label className="form-check-label" htmlFor="kind3">
               <Translated str="teamSwissDutch" />
@@ -193,8 +195,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               name="kind"
               id="kind4"
               value={4}
-              checked={this.state.kind === 4}
-              onChange={this.handleChange}
+              checked={form.kind === 4}
+              onChange={(e) => form.changeKind(4)}
             />
             <label className="form-check-label" htmlFor="kind4">
               <Translated str="teamMonrad" />
@@ -207,15 +209,15 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               name="kind"
               id="kind5"
               value={5}
-              checked={this.state.kind === 5}
-              onChange={this.handleChange}
+              checked={form.kind === 5}
+              onChange={(e) => form.changeKind(5)}
             />
             <label className="form-check-label" htmlFor="kind5">
               <Translated str="teamKonrad" />
             </label>
           </div>
         </div>
-        {![0, 2].includes(this.state.kind) && (
+        {![0, 2].includes(form.kind) && (
           <div className="form-group mt-4" id="roundNb-group">
             <label htmlFor="rounds">
               <Translated str="roundNb" />:
@@ -225,12 +227,12 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               type="number"
               id="rounds"
               name="rounds"
-              value={this.state.rounds}
-              onChange={this.handleChange}
+              value={form.rounds}
+              onChange={(e) => form.changeRounds!(Number(e.target.value))}
             />
           </div>
         )}
-        {[2, 3].includes(this.state.kind) && (
+        {[2, 3].includes(form.kind) && (
           <div className="form-group mt-4" id="nbMembers-group">
             <label htmlFor="per_team">
               <Translated str="membersPerTeam" />:
@@ -240,20 +242,20 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               type="number"
               id="per_team"
               name="per_team"
-              value={this.state.per_team}
-              onChange={this.handleChange}
+              value={form.perTeam}
+              onChange={(e) => form.changePerTeam!(Number(e.target.value))}
             />
           </div>
         )}
-        {this.state.kind === 1 && (
+        {form.kind === 1 && (
           <div className="form-group mt-4">
             <label htmlFor="tb1">
               <Translated str="tiebreaker" /> 1:
             </label>
             &nbsp;
             <TiebreakerDropdown
-              value={this.state.tb1 as string}
-              onChange={this.handleChange}
+              value={form.tb1 as string}
+              onChange={(e) => form.changeTb1(e.target.value)}
               id="tb1"
               name="tb1"
             />
@@ -263,8 +265,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             </label>
             &nbsp;
             <TiebreakerDropdown
-              value={this.state.tb2 as string}
-              onChange={this.handleChange}
+              value={form.tb2 as string}
+              onChange={(e) => form.changeTb2(e.target.value)}
               id="tb2"
               name="tb2"
             />
@@ -274,8 +276,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             </label>
             &nbsp;
             <TiebreakerDropdown
-              value={this.state.tb3 as string}
-              onChange={this.handleChange}
+              value={form.tb3 as string}
+              onChange={(e) => form.changeTb3(e.target.value)}
               id="tb3"
               name="tb3"
             />
@@ -285,8 +287,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             </label>
             &nbsp;
             <TiebreakerDropdown
-              value={this.state.tb4 as string}
-              onChange={this.handleChange}
+              value={form.tb4 as string}
+              onChange={(e) => form.changeTb4(e.target.value)}
               id="tb4"
               name="tb4"
             />
@@ -297,8 +299,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
           <input
             type="checkbox"
             name="show_only_top"
-            checked={this.state.show_only_top}
-            onChange={this.handleChangeCheckbox}
+            checked={form.showOnlyTop}
+            onChange={(e) => form.changeShowOnlyTop(e.target.checked)}
           />
           &nbsp;
           <Translated str="onlyShowScoresOfTop" />
@@ -306,8 +308,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
           <input
             type="number"
             name="show_only_top_nr"
-            value={this.state.show_only_top_nr}
-            onChange={this.handleChange}
+            value={form.showOnlyTopNr}
+            onChange={(e) => form.changeShowOnlyTopNr(Number(e.target.value))}
           />
         </div>
         <div className="mt-4">
@@ -324,8 +326,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               name="default_game_location"
               value={0}
               required
-              onChange={this.handleChange}
-              checked={this.state.default_game_location === 0}
+              onChange={(e) => form.changeDefaultGameLocation(0)}
+              checked={form.defaultGameLocation === 0}
             />
             <label className="form-check-label" htmlFor="dgl0">
               <Translated str="otb" />
@@ -338,8 +340,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
               id="dgl1"
               name="default_game_location"
               value={1}
-              onChange={this.handleChange}
-              checked={this.state.default_game_location === 1}
+              onChange={(e) => form.changeDefaultGameLocation(1)}
+              checked={form.defaultGameLocation === 1}
             />
             <label className="form-check-label" htmlFor="dgl1">
               <Translated str="online" />
@@ -366,8 +368,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             required
             min="2000-01-01"
             max="2099-12-31"
-            value={this.state.first_pairing_date}
-            onChange={this.handleChange}
+            value={form.firstPairingDate}
+            onChange={(e) => form.changeFirstPairingDate(e.target.value)}
           />
           <input
             type="text"
@@ -377,8 +379,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             style={{ display: "inline" }}
             required
             pattern="\d\d?:\d\d"
-            value={this.state.first_pairing_time}
-            onChange={this.handleChange}
+            value={form.firstPairingTime}
+            onChange={(e) => form.changeFirstPairingTime(e.target.value)}
           />
           <div className="mt-1">
             <small>
@@ -398,13 +400,17 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             name="online_pairing_interval_n"
             min="1"
             required
-            value={this.state.online_pairing_interval_n}
-            onChange={this.handleChange}
+            value={form.onlinePairingIntervalN}
+            onChange={(e) =>
+              form.changeOnlinePairingIntervalN(Number(e.target.value))
+            }
           />
           <select
             name="online_pairing_interval_t"
-            value={this.state.online_pairing_interval_t}
-            onChange={this.handleChange}
+            value={form.onlinePairingIntervalT}
+            onChange={(e) =>
+              form.changeOnlinePairingIntervalT(Number(e.target.value))
+            }
           >
             <option value={0}>minutes</option>
             <option value={1}>hours</option>
@@ -426,8 +432,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             min={1}
             name="initial_time"
             required
-            value={this.state.initial_time}
-            onChange={this.handleChange}
+            value={form.initialTime}
+            onChange={(e) => form.changeInitialTime(Number(e.target.value))}
           />
           +
           <input
@@ -437,8 +443,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             min="0"
             name="increment"
             required
-            value={this.state.increment}
-            onChange={this.handleChange}
+            value={form.increment}
+            onChange={(e) => form.changeIncrement(Number(e.target.value))}
           />
         </div>
         <div className="form-group mt-4">
@@ -453,8 +459,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             min="0"
             step="0.5"
             data-type="float"
-            value={this.state.win_points}
-            onChange={this.handleChange}
+            value={form.winPoints}
+            onChange={(e) => form.changeWinPoints(Number(e.target.value))}
           />
           <br />
           <label htmlFor="draw_points">
@@ -468,8 +474,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             min="0"
             step="0.5"
             data-type="float"
-            value={this.state.draw_points}
-            onChange={this.handleChange}
+            value={form.drawPoints}
+            onChange={(e) => form.changeDrawPoints(Number(e.target.value))}
           />
           <br />
           <label htmlFor="loss_points">
@@ -483,8 +489,8 @@ const BuildTournamentForm: FunctionComponent<Props> = () => {
             min="0"
             step="0.5"
             data-type="float"
-            value={this.state.loss_points}
-            onChange={this.handleChange}
+            value={form.lossPoints}
+            onChange={(e) => form.changeLossPoints(Number(e.target.value))}
           />
         </div>
         <div className="form-group mt-4">
