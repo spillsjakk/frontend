@@ -29,6 +29,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/faker": "^5.1.0",
     "@types/howler": "^2.2.1",
     "@types/jest": "^26.0.13",
     "@types/lodash": "^4.14.161",
@@ -40,7 +41,11 @@
     "@types/react-helmet": "^6.1.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.14",
+    "@types/sinon": "^9.0.5",
+    "faker": "^5.1.0",
     "jest": "^26.4.2",
+    "sinon": "^9.0.3",
+    "ts-jest": "^26.3.0",
     "typescript": "^3.9.7"
   },
   "scripts": {
