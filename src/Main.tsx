@@ -27,6 +27,7 @@ import OrgManage from './pages/Organization/Manage';
 import OrgAllAccounts from './pages/Organization/AllAccounts';
 import OrgStatistics from './pages/Organization/Statistics';
 import OrgView from './pages/Organization/View';
+import { BuildTournament } from "./pages/Tournament/build/index";
 
 const Main = () => {
   return (
@@ -40,7 +41,7 @@ const Main = () => {
 
       <Route exact path='/tournament/view/:tid' component={TournamentView}></Route>
       <Route exact path='/tournament/build' component={TournamentBuild}></Route>
-      <Route exact path='/tournament/build-new' component={TournamentBuild}></Route>
+      <Route exact path='/tournament/build-new' component={BuildTournament}></Route>
       <Route exact path='/tournament/players/:tid' component={TournamentPlayers}></Route>
       <Route exact path='/tournament/search' component={TournamentSearch}></Route>
       <Route exact path='/tournament/find' component={TournamentFind}></Route>

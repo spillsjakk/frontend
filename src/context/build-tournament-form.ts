@@ -1,0 +1,60 @@
+import React, { Context, useContext } from "react";
+
+export interface FormContext {
+  id: string;
+  changeId: (value: string) => void;
+  name: string;
+  changeName: (value: string) => void;
+  description: string;
+  changeDescription: (value: string) => void;
+  kind: number;
+  changeKind: (value: number) => void;
+  defaultGameLocation: number;
+  changeDefaultGameLocation: (value: number) => void;
+  startDate: string;
+  changeStartDate: (value: string) => void;
+  endDate: string;
+  changeEndDate: (value: string) => void;
+  publiclyViewable: boolean;
+  changePubliclyViewable: (value: boolean) => void;
+  firstPairingDate: string;
+  changeFirstPairingDate: (value: string) => void;
+  firstPairingTime: string;
+  changeFirstPairingTime: (value: string) => void;
+  onlinePairingIntervalN: number;
+  changeOnlinePairingIntervalN: (value: number) => void;
+  onlinePairingIntervalT: number;
+  changeOnlinePairingIntervalT: (value: number) => void;
+  initialTime: number;
+  changeInitialTime: (value: number) => void;
+  increment: number;
+  changeIncrement: (value: number) => void;
+  selfJoinable: boolean;
+  changeSelfJoinable: (value: boolean) => void;
+  showOnlyTop: boolean;
+  changeShowOnlyTop: (value: boolean) => void;
+  showOnlyTopNr: number;
+  changeShowOnlyTopNr: (value: number) => void;
+  winPoints: number;
+  changeWinPoints: (value: number) => void;
+  drawPoints: number;
+  changeDrawPoints: (value: number) => void;
+  lossPoints: number;
+  changeLossPoints: (value: number) => void;
+  tb1: string;
+  changeTb1: (value: string) => void;
+  tb2: string;
+  changeTb2: (value: string) => void;
+  tb3: string;
+  changeTb3: (value: string) => void;
+  tb4: string;
+  changeTb4: (value: string) => void;
+  fideRated: boolean;
+  changeFideRated: (value: boolean) => void;
+}
+
+const FormContext: Context<Partial<FormContext>> = React.createContext({});
+
+export const FormProvider = FormContext.Provider;
+export default FormContext;
+export const useForm = () => useContext(FormContext);

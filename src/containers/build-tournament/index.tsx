@@ -1,0 +1,18 @@
+import React, { FunctionComponent } from "react";
+import { Helmet } from "react-helmet";
+import Translated from "../../components/Translated";
+import { title } from "../../functions";
+
+const BuildTournament: FunctionComponent<{}> = () => {
+  return (
+    <>
+      <Helmet>
+        <title>{title("buildTournament")}</title>
+      </Helmet>
+      <h1 className="mt-5 p-3">
+        <Translated str="buildTournament" />
+      </h1>
+    </>
+  );
+};
+export { BuildTournament };
