@@ -1,6 +1,8 @@
 import React, { Context, useContext } from "react";
 
 export interface FormContext {
+  show: boolean;
+  changeShow: (value: boolean) => void;
   id: string;
   changeId: (value: string) => void;
   name: string;
@@ -58,6 +60,8 @@ export interface FormContext {
 }
 
 const initalValues = {
+  show: true,
+  changeShow: (value: string) => {},
   id: "",
   changeId: (value: string) => {},
   name: "",

@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useCallback, useState } from "react";
+import { useForm } from "../../context/build-tournament-form";
 import { TemplateProvider } from "../../context/build-tournament-template";
 
 const templates = [
@@ -13,9 +14,15 @@ const placeholder = {
 };
 
 const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
+  const { show, changeShow } = useForm();
+
   const [selectedTemplate, setSelectedTemplate] = useState(placeholder.value);
+
   const onSelect = useCallback((value: string) => {
     console.log(`${value} is selected`);
+    if (!show) {
+      changeShow(true);
+    }
     setSelectedTemplate(value);
   }, []);
 

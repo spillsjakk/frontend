@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useState } from "react";
 import { FormProvider } from "../../context/build-tournament-form";
 
 const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
+  const [show, setShow] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -29,6 +30,10 @@ const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
   const [fideRated, setFideRated] = useState(false);
   const [rounds, setRounds] = useState<number>();
   const [perTeam, setPerTeam] = useState<number>();
+
+  const changeShow = useCallback((value: boolean) => {
+    setShow(value);
+  }, []);
 
   const changeId = useCallback((value: string) => {
     setId(value);
@@ -141,6 +146,8 @@ const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
   return (
     <FormProvider
       value={{
+        show,
+        changeShow,
         id,
         changeId,
         name,
