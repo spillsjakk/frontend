@@ -6,6 +6,7 @@ import { WithBuildTournamentTemplate } from "../../hocs/build-tournament-templat
 import Translated from "../../components/Translated";
 import { title } from "../../functions";
 import { SelectTemplate } from "./select-template";
+import { Continue } from "./continue";
 
 const BuildTournament: FunctionComponent<{}> = () => {
   return (
@@ -19,6 +20,7 @@ const BuildTournament: FunctionComponent<{}> = () => {
       <WithBuildTournamentTemplate>
         <SelectTemplate />
         <ShortForm />
+        <Continue />
       </WithBuildTournamentTemplate>
       <BuildTournamentForm />
     </>

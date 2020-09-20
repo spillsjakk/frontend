@@ -11,7 +11,7 @@ const ShortForm: FunctionComponent<{}> = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (selectedTemplate !== placeholder.value && form.startDate === "") {
+    if (selectedTemplate !== placeholder.value && !form.show) {
       setVisible(true);
     }
   }, [selectedTemplate]);
