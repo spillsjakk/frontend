@@ -108,9 +108,8 @@ const STRINGS = {
     gameScore: "Game score",
     board: "Board",
     membersPerTeam: "Members per team",
-    firstPairingDateTime: "First online pairing date/time",
-    ifNoOnlineGames:
-      "If no games will be played online, fill in anything here, does not watter what.",
+    firstPairingDateTime: "First online pairing date and time",
+    ifNoOnlineGames: "If pairing is OTB, enter any date and time",
     onlinePairingInterval: "Interval between online games",
     minutes: "minutes",
     hours: "hours",
@@ -261,6 +260,7 @@ const STRINGS = {
     lobby: "Lobby",
     playGame: "Play game",
     continueWithoutTemplate: "Continue Without Selecting Template",
+    startsIn: "Starts in ",
   },
   NO: {
     login: "Logg inn",
@@ -366,6 +366,7 @@ const STRINGS = {
     carousel4Desc:
       "Turneringsledere velger om resultater skal offentliggjøres eller ikke.",
     continueWithoutTemplate: "Continue Without Selecting Template",
+    startsIn: "Starts in ",
   },
 };
 

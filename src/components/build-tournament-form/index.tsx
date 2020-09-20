@@ -3,6 +3,7 @@ import { useForm } from "../../context/build-tournament-form";
 import Translated from "../Translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 import { fetchJson } from "../../functions";
+import { Countdown } from "../../components/count-down/index";
 
 const BuildTournamentForm: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -425,9 +426,17 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               style={{ display: "inline" }}
               required
               pattern="\d\d?:\d\d"
+              placeholder="13:00"
               value={form.firstPairingTime}
               onChange={(e) => form.changeFirstPairingTime(e.target.value)}
             />
+            {form.firstPairingDate &&
+              form.firstPairingTime &&
+              form.firstPairingTime.length >= 5 && (
+                <Countdown
+                  time={`${form.firstPairingDate} ${form.firstPairingTime}`}
+                />
+              )}
             <div className="mt-1">
               <small>
                 <Translated str="ifNoOnlineGames" />
