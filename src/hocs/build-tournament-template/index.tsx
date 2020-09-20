@@ -4,9 +4,18 @@ import { useForm } from "../../context/build-tournament-form";
 import { TemplateProvider } from "../../context/build-tournament-template";
 
 const templates = [
-  { name: "90 minutes", value: "0" },
-  { name: "15 minutes", value: "1" },
-  { name: "3 minutes", value: "2" },
+  {
+    name: "90 minutes + 30 seconds / Individual / 9 rounds / Swiss",
+    value: "0",
+  },
+  {
+    name: "15 minutes + 10 seconds / Individual / 7 rounds / Swiss",
+    value: "1",
+  },
+  {
+    name: "3 minutes + 2 seconds / Individual / 11 rounds / Swiss ",
+    value: "2",
+  },
 ];
 
 const templateData = [
