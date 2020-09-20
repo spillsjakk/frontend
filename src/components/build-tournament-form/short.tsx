@@ -11,12 +11,16 @@ const ShortForm: FunctionComponent<{}> = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (selectedTemplate !== placeholder.value) {
+    if (selectedTemplate !== placeholder.value && form.startDate === "") {
       setVisible(true);
     }
   }, [selectedTemplate]);
 
   const submit = () => {
+    if (form.defaultGameLocation === 0) {
+      form.changeFirstPairingDate(form.startDate);
+      form.changeFirstPairingTime("12:00");
+    }
     form.changeShow(true);
     setVisible(false);
   };

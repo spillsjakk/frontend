@@ -1,11 +1,52 @@
-import React, { FunctionComponent } from "react";
+import React, { FormEvent, FunctionComponent } from "react";
 import { useForm } from "../../context/build-tournament-form";
 import Translated from "../Translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
+import { fetchJson } from "../../functions";
 
 const BuildTournamentForm: FunctionComponent<{}> = () => {
   const form = useForm();
-  const submit = () => null;
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+
+    const pairingDateTime = new Date(
+      form.firstPairingDate + "T" + form.firstPairingTime
+    );
+    const pairingDateIsoParts = pairingDateTime.toISOString().split("T");
+
+    const body = {
+      id: form.id,
+      name: form.name,
+      description: form.description,
+      kind: form.kind,
+      default_game_location: form.defaultGameLocation,
+      start_date: form.startDate,
+      end_date: form.endDate,
+      publicly_viewable: form.publiclyViewable,
+      first_pairing_date: pairingDateIsoParts[0],
+      first_pairing_time: pairingDateIsoParts[1].substr(0, 5),
+      online_pairing_interval_n: form.onlinePairingIntervalN,
+      online_pairing_interval_t: form.onlinePairingIntervalT,
+      initial_time: form.initialTime,
+      increment: form.increment,
+      self_joinable: form.selfJoinable,
+      show_only_top: form.showOnlyTop,
+      show_only_top_nr: form.showOnlyTopNr,
+      win_points: form.winPoints,
+      draw_points: form.drawPoints,
+      loss_points: form.lossPoints,
+      tb1: form.tb1 !== "" ? parseInt(form.tb1!, 10) : undefined,
+      tb2: form.tb2 !== "" ? parseInt(form.tb2!, 10) : undefined,
+      tb3: form.tb3 !== "" ? parseInt(form.tb3!, 10) : undefined,
+      tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
+      fide_rated: form.fideRated,
+    };
+
+    fetchJson(`/s/tournament/build`, "POST", body, (result) => {
+      window.location.assign(`/tournament/view/${result.id}`);
+    });
+  };
+
   return (
     <>
       {form.show && (
@@ -34,7 +75,11 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               required
               pattern="[A-Za-z0-9_-]+"
               value={form.id}
-              onChange={(e) => form.changeId(e.target.value)}
+              onChange={(e) =>
+                form.changeId(
+                  e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "")
+                )
+              }
             />
             <div className="mt-1">
               <small>
