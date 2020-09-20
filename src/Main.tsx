@@ -44,12 +44,7 @@ const Main = () => {
         path="/tournament/view/:tid"
         component={TournamentView}
       ></Route>
-      <Route exact path="/tournament/build" component={TournamentBuild}></Route>
-      <Route
-        exact
-        path="/tournament/build-new"
-        component={BuildTournament}
-      ></Route>
+      <Route exact path="/tournament/build" component={BuildTournament}></Route>
       <Route
         exact
         path="/tournament/players/:tid"
