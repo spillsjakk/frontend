@@ -4,10 +4,8 @@ import { Option } from "./interface";
 interface Props {
   options: Array<Option>;
   onSelect: (value: string) => void;
-  placeholder?: string;
+  placeholder?: Option;
 }
-
-const placeholderValue = "PLACEHOLDER-VALUE";
 
 const Dropdown: FunctionComponent<Props> = ({
   options,
@@ -15,7 +13,7 @@ const Dropdown: FunctionComponent<Props> = ({
   placeholder,
 }) => {
   const [selectedValue, setSelectedValue] = useState(
-    placeholder ? placeholderValue : options[0].value
+    placeholder ? placeholder.value : options[0].value
   );
   return (
     <select
@@ -26,8 +24,8 @@ const Dropdown: FunctionComponent<Props> = ({
       }}
     >
       {placeholder && (
-        <option value={placeholderValue} disabled>
-          {placeholder}
+        <option value={placeholder.value} disabled>
+          {placeholder.name}
         </option>
       )}
       {Array.isArray(options) &&

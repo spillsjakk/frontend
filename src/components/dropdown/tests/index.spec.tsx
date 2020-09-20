@@ -61,7 +61,10 @@ describe("Dropdown Component Unit Tests", () => {
   describe("when placeholder is present", () => {
     it("should render placeholder option", () => {
       // Arrange
-      const placeholder = words(2);
+      const placeholder = {
+        name: words(2),
+        value: words(2),
+      };
 
       // Act
       const { container } = render(
