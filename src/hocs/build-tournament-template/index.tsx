@@ -8,21 +8,16 @@ const templates = [
   { name: "3 minutes", value: "2" },
 ];
 
-const placeholder = {
+export const placeholder = {
   name: "Please Select a Template",
   value: "PLACEHOLDER-VALUE",
 };
 
 const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
-  const { show, changeShow } = useForm();
-
   const [selectedTemplate, setSelectedTemplate] = useState(placeholder.value);
 
   const onSelect = useCallback((value: string) => {
     console.log(`${value} is selected`);
-    if (!show) {
-      changeShow(true);
-    }
     setSelectedTemplate(value);
   }, []);
 
