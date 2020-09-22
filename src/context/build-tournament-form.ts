@@ -61,7 +61,7 @@ export interface FormContext {
 
 const initalValues = {
   show: true,
-  changeShow: (value: string) => {},
+  changeShow: (value: boolean) => {},
   id: "",
   changeId: (value: string) => {},
   name: "",
