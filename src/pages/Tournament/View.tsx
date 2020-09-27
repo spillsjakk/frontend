@@ -35,6 +35,7 @@ import "./View.css";
 import { Timestamp } from "../../components/Timestamp";
 import FederationDisplay from "../../components/FederationDisplay";
 import { Countdown } from "../../components/count-down/index";
+import { indexOf } from "lodash";
 
 const { SearchBar } = Search;
 
@@ -117,6 +118,7 @@ class View extends Component<
     this.onClickSelfJoin = this.onClickSelfJoin.bind(this);
     this.onUpdatePairingTime = this.onUpdatePairingTime.bind(this);
     this.loadState = this.loadState.bind(this);
+    this.onDeleteTournament = this.onDeleteTournament.bind(this);
 
     this.participantColumns = [
       { dataField: "seed", text: "seed", sort: true, headerFormatter },
@@ -305,6 +307,19 @@ class View extends Component<
         value.toString().toLowerCase().includes(searchText)) ||
       (row.first_name + " " + row.last_name).toLowerCase().includes(searchText)
     );
+  }
+
+  async onDeleteTournament() {
+    if (window.confirm(Translated.byKey("confirmTournamentDeletion"))) {
+      fetchJson(
+        "/s/tournament/" + this.state.info?.tournament.id,
+        "DELETE",
+        undefined,
+        () => {
+          window.location.replace("/tournament/find");
+        }
+      );
+    }
   }
 
   loadState() {
@@ -726,6 +741,14 @@ class View extends Component<
               >
                 <Translated str="manageParticipants" />
               </Link>
+              {!info.can_start && (
+                <div
+                  className="p-3 btn btn-danger ml-5 mb-3"
+                  onClick={() => this.onDeleteTournament()}
+                >
+                  <Translated str="deleteTournament" />
+                </div>
+              )}
               {info.managed_teams &&
                 info.managed_teams?.map((t) => (
                   <Link

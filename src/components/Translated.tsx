@@ -261,6 +261,8 @@ const STRINGS = {
     playGame: "Play game",
     continueWithoutTemplate: "Continue Without Selecting Template",
     startsIn: "Starts in ",
+    deleteTournament: "Delete Tournament",
+    confirmTournamentDeletion: "Do you delete the tournament?",
   },
   NO: {
     login: "Logg inn",
@@ -367,6 +369,8 @@ const STRINGS = {
       "Turneringsledere velger om resultater skal offentliggjøres eller ikke.",
     continueWithoutTemplate: "Continue Without Selecting Template",
     startsIn: "Starts in ",
+    deleteTournament: "Delete Tournament",
+    confirmTournamentDeletion: "Do you delete the tournament?",
   },
 };
 
