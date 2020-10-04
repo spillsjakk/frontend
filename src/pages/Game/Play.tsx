@@ -1,6 +1,5 @@
 import React, { Component, RefObject, PureComponent } from "react";
 import { Helmet } from 'react-helmet';
-import { Container } from 'react-bootstrap';
 import Translated from "../../components/Translated";
 import UserLink from "../../components/UserLink";
 import { RouteComponentProps } from "react-router-dom";

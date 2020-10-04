@@ -712,9 +712,14 @@ class View extends Component<
 
         <h1 className="mt-4 p-3">{this.state.info?.tournament.name}</h1>
 
-        <p className="mt-4" id="description" style={{ whiteSpace: "pre-line" }}>
-          {this.state.info?.tournament.description}
-        </p>
+        <p
+          className="mt-4"
+          id="description"
+          style={{ whiteSpace: "pre-line" }}
+          dangerouslySetInnerHTML={{
+            __html: this.state.info?.tournament.description || "",
+          }}
+        ></p>
 
         {this.context.user.authenticated &&
           this.context.user.info?.id === info.tournament.organizer &&
