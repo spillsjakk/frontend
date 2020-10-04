@@ -1,12 +1,32 @@
-import React, { FormEvent, FunctionComponent } from "react";
+import React, { FormEvent, FunctionComponent, useEffect } from "react";
 import { useForm } from "../../context/build-tournament-form";
 import Translated from "../Translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 import { fetchJson } from "../../functions";
 import { Countdown } from "../../components/count-down/index";
 
-const BuildTournamentForm: FunctionComponent<{}> = () => {
+const kind: Record<string, number> = {
+  Knockout: 0,
+  SwissDutch: 1,
+  TeamKnockout: 2,
+  TeamSwissDutch: 3,
+  TeamMonrad: 4,
+  TeamKonrad: 5,
+  TeamOlympiad: 6,
+};
+
+const Tiebreaker: Record<string, number> = {
+  AverageOpponentRating: 0,
+  Buchholz: 1,
+  MedianBuchholz: 2,
+  MedianBuchholz2: 3,
+  BuchholzCut1: 4,
+  BuchholzCut2: 5,
+};
+
+const EditTournamentForm: FunctionComponent<{}> = () => {
   const form = useForm();
+  const getId = () => window.location.pathname.split("/")[3];
   const submit = (e: FormEvent) => {
     e.preventDefault();
 
@@ -16,7 +36,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
     const pairingDateIsoParts = pairingDateTime.toISOString().split("T");
 
     const body = {
-      id: form.id,
+      id: getId(),
       name: form.name,
       description: form.description,
       kind: form.kind,
@@ -45,10 +65,67 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
       per_team: form.perTeam,
     };
 
-    fetchJson(`/s/tournament/build`, "POST", body, (result) => {
-      window.location.assign(`/tournament/view/${result.id}`);
+    fetchJson(`/s/tournament/${getId()}`, "PUT", body, (result) => {
+      window.location.assign(`/tournament/view/${getId()}`);
     });
   };
+
+  async function getTournamentData() {
+    const result = await fetch(`/s/tournament/view/${getId()}`);
+    if (result.status === 200) {
+      const data = await result.json();
+      const tournament = data.tournament;
+      form.changeName(tournament.name);
+      form.changeDescription(tournament.description);
+      form.changeKind(kind[tournament.kind]);
+      form.changeDefaultGameLocation(tournament.default_otb ? 0 : 1);
+      form.changeStartDate(tournament.start_date);
+      form.changeEndDate(tournament.end_date);
+      form.changePubliclyViewable(tournament.publicly_viewable);
+      form.changeFirstPairingDate(
+        tournament.first_online_pairing.split("T")[0]
+      );
+      form.changeFirstPairingTime(
+        tournament.first_online_pairing.split("T")[1].substring(0, 5)
+      );
+      form.changeOnlinePairingIntervalN(tournament.online_pairing_interval_n);
+      form.changeOnlinePairingIntervalT(tournament.online_pairing_interval_t);
+      form.changeInitialTime(tournament.initial_time);
+      form.changeIncrement(tournament.increment);
+      form.changeSelfJoinable(tournament.self_joinable);
+      form.changeFideRated(tournament.fide_rated);
+      form.changeShowOnlyTop(!!tournament.show_only_top_nr);
+      if (tournament.show_only_top_nr) {
+        form.changeShowOnlyTopNr(tournament.show_only_top_nr);
+      }
+      form.changeWinPoints(tournament.win_points);
+      form.changeDrawPoints(tournament.draw_points);
+      form.changeLossPoints(tournament.loss_points);
+      if (tournament.per_team_limit) {
+        form.changePerTeam!(tournament.per_team_limit);
+      }
+      form.changeTb1(
+        tournament.tb1 ? Tiebreaker[tournament.tb1].toString() : ""
+      );
+      form.changeTb2(
+        tournament.tb2 ? Tiebreaker[tournament.tb2].toString() : ""
+      );
+      form.changeTb3(
+        tournament.tb3 ? Tiebreaker[tournament.tb3].toString() : ""
+      );
+      form.changeTb4(
+        tournament.tb4 ? Tiebreaker[tournament.tb4].toString() : ""
+      );
+      if (tournament.rounds) {
+        form.changeRounds!(tournament.rounds);
+      }
+    }
+  }
+
+  useEffect(() => {
+    form.changeShow(true);
+    getTournamentData();
+  }, []);
 
   return (
     <>
@@ -67,28 +144,6 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               value={form.name}
               onChange={(e) => form.changeName(e.target.value)}
             />
-          </div>
-          <div className="form-group mt-4">
-            <label htmlFor="id">ID:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="id"
-              name="id"
-              required
-              pattern="[A-Za-z0-9_-]+"
-              value={form.id}
-              onChange={(e) =>
-                form.changeId(
-                  e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "")
-                )
-              }
-            />
-            <div className="mt-1">
-              <small>
-                <Translated str="theUrlForThisTournament" />
-              </small>
-            </div>
           </div>
           <div className="form-group mt-4">
             <label htmlFor="description">
@@ -562,4 +617,4 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
     </>
   );
 };
-export { BuildTournamentForm };
+export { EditTournamentForm };

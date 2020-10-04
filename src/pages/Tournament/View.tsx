@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  SyntheticEvent,
-  FormEvent,
-  RefObject,
-  ChangeEvent,
-} from "react";
+import React, { Component, SyntheticEvent, FormEvent, RefObject } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/Translated";
 import { fetchJson, title } from "../../functions";
@@ -35,7 +29,6 @@ import "./View.css";
 import { Timestamp } from "../../components/Timestamp";
 import FederationDisplay from "../../components/FederationDisplay";
 import { Countdown } from "../../components/count-down/index";
-import { indexOf } from "lodash";
 
 const { SearchBar } = Search;
 
@@ -740,6 +733,12 @@ class View extends Component<
                 to={"/tournament/players/" + info.tournament.id}
               >
                 <Translated str="manageParticipants" />
+              </Link>
+              <Link
+                className="p-3 btn btn-primary ml-5 mb-3"
+                to={"/tournament/edit/" + info.tournament.id}
+              >
+                <Translated str="editTournament" />
               </Link>
               {!info.can_start && (
                 <div
