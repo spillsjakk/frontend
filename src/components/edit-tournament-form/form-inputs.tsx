@@ -33,6 +33,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           required
           value={form.description}
           onChange={(e) => form.changeDescription(e.target.value)}
+          style={{ height: "250px" }}
         />
       </div>
       <div className="form-group mt-4">
