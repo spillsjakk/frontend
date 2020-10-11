@@ -46,6 +46,7 @@ const STRINGS = {
     productDescription:
       "Fast, simple, and reliable chess tournament administration and pairings.",
     buildTournament: "Build a tournament",
+    editTournament: "Edit the tournament details",
     findTournament: "Find a tournament",
     tournamentName: "Tournament name",
     description: "Description",
@@ -275,6 +276,7 @@ const STRINGS = {
     about: "Om",
     productDescription: "SpillSjakk: sjakkturneringer over nett og brett!",
     buildTournament: "Lag turnering",
+    editTournament: "Edit the tournament details",
     findTournament: "Finn turnering",
     tournamentName: "Turneringsnavn",
     description: "Beskrivelse",

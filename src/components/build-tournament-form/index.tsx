@@ -40,7 +40,9 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
       tb2: form.tb2 !== "" ? parseInt(form.tb2!, 10) : undefined,
       tb3: form.tb3 !== "" ? parseInt(form.tb3!, 10) : undefined,
       tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
+      rounds: form.rounds,
       fide_rated: form.fideRated,
+      per_team: form.perTeam,
     };
 
     fetchJson(`/s/tournament/build`, "POST", body, (result) => {
@@ -99,6 +101,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               required
               value={form.description}
               onChange={(e) => form.changeDescription(e.target.value)}
+              style={{ height: "250px" }}
             />
           </div>
           <div className="form-group mt-4">

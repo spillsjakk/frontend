@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { FormProvider } from "../../context/build-tournament-form";
 
-const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
+const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
@@ -208,4 +208,4 @@ const WithBuildTournamentForm: FunctionComponent = ({ children }) => {
     </FormProvider>
   );
 };
-export { WithBuildTournamentForm };
+export { WithTournamentForm };

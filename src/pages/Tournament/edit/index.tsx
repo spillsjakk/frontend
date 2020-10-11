@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { BuildTournament as Container } from "../../../containers/build-tournament/index";
+import { EditTournament as Container } from "../../../containers/edit-tournament/index";
 import { WithTournamentForm } from "../../../hocs/tournament-form/index";
 
-const BuildTournament: FunctionComponent<{}> = () => {
+const EditTournament: FunctionComponent<{}> = () => {
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "Tournament-Build";
   }, []);
@@ -14,4 +14,4 @@ const BuildTournament: FunctionComponent<{}> = () => {
     </>
   );
 };
-export { BuildTournament };
+export { EditTournament };

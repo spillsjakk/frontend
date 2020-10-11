@@ -8,7 +8,6 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import TournamentView from "./pages/Tournament/View";
-import TournamentBuild from "./pages/Tournament/Build";
 import TournamentPlayers from "./pages/Tournament/Players";
 import TournamentSearch from "./pages/Tournament/Search";
 import TournamentFind from "./pages/Tournament/Find";
@@ -28,6 +27,7 @@ import OrgAllAccounts from "./pages/Organization/AllAccounts";
 import OrgStatistics from "./pages/Organization/Statistics";
 import OrgView from "./pages/Organization/View";
 import { BuildTournament } from "./pages/Tournament/build/index";
+import { EditTournament } from "./pages/Tournament/edit/index";
 
 const Main = () => {
   return (
@@ -45,6 +45,11 @@ const Main = () => {
         component={TournamentView}
       ></Route>
       <Route exact path="/tournament/build" component={BuildTournament}></Route>
+      <Route
+        exact
+        path="/tournament/edit/:id"
+        component={EditTournament}
+      ></Route>
       <Route
         exact
         path="/tournament/players/:tid"
