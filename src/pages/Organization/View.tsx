@@ -84,7 +84,7 @@ class View extends PureComponent<RouteComponentProps<ViewProps>, ViewState> {
             height="50px"
             width="50px"
             src={this.state.profile_picture}
-            alt="club profile picture"
+            alt="organization profile picture"
           />
         )}
 

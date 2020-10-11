@@ -265,6 +265,7 @@ const STRINGS = {
     startsIn: "Starts in ",
     deleteTournament: "Delete Tournament",
     confirmTournamentDeletion: "Do you delete the tournament?",
+    profilePicturePlaceholder: "Please fill in the url of the image",
   },
   NO: {
     login: "Logg inn",
@@ -374,6 +375,7 @@ const STRINGS = {
     startsIn: "Starts in ",
     deleteTournament: "Delete Tournament",
     confirmTournamentDeletion: "Do you delete the tournament?",
+    profilePicturePlaceholder: "Please fill in the url of the image",
   },
 };
 

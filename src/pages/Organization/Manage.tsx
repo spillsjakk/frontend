@@ -184,7 +184,7 @@ class Manage extends PureComponent<{}, ManageState> {
               required
               value={this.state.profile_picture}
               onChange={this.handleChange}
-              placeholder="Please fill in the url of the image"
+              placeholder={Translated.byKey("profilePicturePlaceholder")}
             />
           </div>
           <div className="form-group mt-4">
