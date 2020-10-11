@@ -50,6 +50,7 @@ const STRINGS = {
     findTournament: "Find a tournament",
     tournamentName: "Tournament name",
     description: "Description",
+    profile_picture: "Profile Picture",
     type: "Type",
     knockout: "Knockout",
     swissDutch: "Swiss (Dutch)",
