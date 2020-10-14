@@ -50,6 +50,7 @@ const STRINGS = {
     findTournament: "Find a tournament",
     tournamentName: "Tournament name",
     description: "Description",
+    profile_picture: "Profile Picture",
     type: "Type",
     knockout: "Knockout",
     swissDutch: "Swiss (Dutch)",
@@ -264,6 +265,7 @@ const STRINGS = {
     startsIn: "Starts in ",
     deleteTournament: "Delete Tournament",
     confirmTournamentDeletion: "Do you delete the tournament?",
+    profilePicturePlaceholder: "Please fill in the url of the image",
   },
   NO: {
     login: "Logg inn",
@@ -373,6 +375,7 @@ const STRINGS = {
     startsIn: "Starts in ",
     deleteTournament: "Delete Tournament",
     confirmTournamentDeletion: "Do you delete the tournament?",
+    profilePicturePlaceholder: "Please fill in the url of the image",
   },
 };
 
