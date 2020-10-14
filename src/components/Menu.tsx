@@ -4,6 +4,7 @@ import { Navbar, Nav, Dropdown } from "react-bootstrap";
 
 import Translated from './Translated';
 import LangSwitcher from './LangSwitcher';
+import InboxLink from './InboxLink';
 import { UserContext, Levels } from "./UserContext";
 import { fetchJson } from "../functions";
 
@@ -83,10 +84,12 @@ class Menu extends Component {
                 <img src="/icons/person.svg" alt="" width="32" height="32" className="icon" />&nbsp;
               <Translated str="login" />
               </Nav.Link> :
-              <><Nav.Link as={Link} to={"/profile/" + this.context.user.info?.id}>
-                <img src="/icons/person.svg" alt="" width="32" height="32" className="icon" />&nbsp;
+              <>
+                <InboxLink />
+                <Nav.Link as={Link} to={"/profile/" + this.context.user.info?.id}>
+                  <img src="/icons/person.svg" alt="" width="32" height="32" className="icon" />&nbsp;
                 {this.context.user.info?.name}
-              </Nav.Link>
+                </Nav.Link>
                 <Nav.Item>
                   <form className="form-inline" onSubmit={this.doLogout}>
                     <button className="btn nav-link" style={{ border: 0, marginTop: "0.22rem", transition: "none" }} type="submit"><Translated str="logout" /></button>

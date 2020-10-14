@@ -23,6 +23,7 @@ type ManageState = {
   orgs: any[];
   suggestedOrgs: any[];
   newOrgId2: string;
+  messageToMembers: string;
 };
 
 class Manage extends PureComponent<{}, ManageState> {
@@ -45,6 +46,7 @@ class Manage extends PureComponent<{}, ManageState> {
       orgs: [],
       suggestedOrgs: [],
       newOrgId2: "",
+      messageToMembers: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -57,6 +59,7 @@ class Manage extends PureComponent<{}, ManageState> {
     this.joinOrg = this.joinOrg.bind(this);
     this.joinOrg2 = this.joinOrg2.bind(this);
     this.loadState = this.loadState.bind(this);
+    this.messageMembers = this.messageMembers.bind(this);
   }
 
   componentDidMount() {
@@ -153,6 +156,19 @@ class Manage extends PureComponent<{}, ManageState> {
       undefined,
       (_) => {
         this.setState({ newMemberId: "" }, this.loadMembers);
+      }
+    );
+  }
+
+  messageMembers(e: FormEvent) {
+    e.preventDefault();
+
+    fetchJson(
+      `/s/club/message-members/${this.state.id}`,
+      "POST",
+      { text: this.state.messageToMembers },
+      (_) => {
+        this.setState({ messageToMembers: "" });
       }
     );
   }
@@ -483,6 +499,26 @@ class Manage extends PureComponent<{}, ManageState> {
               ))}
           </tbody>
         </table>
+
+        <h3 className="mt-5">
+          <Translated str="messageMembers" />
+        </h3>
+        <form className="mt-4" onSubmit={this.messageMembers}>
+          <div className="form-group">
+            <textarea
+              id="messageToMembers"
+              name="messageToMembers"
+              required
+              value={this.state.messageToMembers}
+              onChange={this.handleChange}
+              className="w-50 form-control"
+            />
+            
+            <button className="btn btn-primary" type="submit">
+              <Translated str="send" />
+            </button>
+          </div>
+        </form>
 
         <h3 className="mt-5">
           <Translated str="addMember" />
