@@ -14,6 +14,7 @@ import { Chess as OpsChess } from 'chessops';
 import { parseFen } from 'chessops/fen';
 import { chessgroundDests } from "chessops/compat";
 import { Howl, Howler } from 'howler';
+import { Modal, Button } from "react-bootstrap";
 
 export function numToSquare(num: number) {
   let file = "abcdefgh"[num % 8];
@@ -120,6 +121,7 @@ type PlayState = {
   lastMove?: string[]
   check: boolean
   shapes: any[]
+  showOutcomePopup: boolean
 }
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -158,7 +160,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       outcome: GameOutcome.Ongoing,
       game: new Chess(),
       check: false,
-      shapes: []
+      shapes: [],
+      showOutcomePopup: false,
     };
     this.groundRef = React.createRef();
     this.whiteClockRef = React.createRef();
@@ -180,6 +183,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.doPromotion = this.doPromotion.bind(this);
     this.cancelPromotion = this.cancelPromotion.bind(this);
     this.clockTick = this.clockTick.bind(this);
+    this.getWhoWon = this.getWhoWon.bind(this);
   }
 
   componentDidMount() {
@@ -280,6 +284,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       }
 
       newState.shapes = this.groundRef.current?.cg?.state?.drawable?.shapes || [];
+      newState.showOutcomePopup = true;
 
       this.setState(newState);
       this.moveTableRef.current?.scrollIntoView(false);
@@ -317,6 +322,18 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         promotionTempSource: source,
         promotionTempTarget: target
       })
+    }
+  }
+
+  getWhoWon() {
+    if (this.state.outcome === GameOutcome.WhiteWins) {
+      return Translated.byKey("whiteWon");
+    } else if (this.state.outcome === GameOutcome.BlackWins) {
+      return Translated.byKey("blackWon");
+    } else if (this.state.outcome === GameOutcome.Draw) {
+      return Translated.byKey("draw");
+    } else {
+      return Translated.byKey("finished");
     }
   }
 
@@ -515,6 +532,30 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         </div>
 
         <Websocket url={"wss://" + window.location.host + "/socket/" + this.gameId} onMessage={this.onWsMessage} />
+
+        <Modal
+          show={this.state.showOutcomePopup}
+          onHide={() => this.setState({ showOutcomePopup: false })}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.getWhoWon()}</Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => this.setState({ showOutcomePopup: false })}
+            >
+              {Translated.byKey("reviewGame")}
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => window.location.assign("/game/lobby")}
+            >
+              {Translated.byKey("nextGame")}
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </>
     );
   }
