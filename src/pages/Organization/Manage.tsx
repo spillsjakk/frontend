@@ -181,7 +181,6 @@ class Manage extends PureComponent<{}, ManageState> {
               id="profile_picture"
               className="form-control w-50"
               name="profile_picture"
-              required
               value={this.state.profile_picture}
               onChange={this.handleChange}
               placeholder={Translated.byKey("profilePicturePlaceholder")}
