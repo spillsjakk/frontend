@@ -271,6 +271,7 @@ const STRINGS = {
     deleteTournament: "Delete Tournament",
     confirmTournamentDeletion: "Do you delete the tournament?",
     profilePicturePlaceholder: "Please fill in the url of the image",
+    boardCards: "Board cards"
   },
   NO: {
     login: "Logg inn",

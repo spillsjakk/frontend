@@ -83,7 +83,7 @@ function outcomeToStr(outcome: number | undefined) {
 class View extends Component<
   RouteComponentProps<TournamentParams>,
   TournamentState
-> {
+  > {
   static contextType = UserContext;
   context!: React.ContextType<typeof UserContext>;
   pairingDateRef: RefObject<HTMLInputElement>;
@@ -131,8 +131,8 @@ class View extends Component<
           const titleSpan = row.title ? (
             <span className="title">{row.title}</span>
           ) : (
-            <></>
-          );
+              <></>
+            );
           if (row.eliminated) {
             return (
               <s>
@@ -157,8 +157,8 @@ class View extends Component<
           return row.team ? (
             <Link to={"/team/view/" + row.team}>{row.team_name}</Link>
           ) : (
-            <></>
-          );
+              <></>
+            );
         },
       },
       { dataField: "fide_rating", text: "rating", sort: true, headerFormatter },
@@ -479,10 +479,10 @@ class View extends Component<
           {info.tournament.kind !== "TeamKnockout"
             ? outcomeToStr(pairing.outcome)
             : outcomeToStr(
-                info.tko_separation?.[
-                  pairing.round.toString() + "_" + pairing.white
-                ].game1
-              )}
+              info.tko_separation?.[
+                pairing.round.toString() + "_" + pairing.white
+              ].game1
+            )}
         </td>
       );
 
@@ -565,10 +565,10 @@ class View extends Component<
 
       const games =
         info.games[
-          pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
+        pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
         ] ||
         info.games[
-          pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
+        pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
         ] ||
         [];
       const sortedGames = games.sort((a, b) =>
@@ -670,6 +670,16 @@ class View extends Component<
     const pairingPanes = pairingRows.map((r, i) => {
       return (
         <Tab.Pane eventKey={"round-tab-" + (i + 1).toString()} key={i}>
+          {this.context.user.authenticated &&
+            (this.context.user.info?.id === info.tournament.organizer ||
+              (this.context.user.info?.level || 0) >=
+                Levels.OrganizationManager) && (
+              <div className="mt-4">
+                <a href={"/s/tournament/printout/boardcards/" + info.tournament.id + "/" + (i + 1).toString()}>
+                  <Translated str="boardCards" />
+                </a>
+              </div>
+            )}
           <table className="table table-striped mt-4 dense pairing-table">
             <thead>
               <tr>
@@ -789,23 +799,23 @@ class View extends Component<
                   ))}
                 </form>
               ) : (
-                <form>
-                  <Button
-                    className="p-3"
-                    variant="primary"
-                    onClick={this.onClickSelfLeave}
-                  >
-                    <Translated str="leave" />
-                  </Button>
-                </form>
-              )}
+                  <form>
+                    <Button
+                      className="p-3"
+                      variant="primary"
+                      onClick={this.onClickSelfLeave}
+                    >
+                      <Translated str="leave" />
+                    </Button>
+                  </form>
+                )}
             </>
           )}
 
         {this.context.user.authenticated &&
           (this.context.user.info?.id === info.tournament.organizer ||
             (this.context.user.info?.level || 0) >=
-              Levels.OrganizationManager) && (
+            Levels.OrganizationManager) && (
             <div className="mt-4">
               <a href={"/s/tournament/printout/results/" + info.tournament.id}>
                 <Translated str="resultPrintouts" />

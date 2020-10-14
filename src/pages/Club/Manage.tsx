@@ -5,6 +5,7 @@ import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 import { Link } from "react-router-dom";
 import FederationDropdown from "../../components/FederationDropdown";
+import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 
 type ManageState = {
   exists: boolean;
@@ -333,30 +334,30 @@ class Manage extends PureComponent<{}, ManageState> {
                 onChange={this.handleChange}
               />
             ) : (
-              <select
-                id="region"
-                className="form-control w-25"
-                required
-                name="region"
-                value={this.state.region}
-                onChange={this.handleChange}
-              >
-                <option value=""></option>
-                <option value="Oslo">Oslo</option>
-                <option value="Rogaland">Rogaland</option>
-                <option value="Møre og Romsdal">Møre og Romsdal</option>
-                <option value="Nordland">Nordland</option>
-                <option value="Viken">Viken</option>
-                <option value="Innlandet">Innlandet</option>
-                <option value="Vestfold og Telemark">
-                  Vestfold og Telemark
+                <select
+                  id="region"
+                  className="form-control w-25"
+                  required
+                  name="region"
+                  value={this.state.region}
+                  onChange={this.handleChange}
+                >
+                  <option value=""></option>
+                  <option value="Oslo">Oslo</option>
+                  <option value="Rogaland">Rogaland</option>
+                  <option value="Møre og Romsdal">Møre og Romsdal</option>
+                  <option value="Nordland">Nordland</option>
+                  <option value="Viken">Viken</option>
+                  <option value="Innlandet">Innlandet</option>
+                  <option value="Vestfold og Telemark">
+                    Vestfold og Telemark
                 </option>
-                <option value="Agder">Agder</option>
-                <option value="Vestland">Vestland</option>
-                <option value="Trøndelag">Trøndelag</option>
-                <option value="Troms og Finnmark">Troms og Finnmark</option>
-              </select>
-            )}
+                  <option value="Agder">Agder</option>
+                  <option value="Vestland">Vestland</option>
+                  <option value="Trøndelag">Trøndelag</option>
+                  <option value="Troms og Finnmark">Troms og Finnmark</option>
+                </select>
+              )}
           </div>
           <div className="mt-4">
             <button type="submit" className="btn btn-primary">
@@ -520,6 +521,18 @@ class Manage extends PureComponent<{}, ManageState> {
                     name={member.first_name + " " + member.last_name}
                     ghost={false}
                   />
+                  {member.has_email && (
+                    <>
+                      &nbsp;&nbsp;
+                      <img
+                        src="/icons/envelope.svg"
+                        alt=""
+                        className="icon"
+                        width="32"
+                        height="32"
+                      />
+                    </>
+                  )}
                 </td>
                 <td>
                   <a
