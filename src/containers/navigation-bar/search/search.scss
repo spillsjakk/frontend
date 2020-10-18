@@ -1,0 +1,18 @@
+#search-container {
+  margin-left: 30px;
+  position: relative;
+
+  input {
+    border: 2px solid black;
+    border-radius: 10px;
+    outline: none;
+    padding: 5px 10px;
+    background-color: #B5BDC5;
+  }
+
+  img {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}

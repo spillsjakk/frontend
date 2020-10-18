@@ -29,12 +29,14 @@ import OrgStatistics from "./pages/Organization/Statistics";
 import OrgView from "./pages/Organization/View";
 import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
+import { Home as NewHome } from "./pages/Home/index";
 import Inbox from "./pages/Inbox";
 
 const Main = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home}></Route>
+      <Route exact path="/new" component={NewHome}></Route>
       <Route exact path="/about" component={About}></Route>
       <Route exact path="/user-guide" component={UserGuide}></Route>
       <Route exact path="/contact" component={Contact}></Route>

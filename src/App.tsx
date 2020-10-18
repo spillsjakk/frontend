@@ -3,7 +3,7 @@ import Main from "./Main";
 
 import { Container } from "react-bootstrap";
 
-import Menu from "./components/Menu";
+import { NavigationBar } from "./containers/navigation-bar/index";
 import LangContext from "./components/LangContext";
 import { UserContext, UserContextDataType } from "./components/UserContext";
 
@@ -49,8 +49,9 @@ class App extends Component<{}, AppState> {
       <>
         <LangContext.Provider value={langProviderValue}>
           <UserContext.Provider value={userProviderValue}>
+            <NavigationBar />
+
             <Container id="main-container">
-              <Menu />
               <GameNotifier />
               <Container id="content-container">
                 <Main />
