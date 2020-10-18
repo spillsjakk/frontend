@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import "./logo.scss";
+import "./style.scss";
 
 const Logo: FunctionComponent<{}> = () => {
   return (

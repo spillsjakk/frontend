@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import "./search.scss";
+import "./style.scss";
 
 const SearchInput: FunctionComponent<{}> = () => {
   return (
