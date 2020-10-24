@@ -281,10 +281,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         } else {
           newState.outcome = GameOutcome.Draw;
         }
+        newState.showOutcomePopup = true;
       }
 
       newState.shapes = this.groundRef.current?.cg?.state?.drawable?.shapes || [];
-      newState.showOutcomePopup = true;
 
       this.setState(newState);
       this.moveTableRef.current?.scrollIntoView(false);
