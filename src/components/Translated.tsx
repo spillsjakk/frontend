@@ -366,7 +366,6 @@ const STRINGS = {
     draw: "the game was a draw",
     reviewGame: "Review Game",
     nextGame: "Next Game",
-    members: "medlemmer",
     suggestedAccounts: "foreslåtte kontoer",
     addOtherAccount: "legg til en konto",
     accountDoesNotExist: "kontoen eksisterer ikke",
