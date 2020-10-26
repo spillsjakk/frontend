@@ -399,7 +399,6 @@ const STRINGS = {
     addClub: "Legg til en Klubb",
     clubs: "Klubber",
     inbox: "Innboks",
-    continueWithoutTemplate: "Fortsett uten å velge en mal",
     seconds: "Sekunder",
     individual: "Individuell",
     allowSelfJoining: "Tillat egenpåmelding",
