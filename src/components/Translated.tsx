@@ -422,8 +422,8 @@ const STRINGS = {
     pairings: "Rundeoppsett",
     resign: "Gi opp",
     offerDraw: "Tilby remis",
-    yes: "Ja"
-    no: "Nei"    
+    yes: "Ja",
+    no: "Nei",    
   },
 };
 
