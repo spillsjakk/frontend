@@ -286,7 +286,6 @@ const STRINGS = {
     contact: "Kontakt",
     about: "Om",
     productDescription: "SpillSjakk: sjakkturneringer over nett og brett!",
-    buildTournament: "Lag turnering",
     editTournament: "Edit the tournament details",
     findTournament: "Finn turnering",
     tournamentName: "Turneringsnavn",
