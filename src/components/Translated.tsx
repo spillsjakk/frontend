@@ -384,7 +384,6 @@ const STRINGS = {
     carousel4Desc:
       "Turneringsledere velger om resultater skal offentliggjøres eller ikke.",
     continueWithoutTemplate: "Fortsett uten å velge en mal",
-    startsIn: "Starter om",
     deleteTournament: "Delete Tournament",
     confirmTournamentDeletion: "Do you delete the tournament?",
     profilePicturePlaceholder: "Please fill in the url of the image",
