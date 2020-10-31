@@ -275,7 +275,8 @@ const STRINGS = {
     boardCards: "Board cards",
     inbox: "Inbox",
     messageMembers: "Message members",
-    send: "Send"
+    send: "Send",
+    manageRoundsAndPairings: "Manage Rounds And Pairings",
   },
   NO: {
     login: "Logg inn",
@@ -420,7 +421,8 @@ const STRINGS = {
     resign: "Gi opp",
     offerDraw: "Tilby remis",
     yes: "Ja",
-    no: "Nei",    
+    no: "Nei",
+    manageRoundsAndPairings: "",
   },
 };
 
