@@ -175,6 +175,7 @@ const STRINGS = {
     viewGame: "View game",
     rawPgn: "Raw PGN",
     teamKonrad: "Team Konrad",
+    manualPairings: "Manual Pairings",
     firstName: "First name",
     lastName: "Last name",
     downloadAsCsv: "Download as CSV",
