@@ -4,7 +4,9 @@ export interface Pairing {
   tournament: string;
   round: number;
   white: string;
+  white_name: string;
   black: string;
+  black_name: string;
 }
 
 export interface TournamentPairingContext {

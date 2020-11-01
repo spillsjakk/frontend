@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import { useTournamentPairing } from "../../context/tournament-pairing";
 import { useTournamentRound } from "../../context/tournament-round";
+import { Pairings } from "./pairings";
 
 const Panel: FunctionComponent<{}> = () => {
   const [whiteAccountId, setWhiteAccountId] = useState("");
@@ -18,9 +19,12 @@ const Panel: FunctionComponent<{}> = () => {
   }
   return (
     <>
-      {Array.isArray(rounds) && rounds.length && (
+      {Array.isArray(rounds) && rounds.length > 0 && (
         <>
-          <Tabs defaultActiveKey={rounds[0].number.toString()}>
+          <Tabs
+            defaultActiveKey={rounds[0].number.toString()}
+            transition={false}
+          >
             {rounds.map((round) => (
               <Tab
                 key={round.number}
@@ -37,6 +41,7 @@ const Panel: FunctionComponent<{}> = () => {
                     onChange={(e) => setBlackAccountId(e.target.value)}
                   />
                   <button type="submit">Add Pairing</button>
+                  <Pairings round={round.number} />
                 </form>
               </Tab>
             ))}
