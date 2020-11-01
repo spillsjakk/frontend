@@ -29,6 +29,9 @@ import "./View.css";
 import { Timestamp } from "../../components/Timestamp";
 import FederationDisplay from "../../components/FederationDisplay";
 import { Countdown } from "../../components/count-down/index";
+import { ManageRoundsAndPairings } from "../../containers/manage-rounds-and-pairings/index";
+import { TournamentProvider } from "../../context/tournament";
+import { TournamentParticipantsProvider } from "../../context/tournament-participants";
 
 const { SearchBar } = Search;
 
@@ -83,7 +86,7 @@ function outcomeToStr(outcome: number | undefined) {
 class View extends Component<
   RouteComponentProps<TournamentParams>,
   TournamentState
-  > {
+> {
   static contextType = UserContext;
   context!: React.ContextType<typeof UserContext>;
   pairingDateRef: RefObject<HTMLInputElement>;
@@ -131,8 +134,8 @@ class View extends Component<
           const titleSpan = row.title ? (
             <span className="title">{row.title}</span>
           ) : (
-              <></>
-            );
+            <></>
+          );
           if (row.eliminated) {
             return (
               <s>
@@ -157,8 +160,8 @@ class View extends Component<
           return row.team ? (
             <Link to={"/team/view/" + row.team}>{row.team_name}</Link>
           ) : (
-              <></>
-            );
+            <></>
+          );
         },
       },
       { dataField: "fide_rating", text: "rating", sort: true, headerFormatter },
@@ -479,10 +482,10 @@ class View extends Component<
           {info.tournament.kind !== "TeamKnockout"
             ? outcomeToStr(pairing.outcome)
             : outcomeToStr(
-              info.tko_separation?.[
-                pairing.round.toString() + "_" + pairing.white
-              ].game1
-            )}
+                info.tko_separation?.[
+                  pairing.round.toString() + "_" + pairing.white
+                ].game1
+              )}
         </td>
       );
 
@@ -565,10 +568,10 @@ class View extends Component<
 
       const games =
         info.games[
-        pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
+          pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
         ] ||
         info.games[
-        pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
+          pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
         ] ||
         [];
       const sortedGames = games.sort((a, b) =>
@@ -587,16 +590,18 @@ class View extends Component<
         </td>
       );
 
-      pairingRows[pairing.round - 1].push(
-        <tr key={pairing.white + "_" + pairing.black}>
-          {whiteCell}
-          {outcomeCell}
-          {blackCell}
-          {organizerCells}
-          {onlineCell}
-          {gameLinkCell}
-        </tr>
-      );
+      if (pairingRows[pairing.round - 1]) {
+        pairingRows[pairing.round - 1].push(
+          <tr key={pairing.white + "_" + pairing.black}>
+            {whiteCell}
+            {outcomeCell}
+            {blackCell}
+            {organizerCells}
+            {onlineCell}
+            {gameLinkCell}
+          </tr>
+        );
+      }
 
       if (info.tournament.kind === "TeamKnockout") {
         const outcomeCell2 = (
@@ -654,14 +659,16 @@ class View extends Component<
           </>
         );
 
-        pairingRows[pairing.round - 1].push(
-          <tr key={"-" + pairing.white + "_" + pairing.black}>
-            {blackCell}
-            {outcomeCell2}
-            {whiteCell}
-            {organizerCells2}
-          </tr>
-        );
+        if (pairingRows[pairing.round - 1]) {
+          pairingRows[pairing.round - 1].push(
+            <tr key={"-" + pairing.white + "_" + pairing.black}>
+              {blackCell}
+              {outcomeCell2}
+              {whiteCell}
+              {organizerCells2}
+            </tr>
+          );
+        }
       }
     }
 
@@ -675,7 +682,14 @@ class View extends Component<
               (this.context.user.info?.level || 0) >=
                 Levels.OrganizationManager) && (
               <div className="mt-4">
-                <a href={"/s/tournament/printout/boardcards/" + info.tournament.id + "/" + (i + 1).toString()}>
+                <a
+                  href={
+                    "/s/tournament/printout/boardcards/" +
+                    info.tournament.id +
+                    "/" +
+                    (i + 1).toString()
+                  }
+                >
                   <Translated str="boardCards" />
                 </a>
               </div>
@@ -713,92 +727,95 @@ class View extends Component<
     });
 
     return (
-      <>
-        <Helmet>
-          <title>
-            {title(this.state.info?.tournament.name || "tournament")}
-          </title>
-        </Helmet>
+      <TournamentProvider value={{ tournament: this.state.info?.tournament }}>
+        <TournamentParticipantsProvider
+          value={{ participants: this.state.info?.participants || [] }}
+        >
+          <Helmet>
+            <title>
+              {title(this.state.info?.tournament.name || "tournament")}
+            </title>
+          </Helmet>
 
-        <h1 className="mt-4 p-3">{this.state.info?.tournament.name}</h1>
+          <h1 className="mt-4 p-3">{this.state.info?.tournament.name}</h1>
 
-        <p
-          className="mt-4"
-          id="description"
-          style={{ whiteSpace: "pre-line" }}
-          dangerouslySetInnerHTML={{
-            __html: this.state.info?.tournament.description || "",
-          }}
-        ></p>
+          <p
+            className="mt-4"
+            id="description"
+            style={{ whiteSpace: "pre-line" }}
+            dangerouslySetInnerHTML={{
+              __html: this.state.info?.tournament.description || "",
+            }}
+          ></p>
 
-        {this.context.user.authenticated &&
-          this.context.user.info?.id === info.tournament.organizer &&
-          info.pairings.length === 0 && (
-            <form>
-              <Button
-                variant="primary"
-                className="p-3 mb-3"
-                disabled={!info.can_start}
-                onClick={this.onPressStart}
-              >
-                <Translated str="start" />
-              </Button>
-              <Link
-                className="p-3 btn btn-primary ml-5 mb-3"
-                to={"/tournament/players/" + info.tournament.id}
-              >
-                <Translated str="manageParticipants" />
-              </Link>
-              <Link
-                className="p-3 btn btn-primary ml-5 mb-3"
-                to={"/tournament/edit/" + info.tournament.id}
-              >
-                <Translated str="editTournament" />
-              </Link>
-              {!info.can_start && (
-                <div
-                  className="p-3 btn btn-danger ml-5 mb-3"
-                  onClick={() => this.onDeleteTournament()}
+          {this.context.user.authenticated &&
+            this.context.user.info?.id === info.tournament.organizer &&
+            info.pairings.length === 0 && (
+              <form>
+                <Button
+                  variant="primary"
+                  className="p-3 mb-3"
+                  disabled={!info.can_start}
+                  onClick={this.onPressStart}
                 >
-                  <Translated str="deleteTournament" />
-                </div>
-              )}
-              {info.managed_teams &&
-                info.managed_teams?.map((t) => (
-                  <Link
-                    key={t.id}
-                    className="p-3 btn btn-primary ml-5 mb-3"
-                    to={
-                      "/tournament/manage-team/" +
-                      info.tournament.id +
-                      "/" +
-                      t.id
-                    }
+                  <Translated str="start" />
+                </Button>
+                <Link
+                  className="p-3 btn btn-primary ml-5 mb-3"
+                  to={"/tournament/players/" + info.tournament.id}
+                >
+                  <Translated str="manageParticipants" />
+                </Link>
+                <Link
+                  className="p-3 btn btn-primary ml-5 mb-3"
+                  to={"/tournament/edit/" + info.tournament.id}
+                >
+                  <Translated str="editTournament" />
+                </Link>
+                {!info.can_start && (
+                  <div
+                    className="p-3 btn btn-danger ml-5 mb-3"
+                    onClick={() => this.onDeleteTournament()}
                   >
-                    <Translated str="manage" /> &quot;{t.name}&quot;
-                  </Link>
-                ))}
-            </form>
-          )}
-
-        {this.context.user.authenticated &&
-          info.tournament.self_joinable &&
-          info.pairings.length === 0 && (
-            <>
-              {!info.is_participating ? (
-                <form>
-                  {info.self_join_teams?.map((t) => (
-                    <Button
-                      className="p-3 mb-3 mr-5"
+                    <Translated str="deleteTournament" />
+                  </div>
+                )}
+                {info.managed_teams &&
+                  info.managed_teams?.map((t) => (
+                    <Link
                       key={t.id}
-                      variant="primary"
-                      onClick={() => this.onClickSelfJoin(t.id)}
+                      className="p-3 btn btn-primary ml-5 mb-3"
+                      to={
+                        "/tournament/manage-team/" +
+                        info.tournament.id +
+                        "/" +
+                        t.id
+                      }
                     >
-                      <Translated str="joinFor" /> &quot;{t.name}&quot;
-                    </Button>
+                      <Translated str="manage" /> &quot;{t.name}&quot;
+                    </Link>
                   ))}
-                </form>
-              ) : (
+              </form>
+            )}
+
+          {this.context.user.authenticated &&
+            info.tournament.self_joinable &&
+            info.pairings.length === 0 && (
+              <>
+                {!info.is_participating ? (
+                  <form>
+                    {info.self_join_teams?.map((t) => (
+                      <Button
+                        className="p-3 mb-3 mr-5"
+                        key={t.id}
+                        variant="primary"
+                        onClick={() => this.onClickSelfJoin(t.id)}
+                      >
+                        <Translated str="joinFor" /> &quot;{t.name}&quot;
+                      </Button>
+                    ))}
+                  </form>
+                ) : (
                   <form>
                     <Button
                       className="p-3"
@@ -809,170 +826,156 @@ class View extends Component<
                     </Button>
                   </form>
                 )}
-            </>
-          )}
-
-        {this.context.user.authenticated &&
-          (this.context.user.info?.id === info.tournament.organizer ||
-            (this.context.user.info?.level || 0) >=
-            Levels.OrganizationManager) && (
-            <div className="mt-4">
-              <a href={"/s/tournament/printout/results/" + info.tournament.id}>
-                <Translated str="resultPrintouts" />
-              </a>
-              &nbsp;|&nbsp;
-              <a href={"/s/tournament/printout/pairings/" + info.tournament.id}>
-                <Translated str="pairingPrintouts" />
-              </a>
-            </div>
-          )}
-
-        <div className="mt-5">
-          <Countdown time={info.tournament.current_online_pairing_time} />
-          <Translated str="nextOnlinePairingWillBeAt" />:{" "}
-          <Timestamp time={info.tournament.current_online_pairing_time} />
-          {this.context.user.authenticated &&
-            this.context.user.info?.id === info.tournament.organizer && (
-              <form onSubmit={this.onUpdatePairingTime}>
-                <label htmlFor="next_pairing_date">
-                  <Translated str="changeNextPairingDateTime" /> (hh:mm,{" "}
-                  <Translated str="localTime" />
-                  !):
-                </label>
-                <input
-                  ref={this.pairingDateRef}
-                  type="date"
-                  id="next_pairing_date"
-                  className="form-control"
-                  name="next_pairing_date"
-                  style={{ display: "inline", width: "13%" }}
-                  required
-                  min="2000-01-01"
-                  max="2099-12-31"
-                />
-                <input
-                  ref={this.pairingHourRef}
-                  type="input"
-                  className="form-control"
-                  name="next_pairing_time"
-                  style={{ display: "inline", width: "13%" }}
-                  required
-                  pattern="\d\d?:\d\d"
-                />
-                <button className="p-2 btn btn-primary mb-1" type="submit">
-                  <Translated str="update" />
-                </button>
-              </form>
-            )}
-        </div>
-
-        <div className="d-flex flex-row mt-5 justify-content-around">
-          <div>
-            <img
-              src="/icons/bullseye.svg"
-              alt=""
-              width="28"
-              height="28"
-              className="icon"
-            />
-            &nbsp;
-            <Translated
-              str={
-                info.tournament.kind.charAt(0).toLowerCase() +
-                info.tournament.kind.slice(1)
-              }
-            />
-            {info.tournament.rounds && (
-              <>
-                &nbsp;- {info.tournament.rounds}&nbsp;
-                <Translated str="rounds" />
               </>
             )}
-          </div>
-          <div>
-            <img
-              src="/icons/calendar.svg"
-              alt=""
-              width="28"
-              height="28"
-              className="icon"
-            />
-            &nbsp;
-            {info.tournament.start_date} - {info.tournament.end_date}
-          </div>
-          <div>
-            <img
-              src="/icons/person.svg"
-              alt=""
-              width="28"
-              height="28"
-              className="icon"
-            />
-            &nbsp;
-            <UserLink
-              id={info.tournament.organizer}
-              name={info.organizer_first_name + " " + info.organizer_last_name}
-              ghost={false}
-            />
-          </div>
-        </div>
 
-        <h3 className="mt-5 mb-4">
-          <Translated str="standings" />
-        </h3>
-
-        <Tab.Container defaultActiveKey="standings-i-tab">
-          <Nav className="nav-tabs">
-            <Nav.Item>
-              <Nav.Link eventKey="standings-i-tab">
-                <Translated str="individual" />
-              </Nav.Link>
-            </Nav.Item>
-            {info.is_team_tournament && (
-              <Nav.Item>
-                <Nav.Link eventKey="standings-t-tab">
-                  <Translated str="team" />
-                </Nav.Link>
-              </Nav.Item>
+          {this.context.user.authenticated &&
+            (this.context.user.info?.id === info.tournament.organizer ||
+              (this.context.user.info?.level || 0) >=
+                Levels.OrganizationManager) && (
+              <div className="mt-4">
+                <a
+                  href={"/s/tournament/printout/results/" + info.tournament.id}
+                >
+                  <Translated str="resultPrintouts" />
+                </a>
+                &nbsp;|&nbsp;
+                <a
+                  href={"/s/tournament/printout/pairings/" + info.tournament.id}
+                >
+                  <Translated str="pairingPrintouts" />
+                </a>
+              </div>
             )}
-          </Nav>
-          <Tab.Content>
-            <Tab.Pane eventKey="standings-i-tab">
-              <ToolkitProvider
-                keyField="account"
-                data={info.participants}
-                columns={
-                  info.tournament.kind === "SwissDutch"
-                    ? this.participantColumns.concat(this.tbColumns)
-                    : this.participantColumns
+
+          <div className="mt-5">
+            <Countdown time={info.tournament.current_online_pairing_time} />
+            <Translated str="nextOnlinePairingWillBeAt" />:{" "}
+            <Timestamp time={info.tournament.current_online_pairing_time} />
+            {this.context.user.authenticated &&
+              this.context.user.info?.id === info.tournament.organizer && (
+                <form onSubmit={this.onUpdatePairingTime}>
+                  <label htmlFor="next_pairing_date">
+                    <Translated str="changeNextPairingDateTime" /> (hh:mm,{" "}
+                    <Translated str="localTime" />
+                    !):
+                  </label>
+                  <input
+                    ref={this.pairingDateRef}
+                    type="date"
+                    id="next_pairing_date"
+                    className="form-control"
+                    name="next_pairing_date"
+                    style={{ display: "inline", width: "13%" }}
+                    required
+                    min="2000-01-01"
+                    max="2099-12-31"
+                  />
+                  <input
+                    ref={this.pairingHourRef}
+                    type="input"
+                    className="form-control"
+                    name="next_pairing_time"
+                    style={{ display: "inline", width: "13%" }}
+                    required
+                    pattern="\d\d?:\d\d"
+                  />
+                  <button className="p-2 btn btn-primary mb-1" type="submit">
+                    <Translated str="update" />
+                  </button>
+                </form>
+              )}
+          </div>
+
+          <div className="d-flex flex-row mt-5 justify-content-around">
+            <div>
+              <img
+                src="/icons/bullseye.svg"
+                alt=""
+                width="28"
+                height="28"
+                className="icon"
+              />
+              &nbsp;
+              <Translated
+                str={
+                  info.tournament.kind.charAt(0).toLowerCase() +
+                  info.tournament.kind.slice(1)
                 }
-                bootstrap4={true}
-                search={{ onColumnMatch: this.onParticipantsColumnMatch }}
-              >
-                {(props) => (
+              />
+              {info.tournament.rounds &&
+                info.tournament.kind !== "ManualPairing" && (
                   <>
-                    <SearchBar {...props.searchProps} />
-                    <BootstrapTable
-                      {...props.baseProps}
-                      pagination={paginationFactory({})}
-                    />
+                    &nbsp;- {info.tournament.rounds}&nbsp;
+                    <Translated str="rounds" />
                   </>
                 )}
-              </ToolkitProvider>
-            </Tab.Pane>
+            </div>
+            <div>
+              <img
+                src="/icons/calendar.svg"
+                alt=""
+                width="28"
+                height="28"
+                className="icon"
+              />
+              &nbsp;
+              {info.tournament.start_date} - {info.tournament.end_date}
+            </div>
+            <div>
+              <img
+                src="/icons/person.svg"
+                alt=""
+                width="28"
+                height="28"
+                className="icon"
+              />
+              &nbsp;
+              <UserLink
+                id={info.tournament.organizer}
+                name={
+                  info.organizer_first_name + " " + info.organizer_last_name
+                }
+                ghost={false}
+              />
+            </div>
+          </div>
 
-            {info.is_team_tournament && (
-              <Tab.Pane eventKey="standings-t-tab">
+          {this.state.info?.tournament?.kind === "ManualPairing" && (
+            <ManageRoundsAndPairings />
+          )}
+
+          <h3 className="mt-5 mb-4">
+            <Translated str="standings" />
+          </h3>
+
+          <Tab.Container defaultActiveKey="standings-i-tab">
+            <Nav className="nav-tabs">
+              <Nav.Item>
+                <Nav.Link eventKey="standings-i-tab">
+                  <Translated str="individual" />
+                </Nav.Link>
+              </Nav.Item>
+              {info.is_team_tournament && (
+                <Nav.Item>
+                  <Nav.Link eventKey="standings-t-tab">
+                    <Translated str="team" />
+                  </Nav.Link>
+                </Nav.Item>
+              )}
+            </Nav>
+            <Tab.Content>
+              <Tab.Pane eventKey="standings-i-tab">
                 <ToolkitProvider
-                  keyField="team_id"
-                  data={info.teams}
+                  keyField="account"
+                  data={info.participants}
                   columns={
-                    info.ssw
-                      ? this.teamParticipantColumns.concat([this.sswColumn])
-                      : this.teamParticipantColumns
+                    info.tournament.kind === "SwissDutch"
+                      ? this.participantColumns.concat(this.tbColumns)
+                      : this.participantColumns
                   }
                   bootstrap4={true}
-                  search
+                  search={{ onColumnMatch: this.onParticipantsColumnMatch }}
                 >
                   {(props) => (
                     <>
@@ -985,24 +988,50 @@ class View extends Component<
                   )}
                 </ToolkitProvider>
               </Tab.Pane>
-            )}
-          </Tab.Content>
-        </Tab.Container>
 
-        {info.pairings.length !== 0 && (
-          <>
-            <h3 className="mt-4">
-              <Translated str="pairings" />
-            </h3>
-            <Tab.Container
-              defaultActiveKey={"round-tab-" + pairingPanes.length.toString()}
-            >
-              {pairingNav}
-              <Tab.Content>{pairingPanes}</Tab.Content>
-            </Tab.Container>
-          </>
-        )}
-      </>
+              {info.is_team_tournament && (
+                <Tab.Pane eventKey="standings-t-tab">
+                  <ToolkitProvider
+                    keyField="team_id"
+                    data={info.teams}
+                    columns={
+                      info.ssw
+                        ? this.teamParticipantColumns.concat([this.sswColumn])
+                        : this.teamParticipantColumns
+                    }
+                    bootstrap4={true}
+                    search
+                  >
+                    {(props) => (
+                      <>
+                        <SearchBar {...props.searchProps} />
+                        <BootstrapTable
+                          {...props.baseProps}
+                          pagination={paginationFactory({})}
+                        />
+                      </>
+                    )}
+                  </ToolkitProvider>
+                </Tab.Pane>
+              )}
+            </Tab.Content>
+          </Tab.Container>
+
+          {info.pairings.length !== 0 && (
+            <>
+              <h3 className="mt-4">
+                <Translated str="pairings" />
+              </h3>
+              <Tab.Container
+                defaultActiveKey={"round-tab-" + pairingPanes.length.toString()}
+              >
+                {pairingNav}
+                <Tab.Content>{pairingPanes}</Tab.Content>
+              </Tab.Container>
+            </>
+          )}
+        </TournamentParticipantsProvider>
+      </TournamentProvider>
     );
   }
 }

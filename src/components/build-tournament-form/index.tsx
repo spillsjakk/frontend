@@ -266,6 +266,20 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
                 <Translated str="teamKonrad" />
               </label>
             </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="kind"
+                id="kind7"
+                value={7}
+                checked={form.kind === 7}
+                onChange={(e) => form.changeKind(7)}
+              />
+              <label className="form-check-label" htmlFor="kind7">
+                <Translated str="manualPairing" />
+              </label>
+            </div>
           </div>
           {![0, 2].includes(form.kind) && (
             <div className="form-group mt-4" id="roundNb-group">
