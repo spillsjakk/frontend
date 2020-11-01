@@ -7,15 +7,17 @@ import Translated from "../../components/Translated";
 
 const ManageRoundsAndPairings: FunctionComponent<{}> = () => {
   return (
-    <WithTournamentRound>
-      <WithTournamentPairing>
-        <h3>
-          <Translated str="manageRoundsAndPairings" />
-        </h3>
-        <AddRound />
-        <Panel />
-      </WithTournamentPairing>
-    </WithTournamentRound>
+    <>
+      <h3>
+        <Translated str="manageRoundsAndPairings" />
+      </h3>
+      <WithTournamentRound>
+        <WithTournamentPairing>
+          <AddRound />
+          <Panel />
+        </WithTournamentPairing>
+      </WithTournamentRound>
+    </>
   );
 };
 export { ManageRoundsAndPairings };

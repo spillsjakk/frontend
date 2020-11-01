@@ -9,12 +9,15 @@ export interface Pairing {
 
 export interface TournamentPairingContext {
   pairings: Array<Pairing>;
-  update: () => void;
+  add: (whiteAccountId: string, blackAccountId: string, round: number) => void;
 }
 
-const TournamentPairingContext: Context<Partial<
-  TournamentPairingContext
->> = React.createContext({});
+const TournamentPairingContext: Context<TournamentPairingContext> = React.createContext(
+  {
+    pairings: [] as Array<Pairing>,
+    add: (whiteAccountId: string, blackAccountId: string, round: number) => {},
+  }
+);
 
 export const TournamentPairingProvider = TournamentPairingContext.Provider;
 export default TournamentPairingContext;

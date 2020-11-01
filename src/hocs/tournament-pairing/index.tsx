@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { fetchJson } from "../../functions";
 import {
   Pairing,
@@ -24,6 +29,41 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
     );
   }
 
+  async function addPairing(body: {
+    whiteAccountId: string;
+    blackAccounntId: string;
+    round: number;
+  }) {
+    fetchJson(
+      `/s/pairings`,
+      "POST",
+      {
+        tournament: tournament?.id,
+        round: body.round,
+        white: body.whiteAccountId,
+        black: body.blackAccounntId,
+        online: true,
+      },
+      (result: Array<Pairing>) => {
+        setPairings(result);
+        fetchPairings();
+      }
+    );
+  }
+
+  const add = useCallback(
+    (whiteAccountId: string, blackAccounntId: string, round: number) => {
+      if (tournament && tournament.id) {
+        addPairing({
+          whiteAccountId,
+          blackAccounntId,
+          round,
+        });
+      }
+    },
+    [tournament, pairings]
+  );
+
   useEffect(() => {
     if (tournament && tournament.id) {
       fetchPairings();
@@ -34,7 +74,7 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
     <TournamentPairingProvider
       value={{
         pairings,
-        update: () => fetchPairings(),
+        add,
       }}
     >
       {children}
