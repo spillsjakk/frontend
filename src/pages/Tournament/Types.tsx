@@ -25,6 +25,7 @@ export type Participant = {
   first_name?: string,
   last_name?: string,
   title?: string,
+  fide_number?: number,
   fide_rating?: number,
   federation?: string,
   score: number,
