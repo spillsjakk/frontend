@@ -1,0 +1,30 @@
+.wrapper {
+  margin-top: 50px;
+}
+
+.heading-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-round-button {
+  margin-left: 20px;
+}
+
+.panel {
+  margin-top: 20px;
+}
+
+.start-date-badge {
+  font-size: 15px;
+  margin: 5px 0px;
+}
+
+.pairing-form {
+  display: flex;
+  margin: 20px 0px;
+}
+
+.pairing-form > input {
+  margin-right: 10px;
+}

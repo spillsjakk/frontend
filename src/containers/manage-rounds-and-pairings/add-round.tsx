@@ -1,17 +1,20 @@
 import React, { FunctionComponent } from "react";
+import { Button } from "react-bootstrap";
+import Translated from "../../components/Translated";
 import { useTournamentRound } from "../../context/tournament-round";
 
 const AddRound: FunctionComponent<{}> = () => {
   const roundContext = useTournamentRound();
   return (
     <>
-      <button
+      <Button
+        variant="primary"
         onClick={() => {
           roundContext.add();
         }}
       >
-        Add round
-      </button>
+        <Translated str="addRound" />
+      </Button>
     </>
   );
 };

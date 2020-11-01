@@ -1,48 +1,44 @@
-import React, { FunctionComponent, useState } from "react";
-import { Tabs, Tab } from "react-bootstrap";
-import { useTournamentPairing } from "../../context/tournament-pairing";
+import React, { FunctionComponent } from "react";
+import { Tabs, Tab, Badge } from "react-bootstrap";
 import { useTournamentRound } from "../../context/tournament-round";
 import { Pairings } from "./pairings";
+import { DeleteButton } from "./delete-button";
+import { AddPairingForm } from "./add-pairing-form";
+import styles from "./style.module.css";
+import Translated from "../../components/Translated";
 
 const Panel: FunctionComponent<{}> = () => {
-  const [whiteAccountId, setWhiteAccountId] = useState("");
-  const [blackAccountId, setBlackAccountId] = useState("");
+  const roundContext = useTournamentRound();
 
-  const pairingContext = useTournamentPairing();
-
-  const { rounds } = useTournamentRound();
-  function onPairingCreate(round: number) {
-    return (e: any) => {
-      e.preventDefault();
-      pairingContext.add(whiteAccountId, blackAccountId, round);
-    };
-  }
   return (
     <>
-      {Array.isArray(rounds) && rounds.length > 0 && (
+      {Array.isArray(roundContext.rounds) && roundContext.rounds.length > 0 && (
         <>
           <Tabs
-            defaultActiveKey={rounds[0].number.toString()}
+            defaultActiveKey={roundContext.rounds[0].number.toString()}
             transition={false}
           >
-            {rounds.map((round) => (
+            {roundContext.rounds.map((round, i) => (
               <Tab
                 key={round.number}
                 eventKey={round.number.toString()}
-                title={round.name}
+                title={
+                  <>
+                    {round.name}
+                    {roundContext.rounds.length - 1 === i && (
+                      <DeleteButton
+                        onClick={() => roundContext.delete()}
+                        tooltip={Translated.byKey("deleteRound")}
+                      />
+                    )}
+                  </>
+                }
               >
-                <form onSubmit={onPairingCreate(round.number)}>
-                  <input
-                    placeholder="Add Player (White)"
-                    onChange={(e) => setWhiteAccountId(e.target.value)}
-                  />
-                  <input
-                    placeholder="Add Player (Black)"
-                    onChange={(e) => setBlackAccountId(e.target.value)}
-                  />
-                  <button type="submit">Add Pairing</button>
-                  <Pairings round={round.number} />
-                </form>
+                <Badge className={styles["start-date-badge"]} variant="info">
+                  {round.start_date}
+                </Badge>
+                <AddPairingForm round={round} />
+                <Pairings round={round.number} />
               </Tab>
             ))}
           </Tabs>

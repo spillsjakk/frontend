@@ -37,8 +37,13 @@ const WithTournamentRound: FunctionComponent = ({ children }) => {
     name: string;
     start_date: string;
   }) {
-    fetchJson(`/s/rounds`, "POST", body, (result: Array<Round>) => {
-      setRounds(result);
+    fetchJson(`/s/rounds`, "POST", body, () => {
+      fetchRounds();
+    });
+  }
+
+  async function deleteRound(body: { tournament: string; number: number }) {
+    fetchJson(`/s/rounds`, "DELETE", body, () => {
       fetchRounds();
     });
   }
@@ -59,6 +64,15 @@ const WithTournamentRound: FunctionComponent = ({ children }) => {
     }
   }, [tournament, rounds]);
 
+  const del = useCallback(() => {
+    if (tournament && tournament.id) {
+      deleteRound({
+        tournament: tournament.id,
+        number: rounds[rounds.length - 1].number,
+      });
+    }
+  }, [tournament, rounds]);
+
   useEffect(() => {
     if (tournament && tournament.id) {
       fetchRounds();
@@ -70,6 +84,7 @@ const WithTournamentRound: FunctionComponent = ({ children }) => {
       value={{
         rounds,
         add,
+        delete: del,
       }}
     >
       {children}
@@ -78,10 +93,11 @@ const WithTournamentRound: FunctionComponent = ({ children }) => {
         onHide={() => setShowAddRoundPopup(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title></Modal.Title>
+          <Modal.Title>
+            <Translated str="fillDateAndTime" />
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Translated str="fillInDateTime" />
           <input
             type="date"
             value={startDate}

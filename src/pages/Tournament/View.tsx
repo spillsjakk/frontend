@@ -589,16 +589,18 @@ class View extends Component<
         </td>
       );
 
-      pairingRows[pairing.round - 1].push(
-        <tr key={pairing.white + "_" + pairing.black}>
-          {whiteCell}
-          {outcomeCell}
-          {blackCell}
-          {organizerCells}
-          {onlineCell}
-          {gameLinkCell}
-        </tr>
-      );
+      if (pairingRows[pairing.round - 1]) {
+        pairingRows[pairing.round - 1].push(
+          <tr key={pairing.white + "_" + pairing.black}>
+            {whiteCell}
+            {outcomeCell}
+            {blackCell}
+            {organizerCells}
+            {onlineCell}
+            {gameLinkCell}
+          </tr>
+        );
+      }
 
       if (info.tournament.kind === "TeamKnockout") {
         const outcomeCell2 = (
@@ -656,14 +658,16 @@ class View extends Component<
           </>
         );
 
-        pairingRows[pairing.round - 1].push(
-          <tr key={"-" + pairing.white + "_" + pairing.black}>
-            {blackCell}
-            {outcomeCell2}
-            {whiteCell}
-            {organizerCells2}
-          </tr>
-        );
+        if (pairingRows[pairing.round - 1]) {
+          pairingRows[pairing.round - 1].push(
+            <tr key={"-" + pairing.white + "_" + pairing.black}>
+              {blackCell}
+              {outcomeCell2}
+              {whiteCell}
+              {organizerCells2}
+            </tr>
+          );
+        }
       }
     }
 
@@ -891,12 +895,13 @@ class View extends Component<
                 info.tournament.kind.slice(1)
               }
             />
-            {info.tournament.rounds && (
-              <>
-                &nbsp;- {info.tournament.rounds}&nbsp;
-                <Translated str="rounds" />
-              </>
-            )}
+            {info.tournament.rounds &&
+              info.tournament.kind !== "ManualPairing" && (
+                <>
+                  &nbsp;- {info.tournament.rounds}&nbsp;
+                  <Translated str="rounds" />
+                </>
+              )}
           </div>
           <div>
             <img

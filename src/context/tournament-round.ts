@@ -9,12 +9,14 @@ export interface Round {
 export interface TournamentRoundContext {
   rounds: Array<Round>;
   add: () => void;
+  delete: () => void;
 }
 
 const TournamentRoundContext: Context<TournamentRoundContext> = React.createContext(
   {
     rounds: [] as Array<Round>,
     add: () => {},
+    delete: () => {},
   }
 );
 

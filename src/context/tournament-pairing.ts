@@ -12,12 +12,22 @@ export interface Pairing {
 export interface TournamentPairingContext {
   pairings: Array<Pairing>;
   add: (whiteAccountId: string, blackAccountId: string, round: number) => void;
+  delete: (
+    whiteAccountId: string,
+    blackAccountId: string,
+    round: number
+  ) => void;
 }
 
 const TournamentPairingContext: Context<TournamentPairingContext> = React.createContext(
   {
     pairings: [] as Array<Pairing>,
     add: (whiteAccountId: string, blackAccountId: string, round: number) => {},
+    delete: (
+      whiteAccountId: string,
+      blackAccountId: string,
+      round: number
+    ) => {},
   }
 );
 

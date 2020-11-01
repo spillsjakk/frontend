@@ -51,10 +51,44 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
     );
   }
 
+  async function deletePairing(body: {
+    whiteAccountId: string;
+    blackAccounntId: string;
+    round: number;
+  }) {
+    fetchJson(
+      `/s/pairings`,
+      "DELETE",
+      {
+        tournament: tournament?.id,
+        round: body.round,
+        white: body.whiteAccountId,
+        black: body.blackAccounntId,
+      },
+      (result: Array<Pairing>) => {
+        setPairings(result);
+        fetchPairings();
+      }
+    );
+  }
+
   const add = useCallback(
     (whiteAccountId: string, blackAccounntId: string, round: number) => {
       if (tournament && tournament.id) {
         addPairing({
+          whiteAccountId,
+          blackAccounntId,
+          round,
+        });
+      }
+    },
+    [tournament, pairings]
+  );
+
+  const del = useCallback(
+    (whiteAccountId: string, blackAccounntId: string, round: number) => {
+      if (tournament && tournament.id) {
+        deletePairing({
           whiteAccountId,
           blackAccounntId,
           round,
@@ -75,6 +109,7 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
       value={{
         pairings,
         add,
+        delete: del,
       }}
     >
       {children}

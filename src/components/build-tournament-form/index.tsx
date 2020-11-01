@@ -277,7 +277,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
                 onChange={(e) => form.changeKind(7)}
               />
               <label className="form-check-label" htmlFor="kind7">
-                <Translated str="manualPairings" />
+                <Translated str="manualPairing" />
               </label>
             </div>
           </div>
