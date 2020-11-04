@@ -1,6 +1,6 @@
 import React, { Context, useContext } from "react";
 
-export interface Participants {
+export interface Participant {
   account?: string;
   first_name?: string;
   last_name?: string;
@@ -8,12 +8,12 @@ export interface Participants {
 }
 
 export interface TournamentParticipantsContext {
-  participants: Array<Participants>;
+  participants: Array<Participant>;
 }
 
 const TournamentParticipantsContext: Context<TournamentParticipantsContext> = React.createContext(
   {
-    participants: [] as Array<Participants>,
+    participants: [] as Array<Participant>,
   }
 );
 
