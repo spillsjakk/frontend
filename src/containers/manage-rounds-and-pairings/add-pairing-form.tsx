@@ -4,10 +4,19 @@ import { useTournamentPairing } from "../../context/tournament-pairing";
 import Translated from "../../components/Translated";
 import { Button } from "react-bootstrap";
 import style from "./style.module.css";
-import { useTournamentParticipants } from "../../context/tournament-participants";
+import {
+  Participant,
+  useTournamentParticipants,
+} from "../../context/tournament-participants";
 
 interface Props {
   round: Round;
+}
+
+function getParticipantInfo(participant: Participant): string {
+  return participant.fide_number
+    ? `${participant.fide_number} ${participant.first_name} ${participant.last_name}`
+    : `${participant.first_name} ${participant.last_name}`;
 }
 
 const AddPairingForm: FunctionComponent<Props> = ({ round }) => {
@@ -21,14 +30,10 @@ const AddPairingForm: FunctionComponent<Props> = ({ round }) => {
     return (e: any) => {
       e.preventDefault();
       const whiteAccount = participants.find(
-        (participant) =>
-          `${participant.first_name} ${participant.last_name}` ===
-          whiteAccountName
+        (participant) => getParticipantInfo(participant) === whiteAccountName
       );
       const blackAccount = participants.find(
-        (participant) =>
-          `${participant.first_name} ${participant.last_name}` ===
-          blackAccountName
+        (participant) => getParticipantInfo(participant) === blackAccountName
       );
       if (!whiteAccount || !blackAccount) {
         return false;
@@ -66,10 +71,7 @@ const AddPairingForm: FunctionComponent<Props> = ({ round }) => {
       {Array.isArray(participants) && (
         <datalist id="participants">
           {participants.map((participant, i) => (
-            <option
-              key={i}
-              value={`${participant.first_name} ${participant.last_name}`}
-            />
+            <option key={i} value={getParticipantInfo(participant)} />
           ))}
         </datalist>
       )}

@@ -284,8 +284,7 @@ const STRINGS = {
     fillDateAndTime: "Fill in the date and time of the round",
     white: "White",
     black: "Black",
-    nameOfThePlayer: "name of the player",
-    fideOfThePlayer: "FIDE number of the player",
+    nameOfThePlayer: "name or FIDE number",
   },
   NO: {
     login: "Logg inn",
@@ -440,7 +439,6 @@ const STRINGS = {
     white: "",
     black: "",
     nameOfThePlayer: "",
-    fideOfThePlayer: "",
     manualPairing: "",
   },
 };
