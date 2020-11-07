@@ -1,11 +1,14 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { fetchJson } from "../../functions";
 import { Tournament } from "../../pages/Tournament/Types";
 import style from "./style.module.scss";
 
 const Tournaments: FunctionComponent<{}> = () => {
   const [tournaments, setTournaments] = useState<Array<Tournament>>([]);
+
+  const history = useHistory();
 
   function fetchTournaments() {
     fetchJson(
@@ -24,6 +27,10 @@ const Tournaments: FunctionComponent<{}> = () => {
     );
   }
 
+  function onTournamentClick(id: string) {
+    history.push(`/tournament/view/${id}`);
+  }
+
   useEffect(() => {
     fetchTournaments();
   }, []);
@@ -34,7 +41,10 @@ const Tournaments: FunctionComponent<{}> = () => {
         {Array.isArray(tournaments) &&
           tournaments.map((tournament, i) => (
             <Col key={i} className={style.column} xs={12} sm={6} md={4} xl={3}>
-              <div className={`${style.tournament} box escalate`}>
+              <div
+                className={`${style.tournament} box escalate`}
+                onClick={() => onTournamentClick(tournament.id)}
+              >
                 <img src="/images/placeholder/tournament-thumbnail.jpg" />
                 <div className={style.content}>
                   <div className={style.first}>

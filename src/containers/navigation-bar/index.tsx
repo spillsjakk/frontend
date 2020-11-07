@@ -9,7 +9,6 @@ import InboxLink from "../../components/InboxLink";
 import { UserContext, Levels } from "../../components/UserContext";
 import { fetchJson } from "../../functions";
 import { Logo } from "./logo";
-import { SearchInput } from "./search";
 
 class NavigationBar extends Component {
   static contextType = UserContext;
@@ -31,7 +30,7 @@ class NavigationBar extends Component {
 
   render() {
     return (
-      <Navbar expand="lg">
+      <Navbar expand="lg" id="navigation-bar">
         <Navbar.Brand as={Link} to="/">
           <Logo />
         </Navbar.Brand>
