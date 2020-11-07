@@ -36,18 +36,17 @@ const Tournaments: FunctionComponent<{}> = () => {
             <Col key={i} className={style.column} xs={12} sm={6} md={4} xl={3}>
               <div className={`${style.tournament} box`}>
                 <img src="/images/placeholder/tournament-thumbnail.jpg" />
-                {tournament.name}
-                {tournament.description}
-              </div>
-            </Col>
-          ))}
-        {Array.isArray(tournaments) &&
-          tournaments.map((tournament, i) => (
-            <Col key={i} className={style.column} xs={12} sm={6} md={4} xl={3}>
-              <div className={`${style.tournament} box`}>
-                <img src="/images/placeholder/tournament-thumbnail.jpg" />
-                {tournament.name}
-                {tournament.description}
+                <div className={style.content}>
+                  <div className={style.first}>
+                    <div className={style.name}>{tournament.name}</div>
+                    <div className={style.date}>{tournament.start_date}</div>
+                  </div>
+                  <div className={style.second}>
+                    <div className={style.description}>
+                      {tournament.description}
+                    </div>
+                  </div>
+                </div>
               </div>
             </Col>
           ))}

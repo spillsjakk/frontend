@@ -49,6 +49,7 @@
       margin: 10px 0px;
       .tournament {
         height: 350px;
+        cursor: pointer;
 
         img {
           width: 100%;
@@ -57,13 +58,51 @@
           border-top-left-radius: 35px;
           border-top-right-radius: 35px;
         }
+
+        .content {
+          display: flex;
+          flex-direction: column;
+          height: 40%;
+          padding: 10px 15px;
+
+          .first {
+            display: flex;
+            align-items: center;
+            .name {
+              font-size: 16px;
+              font-weight: bold;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              padding-right: 10px;
+            }
+
+            .date {
+              color: #bb6565;
+              font-weight: bold;
+            }
+          }
+
+          .second {
+            display: flex;
+            margin-top: 10px;
+            height: 100%;
+
+            .description {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-height: 70%;
+            }
+          }
+        }
       }
     }
   }
 }
 
 .header {
-  font-size: calc(min(6vw, 35px));
+  font-size: calc(min(6vw, 30px));
   color: #469a88;
   margin: 5px 0;
+  font-family: Montserrat;
 }
