@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Features } from "./features";
+import { Tournaments } from "./tournaments";
 import style from "./style.module.scss";
 
 const Home: FunctionComponent<{}> = () => {
@@ -11,6 +12,7 @@ const Home: FunctionComponent<{}> = () => {
       </div>
       <div className={style["tournaments-container"]}>
         <div className={style.header}>LIVE & UPCOMING TOURNAMENTS</div>
+        <Tournaments />
       </div>
     </div>
   );

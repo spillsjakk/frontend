@@ -34,24 +34,26 @@ const Features: FunctionComponent<{}> = () => {
   }
 
   return (
-    <Carousel
-      activeIndex={index}
-      onSelect={onCarouselSelect}
-      className={`${style["features-carousel"]} box`}
-    >
-      {Array.isArray(data) &&
-        data.map((datum, i) => (
-          <Carousel.Item key={i}>
-            <div className={style.item}>
-              <div className={style["image-container"]}>
-                <img src={datum.icon} />
+    <div>
+      <Carousel
+        activeIndex={index}
+        onSelect={onCarouselSelect}
+        className={`${style["features-carousel"]} box`}
+      >
+        {Array.isArray(data) &&
+          data.map((datum, i) => (
+            <Carousel.Item key={i}>
+              <div className={style.item}>
+                <div className={style["image-container"]}>
+                  <img src={datum.icon} />
+                </div>
+                <h3>{datum.title}</h3>
+                <p>{datum.description}</p>
               </div>
-              <h3>{datum.title}</h3>
-              <p>{datum.description}</p>
-            </div>
-          </Carousel.Item>
-        ))}
-    </Carousel>
+            </Carousel.Item>
+          ))}
+      </Carousel>
+    </div>
   );
 };
 
