@@ -40,6 +40,24 @@ const Features: FunctionComponent<{}> = () => {
         onSelect={onCarouselSelect}
         className={`${style["features-carousel"]} box`}
         interval={2000}
+        prevIcon={
+          <img
+            src="/icons/caret-left-fill.svg"
+            alt=""
+            width="32"
+            height="32"
+            className="icon"
+          />
+        }
+        nextIcon={
+          <img
+            src="/icons/caret-right-fill.svg"
+            alt=""
+            width="32"
+            height="32"
+            className="icon"
+          />
+        }
       >
         {Array.isArray(data) &&
           data.map((datum, i) => (
