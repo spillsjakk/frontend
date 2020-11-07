@@ -3,30 +3,30 @@ import { Carousel } from "react-bootstrap";
 import Translated from "../../components/Translated";
 import style from "./style.module.scss";
 
-const data = [
-  {
-    title: Translated.byKey("carousel1"),
-    description: Translated.byKey("carousel1Desc"),
-    icon: "/icons/carousel/management-svgrepo-com.svg",
-  },
-  {
-    title: Translated.byKey("carousel2"),
-    description: Translated.byKey("carousel2Desc"),
-    icon: "/icons/carousel/hammer-and-wrench-doodle-svgrepo-com.svg",
-  },
-  {
-    title: Translated.byKey("carousel3"),
-    description: Translated.byKey("carousel3Desc"),
-    icon: "/icons/carousel/chess-board-svgrepo-com.svg",
-  },
-  {
-    title: Translated.byKey("carousel4"),
-    description: Translated.byKey("carousel4Desc"),
-    icon: "/icons/carousel/podium-svgrepo-com.svg",
-  },
-];
-
 const Features: FunctionComponent<{}> = () => {
+  const data = [
+    {
+      title: Translated.byKey("carousel1"),
+      description: Translated.byKey("carousel1Desc"),
+      icon: "/icons/carousel/management-svgrepo-com.svg",
+    },
+    {
+      title: Translated.byKey("carousel2"),
+      description: Translated.byKey("carousel2Desc"),
+      icon: "/icons/carousel/hammer-and-wrench-doodle-svgrepo-com.svg",
+    },
+    {
+      title: Translated.byKey("carousel3"),
+      description: Translated.byKey("carousel3Desc"),
+      icon: "/icons/carousel/chess-board-svgrepo-com.svg",
+    },
+    {
+      title: Translated.byKey("carousel4"),
+      description: Translated.byKey("carousel4Desc"),
+      icon: "/icons/carousel/podium-svgrepo-com.svg",
+    },
+  ];
+
   const [index, setIndex] = useState(0);
 
   function onCarouselSelect(index: number) {
