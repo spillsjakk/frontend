@@ -1,9 +1,21 @@
 nav {
-  background-color: #B5BDC5;
+  background-color: #b5bdc5;
   height: 100px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px 25px;
+  padding: 10px 45px !important;
+}
 
+.black-text {
+  color: black;
+}
+
+@media only screen and (max-width: 990px) {
+  .mr-1,
+  .navbar-nav {
+    background: #f6f6f6;
+    z-index: 10;
+    position: relative;
+  }
 }

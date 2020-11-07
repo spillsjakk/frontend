@@ -39,6 +39,7 @@ const Features: FunctionComponent<{}> = () => {
         activeIndex={index}
         onSelect={onCarouselSelect}
         className={`${style["features-carousel"]} box`}
+        interval={2000}
       >
         {Array.isArray(data) &&
           data.map((datum, i) => (

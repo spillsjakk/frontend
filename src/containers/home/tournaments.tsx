@@ -34,7 +34,7 @@ const Tournaments: FunctionComponent<{}> = () => {
         {Array.isArray(tournaments) &&
           tournaments.map((tournament, i) => (
             <Col key={i} className={style.column} xs={12} sm={6} md={4} xl={3}>
-              <div className={`${style.tournament} box`}>
+              <div className={`${style.tournament} box escalate`}>
                 <img src="/images/placeholder/tournament-thumbnail.jpg" />
                 <div className={style.content}>
                   <div className={style.first}>

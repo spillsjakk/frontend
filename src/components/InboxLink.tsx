@@ -34,7 +34,7 @@ class InboxLink extends PureComponent<{}, InboxLinkState> {
   }
 
   updateState() {
-    fetchJson(`/s/messages/has-unread`, "GET", undefined, result => {
+    fetchJson(`/s/messages/has-unread`, "GET", undefined, (result) => {
       this.setState({ hasUnread: result.has });
     });
   }
@@ -44,12 +44,29 @@ class InboxLink extends PureComponent<{}, InboxLinkState> {
   }
 
   render() {
-    return <Nav.Link as={Link} to="/inbox" onClick={this.markReadForNow}>
-      <img src="/icons/bell.svg" alt="" width="32" height="32" className="icon" />&nbsp;
-      <span style={this.state.hasUnread ? { color: "orangered", fontWeight: "bold" } : {}}>
-        <Translated str="inbox" />
-      </span>
-    </Nav.Link>;
+    return (
+      <Nav.Link as={Link} to="/inbox" onClick={this.markReadForNow}>
+        <img
+          src="/icons/bell.svg"
+          alt=""
+          width="32"
+          height="32"
+          className="icon"
+        />
+        &nbsp;
+        <span
+          style={
+            this.state.hasUnread
+              ? { color: "orangered", fontWeight: "bold" }
+              : {}
+          }
+        >
+          <span className="black-text">
+            <Translated str="inbox" />
+          </span>
+        </span>
+      </Nav.Link>
+    );
   }
 }
 

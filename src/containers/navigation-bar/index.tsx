@@ -39,7 +39,6 @@ class NavigationBar extends Component {
         <Navbar.Collapse id="collapsible-navbar">
           <Nav className="mr-auto"></Nav>
           <Nav className="mr-1">
-            <SearchInput />
             <LangSwitcher />
             {this.context.user.authenticated &&
               (this.context.user.info?.level || 0) > 0 && (
@@ -90,7 +89,9 @@ class NavigationBar extends Component {
                 className="icon"
               />
               &nbsp;
-              <Translated str="contact" />
+              <span className="black-text">
+                <Translated str="contact" />
+              </span>
             </Nav.Link>
             <Nav.Link as={Link} to="/about">
               <img
@@ -101,7 +102,9 @@ class NavigationBar extends Component {
                 className="icon"
               />
               &nbsp;
-              <Translated str="about" />
+              <span className="black-text">
+                <Translated str="about" />
+              </span>
             </Nav.Link>
             {!this.context.user.authenticated ? (
               <Nav.Link
@@ -116,7 +119,9 @@ class NavigationBar extends Component {
                   className="icon"
                 />
                 &nbsp;
-                <Translated str="login" />
+                <span className="black-text">
+                  <Translated str="login" />
+                </span>
               </Nav.Link>
             ) : (
               <>
@@ -133,7 +138,9 @@ class NavigationBar extends Component {
                     className="icon"
                   />
                   &nbsp;
-                  {this.context.user.info?.name}
+                  <span className="black-text">
+                    {this.context.user.info?.name}
+                  </span>
                 </Nav.Link>
                 <Nav.Item>
                   <form className="form-inline" onSubmit={this.doLogout}>
@@ -146,7 +153,9 @@ class NavigationBar extends Component {
                       }}
                       type="submit"
                     >
-                      <Translated str="logout" />
+                      <span className="black-text">
+                        <Translated str="logout" />
+                      </span>
                     </button>
                   </form>
                 </Nav.Item>
