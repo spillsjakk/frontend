@@ -5,13 +5,14 @@ body {
   position: relative;
   padding-bottom: 195px;
   min-height: 100%;
-  font-family:Roboto,"Open Sans",sans-serif;
+  font-family: Roboto, "Open Sans", sans-serif;
 }
-.nav-link:hover img {
+.nav-link:hover img,
+.nav-link:hover span {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }
 h1 {
-  border-left:2px solid white
+  border-left: 2px solid white;
 }
 footer {
   position: absolute;
@@ -23,7 +24,8 @@ footer {
 footer img {
   height: 120px;
 }
-img.nsf, img.usf {
+img.nsf,
+img.usf {
   filter: invert(1);
 }
 #main-container {

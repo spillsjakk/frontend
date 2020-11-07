@@ -55,9 +55,12 @@ class NavigationBar extends Component {
                     </Dropdown.Item>
                     {this.context.user.info?.level !==
                       Levels.OrganizationManager && (
-                      <Dropdown.Item as={Link} to="/club/manage">
-                        <Translated str="manageClub" />
-                      </Dropdown.Item>
+                      <>
+                        <Dropdown.Divider />
+                        <Dropdown.Item as={Link} to="/club/manage">
+                          <Translated str="manageClub" />
+                        </Dropdown.Item>
+                      </>
                     )}
                     {(this.context.user.info?.level || 0) >=
                       Levels.OrganizationManager && (

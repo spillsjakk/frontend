@@ -285,6 +285,8 @@ const STRINGS = {
     white: "White",
     black: "Black",
     nameOfThePlayer: "name or FIDE number",
+    liveAndUpcomingTournaments: "LIVE & UPCOMING TOURNAMENTS",
+    featuresWeOffer: "FEATURES WE OFFER",
   },
   NO: {
     login: "Logg inn",
@@ -410,8 +412,10 @@ const STRINGS = {
     individual: "Individuell",
     allowSelfJoining: "Tillat egenpåmelding",
     fideRated: "Dette er en FIDE-ratet turnering",
-    onlyShowScoresOfTop: "Antall spillere eller lag som skal vises med resultat på listene",
-    gameLocationCanBeChanged: "Om det skal spilles online eller over brett kan endres for hver runde",
+    onlyShowScoresOfTop:
+      "Antall spillere eller lag som skal vises med resultat på listene",
+    gameLocationCanBeChanged:
+      "Om det skal spilles online eller over brett kan endres for hver runde",
     winPoints: "Poeng for seier",
     drawPoints: "Poeng for remis",
     lossPoints: "Poeng for tap",
@@ -440,6 +444,8 @@ const STRINGS = {
     black: "",
     nameOfThePlayer: "",
     manualPairing: "",
+    liveAndUpcomingTournaments: "LIVE & KOMMENDE TURNERINGER",
+    featuresWeOffer: "FUNKSJONER VI TILBYR",
   },
 };
 
