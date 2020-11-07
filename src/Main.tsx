@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import Home from "./pages/Home";
 import About from "./pages/About";
 import { UserGuide } from "./pages/user-guide/index";
 import Contact from "./pages/Contact";
@@ -29,6 +28,7 @@ import OrgStatistics from "./pages/Organization/Statistics";
 import OrgView from "./pages/Organization/View";
 import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
+import { Home } from "./pages/Home/index";
 import Inbox from "./pages/Inbox";
 
 const Main = () => {

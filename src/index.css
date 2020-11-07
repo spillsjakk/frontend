@@ -7,9 +7,6 @@ body {
   min-height: 100%;
   font-family:Roboto,"Open Sans",sans-serif;
 }
-.icon {
-  filter:invert(1)
-}
 .nav-link:hover img {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }

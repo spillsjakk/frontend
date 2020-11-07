@@ -1,0 +1,21 @@
+#navigation-bar {
+  background-color: #b5bdc5;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px calc(min(5vw, 45px)) !important;
+
+  @media only screen and (max-width: 990px) {
+    .mr-1,
+    .navbar-nav {
+      background: #f6f6f6;
+      z-index: 10;
+      position: relative;
+    }
+  }
+
+  .black-text {
+    color: black;
+  }
+}
