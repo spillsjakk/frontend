@@ -941,9 +941,11 @@ class View extends Component<
             </div>
           </div>
 
-          {this.state.info?.tournament?.kind === "ManualPairing" && (
-            <ManageRoundsAndPairings />
-          )}
+          {this.state.info?.tournament?.kind === "ManualPairing" &&
+            this.context.user.authenticated &&
+            this.context.user.info?.id === info.tournament.organizer && (
+              <ManageRoundsAndPairings />
+            )}
 
           <h3 className="mt-5 mb-4">
             <Translated str="standings" />
