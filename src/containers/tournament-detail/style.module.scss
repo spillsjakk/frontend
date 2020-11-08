@@ -40,6 +40,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     .name {
       font-size: calc(min(5vw, 48px));
       font-weight: bold;
@@ -95,7 +96,7 @@
       justify-content: center;
       align-items: center;
       button {
-        background-color: #469A88;
+        background-color: #469a88;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         color: white;
         border: none;
@@ -104,6 +105,34 @@
         font-weight: 500;
         border-radius: 35px;
       }
+    }
+  }
+
+  .time-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: calc(min(8vw, 80px));
+
+    .round-time-starts {
+      font-size: calc(min(4vw, 18px));
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+
+      .text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .round-time-countdown {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      stroke: #469a88 !important;
+      fill: #469a88 !important;
     }
   }
 }
