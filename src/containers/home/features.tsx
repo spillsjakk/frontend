@@ -38,7 +38,7 @@ const Features: FunctionComponent<{}> = () => {
       <Carousel
         activeIndex={index}
         onSelect={onCarouselSelect}
-        className={`${style["features-carousel"]} box`}
+        className={`${style["features-carousel"]} ${style.box}`}
         interval={2000}
         prevIcon={
           <img

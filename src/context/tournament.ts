@@ -1,8 +1,5 @@
 import React, { Context, useContext } from "react";
-
-interface Tournament {
-  id: string;
-}
+import { Tournament } from "../pages/Tournament/Types";
 
 export interface TournamentContext {
   tournament: Tournament;

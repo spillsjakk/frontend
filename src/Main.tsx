@@ -30,6 +30,7 @@ import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
 import { Home } from "./pages/Home/index";
 import Inbox from "./pages/Inbox";
+import { TournamentDetail } from "./pages/Tournament/detail";
 
 const Main = () => {
   return (
@@ -47,6 +48,11 @@ const Main = () => {
         exact
         path="/tournament/view/:tid"
         component={TournamentView}
+      ></Route>
+      <Route
+        exact
+        path="/tournament/view/new/:tid"
+        component={TournamentDetail}
       ></Route>
       <Route exact path="/tournament/build" component={BuildTournament}></Route>
       <Route
