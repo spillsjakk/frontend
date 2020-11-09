@@ -4,6 +4,7 @@ import { Banner } from "./banner";
 import { Description } from "./description";
 import { TimeSection } from "./time-section";
 import { Name } from "./name";
+import { Standings } from "./standings";
 import style from "./style.module.scss";
 
 const TournamentDetail: FunctionComponent<{}> = () => {
@@ -14,6 +15,7 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       <Name />
       <Description />
       <TimeSection />
+      <Standings />
     </div>
   );
 };

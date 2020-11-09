@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import "./style.css";
+import "./style.scss";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import {
