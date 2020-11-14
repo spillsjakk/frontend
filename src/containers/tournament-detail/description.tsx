@@ -2,11 +2,13 @@ import React, { FunctionComponent } from "react";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../components/Translated";
+import { ActionButton } from "./action-button";
 
 import style from "./style.module.scss";
 
 const Description: FunctionComponent<{}> = () => {
   const { tournament } = useTournamentDetail();
+
   return (
     <div className={style["description-container"]}>
       <Row style={{ width: "100%", margin: "0px" }}>
@@ -50,9 +52,7 @@ const Description: FunctionComponent<{}> = () => {
                 {tournament?.start_date} - {tournament?.end_date}
               </p>
             </div>
-            <div className={style["join-tournament"]}>
-              <button>Join Tournament</button>
-            </div>
+            <ActionButton />
           </div>
         </Col>
       </Row>

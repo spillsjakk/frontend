@@ -287,6 +287,9 @@ const STRINGS = {
     nameOfThePlayer: "name or FIDE number",
     liveAndUpcomingTournaments: "LIVE & UPCOMING TOURNAMENTS",
     featuresWeOffer: "FEATURES WE OFFER",
+    joinTournament: "Join Tournament",
+    leaveTournament: "Leave Tournament",
+    manageTournament: "Manage Tournament",
   },
   NO: {
     login: "Logg inn",
@@ -446,6 +449,9 @@ const STRINGS = {
     manualPairing: "",
     liveAndUpcomingTournaments: "LIVE & KOMMENDE TURNERINGER",
     featuresWeOffer: "FUNKSJONER VI TILBYR",
+    joinTournament: "",
+    leaveTournament: "",
+    manageTournament: "",
   },
 };
 

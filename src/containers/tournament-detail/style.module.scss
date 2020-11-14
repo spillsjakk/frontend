@@ -91,7 +91,7 @@
         align-items: center;
       }
     }
-    .join-tournament {
+    .action-button {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -104,6 +104,21 @@
         height: 40px;
         font-weight: 500;
         border-radius: 35px;
+      }
+      .join-tournament {
+        button {
+          background-color: #469a88;
+        }
+      }
+      .leave-tournament {
+        button {
+          background-color: red;
+        }
+      }
+      .manage-tournament {
+        button {
+          background-color: #469a88;
+        }
       }
     }
   }
