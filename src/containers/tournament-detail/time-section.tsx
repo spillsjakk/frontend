@@ -13,7 +13,7 @@ const TimeSection: FunctionComponent<{}> = () => {
         const sortedRounds = [...rounds];
         sortedRounds.sort((a, b) => {
           return (
-            new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
+            new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
           );
         });
         const now = new Date();
@@ -36,7 +36,9 @@ const TimeSection: FunctionComponent<{}> = () => {
         <div className={style.text}>{Translated.byKey("nextRoundText")}</div>
       </div>
       <div className={style["round-time-countdown"]}>
-        {tournament && <CircularCountDown startDate={getDate()} />}
+        {tournament && Array.isArray(rounds) && rounds?.length > 0 && (
+          <CircularCountDown startDate={getDate()} />
+        )}
       </div>
     </div>
   );
