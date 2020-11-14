@@ -50,11 +50,12 @@ const WithTournamentRound: FunctionComponent = ({ children }) => {
 
   function onAddRoundClick() {
     setShowAddRoundPopup(false);
+    const roundStartDate = new Date(`${startDate} ${startTime}`);
     addRound({
       tournament: tournament!.id,
       number: rounds.length + 1,
       name: `Round ${rounds.length + 1}`,
-      start_date: `${startDate} ${startTime}`,
+      start_date: roundStartDate.toISOString(),
     });
   }
 
