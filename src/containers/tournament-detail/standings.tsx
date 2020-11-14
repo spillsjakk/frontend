@@ -48,23 +48,27 @@ const tbColumns = [
 ];
 
 const Standings: FunctionComponent<{}> = () => {
-  const tournamentDetail = useTournamentDetail();
+  const {
+    tournament,
+    ssw,
+    is_team_tournament,
+    participants,
+    teams,
+  } = useTournamentDetail();
   const [sswColumn, setSswColumn] = useState({});
   const [teamParticipantColumns, setTeamParticipantColumns] = useState<any[]>(
     []
   );
   const [participantColumns, setParticipantColumns] = useState<any[]>([]);
 
-  useEffect(() => {
+  function setup() {
     setSswColumn({
       dataField: "none",
       isDummyField: true,
       text: "weighted",
       headerFormatter,
-      formatter: function () {
-        return function (_: any, __: any, rowIndex: number, ___: any) {
-          return tournamentDetail.ssw?.[rowIndex];
-        };
+      formatter: function (_: any, __: any, rowIndex: number, ___: any) {
+        return ssw?.[rowIndex];
       },
     });
 
@@ -127,23 +131,21 @@ const Standings: FunctionComponent<{}> = () => {
         text: "score",
         sort: true,
         headerFormatter,
-        formatter: function () {
-          return function (
-            _: any,
-            row: Participant,
-            rowIndex: number,
-            ___: any
-          ) {
-            if (tournamentDetail.tournament?.show_only_top_nr) {
-              if (rowIndex >= tournamentDetail.tournament.show_only_top_nr!) {
-                return "";
-              } else {
-                return row.score.toString();
-              }
+        formatter: function (
+          _: any,
+          row: Participant,
+          rowIndex: number,
+          ___: any
+        ) {
+          if (tournament?.show_only_top_nr) {
+            if (rowIndex >= tournament.show_only_top_nr!) {
+              return "";
             } else {
               return row.score.toString();
             }
-          };
+          } else {
+            return row.score.toString();
+          }
         },
       },
     ]);
@@ -172,23 +174,21 @@ const Standings: FunctionComponent<{}> = () => {
         text: "matchScore",
         sort: true,
         headerFormatter,
-        formatter: function () {
-          return function (
-            _: any,
-            row: TeamParticipant,
-            rowIndex: number,
-            ___: any
-          ) {
-            if (tournamentDetail?.tournament?.show_only_top_nr) {
-              if (rowIndex >= tournamentDetail!.tournament.show_only_top_nr!) {
-                return "";
-              } else {
-                return row.match_score.toString();
-              }
+        formatter: function (
+          _: any,
+          row: TeamParticipant,
+          rowIndex: number,
+          ___: any
+        ) {
+          if (tournament?.show_only_top_nr) {
+            if (rowIndex >= tournament.show_only_top_nr!) {
+              return "";
             } else {
               return row.match_score.toString();
             }
-          };
+          } else {
+            return row.match_score.toString();
+          }
         },
       },
       {
@@ -196,31 +196,33 @@ const Standings: FunctionComponent<{}> = () => {
         text: "gameScore",
         sort: true,
         headerFormatter,
-        formatter: function () {
-          return function (
-            _: any,
-            row: TeamParticipant,
-            rowIndex: number,
-            ___: any
-          ) {
-            if (tournamentDetail?.tournament?.show_only_top_nr) {
-              if (rowIndex >= tournamentDetail!.tournament.show_only_top_nr!) {
-                return "";
-              } else {
-                return row.game_score.toString();
-              }
+        formatter: function (
+          _: any,
+          row: TeamParticipant,
+          rowIndex: number,
+          ___: any
+        ) {
+          if (tournament?.show_only_top_nr) {
+            if (rowIndex >= tournament.show_only_top_nr!) {
+              return "";
             } else {
               return row.game_score.toString();
             }
-          };
+          } else {
+            return row.game_score.toString();
+          }
         },
       },
     ]);
-  }, [tournamentDetail]);
+  }
+
+  useEffect(() => {
+    setup();
+  }, [tournament, ssw, participants]);
 
   return (
     <>
-      {tournamentDetail.tournament && (
+      {tournament && Array.isArray(participants) && participants.length > 0 && (
         <div className={style["standings-container"]}>
           <div className={style.table}>
             <Tab.Container defaultActiveKey="standings-i-tab">
@@ -230,7 +232,7 @@ const Standings: FunctionComponent<{}> = () => {
                     <Translated str="individual" />
                   </Nav.Link>
                 </Nav.Item>
-                {tournamentDetail.is_team_tournament && (
+                {is_team_tournament && (
                   <Nav.Item>
                     <Nav.Link eventKey="standings-t-tab">
                       <Translated str="team" />
@@ -242,9 +244,9 @@ const Standings: FunctionComponent<{}> = () => {
                 <Tab.Pane eventKey="standings-i-tab">
                   <ToolkitProvider
                     keyField="account"
-                    data={tournamentDetail.participants || []}
+                    data={participants || []}
                     columns={
-                      tournamentDetail.tournament?.kind === "SwissDutch"
+                      tournament?.kind === "SwissDutch"
                         ? participantColumns.concat(tbColumns as any)
                         : participantColumns
                     }
@@ -263,13 +265,13 @@ const Standings: FunctionComponent<{}> = () => {
                   </ToolkitProvider>
                 </Tab.Pane>
 
-                {tournamentDetail.is_team_tournament && (
+                {is_team_tournament && (
                   <Tab.Pane eventKey="standings-t-tab">
                     <ToolkitProvider
                       keyField="team_id"
-                      data={tournamentDetail.teams || []}
+                      data={teams || []}
                       columns={
-                        tournamentDetail.ssw
+                        ssw
                           ? teamParticipantColumns.concat([sswColumn])
                           : teamParticipantColumns
                       }

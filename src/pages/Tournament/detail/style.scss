@@ -2,11 +2,17 @@ body#tournament-detail {
   background-color: #fafafa;
   color: black !important;
 
-  .nav-item {
-    background-color: gray;
-  }
+  #main-container {
+    .nav-item {
+      background-color: gray;
+    }
 
-  .table {
-    color: black !important;
+    .table {
+      color: black !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n + 1) {
+      background-color: #fafafa !important;
+    }
   }
 }
