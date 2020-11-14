@@ -8,11 +8,13 @@ import {
 } from "../../../context/tournament-detail";
 import { fetchJson, title } from "../../../functions";
 import { TournamentDetail as Container } from "../../../containers/tournament-detail";
+import { Round } from "../../../context/tournament-round";
 
 const TournamentDetail: FunctionComponent<{}> = () => {
   const [tournamentDetail, setTournamentDetail] = useState<
     Partial<ITournamentDetail>
   >({});
+  const [rounds, setRounds] = useState<Array<Round>>([]);
 
   const params = useParams<{ tid: string }>();
 
@@ -21,6 +23,25 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       setTournamentDetail(json);
     });
   }
+
+  async function fetchRounds() {
+    fetchJson(
+      `/s/rounds?tournament=${tournamentDetail.tournament?.id}`,
+      "GET",
+      undefined,
+      (result: Array<Round>) => {
+        if (Array.isArray(result)) {
+          setRounds(result);
+        }
+      }
+    );
+  }
+
+  useEffect(() => {
+    if (tournamentDetail.tournament && tournamentDetail.tournament.id) {
+      fetchRounds();
+    }
+  }, [tournamentDetail]);
 
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "tournament-detail";
@@ -34,7 +55,7 @@ const TournamentDetail: FunctionComponent<{}> = () => {
           {title(tournamentDetail?.tournament?.name || "tournament")}
         </title>
       </Helmet>
-      <TournamentDetailProvider value={tournamentDetail}>
+      <TournamentDetailProvider value={{ ...tournamentDetail, rounds }}>
         <div
           style={{
             color: "black",

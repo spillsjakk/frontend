@@ -8,6 +8,7 @@ import {
   LightGame,
   TKOSeparation,
 } from "../pages/Tournament/Types";
+import { Round } from "./tournament-round";
 
 export interface TournamentDetail {
   tournament: Tournament;
@@ -24,6 +25,7 @@ export interface TournamentDetail {
   organizer_first_name: string;
   organizer_last_name: string;
   ssw?: string[];
+  rounds: Array<Round>;
 }
 
 export type TournamentDetailContext = TournamentDetail;
