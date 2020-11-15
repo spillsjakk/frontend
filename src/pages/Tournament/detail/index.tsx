@@ -25,16 +25,18 @@ const TournamentDetail: FunctionComponent<{}> = () => {
   }
 
   async function fetchRounds() {
-    fetchJson(
-      `/s/rounds?tournament=${tournamentDetail.tournament?.id}`,
-      "GET",
-      undefined,
-      (result: Array<Round>) => {
+    fetch(`/s/rounds?tournament=${tournamentDetail.tournament?.id}`, {
+      method: "GET",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => {
+      if (response.status < 400) {
+        const result = response.json();
         if (Array.isArray(result)) {
           setRounds(result);
         }
       }
-    );
+    });
   }
 
   useEffect(() => {

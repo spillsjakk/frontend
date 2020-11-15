@@ -32,14 +32,18 @@ const TimeSection: FunctionComponent<{}> = () => {
 
   return (
     <div className={style["time-section"]}>
-      <div className={style["round-time-starts"]}>
-        <div className={style.text}>{Translated.byKey("nextRoundText")}</div>
-      </div>
-      <div className={style["round-time-countdown"]}>
-        {tournament && Array.isArray(rounds) && rounds?.length > 0 && (
-          <CircularCountDown startDate={getDate()} />
-        )}
-      </div>
+      {tournament && Array.isArray(rounds) && rounds?.length > 0 && (
+        <>
+          <div className={style["round-time-starts"]}>
+            <div className={style.text}>
+              {Translated.byKey("nextRoundText")}
+            </div>
+          </div>
+          <div className={style["round-time-countdown"]}>
+            <CircularCountDown startDate={getDate()} />
+          </div>
+        </>
+      )}
     </div>
   );
 };
