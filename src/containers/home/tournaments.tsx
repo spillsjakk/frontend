@@ -42,7 +42,7 @@ const Tournaments: FunctionComponent<{}> = () => {
           tournaments.map((tournament, i) => (
             <Col key={i} className={style.column} xs={12} sm={6} md={4} xl={3}>
               <div
-                className={`${style.tournament} box escalate`}
+                className={`${style.tournament} ${style.box} ${style.escalate}`}
                 onClick={() => onTournamentClick(tournament.id)}
               >
                 <img src="/images/placeholder/tournament-thumbnail.jpg" />

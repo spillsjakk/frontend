@@ -4,10 +4,9 @@ import "./style.scss";
 const Logo: FunctionComponent<{}> = () => {
   return (
     <div id="logo-container">
-      <img src="/icons/logos/platform.png" alt="logo" />
-      <span>
-        Spill<b>Sjakk</b>
-      </span>
+      <div>
+        <img src="/dark-horse-icon.svg" alt="logo" />
+      </div>
     </div>
   );
 };

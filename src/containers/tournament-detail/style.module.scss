@@ -1,0 +1,169 @@
+.wrapper {
+  font-family: Montserrat;
+  color: black;
+  width: calc(min(90vw, 1200px));
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+
+    .header {
+      color: #469a88;
+      font-weight: bold;
+    }
+    .icon {
+      .tick {
+        width: 20px;
+      }
+    }
+  }
+
+  .banner {
+    position: relative;
+    .pp {
+      width: 15%;
+      position: absolute;
+      top: 65%;
+      left: 44%;
+    }
+
+    .banner-pic {
+      width: 100%;
+    }
+  }
+
+  .name-container {
+    position: relative;
+    margin-top: calc(min(8vw, 80px));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    .name {
+      font-size: calc(min(5vw, 48px));
+      font-weight: bold;
+      line-height: calc(min(6vw, 50px));
+    }
+    .organiser {
+      font-size: calc(min(3vw, 20px));
+      margin-top: 10px;
+      span {
+        color: #469a88;
+      }
+    }
+    .icon {
+      position: absolute;
+      top: 10px;
+      right: 0;
+      img {
+        width: calc(min(5vw, 30px));
+        cursor: pointer;
+      }
+    }
+  }
+  .description-container {
+    display: flex;
+    margin-top: calc(min(8vw, 80px));
+
+    .about {
+      .heading {
+        font-size: calc(min(3vw, 16px));
+        font-weight: 500;
+      }
+
+      p {
+        font-weight: 400;
+        font-size: calc(min(3vw, 14px));
+      }
+    }
+    .info {
+      .item {
+        .heading {
+          font-weight: 500;
+        }
+        margin-bottom: 10px;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .action-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      button {
+        background-color: #469a88;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        color: white;
+        border: none;
+        width: 80%;
+        height: 40px;
+        font-weight: 500;
+        border-radius: 35px;
+      }
+      .join-tournament {
+        button {
+          background-color: #469a88;
+        }
+      }
+      .leave-tournament {
+        button {
+          background-color: red;
+        }
+      }
+      .manage-tournament {
+        button {
+          background-color: #469a88;
+        }
+      }
+    }
+  }
+
+  .time-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: calc(min(8vw, 80px));
+
+    .round-time-starts {
+      font-size: calc(min(4vw, 18px));
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+
+      .text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .round-time-countdown {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      stroke: #469a88 !important;
+      fill: #469a88 !important;
+    }
+  }
+
+  .standings-container {
+    color: black;
+  }
+}
+
+.box {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 35px;
+  background-color: #f4f4f4;
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -755,7 +755,7 @@ class View extends Component<
                 <Button
                   variant="primary"
                   className="p-3 mb-3"
-                  disabled={!info.can_start}
+                  disabled={false}
                   onClick={this.onPressStart}
                 >
                   <Translated str="start" />
