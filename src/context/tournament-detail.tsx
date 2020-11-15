@@ -26,6 +26,7 @@ export interface TournamentDetail {
   organizer_last_name: string;
   ssw?: string[];
   rounds: Array<Round>;
+  update: () => void;
 }
 
 export type TournamentDetailContext = TournamentDetail;

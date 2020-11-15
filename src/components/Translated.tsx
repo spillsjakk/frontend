@@ -291,6 +291,8 @@ const STRINGS = {
     leaveTournament: "Leave Tournament",
     manageTournament: "Manage Tournament",
     nextRoundText: "The next round starts in: ",
+    organiser: "organiser",
+    numberOfRounds: "Number of Rounds",
   },
   NO: {
     login: "Logg inn",
@@ -454,6 +456,8 @@ const STRINGS = {
     leaveTournament: "",
     manageTournament: "",
     nextRoundText: "",
+    organiser: "",
+    numberOfRounds: "",
   },
 };
 

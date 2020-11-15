@@ -55,7 +55,9 @@ const TournamentDetail: FunctionComponent<{}> = () => {
           {title(tournamentDetail?.tournament?.name || "tournament")}
         </title>
       </Helmet>
-      <TournamentDetailProvider value={{ ...tournamentDetail, rounds }}>
+      <TournamentDetailProvider
+        value={{ ...tournamentDetail, rounds, update: fetchTournament }}
+      >
         <div
           style={{
             color: "black",

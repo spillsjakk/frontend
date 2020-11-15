@@ -12,9 +12,6 @@ const Name: FunctionComponent<{}> = () => {
       <div className={style.organiser}>
         organiser: <span>{tournament?.organizer}</span>
       </div>
-      <div className={style.icon}>
-        <img src="/icons/three-dots-vertical.svg" />
-      </div>
     </div>
   );
 };

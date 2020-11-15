@@ -46,12 +46,12 @@ const Main = () => {
 
       <Route
         exact
-        path="/tournament/view/:tid"
+        path="/tournament/view/old/:tid"
         component={TournamentView}
       ></Route>
       <Route
         exact
-        path="/tournament/view/new/:tid"
+        path="/tournament/view/:tid"
         component={TournamentDetail}
       ></Route>
       <Route exact path="/tournament/build" component={BuildTournament}></Route>

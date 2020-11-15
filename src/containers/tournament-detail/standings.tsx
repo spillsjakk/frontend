@@ -225,6 +225,11 @@ const Standings: FunctionComponent<{}> = () => {
       {tournament && Array.isArray(participants) && participants.length > 0 && (
         <div className={style["standings-container"]}>
           <div className={style.table}>
+            <div className={style["centered-container"]}>
+              <h3 className="mt-4">
+                <Translated str="standings" />
+              </h3>
+            </div>
             <Tab.Container defaultActiveKey="standings-i-tab">
               <Nav className="nav-tabs">
                 <Nav.Item>

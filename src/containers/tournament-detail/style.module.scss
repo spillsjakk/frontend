@@ -161,3 +161,9 @@
   border-radius: 35px;
   background-color: #f4f4f4;
 }
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

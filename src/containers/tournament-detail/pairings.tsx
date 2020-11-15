@@ -3,6 +3,7 @@ import { Nav, Tab } from "react-bootstrap";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import Translated from "../../components/Translated";
 import { Link } from "react-router-dom";
+import style from "./style.module.scss";
 
 function outcomeToStr(outcome: number | undefined) {
   switch (outcome) {
@@ -187,9 +188,11 @@ const Pairings: FunctionComponent<{}> = () => {
     <>
       {Array.isArray(pairingPanes) && pairingPanes.length > 0 && (
         <div>
-          <h3 className="mt-4">
-            <Translated str="pairings" />
-          </h3>
+          <div className={style["centered-container"]}>
+            <h3 className="mt-4">
+              <Translated str="pairings" />
+            </h3>
+          </div>
           <Tab.Container
             defaultActiveKey={"round-tab-" + pairingPanes.length.toString()}
           >

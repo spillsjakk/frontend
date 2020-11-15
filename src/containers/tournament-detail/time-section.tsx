@@ -21,7 +21,7 @@ const TimeSection: FunctionComponent<{}> = () => {
           (round) => now.getTime() - new Date(round.start_date).getTime() < 0
         );
         return new Date(
-          filteredRounds.length > 0 ? filteredRounds[0].start_date : ""
+          filteredRounds.length > 0 ? filteredRounds[0].start_date : 0
         );
       }
 

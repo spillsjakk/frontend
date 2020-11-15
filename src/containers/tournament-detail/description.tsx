@@ -14,14 +14,18 @@ const Description: FunctionComponent<{}> = () => {
       <Row style={{ width: "100%", margin: "0px" }}>
         <Col xs={12} md={8}>
           <div className={style.about}>
-            <div className={style.heading}>ABOUT:</div>
+            <div className={style.heading}>
+              {Translated.byKey("about").toUpperCase()}
+            </div>
             <p>{tournament?.description}</p>
           </div>
         </Col>
         <Col xs={12} md={4}>
           <div className={style.info}>
             <div className={`${style.box} ${style.item}`}>
-              <div className={style.heading}>Time Control: </div>
+              <div className={style.heading}>
+                {Translated.byKey("timeControl")}
+              </div>
               <p>
                 {tournament?.initial_time} minutes + {tournament?.increment}{" "}
                 minutes increment
@@ -43,11 +47,17 @@ const Description: FunctionComponent<{}> = () => {
               <p>{/* {TODO: tournament kind's description} */}</p>
             </div>
             <div className={`${style.box} ${style.item}`}>
-              <div className={style.heading}>Number of Rounds</div>
-              <p>{tournament?.rounds} rounds</p>
+              <div className={style.heading}>
+                {Translated.byKey("numberOfRounds")}
+              </div>
+              <p>
+                {tournament?.rounds} {Translated.byKey("rounds")}
+              </p>
             </div>
             <div className={`${style.box} ${style.item}`}>
-              <div className={style.heading}>Start Date - End Date</div>
+              <div className={style.heading}>
+                {Translated.byKey("startDate")} - {Translated.byKey("endDate")}
+              </div>
               <p>
                 {tournament?.start_date} - {tournament?.end_date}
               </p>
