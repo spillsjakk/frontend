@@ -18,7 +18,7 @@ import AccountCreate from "./pages/Account/Create";
 import AccountRecover from "./pages/Account/Recover";
 import AccountSettings from "./pages/Account/Settings";
 import GameLobby from "./pages/Game/Lobby";
-import GamePlay from "./pages/Game/Play";
+import GamePlay from "./pages/Game/play/Play";
 import GameView from "./pages/Game/View";
 import ClubManage from "./pages/Club/Manage";
 import ClubView from "./pages/Club/View";
@@ -46,7 +46,7 @@ const Main = () => {
 
       <Route
         exact
-        path="/tournament/view/old/:tid"
+        path="/tournament/manage/:tid"
         component={TournamentView}
       ></Route>
       <Route

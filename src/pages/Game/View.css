@@ -1,3 +1,8 @@
+#Game-View {
+  background-color: #fafafa;
+  color: black;
+}
+
 #Game-View #content-container {
   max-width: 1200px;
 }

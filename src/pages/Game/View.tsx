@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/Translated";
 import UserLink from "../../components/UserLink";
-import { GameOutcome, numToSquare } from "./Play";
+import { GameOutcome, numToSquare } from "./play/Play";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import Chessground from 'react-chessground';
 import 'react-chessground/dist/styles/chessground.css';

@@ -28,7 +28,7 @@ const Description: FunctionComponent<{}> = () => {
               </div>
               <p>
                 {tournament?.initial_time} minutes + {tournament?.increment}{" "}
-                minutes increment
+                seconds increment
               </p>
             </div>
             <div className={`${style.box} ${style.item}`}>

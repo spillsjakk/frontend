@@ -1,3 +1,12 @@
+#Game-Play {
+  background-color: #fafafa;
+  color: black;
+}
+
+#Game-Play .clock, #resign-btn, #draw-btn, #yes-draw-btn, #no-draw-btn {
+  color: white;
+}
+
 #Game-Play #content-container {
   max-width: 1200px;
 }
@@ -72,4 +81,25 @@
 }
 #Game-Play [data-square], #Game-Play [data-piece] {
   touch-action: none;
+}
+
+#Game-Play .play-box {
+  padding-right: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#Game-Play .play-box .user-box {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+#Game-Play .play-box .user-box .user-info {
+  display: flex;
+  margin: 10px 20px;
+}
+
+#Game-Play .play-box .user-box .user-info .name {
+  display: flex;
+  margin-left: 15px;
 }

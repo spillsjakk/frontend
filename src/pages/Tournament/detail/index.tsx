@@ -29,9 +29,9 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       method: "GET",
       credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
-    }).then((response) => {
+    }).then(async (response) => {
       if (response.status < 400) {
-        const result = response.json();
+        const result = await response.json();
         if (Array.isArray(result)) {
           setRounds(result);
         }

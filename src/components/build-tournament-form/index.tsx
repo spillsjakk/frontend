@@ -281,7 +281,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               </label>
             </div>
           </div>
-          {![0, 2].includes(form.kind) && (
+          {![0, 2, 7].includes(form.kind) && (
             <div className="form-group mt-4" id="roundNb-group">
               <label htmlFor="rounds">
                 <Translated str="roundNb" />:
@@ -296,7 +296,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               />
             </div>
           )}
-          {[2, 3].includes(form.kind) && (
+          {[2, 3, 7].includes(form.kind) && (
             <div className="form-group mt-4" id="nbMembers-group">
               <label htmlFor="per_team">
                 <Translated str="membersPerTeam" />:
