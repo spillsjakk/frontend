@@ -6,7 +6,7 @@ import { UserGuide } from "./pages/user-guide/index";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile/Profile";
 import TournamentView from "./pages/Tournament/View";
 import TournamentPlayers from "./pages/Tournament/Players";
 import TournamentSearch from "./pages/Tournament/Search";

@@ -47,7 +47,10 @@
   user-select: none;
 }
 #Game-View #controls div:hover {
-  background: #333;
+  background: #b5bdc5;
+}
+#Game-View #controls {
+  padding-left: 5px;
 }
 #Game-View .move-cell {
   cursor: pointer;
@@ -58,4 +61,24 @@
 #Game-View #player-links div {
   font-size: 1.2rem;
   font-weight: bold;
+}
+#Game-View .play-box {
+  padding-right: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#Game-View .play-box .user-box {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+#Game-View .play-box .user-box .user-info {
+  display: flex;
+  margin: 10px 20px;
+}
+
+#Game-View .play-box .user-box .user-info .name {
+  display: flex;
+  margin-left: 15px;
 }

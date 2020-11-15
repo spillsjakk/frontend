@@ -12,6 +12,7 @@ const ActionButton: FunctionComponent<{}> = () => {
     pairings,
     is_participating,
     update,
+    self_join_teams,
   } = useTournamentDetail();
   const {
     user: { authenticated, info },
@@ -32,26 +33,17 @@ const ActionButton: FunctionComponent<{}> = () => {
     history.push(`/tournament/manage/${params.tid}`);
   }
 
-  // TODO: implement selecting team
-  // function onClickSelfJoin(team: string) {
-  //   fetchJson(
-  //     `/s/tournament/self-join/${params.tid}?team=${team}`,
-  //     "POST",
-  //     undefined,
-  //     update!
-  //   );
-  // }
+  function onClickSelfJoin(team: string) {
+    fetchJson(
+      `/s/tournament/self-join/${params.tid}?team=${team}`,
+      "POST",
+      undefined,
+      update!
+    );
+  }
 
   function isOrganizer() {
     return authenticated && info?.id === tournament?.organizer;
-  }
-
-  function joinTournamentButton() {
-    return (
-      <div className={`${style["action-button"]} ${style["join-tournament"]}`}>
-        <button>{Translated.byKey("joinTournament")}</button>
-      </div>
-    );
   }
 
   function manageTournamentButton() {
@@ -66,33 +58,44 @@ const ActionButton: FunctionComponent<{}> = () => {
     );
   }
 
-  function leaveTournamentButton() {
-    return (
-      <div className={`${style["action-button"]} ${style["leave-tournament"]}`}>
-        <button onClick={onClickSelfLeave}>
-          {Translated.byKey("leaveTournament")}
-        </button>
-      </div>
-    );
-  }
-
-  function render() {
-    if (authenticated && isOrganizer) {
-      return manageTournamentButton();
-    }
-
-    if (authenticated && is_participating) {
-      return leaveTournamentButton();
-    }
-
-    if (authenticated && tournament?.self_joinable && pairings?.length === 0) {
-      return joinTournamentButton();
-    }
-
-    return <></>;
-  }
-
-  return <>{render()}</>;
+  return (
+    <>
+      {authenticated && isOrganizer() && manageTournamentButton()}
+      {authenticated &&
+        tournament &&
+        tournament.self_joinable &&
+        Array.isArray(pairings) &&
+        pairings.length === 0 && (
+          <>
+            {!is_participating ? (
+              <form>
+                {self_join_teams &&
+                  self_join_teams?.map((t) => (
+                    <div
+                      key={t.id}
+                      className={`${style["action-button"]} ${style["join-tournament"]}`}
+                    >
+                      <button onClick={() => onClickSelfJoin(t.id)}>
+                        <Translated str="joinFor" /> &quot;{t.name}&quot;
+                      </button>
+                    </div>
+                  ))}
+              </form>
+            ) : (
+              <form>
+                <div
+                  className={`${style["action-button"]} ${style["leave-tournament"]}`}
+                >
+                  <button onClick={onClickSelfLeave}>
+                    <Translated str="leave" />
+                  </button>
+                </div>
+              </form>
+            )}
+          </>
+        )}
+    </>
+  );
 };
 
 export { ActionButton };

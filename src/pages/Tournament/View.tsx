@@ -25,7 +25,7 @@ import {
   TKOSeparation,
 } from "./Types";
 
-import "./View.css";
+import "./View.scss";
 import { Timestamp } from "../../components/Timestamp";
 import FederationDisplay from "../../components/FederationDisplay";
 import { Countdown } from "../../components/count-down/index";

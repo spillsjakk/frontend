@@ -21,7 +21,7 @@ const DeleteButton: FunctionComponent<Props> = ({ onClick, tooltip }) => {
         <button
           type="button"
           className="close"
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "10px", color: "black" }}
           onClick={onClick}
         >
           <span aria-hidden="true">×</span>

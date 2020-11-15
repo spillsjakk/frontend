@@ -225,7 +225,7 @@ class Players extends Component<RouteComponentProps<PlayersProps>, PlayersState>
         <h1 className="mt-5 p-3"><Translated str="manageParticipants" /></h1>
 
         <div>
-          <Link to={"/tournament/view/" + info.tournament.id}><Translated str="backToTournament" /></Link>
+          <Link to={"/tournament/manage/" + info.tournament.id}><Translated str="backToTournament" /></Link>
         </div>
 
         <div className="mt-4">

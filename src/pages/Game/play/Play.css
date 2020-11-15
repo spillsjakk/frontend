@@ -3,14 +3,19 @@
   color: black;
 }
 
-#Game-Play .clock, #resign-btn, #draw-btn, #yes-draw-btn, #no-draw-btn {
+#Game-Play .clock,
+#resign-btn,
+#draw-btn,
+#yes-draw-btn,
+#no-draw-btn {
   color: white;
 }
 
 #Game-Play #content-container {
   max-width: 1200px;
 }
-#Game-Play #promotion-dialog img, #promotion-dialog span {
+#Game-Play #promotion-dialog img,
+#promotion-dialog span {
   cursor: pointer;
   padding-left: 5px;
   padding-right: 5px;
@@ -42,10 +47,16 @@
 #Game-Play .btn-container {
   margin-left: 20px;
 }
-#Game-Play #resign-btn, #Game-Play #draw-btn, #Game-Play #yes-resign-btn, #Game-Play #yes-draw-btn, #Game-Play #no-resign-btn, #Game-Play #no-draw-btn {
+#Game-Play #resign-btn,
+#Game-Play #draw-btn,
+#Game-Play #yes-resign-btn,
+#Game-Play #yes-draw-btn,
+#Game-Play #no-resign-btn,
+#Game-Play #no-draw-btn {
   display: inline;
 }
-#Game-Play div.cg-wrap, #Game-Play cg-container {
+#Game-Play div.cg-wrap,
+#Game-Play cg-container {
   width: 90vh !important; /* Firefox mobile compat */
   width: min(525px, 90vh) !important;
   height: 90vw !important;
@@ -74,12 +85,14 @@
 #Game-Play #game-result-div {
   font-size: 24pt;
 }
-#Game-Play #white-name, #Game-Play #black-name {
+#Game-Play #white-name,
+#Game-Play #black-name {
   text-align: center;
   font-weight: bold;
   font-size: 1.1rem;
 }
-#Game-Play [data-square], #Game-Play [data-piece] {
+#Game-Play [data-square],
+#Game-Play [data-piece] {
   touch-action: none;
 }
 
@@ -102,4 +115,8 @@
 #Game-Play .play-box .user-box .user-info .name {
   display: flex;
   margin-left: 15px;
+}
+
+#Game-Play #outcome-popup .modal-content {
+  background-color: #fafafa;
 }

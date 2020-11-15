@@ -1,0 +1,38 @@
+#Tournament-View .title {
+  color: #bf811d;
+  font-weight: bold;
+}
+
+#Tournament-View .dense td {
+  padding-top: 0;
+  padding-bottom: 0;
+  border: none;
+  vertical-align: middle;
+}
+
+#Tournament-View {
+  background-color: #fafafa;
+  color: black;
+
+  #main-container {
+    .nav-item {
+      background-color: gray;
+    }
+
+    .table {
+      color: black !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n + 1) {
+      background-color: #fafafa !important;
+    }
+  }
+  .list-group-item {
+    background-color: #fafafa;
+  }
+}
+
+#Tournament-View .modal-content {
+  background-color: #fafafa;
+  color: black;
+}

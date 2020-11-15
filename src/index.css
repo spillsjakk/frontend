@@ -64,3 +64,17 @@ img.usf {
     height: 6vh;
   }
 }
+
+#Login {
+  background-color: #fafafa;
+  color: black;
+}
+
+#Login form {
+  margin-top: 50px;
+}
+
+#Tournament-Build {
+  background-color: #fafafa;
+  color: black;
+}

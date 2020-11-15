@@ -7,7 +7,7 @@ import { ActionButton } from "./action-button";
 import style from "./style.module.scss";
 
 const Description: FunctionComponent<{}> = () => {
-  const { tournament } = useTournamentDetail();
+  const { tournament, rounds } = useTournamentDetail();
 
   return (
     <div className={style["description-container"]}>
@@ -42,7 +42,7 @@ const Description: FunctionComponent<{}> = () => {
                   }
                 />
                 {tournament?.per_team_limit &&
-                  `${tournament.per_team_limit} per team`}
+                  ` - ${tournament.per_team_limit} per team`}
               </div>
               <p>{/* {TODO: tournament kind's description} */}</p>
             </div>
@@ -50,9 +50,18 @@ const Description: FunctionComponent<{}> = () => {
               <div className={style.heading}>
                 {Translated.byKey("numberOfRounds")}
               </div>
-              <p>
-                {tournament?.rounds} {Translated.byKey("rounds")}
-              </p>
+              {tournament?.kind === "ManualPairing" ? (
+                Array.isArray(rounds) &&
+                rounds.length > 0 && (
+                  <p>
+                    {rounds.length} {Translated.byKey("rounds")}
+                  </p>
+                )
+              ) : (
+                <p>
+                  {tournament?.rounds} {Translated.byKey("rounds")}
+                </p>
+              )}
             </div>
             <div className={`${style.box} ${style.item}`}>
               <div className={style.heading}>

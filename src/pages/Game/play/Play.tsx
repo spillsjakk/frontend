@@ -1,3 +1,7 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-redeclare */
+/* eslint-disable no-var */
+/* eslint-disable no-unused-expressions */
 import React, { Component, RefObject, PureComponent } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../../components/Translated";
@@ -352,6 +356,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         this.groundRef.current?.cg?.state?.drawable?.shapes || [];
 
       this.setState(newState);
+      // eslint-disable-next-line no-unused-expressions
       this.moveTableRef.current?.scrollIntoView(false);
     } else if (data.t === "draw") {
       if (data.vote === "yes") {
@@ -365,6 +370,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   componentDidUpdate() {
+    // eslint-disable-next-line no-unused-expressions
     this.groundRef.current?.cg?.setShapes(this.state.shapes);
     window.dispatchEvent(new Event("resize")); // apparently sometimes needed for chessground
   }
@@ -475,8 +481,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     if (total_seconds < 10) {
       const fraction = total_seconds - Math.floor(total_seconds);
       const tenths = Math.floor(fraction * 10);
+      // eslint-disable-next-line no-var
       var tenthsStr = "." + tenths.toString();
     } else {
+      // eslint-disable-next-line no-var
       var tenthsStr = "";
     }
     if (hours != 0) {
@@ -804,6 +812,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         />
 
         <Modal
+          id="outcome-popup"
           show={this.state.showOutcomePopup}
           onHide={() => this.setState({ showOutcomePopup: false })}
         >

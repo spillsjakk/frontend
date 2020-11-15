@@ -3,14 +3,19 @@ import { useTournamentDetail } from "../../context/tournament-detail";
 import style from "./style.module.scss";
 
 const Name: FunctionComponent<{}> = () => {
-  const { tournament } = useTournamentDetail();
+  const {
+    tournament,
+    organizer_first_name,
+    organizer_last_name,
+  } = useTournamentDetail();
 
   return (
     <div className={style["name-container"]}>
       <div className={style.name}>{tournament?.name}</div>
 
       <div className={style.organiser}>
-        organiser: <span>{tournament?.organizer}</span>
+        organiser:{" "}
+        <span>{`${organizer_first_name} ${organizer_last_name}`}</span>
       </div>
     </div>
   );

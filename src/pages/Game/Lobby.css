@@ -20,3 +20,12 @@
     display: none;
   }
 }
+
+#Game-Lobby h1 {
+  border-left: 2px solid black;
+}
+
+#Game-Lobby {
+  background-color: #fafafa;
+  color: black;
+}
