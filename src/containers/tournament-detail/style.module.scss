@@ -75,10 +75,9 @@
         text-align: center;
       }
 
-      p {
-        font-weight: 400;
-        font-size: calc(min(3vw, 20px));
-      }
+      font-weight: 400;
+      font-size: calc(min(3vw, 20px));
+      white-space: pre-line;
     }
     .info {
       .item {

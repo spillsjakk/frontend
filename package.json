@@ -25,7 +25,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-websocket": "^2.1.0",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "xss-filters": "^1.2.7"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -44,6 +45,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/recharts": "^1.8.14",
     "@types/sinon": "^9.0.5",
+    "@types/xss-filters": "0.0.27",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "eslint": "^6.8.0",

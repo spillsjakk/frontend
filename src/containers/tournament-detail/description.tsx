@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import xssFilters from "xss-filters";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../components/Translated";
@@ -17,7 +18,11 @@ const Description: FunctionComponent<{}> = () => {
             <div className={style.heading}>
               {Translated.byKey("about").toUpperCase()}:
             </div>
-            <p>{tournament?.description}</p>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: xssFilters.inHTMLData(tournament?.description || ""),
+              }}
+            ></div>
           </div>
         </Col>
         <Col xs={12} md={4}>
