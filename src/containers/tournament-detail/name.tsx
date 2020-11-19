@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import UserLink from "../../components/UserLink";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import style from "./style.module.scss";
 
@@ -15,7 +16,11 @@ const Name: FunctionComponent<{}> = () => {
 
       <div className={style.organiser}>
         organiser:{" "}
-        <span>{`${organizer_first_name} ${organizer_last_name}`}</span>
+        <UserLink
+          id={tournament?.organizer || ""}
+          name={organizer_first_name + " " + organizer_last_name}
+          ghost={false}
+        />
       </div>
     </div>
   );

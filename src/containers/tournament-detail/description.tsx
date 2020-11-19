@@ -15,7 +15,7 @@ const Description: FunctionComponent<{}> = () => {
         <Col xs={12} md={8}>
           <div className={style.about}>
             <div className={style.heading}>
-              {Translated.byKey("about").toUpperCase()}
+              {Translated.byKey("about").toUpperCase()}:
             </div>
             <p>{tournament?.description}</p>
           </div>

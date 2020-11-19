@@ -7,32 +7,51 @@ import Translated from "../../components/Translated";
 const TimeSection: FunctionComponent<{}> = () => {
   const { tournament, rounds } = useTournamentDetail();
 
-  function getDate() {
-    if (tournament && Array.isArray(rounds) && rounds.length > 0) {
+  function getDate(): Date {
+    if (tournament) {
       if (tournament?.kind === "ManualPairing") {
-        const sortedRounds = [...rounds];
-        sortedRounds.sort((a, b) => {
-          return (
-            new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
+        if (Array.isArray(rounds) && rounds.length > 0) {
+          const sortedRounds = [...rounds];
+          sortedRounds.sort((a, b) => {
+            return (
+              new Date(a.start_date).getTime() -
+              new Date(b.start_date).getTime()
+            );
+          });
+          const now = new Date();
+          const filteredRounds = sortedRounds.filter(
+            (round) => now.getTime() - new Date(round.start_date).getTime() < 0
           );
-        });
-        const now = new Date();
-        const filteredRounds = sortedRounds.filter(
-          (round) => now.getTime() - new Date(round.start_date).getTime() < 0
-        );
-        return new Date(
-          filteredRounds.length > 0 ? filteredRounds[0].start_date : 0
-        );
+          return new Date(
+            filteredRounds.length > 0 ? filteredRounds[0].start_date : 0
+          );
+        } else {
+          return new Date();
+        }
       }
-
-      return new Date(tournament.first_online_pairing);
+      return new Date(tournament.current_online_pairing_time);
     }
     return new Date();
   }
 
   return (
     <div className={style["time-section"]}>
-      {tournament && Array.isArray(rounds) && rounds?.length > 0 && (
+      {tournament &&
+        tournament.kind === "ManualPairing" &&
+        rounds &&
+        rounds.length > 0 && (
+          <>
+            <div className={style["round-time-starts"]}>
+              <div className={style.text}>
+                {Translated.byKey("nextRoundText")}
+              </div>
+            </div>
+            <div className={style["round-time-countdown"]}>
+              <CircularCountDown startDate={getDate()} />
+            </div>
+          </>
+        )}
+      {tournament && tournament.kind !== "ManualPairing" && (
         <>
           <div className={style["round-time-starts"]}>
             <div className={style.text}>

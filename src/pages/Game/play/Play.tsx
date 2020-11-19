@@ -231,7 +231,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         json.redirect ||
         (json.game_info && json.game_info.outcome !== null)
       ) {
-        this.props.history.push("/game/view/" + this.gameId);
+        this.props.history.replace("/game/view/" + this.gameId);
         return;
       }
 
