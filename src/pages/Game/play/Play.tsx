@@ -349,7 +349,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         } else {
           newState.outcome = GameOutcome.Draw;
         }
-        newState.showOutcomePopup = true;
+        if (this.state.isPlayer) {
+          newState.showOutcomePopup = true;
+        }
       }
 
       newState.shapes =
