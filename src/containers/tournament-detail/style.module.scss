@@ -29,6 +29,14 @@
       top: 65%;
       left: 44%;
     }
+    .pp-custom {
+      position: absolute;
+      top: 65%;
+      left: calc(min(40vw, 525px));
+      height: calc(min(15vw, 150px));
+      width: calc(min(15vw, 150px));
+      border-radius: 50%;
+    }
 
     .banner-pic {
       width: 100%;

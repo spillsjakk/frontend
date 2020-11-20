@@ -9,6 +9,7 @@ import {
 import { fetchJson, title } from "../../../functions";
 import { TournamentDetail as Container } from "../../../containers/tournament-detail";
 import { Round } from "../../../context/tournament-round";
+import { WithOrganization } from "../../../hocs/with-organization";
 
 const TournamentDetail: FunctionComponent<{}> = () => {
   const [tournamentDetail, setTournamentDetail] = useState<
@@ -60,16 +61,18 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       <TournamentDetailProvider
         value={{ ...tournamentDetail, rounds, update: fetchTournament }}
       >
-        <div
-          style={{
-            color: "black",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Container />
-        </div>
+        <WithOrganization>
+          <div
+            style={{
+              color: "black",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Container />
+          </div>
+        </WithOrganization>
       </TournamentDetailProvider>
     </>
   );
