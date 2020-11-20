@@ -20,7 +20,8 @@ const ActionButton: FunctionComponent<{}> = () => {
   const params = useParams<{ tid: string }>();
   const history = useHistory();
 
-  function onClickSelfLeave() {
+  function onClickSelfLeave(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     fetchJson(
       `/s/tournament/self-leave/${params.tid}`,
       "POST",
@@ -34,12 +35,15 @@ const ActionButton: FunctionComponent<{}> = () => {
   }
 
   function onClickSelfJoin(team: string) {
-    fetchJson(
-      `/s/tournament/self-join/${params.tid}?team=${team}`,
-      "POST",
-      undefined,
-      update!
-    );
+    return (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      fetchJson(
+        `/s/tournament/self-join/${params.tid}?team=${team}`,
+        "POST",
+        undefined,
+        update!
+      );
+    };
   }
 
   function isOrganizer() {
@@ -68,25 +72,27 @@ const ActionButton: FunctionComponent<{}> = () => {
         pairings.length === 0 && (
           <>
             {!is_participating ? (
-              <form>
+              <>
                 {self_join_teams &&
-                  self_join_teams?.map((t) => (
-                    <div
-                      key={t.id}
-                      className={`${style["action-button"]} ${style["join-tournament"]}`}
-                    >
-                      <button onClick={() => onClickSelfJoin(t.id)}>
-                        <Translated str="joinFor" /> &quot;{t.name}&quot;
-                      </button>
-                    </div>
+                  self_join_teams?.map((t, i) => (
+                    <form onSubmit={onClickSelfJoin(t.id)} key={i}>
+                      <div
+                        key={t.id}
+                        className={`${style["action-button"]} ${style["join-tournament"]}`}
+                      >
+                        <button type="submit">
+                          <Translated str="joinFor" /> &quot;{t.name}&quot;
+                        </button>
+                      </div>
+                    </form>
                   ))}
-              </form>
+              </>
             ) : (
-              <form>
+              <form onSubmit={onClickSelfLeave}>
                 <div
                   className={`${style["action-button"]} ${style["leave-tournament"]}`}
                 >
-                  <button onClick={onClickSelfLeave}>
+                  <button type="submit">
                     <Translated str="leave" />
                   </button>
                 </div>
