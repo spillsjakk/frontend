@@ -33,7 +33,7 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
       password: this.state.password
     }, user => {
       this.context.setUser(user);
-      
+
       if (this.props.location.search.startsWith("?path=")) {
         this.props.history.push(this.props.location.search.split("=")[1] || "/");
         return;
@@ -70,7 +70,7 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
             <label htmlFor="password"><Translated str="password" /></label>
             <input type="password" className="form-control w-25" name="password" id="password" value={this.state.password} onChange={this.handleChange} required />
           </div>
-          <button className="btn btn-primary"><Translated str="login" /></button>
+          <button id="submit" className="btn btn-primary"><Translated str="login" /></button>
         </form>
         <p className="mt-5">
           <Link to="/account/recover"><Translated str="forgotPassword" /></Link>
