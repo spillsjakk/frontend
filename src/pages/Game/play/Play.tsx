@@ -11,7 +11,6 @@ import { fetchJson, title } from "../../../functions";
 import "react-chessground/dist/styles/chessground.css";
 import "./Play.css";
 import "../chessground-theme.css";
-import Websocket from "react-websocket";
 import Chessground from "react-chessground";
 import Chess from "chess.js";
 import { Chess as OpsChess } from "chessops";
@@ -145,6 +144,7 @@ type PlayState = {
   showOutcomePopup: boolean;
   white_fide_federation: string;
   black_fide_federation: string;
+  ws: WebSocket | null;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -154,6 +154,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   blackClockRef: RefObject<Clock>;
   moveTableRef: RefObject<HTMLTableElement>;
   moveSound: Howl;
+  timeout = 250;
 
   constructor(props: RouteComponentProps<PlayProps>) {
     super(props);
@@ -193,6 +194,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       showOutcomePopup: false,
       white_fide_federation: "",
       black_fide_federation: "",
+      ws: null,
     };
     this.groundRef = React.createRef();
     this.whiteClockRef = React.createRef();
@@ -202,7 +204,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       src: ["/sounds/move.mp3"],
     });
 
-    this.onWsMessage = this.onWsMessage.bind(this);
     this.updateData = this.updateData.bind(this);
     this.onMove = this.onMove.bind(this);
     this.resignFirst = this.resignFirst.bind(this);
@@ -219,12 +220,16 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.getSelfInfo = this.getSelfInfo.bind(this);
     this.renderOpponentBox = this.renderOpponentBox.bind(this);
     this.renderSelfBox = this.renderSelfBox.bind(this);
+    this.check = this.check.bind(this);
+    this.connect = this.connect.bind(this);
   }
 
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Game-Play";
 
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
+
+    this.connect();
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, (json) => {
       if (
@@ -262,6 +267,60 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   componentWillUnmount() {
     window.clearInterval(this.state.clocksInterval);
   }
+
+  connect = () => {
+    const ws = new WebSocket(
+      "wss://" + window.location.host + "/socket/" + this.gameId
+    );
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this; // cache the this
+    let connectInterval: any;
+
+    // websocket onopen event listener
+    ws.onopen = () => {
+      console.log("connected websocket");
+
+      this.setState({ ws: ws });
+
+      that.timeout = 250; // reset timer to 250 on open of websocket connection
+      clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+    };
+
+    ws.onmessage = (evt) => {
+      // listen to data sent from the websocket server
+      this.updateData(JSON.parse(evt.data));
+    };
+
+    // websocket onclose event listener
+    ws.onclose = (e) => {
+      console.log(
+        `Socket is closed. Reconnect will be attempted in ${Math.min(
+          10000 / 1000,
+          (that.timeout + that.timeout) / 1000
+        )} second.`,
+        e.reason
+      );
+
+      that.timeout = that.timeout + that.timeout; // increment retry interval
+      connectInterval = setTimeout(this.check, Math.min(10000, that.timeout)); // call check function after timeout
+    };
+
+    // websocket onerror event listener
+    ws.onerror = (err: any) => {
+      console.error(
+        "Socket encountered error: ",
+        err.message,
+        "Closing socket"
+      );
+
+      ws.close();
+    };
+  };
+
+  check = () => {
+    const { ws } = this.state;
+    if (!ws || ws.readyState == WebSocket.CLOSED) this.connect(); // check if websocket instance is closed, if so call `connect` function.
+  };
 
   reconstructGame(b64moves: string) {
     const game = new Chess();
@@ -375,11 +434,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     // eslint-disable-next-line no-unused-expressions
     this.groundRef.current?.cg?.setShapes(this.state.shapes);
     window.dispatchEvent(new Event("resize")); // apparently sometimes needed for chessground
-  }
-
-  onWsMessage(msg: string) {
-    const data = JSON.parse(msg);
-    this.updateData(data);
   }
 
   onMove(source: string, target: string) {
@@ -807,11 +861,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               <Translated str="itsADraw" />
             ))}
         </div>
-
-        <Websocket
-          url={"wss://" + window.location.host + "/socket/" + this.gameId}
-          onMessage={this.onWsMessage}
-        />
 
         <Modal
           id="outcome-popup"
