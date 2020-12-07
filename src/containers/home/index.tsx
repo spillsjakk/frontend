@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Features } from "./features";
 import { Tournaments } from "./tournaments";
 import style from "./style.module.scss";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 
 const Home: FunctionComponent<{}> = () => {
   return (

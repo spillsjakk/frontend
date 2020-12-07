@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import { Round } from "../../context/tournament-round";
 import { useTournamentPairing } from "../../context/tournament-pairing";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { Button } from "react-bootstrap";
 import style from "./style.module.css";
 import {

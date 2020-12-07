@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { useForm } from "../../context/build-tournament-form";
 import { useTemplate } from "../../context/build-tournament-template";
 import { placeholder } from "../../hocs/build-tournament-template";
-import Translated from "../Translated";
+import Translated from "../translated";
 
 const ShortForm: FunctionComponent<{}> = () => {
   const form = useForm();

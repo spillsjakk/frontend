@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useForm } from "../../context/build-tournament-form";
-import Translated from "../Translated";
+import Translated from "../translated";
 
 const ShortFormInputs: FunctionComponent<{}> = () => {
   const form = useForm();

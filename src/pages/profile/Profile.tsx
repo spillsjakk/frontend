@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
 import { RouteComponentProps, Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";

@@ -1,6 +1,6 @@
 import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
 import { Link } from "react-router-dom";
 import FederationDropdown from "../../components/FederationDropdown";

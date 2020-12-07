@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { CircularProgressbarWithChildren as CircularProgressbar } from "react-circular-progressbar";
-import Translated from "../Translated";
+import Translated from "../translated";
 import style from "./style.module.scss";
 import "./custom.css";
 

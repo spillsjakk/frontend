@@ -1,6 +1,6 @@
 import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 import { Link } from "react-router-dom";
@@ -512,7 +512,7 @@ class Manage extends PureComponent<{}, ManageState> {
               onChange={this.handleChange}
               className="w-50 form-control"
             />
-            
+
             <button className="btn btn-primary" type="submit">
               <Translated str="send" />
             </button>

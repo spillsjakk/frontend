@@ -8,7 +8,7 @@ import { fetchJson } from "../../functions";
 import { Round, TournamentRoundProvider } from "../../context/tournament-round";
 import { useTournament } from "../../context/tournament";
 import { Modal, Button } from "react-bootstrap";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 
 const WithTournamentRound: FunctionComponent = ({ children }) => {
   const [rounds, setRounds] = useState<Array<Round>>([]);

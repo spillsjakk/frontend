@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { Carousel } from "react-bootstrap";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import style from "./style.module.scss";
 
 const Features: FunctionComponent<{}> = () => {

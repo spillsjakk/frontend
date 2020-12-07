@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import UserLink from "../../components/UserLink";
 import { UserContext } from "../../components/UserContext";
 import { CircularProgressbar } from 'react-circular-progressbar';

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Helmet } from 'react-helmet';
 import { Timestamp } from "../components/Timestamp";
-import Translated from "../components/Translated";
+import Translated from "../components/translated";
 import UserLink from "../components/UserLink";
 import { fetchJson, title } from "../functions";
 
@@ -41,7 +41,7 @@ class Inbox extends PureComponent<{}, InboxState> {
         </Helmet>
         <h1 className="mt-5 p-3"><Translated str="inbox" /></h1>
 
-        {this.state.messages.map(msg => 
+        {this.state.messages.map(msg =>
           <>
             <p style={ msg.read ? {} : { fontWeight: "bold" }}>
               <Timestamp time={msg.moment} /> -&nbsp;

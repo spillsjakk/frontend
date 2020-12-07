@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component, RefObject, PureComponent } from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../../../components/Translated";
+import Translated from "../../../components/translated";
 import { UserInfoBox } from "./user-info-box";
 import { RouteComponentProps } from "react-router-dom";
 import { fetchJson, title } from "../../../functions";

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
-import Translated from './components/Translated';
+import Translated from './components/translated';
 
 type ErrorProps = {
   err: string

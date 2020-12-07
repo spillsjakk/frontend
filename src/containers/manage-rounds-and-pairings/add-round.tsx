@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Button } from "react-bootstrap";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { useTournamentRound } from "../../context/tournament-round";
 
 const AddRound: FunctionComponent<{}> = () => {

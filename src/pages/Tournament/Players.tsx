@@ -1,6 +1,6 @@
 import React, { Component, FormEvent, ChangeEvent, RefObject } from "react";
 import { Helmet } from 'react-helmet';
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { Tournament, Participant, Team, TeamParticipant, Account } from './Types';
 import { RouteComponentProps, Link } from "react-router-dom";
 import { fetchJson, title } from "../../functions";

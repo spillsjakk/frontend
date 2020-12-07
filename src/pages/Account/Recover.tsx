@@ -1,7 +1,7 @@
 import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
 
 type RecoverProps = {
