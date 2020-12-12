@@ -167,6 +167,10 @@ const no = {
   navbarAccountCreation: "",
   navbarOrgs: "",
   navbarTournaments: "",
+  myTournamentCalendar: "",
+  browse: "",
+  bulkAccountCreation: "",
+  userGuide: "",
 };
 
 export { no };

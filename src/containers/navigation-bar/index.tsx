@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import LangSwitcher from "../../components/LangSwitcher";
 import Translated from "../../components/translated";
 import { Levels, useUser } from "../../components/UserContext";
 import { fetchJson } from "../../functions";
@@ -50,11 +51,11 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {Translated.byKey("navbarTournaments")}
               <div className="menu">
                 <a href="/game/lobby" className="item">
-                  My Tournament Calendar
+                  {Translated.byKey("myTournamentCalendar")}
                 </a>
                 {hasLevel() && (
                   <a href="/tournament/build" className="item">
-                    Build a Tournament
+                    {Translated.byKey("buildTournament")}
                   </a>
                 )}
               </div>
@@ -63,16 +64,16 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {Translated.byKey("navbarOrgs")}
               <div className="menu">
                 <a href="/browse" className="item">
-                  Browse
+                  {Translated.byKey("browse")}
                 </a>
                 {hasLevel() && (
                   <a href="/club/manage" className="item">
-                    Manage Club
+                    {Translated.byKey("manageClub")}
                   </a>
                 )}
                 {isOrganizationManager() && (
                   <a href="/organization/manage" className="item">
-                    Manage Organization
+                    {Translated.byKey("manageOrganization")}
                   </a>
                 )}
               </div>
@@ -83,11 +84,11 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {hasLevel() && (
                 <div className="menu">
                   <a href="/account/create" className="item">
-                    Create Accounts
+                    {Translated.byKey("createAccounts")}
                   </a>
                   {isAdmin() && (
                     <a href="/account/csv_import" className="item">
-                      Bulk Account Creation
+                      {Translated.byKey("manageClub")}
                     </a>
                   )}
                 </div>
@@ -98,19 +99,20 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {Translated.byKey("navbarInfo")}
               <div className="menu">
                 <a href="/about" className="item">
-                  About
+                  {Translated.byKey("manageClub")}
                 </a>
                 <a href="/user-guide" className="item">
-                  User Guide
+                  {Translated.byKey("userGuide")}
                 </a>
                 <a href="/contact" className="item">
-                  Contact
+                  {Translated.byKey("contact")}
                 </a>
               </div>
             </div>
           </nav>
         </div>
         <div className="right links">
+          <LangSwitcher />
           {anon() && (
             <a href="/login">
               <button>{Translated.byKey("navbarLogin")}</button>
@@ -120,11 +122,11 @@ const NavigationBar: FunctionComponent<{}> = () => {
             <div className="link">
               <img src="/images/user.svg" width="35px" />
               <div className="menu">
-                <a href="/about" className="item">
+                <a href={"/profile/" + user.info?.id} className="item">
                   {user?.info?.name}
                 </a>
                 <a href="/" onClick={onLogout} className="item">
-                  Logout
+                  {Translated.byKey("logout")}
                 </a>
               </div>
             </div>

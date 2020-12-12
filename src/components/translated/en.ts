@@ -262,6 +262,10 @@ const en = {
   navbarAccountCreation: "ACCOUNT CREATION",
   navbarOrgs: "ORGANIZATIONS & CLUBS",
   navbarTournaments: "TOURNAMENTS",
+  myTournamentCalendar: "My Tournament Calendar",
+  browse: "Browse",
+  bulkAccountCreation: "Bulk Account Creation",
+  userGuide: "User Guide",
 };
 
 export { en };
