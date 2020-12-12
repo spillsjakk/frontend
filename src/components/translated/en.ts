@@ -100,6 +100,7 @@ const en = {
     "Game location can be changed for each pairing when the tournament is running.",
   games: "Games",
   gameScore: "Game score",
+  getInTouch: "GET IN TOUCH",
   goToLobby: "Go to the lobby.",
   home: "Home",
   hours: "hours",

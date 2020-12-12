@@ -3,7 +3,8 @@ import { Switch, Route } from "react-router-dom";
 
 import About from "./pages/About";
 import { UserGuide } from "./pages/user-guide/index";
-import Contact from "./pages/Contact";
+import { Contact } from "./pages/contact/index";
+// import { Inbox } from "./pages/inbox/index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Profile from "./pages/profile/Profile";
@@ -29,7 +30,7 @@ import OrgView from "./pages/Organization/View";
 import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
 import { Home } from "./pages/Home/index";
-import Inbox from "./pages/Inbox";
+import { Inbox } from "./pages/inbox/index";
 import { TournamentDetail } from "./pages/Tournament/detail";
 
 const Main = () => {

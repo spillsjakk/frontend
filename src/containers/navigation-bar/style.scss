@@ -18,6 +18,15 @@
     justify-content: space-between;
     width: 100%;
 
+    .unread-icon {
+      position: absolute;
+      background-color: red;
+      width: 10px;
+      height: 10px;
+      border-radius: 10px;
+      top: -5px;
+    }
+
     .left {
       display: flex;
       flex-direction: row;

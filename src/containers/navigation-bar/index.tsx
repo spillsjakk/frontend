@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import LangSwitcher from "../../components/LangSwitcher";
 import Translated from "../../components/translated";
 import { Levels, useUser } from "../../components/UserContext";
@@ -7,7 +7,15 @@ import { Logo } from "./logo";
 import "./style.scss";
 
 const NavigationBar: FunctionComponent<{}> = () => {
+  const [hasMessage, setHasMessage] = useState(false);
+
   const { user, setUser } = useUser();
+
+  useEffect(() => {
+    fetchJson("/s/messages/has-unread", "GET", undefined, (response) => {
+      setHasMessage(!!response.has);
+    });
+  }, []);
 
   function onLogout() {
     fetchJson("/s/account/logout", "POST", {}, (_) => {
@@ -87,8 +95,8 @@ const NavigationBar: FunctionComponent<{}> = () => {
                     {Translated.byKey("createAccounts")}
                   </a>
                   {isAdmin() && (
-                    <a href="/account/csv_import" className="item">
-                      {Translated.byKey("manageClub")}
+                    <a href="/club/csv_import" className="item">
+                      {Translated.byKey("bulkAccountCreation")}
                     </a>
                   )}
                 </div>
@@ -99,7 +107,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {Translated.byKey("navbarInfo")}
               <div className="menu">
                 <a href="/about" className="item">
-                  {Translated.byKey("manageClub")}
+                  {Translated.byKey("about")}
                 </a>
                 <a href="/user-guide" className="item">
                   {Translated.byKey("userGuide")}
@@ -120,10 +128,14 @@ const NavigationBar: FunctionComponent<{}> = () => {
           )}
           {authenticated() && (
             <div className="link">
+              {hasMessage && <div className="unread-icon"></div>}
               <img src="/images/user.svg" width="35px" />
               <div className="menu">
                 <a href={"/profile/" + user.info?.id} className="item">
                   {user?.info?.name}
+                </a>
+                <a href="/inbox" className="item">
+                  {Translated.byKey("inbox")}
                 </a>
                 <a href="/" onClick={onLogout} className="item">
                   {Translated.byKey("logout")}

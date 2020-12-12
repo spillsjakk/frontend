@@ -98,6 +98,7 @@ const no = {
     "Om det skal spilles online eller over brett kan endres for hver runde",
   games: "",
   gameScore: "partiresultat",
+  getInTouch: "",
   goToLobby: "",
   home: "Hjem",
   hours: "timer",
