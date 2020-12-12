@@ -21,7 +21,7 @@ class App extends Component<{}, AppState> {
     this.state = {
       lang: localStorage.getItem("lang") ?? "EN",
       user: {
-        authenticated: false,
+        authenticated: null,
       },
     };
   }

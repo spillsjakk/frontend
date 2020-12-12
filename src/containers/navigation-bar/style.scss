@@ -21,47 +21,18 @@
     .left {
       display: flex;
       flex-direction: row;
-      .links {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-left: 10px;
-        .link {
-          position: relative;
-          cursor: pointer;
-          margin: 0px 10px;
-
-          .menu {
-            display: none;
-            position: absolute;
-            background-color: #cccccc;
-            border-radius: 10px;
-            padding: 5px;
-            font-size: 12px;
-            width: 200px;
-
-            .item {
-              border-radius: 10px;
-              padding: 10px;
-            }
-
-            .item:hover {
-              background-color: #ababab;
-            }
-          }
-        }
-
-        .link:hover .menu {
-          display: block;
-        }
-      }
     }
+
     .right {
       display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
+
+      .menu {
+        right: -20px;
+        width: 100px !important;
+      }
 
       button {
         background-color: #469a88;
@@ -71,6 +42,51 @@
         height: 40px;
         color: white;
         border-radius: 10px;
+      }
+    }
+
+    .links {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      .link {
+        position: relative;
+        cursor: default;
+        margin: 0px 10px;
+
+        .menu {
+          display: none;
+          position: absolute;
+          background-color: #cccccc;
+          border-radius: 10px;
+          padding: 5px;
+          font-size: 12px;
+          width: 200px;
+
+          .item {
+            display: block;
+            border-radius: 10px;
+            padding: 10px;
+          }
+
+          .item:hover {
+            background-color: #ababab;
+          }
+
+          a {
+            color: black;
+          }
+
+          a:hover {
+            background-color: #ababab;
+          }
+        }
+      }
+
+      .link:hover .menu {
+        display: block;
       }
     }
   }
