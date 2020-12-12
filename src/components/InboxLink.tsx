@@ -3,7 +3,7 @@ import { Nav } from "react-bootstrap";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { fetchJson } from "../functions";
-import Translated from "./Translated";
+import Translated from "./translated";
 
 type InboxLinkState = {
   hasUnread: boolean;

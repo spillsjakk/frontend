@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { fetchJson } from "../../functions";
 import UserLink from "../../components/UserLink";
 import { Link, RouteComponentProps } from "react-router-dom";

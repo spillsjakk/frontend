@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Helmet } from 'react-helmet';
 import { Container } from 'react-bootstrap';
-import Translated from "../components/Translated";
+import Translated from "../components/translated";
 import { title } from "../functions";
 
 class NotFound extends PureComponent {

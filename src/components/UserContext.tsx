@@ -1,7 +1,7 @@
 import React from "react";
 
 export type UserContextDataType = {
-  authenticated: boolean;
+  authenticated: boolean | null;
   info?: {
     id: string;
     name: string;
@@ -10,7 +10,7 @@ export type UserContextDataType = {
 };
 
 const defaults: UserContextDataType = {
-  authenticated: false,
+  authenticated: null,
   info: undefined,
 };
 

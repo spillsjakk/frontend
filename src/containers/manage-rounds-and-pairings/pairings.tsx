@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { useTournamentPairing } from "../../context/tournament-pairing";
 import { DeleteButton } from "./delete-button";
 

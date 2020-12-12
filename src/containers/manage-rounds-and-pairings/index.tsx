@@ -3,7 +3,7 @@ import { WithTournamentRound } from "../../hocs/tournament-round";
 import { WithTournamentPairing } from "../../hocs/tournament-pairing";
 import { AddRound } from "./add-round";
 import { Panel } from "./panel";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import style from "./style.module.css";
 
 const ManageRoundsAndPairings: FunctionComponent<{}> = () => {

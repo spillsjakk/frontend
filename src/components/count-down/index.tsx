@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import ReactCountdown from "react-countdown";
-import Translated from "../../components/Translated";
+import Translated from "../translated";
 
 interface Props {
   time: string;

@@ -6,7 +6,7 @@ import ToolkitProvider, {
   SearchMatchProps,
 } from "react-bootstrap-table2-toolkit";
 import style from "./style.module.scss";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import {} from "../../containers/tournament-detail";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import paginationFactory from "react-bootstrap-table2-paginator";

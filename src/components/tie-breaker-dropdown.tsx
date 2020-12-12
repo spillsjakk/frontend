@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import Translated from "./Translated";
+import Translated from "./translated";
 
 export function TiebreakerDropdown(props: {
   value?: string;

@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 import { useForm } from "../../context/build-tournament-form";
-import Translated from "../Translated";
+import Translated from "../translated";
 import { fetchJson } from "../../functions";
 import { FormInputs } from "./form-inputs";
 import { ShortFormInputs } from "./short-form-inputs";

@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from "react";
 import { Container, Alert } from "react-bootstrap";
-import Translated from "./Translated";
+import Translated from "./translated";
 import { Link, useHistory, withRouter, RouteComponentProps } from "react-router-dom";
 import { fetchJson } from "../functions";
 import { UserContext } from "./UserContext";

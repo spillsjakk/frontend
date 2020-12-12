@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useTournamentDetail } from "../../context/tournament-detail";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
 import style from "./style.module.scss";
 import { fetchJson } from "../../functions";

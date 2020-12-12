@@ -5,7 +5,7 @@ import { Pairings } from "./pairings";
 import { DeleteButton } from "./delete-button";
 import { AddPairingForm } from "./add-pairing-form";
 import styles from "./style.module.css";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 
 const Panel: FunctionComponent<{}> = () => {
   const roundContext = useTournamentRound();

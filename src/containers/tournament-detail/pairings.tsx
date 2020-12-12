@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Nav, Tab } from "react-bootstrap";
 import { useTournamentDetail } from "../../context/tournament-detail";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
 

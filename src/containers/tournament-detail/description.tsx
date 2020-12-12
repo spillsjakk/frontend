@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import xssFilters from "xss-filters";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import { Col, Row } from "react-bootstrap";
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { ActionButton } from "./action-button";
 
 import style from "./style.module.scss";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from 'react-helmet';
-import Translated from "../../components/Translated";
+import Translated from "../../components/translated";
 import { Team } from "../Tournament/Types";
 import { UserContext } from "../../components/UserContext";
 import UserLink from "../../components/UserLink";
