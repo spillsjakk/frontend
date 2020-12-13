@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import About from "./pages/About";
 import { UserGuide } from "./pages/user-guide/index";
 import { Contact } from "./pages/contact/index";
-// import { Inbox } from "./pages/inbox/index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Profile from "./pages/profile/Profile";

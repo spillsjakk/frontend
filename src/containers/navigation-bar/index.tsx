@@ -110,11 +110,6 @@ const NavigationBar: FunctionComponent<{}> = () => {
                   <a href="/account/create" className="item">
                     {Translated.byKey("createAccounts")}
                   </a>
-                  {isAdmin() && (
-                    <a href="/club/csv_import" className="item">
-                      {Translated.byKey("bulkAccountCreation")}
-                    </a>
-                  )}
                 </div>
               )}
             </div>

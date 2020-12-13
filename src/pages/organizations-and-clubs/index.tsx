@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
+import { SearchByFideId } from "./search-by-fide-id";
 import "./style.scss";
 
 const defaultPic = "https://via.placeholder.com/150";
@@ -25,10 +26,11 @@ const OrganizationsAndClubs: FunctionComponent<{}> = () => {
   }, []);
 
   return (
-    <div id="">
+    <>
       <Helmet>
         <title>{title("browseOrgsAndClubs")}</title>
       </Helmet>
+      <SearchByFideId />
       <div className="header">
         {Translated.byKey("browseOrgs").toUpperCase()}
       </div>
@@ -74,7 +76,7 @@ const OrganizationsAndClubs: FunctionComponent<{}> = () => {
           ))}
         </Row>
       </div>
-    </div>
+    </>
   );
 };
 

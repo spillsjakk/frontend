@@ -39,5 +39,21 @@ body#organizations-and-clubs-page {
         }
       }
     }
+
+    #search-by-fide-id {
+      .wrapper {
+        display: flex;
+        width: 50%;
+      }
+      input {
+        width: clamp(300px, 60vw, 800px);
+        border: solid 1px #b2b2b2;
+        border-radius: 0.25rem 0 0 0.25rem;
+      }
+      button {
+        background-color: #469a88;
+        border-radius: 0 0.25rem 0.25rem 0;
+      }
+    }
   }
 }
