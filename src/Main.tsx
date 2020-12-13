@@ -31,6 +31,7 @@ import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
 import { Home } from "./pages/Home/index";
 import { Inbox } from "./pages/inbox/index";
+import { OrganizationsAndClubs } from "./pages/organizations-and-clubs/index";
 import { TournamentDetail } from "./pages/Tournament/detail";
 
 const Main = () => {
@@ -42,6 +43,7 @@ const Main = () => {
       <Route exact path="/contact" component={Contact}></Route>
       <Route exact path="/login" component={Login}></Route>
       <Route exact path="/inbox" component={Inbox}></Route>
+      <Route exact path="/browse" component={OrganizationsAndClubs}></Route>
 
       <Route exact path="/profile/:uid" component={Profile}></Route>
 

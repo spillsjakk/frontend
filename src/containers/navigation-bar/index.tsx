@@ -12,10 +12,26 @@ const NavigationBar: FunctionComponent<{}> = () => {
   const { user, setUser } = useUser();
 
   useEffect(() => {
-    fetchJson("/s/messages/has-unread", "GET", undefined, (response) => {
-      setHasMessage(!!response.has);
-    });
-  }, []);
+    if (user && user.authenticated) {
+      fetch("/s/messages/has-unread", {
+        method: "GET",
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.status < 400) {
+            return response.json();
+          } else {
+            return Promise.resolve({ error: response.status.toString() });
+          }
+        })
+        .then((json) => {
+          if (!json.error) {
+            setHasMessage(!!json.has);
+          }
+        });
+    }
+  }, [user]);
 
   function onLogout() {
     fetchJson("/s/account/logout", "POST", {}, (_) => {
