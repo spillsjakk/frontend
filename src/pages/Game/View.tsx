@@ -31,6 +31,7 @@ type ViewState = {
   white_fide_federation: string;
   black_fide_federation: string;
   orientation: string;
+  tournament: string;
 };
 
 class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
@@ -54,6 +55,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       white_fide_federation: "",
       black_fide_federation: "",
       orientation: "",
+      tournament: "",
     };
 
     this.gameId = props.match.params.id;
@@ -76,14 +78,17 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       }
 
       fetchJson(
-        `/s/game/accounts/info?white=${result.game.white}&black=${result.game.black}`,
+        `/s/game/${this.gameId}/accounts/info?white=${result.game.white}&black=${result.game.black}`,
         "GET",
         undefined,
         (json) => {
-          this.setState({
-            white_fide_federation: json.white_fide_federation,
-            black_fide_federation: json.black_fide_federation,
-          });
+          if (json) {
+            this.setState({
+              white_fide_federation: json.white_fide_federation,
+              black_fide_federation: json.black_fide_federation,
+              tournament: json.tournament,
+            });
+          }
         }
       );
 
@@ -258,6 +263,11 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
         <div className="d-flex flex-row justify-content-between mt-4">
           <div id="move-div">
+            <div className="tournament-link">
+              <a href={`/tournament/view/${this.state.tournament}`}>
+                {Translated.byKey("backToTournament")}
+              </a>
+            </div>
             <table id="move-table">
               <tbody>{rows}</tbody>
             </table>
