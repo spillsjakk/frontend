@@ -150,6 +150,7 @@ type PlayState = {
     source: string;
     dest: string;
   };
+  tournament: string;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -205,6 +206,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         source: "",
         dest: "",
       },
+      tournament: "",
     };
     this.groundRef = React.createRef();
     this.whiteClockRef = React.createRef();
@@ -251,14 +253,17 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       }
 
       fetchJson(
-        `/s/game/accounts/info?white=${json.game_info.white}&black=${json.game_info.black}`,
+        `/s/game/${this.gameId}/accounts/info?white=${json.game_info.white}&black=${json.game_info.black}`,
         "GET",
         undefined,
         (json) => {
-          this.setState({
-            white_fide_federation: json.white_fide_federation,
-            black_fide_federation: json.black_fide_federation,
-          });
+          if (json) {
+            this.setState({
+              white_fide_federation: json.white_fide_federation,
+              black_fide_federation: json.black_fide_federation,
+              tournament: json.tournament,
+            });
+          }
         }
       );
 
@@ -690,7 +695,13 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           <title>{title("playGame")}</title>
         </Helmet>
 
-        <div className="mt-5"></div>
+        <div className="mt-5">
+          <div className="tournament-link">
+            <a href={`/tournament/view/${this.state.tournament}`}>
+              {Translated.byKey("backToTournament")}
+            </a>
+          </div>
+        </div>
 
         {this.state.isPromoting && (
           <div className="d-flex flex-row justify-content-around">

@@ -11,6 +11,10 @@
   color: white;
 }
 
+#Game-Play  .tournament-link {
+  margin: 10px;
+}
+
 #Game-Play #content-container {
   max-width: 1200px;
 }
