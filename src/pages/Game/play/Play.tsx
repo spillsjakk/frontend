@@ -145,6 +145,11 @@ type PlayState = {
   white_fide_federation: string;
   black_fide_federation: string;
   ws: WebSocket | null;
+  premove: boolean;
+  premoveData: {
+    source: string;
+    dest: string;
+  };
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -195,6 +200,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       white_fide_federation: "",
       black_fide_federation: "",
       ws: null,
+      premove: false,
+      premoveData: {
+        source: "",
+        dest: "",
+      },
     };
     this.groundRef = React.createRef();
     this.whiteClockRef = React.createRef();
@@ -419,6 +429,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       this.setState(newState);
       // eslint-disable-next-line no-unused-expressions
       this.moveTableRef.current?.scrollIntoView(false);
+
+      if (this.state.premove) {
+        this.onMove(this.state.premoveData.source, this.state.premoveData.dest);
+        this.setState({
+          premove: false,
+          premoveData: { source: "", dest: "" },
+        });
+      }
     } else if (data.t === "draw") {
       if (data.vote === "yes") {
         if (!this.state.pendingDrawOffer) {
@@ -729,7 +747,25 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                   showDests: true,
                   rookCastle: false,
                 }}
-                premovable={{ enabled: false }}
+                premovable={{
+                  enabled: true,
+                  showDests: true,
+                  castle: true,
+                  events: {
+                    set: (orig: any, dest: any) => {
+                      this.setState({
+                        premove: true,
+                        premoveData: { source: orig, dest },
+                      });
+                    },
+                    unset: () => {
+                      this.setState({
+                        premove: false,
+                        premoveData: { source: "", dest: "" },
+                      });
+                    },
+                  },
+                }}
                 lastMove={this.state.lastMove}
                 check={this.state.check}
               />
