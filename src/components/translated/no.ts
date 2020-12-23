@@ -42,7 +42,7 @@ const no = {
   carousel1: "Turneringsprogram med online spillplattform",
   carousel1Desc:
     "Enkel organisering av individuelle turneringer, lagturneringer, seriespill og hybridturneringer online og/eller over brettet. Vi har allerede implementert bl.a. Sveitser, Berger, Knockout individuelt og for lag samt manuelt oppsett",
-  carousel2: "Opprett en turnering",
+  carousel2: "Bruksområder - formål",
   carousel2Desc:
     "Et fleksibelt og brukervennlig verktøy tilpasset prosjekter og aktiviteter i forbundsregi",
   carousel3: "SpillSjakk tilhører sjakkspillerne",
