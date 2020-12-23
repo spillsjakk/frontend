@@ -47,6 +47,7 @@ const en = {
   carousel1: "Tournament software with integrated online playing platform",
   carousel1Desc:
     "Easy organization of individual tournaments, team tournaments, league games and hybrid tournaments online and/or across the board. Supporting Swiss, Round Robin, Knockout and Manual Pairing.",
+  carousel2: "For multiple purposes",
   carousel2Desc:
     "A flexible and user-friendly tool adapted to projects and activities organised from the federation level to the smallest club events",
   carousel3: "SpillSjakk belongs to the chess players",
