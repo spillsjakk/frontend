@@ -41,13 +41,13 @@ const no = {
   byRating: "Ut ifra rating",
   carousel1: "Administrer lag og spillere",
   carousel1Desc:
-    "Opprett egne lag og legg til spillere som administrator. Hent opplysninger om spilleren automatisk ved hjelp av FIDE-ID når du oppretter en konto.”
+    "Opprett egne lag og legg til spillere som administrator. Hent opplysninger om spilleren automatisk ved hjelp av FIDE-ID når du oppretter en konto.",
   carousel2: "Opprett en turnering",
   carousel2Desc:
-    "Støtter flere individuelle turneringsformat og lagturneringer som for eksempel Swiss og SkoleSjakken. Tilpass og lagre egne maler til ditt formål.”
+    "Støtter flere individuelle turneringsformat og lagturneringer som for eksempel Swiss og SkoleSjakken. Tilpass og lagre egne maler til ditt formål.",
   carousel3: "Spill online eller over brett",
   carousel3Desc:
-    "Turneringer kan organiseres med full støtte for “spill over brettet”. I tillegg kan turneringer både opprettes og spilles online på plattformen.”
+    "Turneringer kan organiseres med full støtte for “spill over brettet”. I tillegg kan turneringer både opprettes og spilles online på plattformen.",
   carousel4: "Resultater",
   carousel4Desc:
     "Resultater for online spill oppdateres automatisk, administrator kan overstyre resultater manuelt underveis og i etterkant. Søk i turneringer og finn partier fra spillernes profiler.",
@@ -56,7 +56,7 @@ const no = {
   changePassword: "Endre passord",
   clubCount: "Antall klubber",
   clubs: "Klubber",
-  confirmTournamentDeletion: “Vil du virkelig slette turneringen?”,
+  confirmTournamentDeletion: "Vil du virkelig slette turneringen?",
   contact: "Kontakt",
   continueWithoutTemplate: "Fortsett uten å velge mal",
   country: "Land",
@@ -71,8 +71,8 @@ const no = {
   deleteRound: "Slett runde",
   deleteTournament: "Slett turnering",
   description: "Beskrivelse",
-  downloadAsCsv: “Last ned som CSV",
-  draw: “Partiet ble remis”,
+  downloadAsCsv: "Last ned som CSV",
+  draw: "Partiet ble remis",
   drawOfferPending: "Remistilbud",
   drawPoints: "Poeng for remis",
   editTournament: "Endre turneringsdetaljer", 
@@ -111,12 +111,12 @@ const no = {
   itsADraw: "Remis 1/2 -1/2",
   join: "Bli med",
   joinFor: "Bli med for",
-  joinOrganization: "Bli med i en organisasjon"
-  joinTournament: "Bli med i en turnering"
+  joinOrganization: "Bli med i en organisasjon",
+  joinTournament: "Bli med i en turnering",
   knockout: "Knockout",
   lastName: "Etternavn",
   leave: "Gå ut",
-  leaveTournament: “Gå ut av turneringen",
+  leaveTournament: "Gå ut av turneringen",
   liveAndUpcomingTournaments: "PÅGÅENDE OG KOMMENDE TURNERINGER",
   lobby: "Lobby",
   localTime: "Lokal tid",
@@ -177,7 +177,7 @@ const no = {
   participating: "Deltar",
   password: "Passord",
   passwordChanged: "Passord har blitt endret",
-  passwordRecoveryEmailSent: "Epost med lenke til gjenoppretting av passord er sendt til deg.”,
+  passwordRecoveryEmailSent: "Epost med lenke til gjenoppretting av passord er sendt til deg.",
   passwords: "Passord",
   passwordsAreNotEqual: "Tassordene er ikke like",
   permissions: "Tillatelser",
@@ -190,7 +190,7 @@ const no = {
   productDescription: "Enkel og sikker turneringsadministrasjon.",
   productName: "SpillSjakk",
   profile_picture: "Profilbilde",
-  profilePicturePlaceholder: “Sett inn url til bilde”,
+  profilePicturePlaceholder: "Sett inn url til bilde",
   provisionalFideRating: "Midlertidig FIDE-rating",
   publiclyViewable: "Offentlig synlig",
   random: "Tilfeldig",
@@ -215,7 +215,7 @@ const no = {
   seeding: "Rangering",
   send: " Send",
   sex: "Kjønn",
-  spectate: "Se på"
+  spectate: "Se på",
   standings: "Oversikt",
   start: "Start",
   startDate: "Startdato",
@@ -234,7 +234,7 @@ const no = {
   teams: "Lag",
   teamSwissDutch: "Sveitser for lag",
   theUrlForThisTeam: "URL for dette laget blir /team/view/<id>",
-  theUrlForThisTournament: "URL  til denne turneringen blir /tournament/view/<id>"
+  theUrlForThisTournament: "URL  til denne turneringen blir /tournament/view/<id>",
   thisIsTheOnlyTimeYouSeeThesePasswords:  "Se brukernavn og passord for kontoene her. Du ser passordene kun nå!",
   tiebreaker: "Rangering",
   timeControl: "Tidskontroll",
@@ -256,7 +256,7 @@ const no = {
   weighted: "Vektet",
   white: "Hvit",
   whiteWins: "Hvit vinner, 1-0",
-  whiteWon: “Seier til hvit",
+  whiteWon: "Seier til hvit",
   winPoints: "Poeng for seier",
   yes: "Ja",
 };
