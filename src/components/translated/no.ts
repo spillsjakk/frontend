@@ -39,18 +39,18 @@ const no = {
   buildTournament: "Opprett turnering",
   bulkAccountCreation: "Opprett flere kontoer",
   byRating: "Ut ifra rating",
-  carousel1: "Administrer lag og spillere",
+  carousel1: "Turneringsprogram med online spillplattform",
   carousel1Desc:
-    "Opprett egne lag og legg til spillere som administrator. Hent opplysninger om spilleren automatisk ved hjelp av FIDE-ID når du oppretter en konto.",
+    "Enkel organisering av individuelle turneringer, lagturneringer, seriespill og hybridturneringer online og/eller over brettet. Vi har allerede implementert bl.a. Sveitser, Berger, Knockout individuelt og for lag samt manuelt oppsett",
   carousel2: "Opprett en turnering",
   carousel2Desc:
-    "Støtter flere individuelle turneringsformat og lagturneringer som for eksempel Swiss og SkoleSjakken. Tilpass og lagre egne maler til ditt formål.",
-  carousel3: "Spill online eller over brett",
+    "Et fleksibelt og brukervennlig verktøy tilpasset prosjekter og aktiviteter i forbundsregi",
+  carousel3: "SpillSjakk tilhører sjakkspillerne",
   carousel3Desc:
-    "Turneringer kan organiseres med full støtte for “spill over brettet”. I tillegg kan turneringer både opprettes og spilles online på plattformen.",
-  carousel4: "Resultater",
+    "Gjennom forbundene er det norske klubbspillere som eier SpillSjakk. Det betyr at SpillSjakk alltid vil sette de aktive sjakkspillernes behov først",
+  carousel4: "Bli med og påvirk!",
   carousel4Desc:
-    "Resultater for online spill oppdateres automatisk, administrator kan overstyre resultater manuelt underveis og i etterkant. Søk i turneringer og finn partier fra spillernes profiler.",
+    "Bli med SpillSjakks Discord-server for de siste oppdateringene fra utviklerteamet. Delta i test-turneringer, kom med ris, ros og bidra med forslag til at SpillSjakk blir best mulig!",
   changeEmail: "Endre epost",
   changeNextPairingDateTime: "Endre tidspunkt for neste rundeoppsett",
   changePassword: "Endre passord",
