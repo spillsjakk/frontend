@@ -44,18 +44,17 @@ const en = {
   buildTournament: "Build a tournament",
   bulkAccountCreation: "Bulk Account Creation",
   byRating: "By rating",
-  carousel1: "Manage teams and players",
+  carousel1: "Tournament software with integrated online playing platform",
   carousel1Desc:
-    "Create your roster of players, from regulars in a weekly season long league, to a major national open. Auto-fill from FIDE’s database and create accounts for online entrants to use.",
-  carousel2: "Build a tournament",
+    "Easy organization of individual tournaments, team tournaments, league games and hybrid tournaments online and/or across the board. Supporting Swiss, Round Robin, Knockout and Manual Pairing.",
   carousel2Desc:
-    "Multiple tournament formats supported, including Swiss (Dutch). Choose from popular templates, or build and save something unique with full customisation.",
-  carousel3: "Play online or OTB",
+    "A flexible and user-friendly tool adapted to projects and activities organised from the federation level to the smallest club events",
+  carousel3: "SpillSjakk belongs to the chess players",
   carousel3Desc:
-    "Tournament organisers can plan, build, and customise events with full OTB support. Online functionality allows participants to get paired and play all in one place.",
-  carousel4: "Results tracking",
+    "Through the national federations, it's the club players who own SpillSjakk. This means that SpillSjakk will always put the needs of the active chess players first",
+  carousel4: "Have your say!",
   carousel4Desc:
-    "Online results automatically updated, manual overrides let the organiser handle disputes and appeals. Search past, current and future events, and find specific games from players profiles.",
+    "Join SpillSjakk's Discord server for the latest updates from the developer team. Participate in test tournaments, contribute with your feedback and suggestions for SpillSjakk to be the best possible!",
   changeEmail: "Change email",
   changeNextPairingDateTime: "Change the time of the next pairing:",
   changePassword: "Change password",
