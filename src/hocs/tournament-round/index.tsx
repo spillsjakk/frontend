@@ -86,6 +86,7 @@ const WithTournamentRound: FunctionComponent = ({ children }) => {
         rounds,
         add,
         delete: del,
+        fetch: fetchRounds,
       }}
     >
       {children}

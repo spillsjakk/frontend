@@ -2,6 +2,7 @@ import React, { Context, useContext } from "react";
 
 export interface Round {
   start_date: string;
+  tournament: string;
   number: number;
   name: string;
 }
@@ -10,6 +11,7 @@ export interface TournamentRoundContext {
   rounds: Array<Round>;
   add: () => void;
   delete: () => void;
+  fetch: () => Promise<void>;
 }
 
 const TournamentRoundContext: Context<TournamentRoundContext> = React.createContext(
@@ -17,6 +19,7 @@ const TournamentRoundContext: Context<TournamentRoundContext> = React.createCont
     rounds: [] as Array<Round>,
     add: () => {},
     delete: () => {},
+    fetch: () => ({} as any),
   }
 );
 
