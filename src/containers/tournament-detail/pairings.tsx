@@ -4,6 +4,7 @@ import { useTournamentDetail } from "../../context/tournament-detail";
 import Translated from "../../components/translated";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
+import { defaultDate } from "../../constants";
 
 function outcomeToStr(outcome: number | undefined) {
   switch (outcome) {
@@ -22,7 +23,13 @@ const Pairings: FunctionComponent<{}> = () => {
   const [pairingPanes, setPairingPanes] = useState<any>([]);
   const [pairingNav, setPairingNav] = useState<any>([]);
 
-  const { pairings, tournament, tko_separation, games } = useTournamentDetail();
+  const {
+    pairings,
+    tournament,
+    tko_separation,
+    games,
+    rounds,
+  } = useTournamentDetail();
 
   useEffect(() => {
     if (Array.isArray(pairings) && pairings.length && tournament && games) {
@@ -154,8 +161,16 @@ const Pairings: FunctionComponent<{}> = () => {
       const pairingNav = <Nav className="nav-tabs">{pairingTabLinks}</Nav>;
 
       const pairingPanes = pairingRows.map((r, i) => {
+        const round = rounds?.find((round) => round.number === i + 1);
         return (
           <Tab.Pane eventKey={"round-tab-" + (i + 1).toString()} key={i}>
+            {round?.start_date !== defaultDate && (
+              <div
+                className={style["round-starting-time"]}
+              >{`${Translated.byKey("startDate")}: ${new Date(
+                round?.start_date || 0
+              ).toLocaleString()}`}</div>
+            )}
             <table className="table table-striped mt-4 dense pairing-table">
               <thead>
                 <tr>
@@ -182,7 +197,7 @@ const Pairings: FunctionComponent<{}> = () => {
       setPairingNav(pairingNav);
       setPairingPanes(pairingPanes);
     }
-  }, [pairings, tournament, tko_separation, games]);
+  }, [pairings, tournament, tko_separation, games, rounds]);
 
   return (
     <>

@@ -16,18 +16,20 @@ const WithRoundSetupPopup: FunctionComponent<{}> = ({ children }) => {
   const { fetch } = useTournamentRound();
 
   function setupRound() {
+    const roundStartDate = new Date(`${startDate} ${startTime}`);
     fetchJson(
       `/s/rounds/setup`,
       "PATCH",
       {
         tournament: tournament!.id,
         number: roundNumber,
-        startDate,
+        start_date: roundStartDate.toISOString(),
       },
       () => {
         fetch();
       }
     );
+    setShow(false);
   }
   return (
     <RoundSetupPopupProvider

@@ -9,7 +9,10 @@ const TimeSection: FunctionComponent<{}> = () => {
 
   function getDate(): Date {
     if (tournament) {
-      if (tournament?.kind === "ManualPairing") {
+      if (
+        tournament?.kind === "ManualPairing" ||
+        tournament?.kind === "RoundRobin"
+      ) {
         if (Array.isArray(rounds) && rounds.length > 0) {
           const sortedRounds = [...rounds];
           sortedRounds.sort((a, b) => {
@@ -18,10 +21,12 @@ const TimeSection: FunctionComponent<{}> = () => {
               new Date(b.start_date).getTime()
             );
           });
+          console.log("sortedrounds", sortedRounds);
           const now = new Date();
           const filteredRounds = sortedRounds.filter(
             (round) => now.getTime() - new Date(round.start_date).getTime() < 0
           );
+          console.log("filteredRounds", filteredRounds);
           return new Date(
             filteredRounds.length > 0 ? filteredRounds[0].start_date : 0
           );
@@ -37,7 +42,8 @@ const TimeSection: FunctionComponent<{}> = () => {
   return (
     <div className={style["time-section"]}>
       {tournament &&
-        tournament.kind === "ManualPairing" &&
+        (tournament.kind === "ManualPairing" ||
+          tournament.kind === "RoundRobin") &&
         rounds &&
         rounds.length > 0 && (
           <>
@@ -51,18 +57,20 @@ const TimeSection: FunctionComponent<{}> = () => {
             </div>
           </>
         )}
-      {tournament && tournament.kind !== "ManualPairing" && (
-        <>
-          <div className={style["round-time-starts"]}>
-            <div className={style.text}>
-              {Translated.byKey("nextRoundText")}
+      {tournament &&
+        tournament.kind !== "ManualPairing" &&
+        tournament.kind !== "RoundRobin" && (
+          <>
+            <div className={style["round-time-starts"]}>
+              <div className={style.text}>
+                {Translated.byKey("nextRoundText")}
+              </div>
             </div>
-          </div>
-          <div className={style["round-time-countdown"]}>
-            <CircularCountDown startDate={getDate()} />
-          </div>
-        </>
-      )}
+            <div className={style["round-time-countdown"]}>
+              <CircularCountDown startDate={getDate()} />
+            </div>
+          </>
+        )}
     </div>
   );
 };

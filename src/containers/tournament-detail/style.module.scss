@@ -2,6 +2,10 @@
   font-family: Montserrat;
   color: black;
   width: calc(min(90vw, 1200px));
+  .round-starting-time {
+    margin-top: 15px;
+    font-weight: bold;
+  }
 
   .header-container {
     display: flex;
