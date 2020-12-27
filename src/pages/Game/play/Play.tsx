@@ -182,8 +182,8 @@ type PlayState = {
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   gameId: string;
   groundRef: RefObject<typeof Chessground>;
-  whiteClockRef: RefObject<Clock>;
-  blackClockRef: RefObject<Clock>;
+  whiteClockRef: RefObject<Clock> | undefined;
+  blackClockRef: RefObject<Clock> | undefined;
   moveTableRef: RefObject<HTMLTableElement>;
   moveSound: Howl;
   timeout = 250;
@@ -235,8 +235,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       tournament: "",
     };
     this.groundRef = React.createRef();
-    this.whiteClockRef = React.createRef();
-    this.blackClockRef = React.createRef();
     this.moveTableRef = React.createRef();
     this.moveSound = new Howl({
       src: ["/sounds/move.mp3"],
@@ -266,8 +264,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     document.getElementsByTagName("body")[0].id = "Game-Play";
 
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
-
-    this.connect();
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, (json) => {
       if (
@@ -302,6 +298,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         blackId: json.game_info.black,
         blackName: json.game_info.black_name,
       });
+
+      this.whiteClockRef = React.createRef();
+      this.blackClockRef = React.createRef();
+
+      this.connect();
     });
   }
 
@@ -400,8 +401,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         this.moveSound.play();
       }
 
-      newState.clocksRunning =
-        !data.finished && atob(data.moves).length / 3 > 1;
+      newState.clocksRunning = !data.finished; // && atob(data.moves).length / 3 > 1;
       newState.lastMove = lastMove;
       newState.turn = game.turn() === "w" ? "white" : "black";
 
@@ -411,12 +411,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
       newState.check = opsGame.isCheck();
 
-      this.whiteClockRef.current?.updateAndCache(data.wc);
-      this.blackClockRef.current?.updateAndCache(data.bc);
-      if (game.turn() === "w") {
-        this.whiteClockRef.current?.check();
-      } else {
-        this.blackClockRef.current?.check();
+      if (this.whiteClockRef && this.blackClockRef) {
+        this.whiteClockRef.current?.updateAndCache(data.wc);
+        this.blackClockRef.current?.updateAndCache(data.bc);
+        if (game.turn() === "w") {
+          this.whiteClockRef.current?.check();
+        } else {
+          this.blackClockRef.current?.check();
+        }
       }
 
       if (!data.finished) {
@@ -619,7 +621,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   clockTick() {
-    if (this.state.clocksRunning) {
+    if (this.state.clocksRunning && this.whiteClockRef && this.blackClockRef) {
       const side = this.state.game.turn();
       const clockRef = (side === "w" ? this.whiteClockRef : this.blackClockRef)
         .current!;
