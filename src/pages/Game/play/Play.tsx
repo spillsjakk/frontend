@@ -19,6 +19,32 @@ import { chessgroundDests } from "chessops/compat";
 import { Howl } from "howler";
 import { Modal, Button } from "react-bootstrap";
 
+function fetchCall(
+  url: string,
+  method: string,
+  body: any | undefined,
+  handler: (_: any) => void
+) {
+  return fetch(url, {
+    method,
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  })
+    .then((response) => {
+      if (response.status < 400) {
+        return response.json();
+      } else {
+        return Promise.resolve({ error: response.status.toString() });
+      }
+    })
+    .then((json) => {
+      if (!json.error) {
+        handler(json);
+      }
+    });
+}
+
 export function numToSquare(num: number) {
   const file = "abcdefgh"[num % 8];
   const rank = Math.floor(num / 8) + 1;
@@ -466,7 +492,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       piece === "p" && (target_rank === "8" || target_rank === "1");
 
     if (!promoting) {
-      fetchJson(
+      fetchCall(
         `/s/game/move/${this.gameId}/${source}/${target}`,
         "POST",
         undefined,
@@ -707,19 +733,27 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           <div className="d-flex flex-row justify-content-around">
             <div id="promotion-dialog">
               <img
-                src="/images/pieces/wQ.svg"
+                src={`/images/pieces/${
+                  this.state.orientation === "black" ? "bQ" : "wQ"
+                }.svg`}
                 onClick={() => this.doPromotion("q")}
               />
               <img
-                src="/images/pieces/wR.svg"
+                src={`/images/pieces/${
+                  this.state.orientation === "black" ? "bR" : "wR"
+                }.svg`}
                 onClick={() => this.doPromotion("r")}
               />
               <img
-                src="/images/pieces/wB.svg"
+                src={`/images/pieces/${
+                  this.state.orientation === "black" ? "bB" : "wB"
+                }.svg`}
                 onClick={() => this.doPromotion("b")}
               />
               <img
-                src="/images/pieces/wN.svg"
+                src={`/images/pieces/${
+                  this.state.orientation === "black" ? "bN" : "wN"
+                }.svg`}
                 onClick={() => this.doPromotion("n")}
               />
               <span onClick={this.cancelPromotion}>X</span>
