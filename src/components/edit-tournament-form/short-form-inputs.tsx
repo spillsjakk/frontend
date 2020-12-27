@@ -6,6 +6,20 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
   const form = useForm();
   return (
     <>
+      <div className="form-group">
+        <label htmlFor="name">
+          <Translated str="tournamentName" />:
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="name"
+          name="name"
+          required
+          value={form.name}
+          onChange={(e) => form.changeName(e.target.value)}
+        />
+      </div>
       <div className="form-group mt-4">
         <label htmlFor="description">
           <Translated str="description" />:
@@ -19,6 +33,51 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
           onChange={(e) => form.changeDescription(e.target.value)}
           style={{ height: "250px" }}
         />
+      </div>
+      <div className="form-group mt-4">
+        <label htmlFor="start_date">
+          <Translated str="startDate" />:
+        </label>
+        <input
+          type="date"
+          id="start_date"
+          className="form-control w-25"
+          name="start_date"
+          required
+          min="2000-01-01"
+          max="2099-12-31"
+          value={form.startDate}
+          onChange={(e) => form.changeStartDate(e.target.value)}
+        />
+      </div>
+      <div className="form-group mt-4">
+        <label htmlFor="end_date">
+          <Translated str="endDate" />:
+        </label>
+        <input
+          type="date"
+          id="end_date"
+          className="form-control w-25"
+          name="end_date"
+          required
+          min="2000-01-01"
+          max="2099-12-31"
+          value={form.endDate}
+          onChange={(e) => form.changeEndDate(e.target.value)}
+        />
+      </div>
+      <div className="form-check mt-4">
+        <input
+          className="form-check-input"
+          type="checkbox"
+          id="publicly_viewable"
+          name="publicly_viewable"
+          checked={form.publiclyViewable}
+          onChange={(e) => form.changePubliclyViewable(e.target.checked)}
+        />
+        <label className="form-check-label" htmlFor="publicly_viewable">
+          <Translated str="publiclyViewable" />
+        </label>
       </div>
       <div className="mt-4">
         <input
@@ -72,52 +131,6 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
             <Translated str="online" />
           </label>
         </div>
-      </div>
-      <div className="form-group mt-4">
-        <label htmlFor="win_points">
-          <Translated str="winPoints" />:
-        </label>
-        &nbsp;
-        <input
-          type="number"
-          id="win_points"
-          name="win_points"
-          min="0"
-          step="0.5"
-          data-type="float"
-          value={form.winPoints}
-          onChange={(e) => form.changeWinPoints(Number(e.target.value))}
-        />
-        <br />
-        <label htmlFor="draw_points">
-          <Translated str="drawPoints" />:
-        </label>
-        &nbsp;
-        <input
-          type="number"
-          id="draw_points"
-          name="draw_points"
-          min="0"
-          step="0.5"
-          data-type="float"
-          value={form.drawPoints}
-          onChange={(e) => form.changeDrawPoints(Number(e.target.value))}
-        />
-        <br />
-        <label htmlFor="loss_points">
-          <Translated str="lossPoints" />:
-        </label>
-        &nbsp;
-        <input
-          type="number"
-          id="loss_points"
-          name="loss_points"
-          min="0"
-          step="0.5"
-          data-type="float"
-          value={form.lossPoints}
-          onChange={(e) => form.changeLossPoints(Number(e.target.value))}
-        />
       </div>
     </>
   );

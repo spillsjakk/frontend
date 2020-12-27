@@ -18,6 +18,16 @@ export type Tournament = {
   current_online_pairing_time: string;
   self_joinable: boolean;
   show_only_top_nr?: number;
+  online_pairing_interval_n: number;
+  online_pairing_interval_t: number;
+  fide_rated: boolean;
+  win_points: number;
+  draw_points: number;
+  loss_points: number;
+  tb1: string | null;
+  tb2: string | null;
+  tb3: string | null;
+  tb4: string | null;
 };
 
 export type Participant = {

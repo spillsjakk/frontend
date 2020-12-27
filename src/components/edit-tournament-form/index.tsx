@@ -9,6 +9,8 @@ import Translated from "../translated";
 import { fetchJson } from "../../functions";
 import { FormInputs } from "./form-inputs";
 import { ShortFormInputs } from "./short-form-inputs";
+import { useTournamentRound } from "../../context/tournament-round";
+import { useTournament } from "../../context/tournament";
 
 const kind: Record<string, number> = {
   Knockout: 0,
@@ -34,7 +36,15 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
 
   const [tournamentStarted, setTournamentStarted] = useState(false);
 
+  const { rounds } = useTournamentRound();
+
+  const { tournament } = useTournament();
+
   const getId = () => window.location.pathname.split("/")[3];
+
+  useEffect(() => {
+    setTournamentStarted(Array.isArray(rounds) && rounds.length > 0);
+  }, [rounds]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -79,16 +89,8 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
     });
   };
 
-  async function getTournamentData() {
-    const result = await fetch(`/s/tournament/view/${getId()}`);
-    if (result.status === 200) {
-      const data = await result.json();
-      const tournament = data.tournament;
-      setTournamentStarted(
-        (new Date(tournament.first_online_pairing) as any) -
-          (new Date() as any) <
-          0
-      );
+  function setFormStates() {
+    if (tournament && tournament.id) {
       form.changeName(tournament.name);
       form.changeDescription(tournament.description);
       form.changeKind(kind[tournament.kind]);
@@ -96,11 +98,14 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       form.changeStartDate(tournament.start_date);
       form.changeEndDate(tournament.end_date);
       form.changePubliclyViewable(tournament.publicly_viewable);
+      const firstOnlinePairingDate = new Date(tournament.first_online_pairing);
       form.changeFirstPairingDate(
-        tournament.first_online_pairing.split("T")[0]
+        `${firstOnlinePairingDate.getFullYear()}-${
+          firstOnlinePairingDate.getMonth() + 1
+        }-${firstOnlinePairingDate.getDate()}`
       );
       form.changeFirstPairingTime(
-        tournament.first_online_pairing.split("T")[1].substring(0, 5)
+        firstOnlinePairingDate.toTimeString().substring(0, 5)
       );
       form.changeOnlinePairingIntervalN(tournament.online_pairing_interval_n);
       form.changeOnlinePairingIntervalT(tournament.online_pairing_interval_t);
@@ -137,9 +142,11 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
   }
 
   useEffect(() => {
-    form.changeShow(true);
-    getTournamentData();
-  }, []);
+    if (tournament && tournament.id) {
+      form.changeShow(true);
+      setFormStates();
+    }
+  }, [tournament]);
 
   return (
     <>

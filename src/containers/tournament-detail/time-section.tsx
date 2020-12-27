@@ -21,12 +21,10 @@ const TimeSection: FunctionComponent<{}> = () => {
               new Date(b.start_date).getTime()
             );
           });
-          console.log("sortedrounds", sortedRounds);
           const now = new Date();
           const filteredRounds = sortedRounds.filter(
             (round) => now.getTime() - new Date(round.start_date).getTime() < 0
           );
-          console.log("filteredRounds", filteredRounds);
           return new Date(
             filteredRounds.length > 0 ? filteredRounds[0].start_date : 0
           );

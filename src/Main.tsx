@@ -7,7 +7,7 @@ import { Contact } from "./pages/contact/index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Profile from "./pages/profile/Profile";
-import TournamentView from "./pages/Tournament/View";
+import TournamentManage from "./pages/Tournament/Manage";
 import TournamentPlayers from "./pages/Tournament/Players";
 import TournamentSearch from "./pages/Tournament/Search";
 import TournamentFind from "./pages/Tournament/Find";
@@ -49,7 +49,7 @@ const Main = () => {
       <Route
         exact
         path="/tournament/manage/:tid"
-        component={TournamentView}
+        component={TournamentManage}
       ></Route>
       <Route
         exact

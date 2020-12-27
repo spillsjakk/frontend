@@ -25,7 +25,7 @@ import {
   TKOSeparation,
 } from "./Types";
 
-import "./View.scss";
+import "./Manage.scss";
 import { Timestamp } from "../../components/Timestamp";
 import FederationDisplay from "../../components/FederationDisplay";
 import { Countdown } from "../../components/count-down/index";
@@ -739,52 +739,57 @@ class View extends Component<
                 ></p>
 
                 {this.context.user.authenticated &&
-                  this.context.user.info?.id === info.tournament.organizer &&
-                  info.pairings.length === 0 && (
+                  this.context.user.info?.id === info.tournament.organizer && (
                     <form>
-                      <Button
-                        variant="primary"
-                        className="p-3 mb-3"
-                        disabled={false}
-                        onClick={this.onPressStart}
-                      >
-                        <Translated str="start" />
-                      </Button>
+                      {info.pairings.length === 0 && (
+                        <>
+                          <Button
+                            variant="primary"
+                            className="p-3 mb-3"
+                            disabled={false}
+                            onClick={this.onPressStart}
+                          >
+                            <Translated str="start" />
+                          </Button>
+                          <Link
+                            className="p-3 btn btn-primary ml-5 mb-3"
+                            to={"/tournament/players/" + info.tournament.id}
+                          >
+                            <Translated str="manageParticipants" />
+                          </Link>
+                          {!info.can_start && (
+                            <div
+                              className="p-3 btn btn-danger ml-5 mb-3"
+                              onClick={() => this.onDeleteTournament()}
+                            >
+                              <Translated str="deleteTournament" />
+                            </div>
+                          )}
+                          {info.managed_teams &&
+                            info.managed_teams?.map((t) => (
+                              <Link
+                                key={t.id}
+                                className="p-3 btn btn-primary ml-5 mb-3"
+                                to={
+                                  "/tournament/manage-team/" +
+                                  info.tournament.id +
+                                  "/" +
+                                  t.id
+                                }
+                              >
+                                <Translated str="manage" /> &quot;{t.name}&quot;
+                              </Link>
+                            ))}
+                        </>
+                      )}
                       <Link
-                        className="p-3 btn btn-primary ml-5 mb-3"
-                        to={"/tournament/players/" + info.tournament.id}
-                      >
-                        <Translated str="manageParticipants" />
-                      </Link>
-                      <Link
-                        className="p-3 btn btn-primary ml-5 mb-3"
+                        className={`p-3 btn btn-primary ${
+                          info.pairings.length === 0 ? "ml-5" : ""
+                        } mb-3`}
                         to={"/tournament/edit/" + info.tournament.id}
                       >
                         <Translated str="editTournament" />
                       </Link>
-                      {!info.can_start && (
-                        <div
-                          className="p-3 btn btn-danger ml-5 mb-3"
-                          onClick={() => this.onDeleteTournament()}
-                        >
-                          <Translated str="deleteTournament" />
-                        </div>
-                      )}
-                      {info.managed_teams &&
-                        info.managed_teams?.map((t) => (
-                          <Link
-                            key={t.id}
-                            className="p-3 btn btn-primary ml-5 mb-3"
-                            to={
-                              "/tournament/manage-team/" +
-                              info.tournament.id +
-                              "/" +
-                              t.id
-                            }
-                          >
-                            <Translated str="manage" /> &quot;{t.name}&quot;
-                          </Link>
-                        ))}
                     </form>
                   )}
 
