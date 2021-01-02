@@ -5,6 +5,7 @@
 import React, { Component, RefObject, PureComponent } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../../components/translated";
+import { CircularSecondsCountDown } from "../../../components/circular-seconds-count-down";
 import { UserInfoBox } from "./user-info-box";
 import { RouteComponentProps } from "react-router-dom";
 import { fetchJson, title } from "../../../functions";
@@ -96,13 +97,7 @@ class Clock extends PureComponent<{}, ClockState> {
     const minutes_f = seconds_left / 60;
     const minutes = Math.floor(minutes_f);
     const seconds = Math.floor(seconds_left % 60);
-    if (total_seconds < 10) {
-      const fraction = total_seconds - Math.floor(total_seconds);
-      const tenths = Math.floor(fraction * 10);
-      var tenthsStr = "." + tenths.toString();
-    } else {
-      var tenthsStr = "";
-    }
+
     if (hours != 0) {
       return (
         <>
@@ -110,19 +105,11 @@ class Clock extends PureComponent<{}, ClockState> {
           {seconds.toString().padStart(2, "0")}
         </>
       );
-    } else if (tenthsStr === "") {
+    } else {
       return (
         <>
           &nbsp;{minutes.toString().padStart(2, "0")}:
           {seconds.toString().padStart(2, "0")}&nbsp;
-        </>
-      );
-    } else {
-      return (
-        <>
-          {minutes.toString().padStart(2, "0")}:
-          {seconds.toString().padStart(2, "0")}
-          {tenthsStr}
         </>
       );
     }
@@ -177,13 +164,19 @@ type PlayState = {
     dest: string;
   };
   tournament: string;
+  showWhiteInitialCountdown: boolean;
+  showBlackInitialCountdown: boolean;
+  whiteInitialCountdown: number;
+  blackInitialCountdown: number;
+  whiteCountdownTemp: number;
+  blackCountdownTemp: number;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   gameId: string;
   groundRef: RefObject<typeof Chessground>;
-  whiteClockRef: RefObject<Clock>;
-  blackClockRef: RefObject<Clock>;
+  whiteClockRef: RefObject<Clock> | undefined;
+  blackClockRef: RefObject<Clock> | undefined;
   moveTableRef: RefObject<HTMLTableElement>;
   moveSound: Howl;
   timeout = 250;
@@ -233,10 +226,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         dest: "",
       },
       tournament: "",
+      showWhiteInitialCountdown: false,
+      showBlackInitialCountdown: false,
+      whiteInitialCountdown: 0,
+      blackInitialCountdown: 0,
+      whiteCountdownTemp: 0,
+      blackCountdownTemp: 0,
     };
     this.groundRef = React.createRef();
-    this.whiteClockRef = React.createRef();
-    this.blackClockRef = React.createRef();
     this.moveTableRef = React.createRef();
     this.moveSound = new Howl({
       src: ["/sounds/move.mp3"],
@@ -266,8 +263,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     document.getElementsByTagName("body")[0].id = "Game-Play";
 
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
-
-    this.connect();
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, (json) => {
       if (
@@ -302,6 +297,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         blackId: json.game_info.black,
         blackName: json.game_info.black_name,
       });
+
+      this.whiteClockRef = React.createRef();
+      this.blackClockRef = React.createRef();
+
+      this.connect();
     });
   }
 
@@ -400,8 +400,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         this.moveSound.play();
       }
 
-      newState.clocksRunning =
-        !data.finished && atob(data.moves).length / 3 > 1;
+      newState.clocksRunning = !data.finished; // && atob(data.moves).length / 3 > 1;
       newState.lastMove = lastMove;
       newState.turn = game.turn() === "w" ? "white" : "black";
 
@@ -411,12 +410,57 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
       newState.check = opsGame.isCheck();
 
-      this.whiteClockRef.current?.updateAndCache(data.wc);
-      this.blackClockRef.current?.updateAndCache(data.bc);
-      if (game.turn() === "w") {
-        this.whiteClockRef.current?.check();
-      } else {
-        this.blackClockRef.current?.check();
+      const wc = data.wc - (data.wic > 0 ? 20 : 0);
+      const bc = data.bc - (data.bic > 0 ? 20 : 0);
+
+      newState.whiteCountdownTemp = wc;
+      newState.blackCountdownTemp = bc;
+      if (newState.turn === "white" && data.wic > 0) {
+        newState.showWhiteInitialCountdown = true;
+        newState.whiteInitialCountdown = data.wic;
+        if (this.blackClockRef) {
+          this.blackClockRef.current?.updateAndCache(bc);
+        }
+      } else if (newState.turn === "black" && data.bic > 0) {
+        this.setState(
+          {
+            showWhiteInitialCountdown: false,
+            showBlackInitialCountdown: true,
+            blackInitialCountdown: data.bic,
+            turn: newState.turn,
+          },
+          () => {
+            if (this.whiteClockRef) {
+              this.whiteClockRef.current?.updateAndCache(wc);
+              this.whiteClockRef.current?.check();
+            }
+          }
+        );
+      } else if (this.whiteClockRef && this.blackClockRef) {
+        if (this.state.showBlackInitialCountdown) {
+          this.setState(
+            { showBlackInitialCountdown: false, turn: newState.turn },
+            () => {
+              if (this.blackClockRef && this.whiteClockRef) {
+                this.whiteClockRef.current?.updateAndCache(wc);
+                this.blackClockRef.current?.updateAndCache(bc);
+                if (game.turn() === "w") {
+                  this.whiteClockRef.current?.check();
+                } else {
+                  this.blackClockRef.current?.check();
+                }
+              }
+            }
+          );
+        } else {
+          this.whiteClockRef.current?.updateAndCache(wc);
+          this.blackClockRef.current?.updateAndCache(bc);
+          if (game.turn() === "w") {
+            this.whiteClockRef.current?.check();
+          } else {
+            this.blackClockRef.current?.check();
+          }
+        }
       }
 
       if (!data.finished) {
@@ -619,19 +663,21 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   clockTick() {
-    if (this.state.clocksRunning) {
+    if (this.state.clocksRunning && this.whiteClockRef && this.blackClockRef) {
       const side = this.state.game.turn();
       const clockRef = (side === "w" ? this.whiteClockRef : this.blackClockRef)
-        .current!;
-      clockRef.tick();
-      const newTime = clockRef.state.current;
-      if (newTime < 0 && this.state.isPlayer) {
-        fetchJson(
-          `/s/game/move/${this.gameId}/flag/flag`,
-          "POST",
-          undefined,
-          (_) => {}
-        );
+        .current;
+      if (clockRef) {
+        clockRef.tick();
+        const newTime = clockRef.state.current;
+        if (newTime < 0 && this.state.isPlayer) {
+          fetchJson(
+            `/s/game/move/${this.gameId}/flag/flag`,
+            "POST",
+            undefined,
+            (_) => {}
+          );
+        }
       }
     }
   }
@@ -822,23 +868,85 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           <div className="d-flex flex-column justify-content-between">
             {this.state.orientation === "black" ? (
               <>
-                <div
-                  className={
-                    "clock" + (this.state.turn === "white" ? " running" : "")
-                  }
-                >
-                  <Clock ref={this.whiteClockRef} />
-                </div>
+                {this.state.showWhiteInitialCountdown ? (
+                  <div className="initial-countdown">
+                    <CircularSecondsCountDown
+                      start={this.state.whiteInitialCountdown}
+                      onEnd={() => {
+                        this.setState(
+                          { showWhiteInitialCountdown: false },
+                          () => {
+                            if (this.whiteClockRef && this.blackClockRef) {
+                              this.whiteClockRef.current?.updateAndCache(
+                                this.state.whiteCountdownTemp
+                              );
+                              this.blackClockRef.current?.updateAndCache(
+                                this.state.blackCountdownTemp
+                              );
+                              if (this.state.turn === "white") {
+                                this.whiteClockRef.current?.check();
+                              } else {
+                                this.blackClockRef.current?.check();
+                              }
+                            }
+                          }
+                        );
+                      }}
+                    />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={
+                      "clock" + (this.state.turn === "white" ? " running" : "")
+                    }
+                  >
+                    <Clock ref={this.whiteClockRef} />
+                  </div>
+                )}
               </>
             ) : (
               <>
-                <div
-                  className={
-                    "clock" + (this.state.turn === "black" ? " running" : "")
-                  }
-                >
-                  <Clock ref={this.blackClockRef} />
-                </div>
+                {this.state.showBlackInitialCountdown ? (
+                  <div className="initial-countdown">
+                    <CircularSecondsCountDown
+                      start={this.state.blackInitialCountdown}
+                      onEnd={() => {
+                        this.setState(
+                          { showBlackInitialCountdown: false },
+                          () => {
+                            if (this.whiteClockRef && this.blackClockRef) {
+                              this.whiteClockRef.current?.updateAndCache(
+                                this.state.whiteCountdownTemp
+                              );
+                              this.blackClockRef.current?.updateAndCache(
+                                this.state.blackCountdownTemp
+                              );
+                              if (this.state.turn === "white") {
+                                this.whiteClockRef.current?.check();
+                              } else {
+                                this.blackClockRef.current?.check();
+                              }
+                            }
+                          }
+                        );
+                      }}
+                    />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={
+                      "clock" + (this.state.turn === "black" ? " running" : "")
+                    }
+                  >
+                    <Clock ref={this.blackClockRef} />
+                  </div>
+                )}
               </>
             )}
 
@@ -910,23 +1018,85 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
             {this.state.orientation === "black" ? (
               <>
-                <div
-                  className={
-                    "clock" + (this.state.turn === "black" ? " running" : "")
-                  }
-                >
-                  <Clock ref={this.blackClockRef} />
-                </div>
+                {this.state.showBlackInitialCountdown ? (
+                  <div className="initial-countdown">
+                    <CircularSecondsCountDown
+                      start={this.state.blackInitialCountdown}
+                      onEnd={() => {
+                        this.setState(
+                          { showBlackInitialCountdown: false },
+                          () => {
+                            if (this.whiteClockRef && this.blackClockRef) {
+                              this.whiteClockRef.current?.updateAndCache(
+                                this.state.whiteCountdownTemp
+                              );
+                              this.blackClockRef.current?.updateAndCache(
+                                this.state.blackCountdownTemp
+                              );
+                              if (this.state.turn === "white") {
+                                this.whiteClockRef.current?.check();
+                              } else {
+                                this.blackClockRef.current?.check();
+                              }
+                            }
+                          }
+                        );
+                      }}
+                    />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={
+                      "clock" + (this.state.turn === "black" ? " running" : "")
+                    }
+                  >
+                    <Clock ref={this.blackClockRef} />
+                  </div>
+                )}
               </>
             ) : (
               <>
-                <div
-                  className={
-                    "clock" + (this.state.turn === "white" ? " running" : "")
-                  }
-                >
-                  <Clock ref={this.whiteClockRef} />
-                </div>
+                {this.state.showWhiteInitialCountdown ? (
+                  <div className="initial-countdown">
+                    <CircularSecondsCountDown
+                      start={this.state.whiteInitialCountdown}
+                      onEnd={() => {
+                        this.setState(
+                          { showWhiteInitialCountdown: false },
+                          () => {
+                            if (this.whiteClockRef && this.blackClockRef) {
+                              this.whiteClockRef.current?.updateAndCache(
+                                this.state.whiteCountdownTemp
+                              );
+                              this.blackClockRef.current?.updateAndCache(
+                                this.state.blackCountdownTemp
+                              );
+                              if (this.state.turn === "white") {
+                                this.whiteClockRef.current?.check();
+                              } else {
+                                this.blackClockRef.current?.check();
+                              }
+                            }
+                          }
+                        );
+                      }}
+                    />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={
+                      "clock" + (this.state.turn === "white" ? " running" : "")
+                    }
+                  >
+                    <Clock ref={this.whiteClockRef} />
+                  </div>
+                )}
               </>
             )}
           </div>

@@ -242,6 +242,7 @@ const no = {
   tiebreaker: "Rangering",
   timeControl: "Tidskontroll",
   title: "Tittel",
+  toMakeFirstMove: "",
   totalClubCount: "Totalt antall klubber",
   totalPlayerCount: "Totalt antall spillere",
   tournament: "Turnering",

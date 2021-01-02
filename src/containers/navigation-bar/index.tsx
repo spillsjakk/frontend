@@ -48,7 +48,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
   }
 
   function hasLevel() {
-    return user.authenticated && user.info?.level && user.info?.level > 0;
+    return user.authenticated && !!user.info?.level && user.info?.level > 0;
   }
 
   function isOrganizationManager() {

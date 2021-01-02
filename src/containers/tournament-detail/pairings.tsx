@@ -164,7 +164,7 @@ const Pairings: FunctionComponent<{}> = () => {
         const round = rounds?.find((round) => round.number === i + 1);
         return (
           <Tab.Pane eventKey={"round-tab-" + (i + 1).toString()} key={i}>
-            {round?.start_date !== defaultDate && (
+            {round && round?.start_date !== defaultDate && (
               <div
                 className={style["round-starting-time"]}
               >{`${Translated.byKey("startDate")}: ${new Date(
