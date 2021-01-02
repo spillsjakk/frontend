@@ -15,6 +15,10 @@
   margin: 10px;
 }
 
+#Game-Play  .initial-countdown {
+  max-width: 150px;
+}
+
 #Game-Play #content-container {
   max-width: 1200px;
 }

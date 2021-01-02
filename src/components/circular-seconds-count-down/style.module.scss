@@ -1,0 +1,15 @@
+.secondsContainer {
+  display: flex;
+  max-width: 1000px;
+  justify-content: center;
+  align-items: center;
+  .name {
+    font-size: calc(min(3vw, 22px));
+    font-weight: 500;
+  }
+
+  .number {
+    font-size: calc(min(3vw, 22px));
+    font-weight: 500;
+  }
+}
