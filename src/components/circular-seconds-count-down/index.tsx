@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { CircularProgressbar } from "react-circular-progressbar";
+import { CircularProgressbarWithChildren as CircularProgressbar } from "react-circular-progressbar";
 import Translated from "../translated";
 import style from "./style.module.scss";
 import "./custom.css";
@@ -20,7 +20,7 @@ const CircularSecondsCountDown: FunctionComponent<Props> = ({
   const [seconds, setSeconds] = useState(start);
   const [startDate] = useState(() => {
     const date = new Date();
-    date.setSeconds(date.getSeconds() + start);
+    date.setSeconds(date.getSeconds() + start + 2);
     return date;
   });
   function tick() {
@@ -39,9 +39,11 @@ const CircularSecondsCountDown: FunctionComponent<Props> = ({
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className={style.secondsContainer}>
+    <div className={style["seconds-container"]}>
       <CircularProgressbar minValue={0} maxValue={20} value={seconds}>
-        <div className={style.number}>{pad(seconds)} </div>
+        <div className={style.number}>
+          {Number(pad(seconds)) > 0 ? pad(Math.ceil(seconds)) : 0}{" "}
+        </div>
         <div className={style.name}>{Translated.byKey("seconds")}</div>
       </CircularProgressbar>
     </div>

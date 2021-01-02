@@ -255,6 +255,7 @@ const en = {
   tiebreaker: "Tiebreaker",
   timeControl: "Time control",
   title: "Title",
+  toMakeFirstMove: "to make the first move",
   totalClubCount: "Total club count",
   totalPlayerCount: "Total player count",
   tournament: "Tournament",

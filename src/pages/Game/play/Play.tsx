@@ -893,6 +893,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                         );
                       }}
                     />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
                   </div>
                 ) : (
                   <div
@@ -931,6 +934,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                         );
                       }}
                     />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
                   </div>
                 ) : (
                   <div
@@ -1037,6 +1043,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                         );
                       }}
                     />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
                   </div>
                 ) : (
                   <div
@@ -1075,6 +1084,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                         );
                       }}
                     />
+                    <div className="move-text">
+                      {Translated.byKey("toMakeFirstMove")}
+                    </div>
                   </div>
                 ) : (
                   <div

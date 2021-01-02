@@ -1,7 +1,8 @@
-.secondsContainer {
+.seconds-container {
   display: flex;
   max-width: 1000px;
   justify-content: center;
+  max-width: 150px;
   align-items: center;
   .name {
     font-size: calc(min(3vw, 22px));
