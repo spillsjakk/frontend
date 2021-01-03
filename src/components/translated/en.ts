@@ -276,6 +276,23 @@ const en = {
   whiteWon: "white won",
   winPoints: "Points for a win",
   yes: "Yes",
+  hello: "Hello",
+  thankYouForGame: "Thank you for the game",
+  wellPlayed: "Well played",
+  goodGame: "Good game",
+  iLikeYourOpening: "I like your opening",
+  greatEndgame: "Great endgame technique",
+  mouseSlip: "Argh! Mouseslip",
+  letsPlayAgain: "Let's play again sometime",
+  areYouAtSpillsjakkDiscord: "Are you at SpillSjakk Discord?",
+  iDidntNeedThatPiece: "I didn't need that piece anyway",
+  congrats: "Congratulations",
+  iNeedtoRethink: "I need to rethink my approach to chess",
+  niceTactic: "Nice tactic",
+  flaggingTime: "Flagging time!",
+  startTyping: "start typing or select",
+  you: "You",
+  opponent: "Opponent",
 };
 
 export { en };

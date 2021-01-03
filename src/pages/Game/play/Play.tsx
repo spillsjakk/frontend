@@ -8,7 +8,7 @@ import Translated from "../../../components/translated";
 import { CircularSecondsCountDown } from "../../../components/circular-seconds-count-down";
 import { UserInfoBox } from "./user-info-box";
 import { RouteComponentProps } from "react-router-dom";
-import { fetchJson, title } from "../../../functions";
+import { fetchJson, title, fetchCall } from "../../../functions";
 import "react-chessground/dist/styles/chessground.css";
 import "./Play.css";
 import "../chessground-theme.css";
@@ -19,32 +19,9 @@ import { parseFen } from "chessops/fen";
 import { chessgroundDests } from "chessops/compat";
 import { Howl } from "howler";
 import { Modal, Button } from "react-bootstrap";
-
-function fetchCall(
-  url: string,
-  method: string,
-  body: any | undefined,
-  handler: (_: any) => void
-) {
-  return fetch(url, {
-    method,
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  })
-    .then((response) => {
-      if (response.status < 400) {
-        return response.json();
-      } else {
-        return Promise.resolve({ error: response.status.toString() });
-      }
-    })
-    .then((json) => {
-      if (!json.error) {
-        handler(json);
-      }
-    });
-}
+import { GameChat } from "../../../containers/game-chat";
+import { WithChatService } from "../../../hocs/with-chat-service";
+import { Message } from "../../../context/chat-service";
 
 export function numToSquare(num: number) {
   const file = "abcdefgh"[num % 8];
@@ -170,6 +147,7 @@ type PlayState = {
   blackInitialCountdown: number;
   whiteCountdownTemp: number;
   blackCountdownTemp: number;
+  messages: Array<Message>;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -232,6 +210,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       blackInitialCountdown: 0,
       whiteCountdownTemp: 0,
       blackCountdownTemp: 0,
+      messages: [],
     };
     this.groundRef = React.createRef();
     this.moveTableRef = React.createRef();
@@ -520,6 +499,16 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       } else {
         this.setState({ pendingDrawOffer: 0, showDrawConfirm: false });
       }
+    } else if (data.t === "message") {
+      this.setState({
+        messages: [
+          {
+            side: data.side,
+            message_id: data.message_id,
+          },
+          ...this.state.messages,
+        ],
+      });
     }
   }
 
@@ -979,6 +968,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                     </div>
                   )}
                 </div>
+
+                <WithChatService
+                  messages={this.state.messages}
+                  gameId={this.gameId}
+                  side={this.state.myColor === "white" ? 0 : 1}
+                >
+                  <GameChat color={this.state.myColor} />
+                </WithChatService>
 
                 <div className="btn-container">
                   <a

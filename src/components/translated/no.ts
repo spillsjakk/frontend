@@ -1,6 +1,7 @@
 const no = {
- "403": "403 - Forbudt, du er ikke innlogget og har ingen tilgang.",
-  "404": "404 - Ressurs ikke tilgjengelig, hvis du mener dette er feil - sjekk at du er innlogget.",
+  "403": "403 - Forbudt, du er ikke innlogget og har ingen tilgang.",
+  "404":
+    "404 - Ressurs ikke tilgjengelig, hvis du mener dette er feil - sjekk at du er innlogget.",
   "500": "500 - Intern feil på server",
   about: "Om",
   aboutToPlay: "Partiet ditt starter snart!",
@@ -19,7 +20,8 @@ const no = {
   addParticipantsWithoutAccount: "Legg til deltakere uten konto",
   addRound: "Legg til runde",
   age: "Alder",
-  allowSelfJoining: "Tillat egenpåmelding (spillerne kan selv melde seg på turneringen)",
+  allowSelfJoining:
+    "Tillat egenpåmelding (spillerne kan selv melde seg på turneringen)",
   alreadyMemberOfTeam: "Kontoen er allerede medl i dette laget.",
   averageAge: "Gjennomsnittsalder",
   averageOpponentRating: "Gjennomsnittlig ratingmotstand",
@@ -102,7 +104,8 @@ const no = {
   hours: "Timer",
   id: "ID",
   idAlreadyTaken: "Brukernavn er opptatt",
-  ifNoOnlineGames: "Hvis det spilles kun over brettet kan du angi hvilken som helst dato og tid",
+  ifNoOnlineGames:
+    "Hvis det spilles kun over brettet kan du angi hvilken som helst dato og tid",
   inbox: "Innboks",
   incorrectPassword: "Ugyldig passord",
   individual: "Individuell",
@@ -163,7 +166,8 @@ const no = {
   ongoingTournaments: "Pågående turneringer",
   online: "Online",
   onlinePairingInterval: "Intervall mellom runder online",
-  onlyShowScoresOfTop: "Velg antall spillere eller lag som skal vises med resultat på listene",
+  onlyShowScoresOfTop:
+    "Velg antall spillere eller lag som skal vises med resultat på listene",
   organiser: "Arrangør",
   organizations: "Organisasjoner",
   organizationStatistics: "Statistikk for organisasjonoen",
@@ -177,7 +181,8 @@ const no = {
   participating: "Deltar",
   password: "Passord",
   passwordChanged: "Passord har blitt endret",
-  passwordRecoveryEmailSent: "Epost med lenke til gjenoppretting av passord er sendt til deg.",
+  passwordRecoveryEmailSent:
+    "Epost med lenke til gjenoppretting av passord er sendt til deg.",
   passwords: "Passord",
   passwordsAreNotEqual: "Tassordene er ikke like",
   permissions: "Tillatelser",
@@ -237,8 +242,10 @@ const no = {
   teams: "Lag",
   teamSwissDutch: "Sveitser for lag",
   theUrlForThisTeam: "URL for dette laget blir /team/view/<id>",
-  theUrlForThisTournament: "URL  til denne turneringen blir /tournament/view/<id>",
-  thisIsTheOnlyTimeYouSeeThesePasswords:  "Se brukernavn og passord for kontoene her. Du ser passordene kun nå!",
+  theUrlForThisTournament:
+    "URL  til denne turneringen blir /tournament/view/<id>",
+  thisIsTheOnlyTimeYouSeeThesePasswords:
+    "Se brukernavn og passord for kontoene her. Du ser passordene kun nå!",
   tiebreaker: "Rangering",
   timeControl: "Tidskontroll",
   title: "Tittel",
@@ -263,6 +270,23 @@ const no = {
   whiteWon: "Seier til hvit",
   winPoints: "Poeng for seier",
   yes: "Ja",
+  hello: "Hei",
+  thankYouForGame: "Takk for partiet",
+  wellPlayed: "Bra spilt",
+  goodGame: "Godt parti",
+  iLikeYourOpening: "Liker åpningen din",
+  greatEndgame: "Bra sluttspill teknikk",
+  mouseSlip: "Argh! Mouseslip",
+  letsPlayAgain: "La oss spille igjen en gang",
+  areYouAtSpillsjakkDiscord: "Er du i SpillSjakks Discord-server?",
+  iDidntNeedThatPiece: "Jeg trengte ikke den brikken likevel",
+  congrats: "Gratulerer",
+  iNeedtoRethink: "Jeg trenger å revurdere min tilnærming til sjakk",
+  niceTactic: "Glimrende taktikk",
+  flaggingTime: "Flagging time!",
+  startTyping: "",
+  you: "",
+  opponent: "",
 };
 
 export { no };
