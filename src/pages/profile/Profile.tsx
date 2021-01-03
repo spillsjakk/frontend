@@ -25,6 +25,7 @@ type ProfileState = {
   tournamentColumns: any[];
   gameData: any[];
   gameColumns: any[];
+  online: boolean;
 };
 
 type Tournament = {
@@ -102,6 +103,7 @@ class Profile extends Component<
         },
         { dataField: "result", text: Translated.byKey("result"), sort: true },
       ],
+      online: false,
     };
   }
 
@@ -151,6 +153,7 @@ class Profile extends Component<
           tournamentData,
           gameData,
           account: data.account,
+          online: data.online === "true",
         });
       }
     );
@@ -162,8 +165,17 @@ class Profile extends Component<
         <Helmet>
           <title>{title(this.state.name)}</title>
         </Helmet>
-
-        <h1 className="mt-4 p-3">{this.state.name}</h1>
+        <div className="name-container">
+          <img
+            src={`/images/${
+              this.state.online ? "online" : "offline"
+            }-circle.svg`}
+            height={25}
+            width={25}
+            alt={`this.state.online ? "online" : "offline"`}
+          />
+          <h1 className="mt-4 p-3">{this.state.name}</h1>
+        </div>
 
         {this.props.match.params.uid === this.context.user.info?.id && (
           <div className="mt-4">

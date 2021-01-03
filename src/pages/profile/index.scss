@@ -1,9 +1,16 @@
 #Profile {
   background-color: #fafafa;
   color: black;
-
-  h1 {
-    border-left: 2px solid white;
+  .name-container {
+    position: relative;
+    h1 {
+      border-left: 2px solid white;
+    }
+    img {
+      position: absolute;
+      top: 30px;
+      left: -15px;
+    }
   }
 
   #main-container {
