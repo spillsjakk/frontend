@@ -11,7 +11,7 @@ import { Col, Row } from "react-bootstrap";
 import { useManageOrganizationPopup } from "../../context/manage-organization-popup";
 
 const ManageOrganization: FunctionComponent<{}> = () => {
-  const { openDetailEdit } = useManageOrganizationPopup();
+  const { openDetailEdit, openStats } = useManageOrganizationPopup();
   return (
     <Row className={style.row}>
       <Col className={style.col} xs="auto">
@@ -25,7 +25,9 @@ const ManageOrganization: FunctionComponent<{}> = () => {
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard
-          onAction={() => {}}
+          onAction={() => {
+            openStats();
+          }}
           actionName={Translated.byKey("expandAll").toUpperCase()}
           content={<StatsSummary />}
         />

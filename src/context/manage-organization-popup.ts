@@ -6,6 +6,7 @@ export interface ManageOrganizationPopupContext {
   openClubList: () => void;
   openPlayerList: () => void;
   openPowerShare: () => void;
+  openStats: () => void;
   close: () => void;
 }
 
@@ -15,6 +16,7 @@ const initalValues = {
   openClubList: () => {},
   openPlayerList: () => {},
   openPowerShare: () => {},
+  openStats: () => {},
   close: () => {},
 };
 
