@@ -66,7 +66,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
   }
 
   return (
-    <header id="navigation-bar">
+    <nav id="navigation-bar">
       <div className="wrapper">
         <div className="left">
           <Logo />
@@ -156,7 +156,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
           )}
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Organization, OrganizationProvider } from "../../context/organization";
 import { useTournamentDetail } from "../../context/tournament-detail";
-import { fetchJson } from "../../functions";
 
 const WithOrganization: FunctionComponent<{}> = ({ children }) => {
   const [organization, setOrganization] = useState<Organization>();

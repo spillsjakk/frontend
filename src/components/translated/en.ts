@@ -293,6 +293,35 @@ const en = {
   startTyping: "start typing or select",
   you: "You",
   opponent: "Opponent",
+  tournamentHomepage: "TOURNAMENT HOMEPAGE",
+  addClubId: "Add Club ID",
+  addPlayerId: "Add Player ID",
+  saveUpdates: "Save Updates",
+  expandAll: "Expand All",
+  custom: "Custom",
+  manageOrg_orgsName: "Organization’s name: ",
+  manageOrg_orgsNameDesc: "(this name will be publicly visible)",
+  manageOrg_orgsId: "Organization’s URL (SpillSjakk ID): ",
+  manageOrg_orgsIdDesc:
+    "(this field will appear at the end of web URLs on SpillSjakk, e.g., spillsjakk.no/organization/view/CUSTOMURL)",
+  manageOrg_orgsDesc: "About the Organization: ",
+  manageOrg_orgsDescDesc:
+    "(this is publicly viewable and is a chance to tell the public about your organization)",
+  manageOrg_bannerPhoto: "Banner photo: ",
+  manageOrg_bannerPhotoDesc:
+    "(this is a larger picture appearing on your profile page - do you have sponsors or a photo you’d like to publicly share? Just copy a URL ending in .jpg or .png below)",
+  manageOrg_profilePhoto: "Profile photo: ",
+  manageOrg_profilePhotoDesc:
+    "(this should be your brand or logo - it will appear on tournaments you make via SpillSjakk, and on your profile page. Just copy a URL ending in .jpg or .png below)",
+  manageOrg_address: "Address: ",
+  manageOrg_addressDesc:
+    "(your postal address or primary physical location will be shared on your profile page)",
+  manageOrg_website: "Website & Social media: ",
+  manageOrg_websiteDesc:
+    "(your Organization’s website, twitter, facebook, etc, will be shared on your profile page)",
+  manageOrg_email: "Email: ",
+  manageOrg_emailDesc:
+    "(a public email address if people have enquiries about your Organization)",
 };
 
 export { en };

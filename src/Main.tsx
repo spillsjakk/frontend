@@ -22,7 +22,7 @@ import GamePlay from "./pages/Game/play/Play";
 import GameView from "./pages/Game/View";
 import ClubManage from "./pages/Club/Manage";
 import ClubView from "./pages/Club/View";
-import OrgManage from "./pages/Organization/Manage";
+import { ManageOrganizationPage } from "./pages/Organization/manage/index";
 import OrgAllAccounts from "./pages/Organization/AllAccounts";
 import OrgStatistics from "./pages/Organization/Statistics";
 import OrgView from "./pages/Organization/View";
@@ -97,7 +97,11 @@ const Main = () => {
       <Route exact path="/club/manage" component={ClubManage}></Route>
       <Route exact path="/club/view/:cid" component={ClubView}></Route>
 
-      <Route exact path="/organization/manage" component={OrgManage}></Route>
+      <Route
+        exact
+        path="/organization/manage"
+        component={ManageOrganizationPage}
+      ></Route>
       <Route
         exact
         path="/organization/all-accounts/:oid"

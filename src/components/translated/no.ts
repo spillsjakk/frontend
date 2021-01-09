@@ -287,6 +287,7 @@ const no = {
   startTyping: "",
   you: "",
   opponent: "",
+  tournamentHomepage: "",
 };
 
 export { no };

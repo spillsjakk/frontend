@@ -1,0 +1,30 @@
+body#organization-manage {
+  background-color: #fafafa;
+  color: black !important;
+  font-family: Montserrat;
+
+  .modal-content {
+    background-color: #fafafa;
+  }
+
+  #content-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  main {
+    width: calc(min(90vw, 1200px));
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 0px 10px 0px;
+
+      .text {
+        color: #469a88;
+        font-weight: bold;
+        font-size: calc(min(6vw, 30px));
+      }
+    }
+  }
+}

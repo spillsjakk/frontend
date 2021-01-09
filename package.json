@@ -16,6 +16,7 @@
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-paginator": "^2.1.2",
     "react-bootstrap-table2-toolkit": "^2.1.3",
+    "react-bootstrap-toggle": "^2.3.2",
     "react-chessground": "^1.5.0",
     "react-circular-progressbar": "^2.0.3",
     "react-countdown": "^2.2.1",
