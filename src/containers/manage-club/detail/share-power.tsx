@@ -4,6 +4,8 @@ import Translated from "../../../components/translated";
 import style from "../style.module.scss";
 import Toggle from "react-bootstrap-toggle";
 import Collapse from "react-bootstrap/Collapse";
+import { useOrganization } from "../../../context/organization";
+import { fetchJson } from "../../../functions";
 
 const GetToggleItem: FunctionComponent<{
   onClick: () => void;
@@ -49,6 +51,58 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
     misc5: false,
     misc6: false,
   });
+  const organization = useOrganization();
+  function save(id: string) {
+    const data = [];
+    if (!custom) {
+      if (allPackage) {
+        data.push(`organization:all:${organization.id}`);
+      }
+      if (arbiterPackage) {
+        data.push(`organization:arbiter:${organization.id}`);
+      }
+      if (editorPackage) {
+        data.push(`organization:editor:${organization.id}`);
+      }
+    } else {
+      if (customPowers.arbiter1) {
+        data.push(`organization:arbiter1:${organization.id}`);
+      }
+      if (customPowers.arbiter2) {
+        data.push(`organization:arbiter2:${organization.id}`);
+      }
+      if (customPowers.arbiter3) {
+        data.push(`organization:arbiter3:${organization.id}`);
+      }
+      if (customPowers.editor1) {
+        data.push(`organization:editor1:${organization.id}`);
+      }
+      if (customPowers.editor2) {
+        data.push(`organization:editor2:${organization.id}`);
+      }
+      if (customPowers.misc1) {
+        data.push(`organization:misc1:${organization.id}`);
+      }
+      if (customPowers.misc2) {
+        data.push(`organization:misc2:${organization.id}`);
+      }
+      if (customPowers.misc3) {
+        data.push(`organization:misc3:${organization.id}`);
+      }
+      if (customPowers.misc4) {
+        data.push(`organization:misc4:${organization.id}`);
+      }
+      if (customPowers.misc5) {
+        data.push(`organization:misc5:${organization.id}`);
+      }
+      if (customPowers.misc6) {
+        data.push(`organization:misc6:${organization.id}`);
+      }
+    }
+    fetchJson(`/s/account/add-power/${id}`, "POST", { powers: data }, () => {
+      organization.updateData!();
+    });
+  }
   return (
     <>
       <div id={style["share-power"]}>
@@ -56,7 +110,7 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
           {Translated.byKey("manageOrg_sharePower")}
         </div>
         <InputAdd
-          onAction={() => {}}
+          onAction={save}
           placeholder={Translated.byKey("addPlayerId")}
         />
         <div
@@ -118,7 +172,9 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
         </button>
         <Collapse in={custom}>
           <div id={style["custom-powers"]}>
-            <div className={style.desc}>{Translated.byKey("manageOrg_customPowerDesc")}</div>
+            <div className={style.desc}>
+              {Translated.byKey("manageOrg_customPowerDesc")}
+            </div>
             <div>
               <strong>
                 {Translated.byKey("manageOrg_arbiterPowersPackage")}
@@ -126,21 +182,30 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
             </div>
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, arbiter1: !customPowers.arbiter1 });
+                setCustomPowers({
+                  ...customPowers,
+                  arbiter1: !customPowers.arbiter1,
+                });
               }}
               active={customPowers.arbiter1}
               description={Translated.byKey("manageOrg_arbiter1")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, arbiter2: !customPowers.arbiter2 });
+                setCustomPowers({
+                  ...customPowers,
+                  arbiter2: !customPowers.arbiter2,
+                });
               }}
               active={customPowers.arbiter2}
               description={Translated.byKey("manageOrg_arbiter2")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, arbiter3: !customPowers.arbiter3 });
+                setCustomPowers({
+                  ...customPowers,
+                  arbiter3: !customPowers.arbiter3,
+                });
               }}
               active={customPowers.arbiter3}
               description={Translated.byKey("manageOrg_arbiter3")}
@@ -154,14 +219,20 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
 
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, editor1: !customPowers.editor1 });
+                setCustomPowers({
+                  ...customPowers,
+                  editor1: !customPowers.editor1,
+                });
               }}
               active={customPowers.editor1}
               description={Translated.byKey("manageOrg_editor1")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, editor2: !customPowers.editor2 });
+                setCustomPowers({
+                  ...customPowers,
+                  editor2: !customPowers.editor2,
+                });
               }}
               active={customPowers.editor2}
               description={Translated.byKey("manageOrg_editor2")}
@@ -173,42 +244,60 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
 
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, misc1: !customPowers.misc1 });
+                setCustomPowers({
+                  ...customPowers,
+                  misc1: !customPowers.misc1,
+                });
               }}
               active={customPowers.misc1}
               description={Translated.byKey("manageOrg_misc1")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, misc2: !customPowers.misc2 });
+                setCustomPowers({
+                  ...customPowers,
+                  misc2: !customPowers.misc2,
+                });
               }}
               active={customPowers.misc2}
               description={Translated.byKey("manageOrg_misc2")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, misc3: !customPowers.misc3 });
+                setCustomPowers({
+                  ...customPowers,
+                  misc3: !customPowers.misc3,
+                });
               }}
               active={customPowers.misc3}
               description={Translated.byKey("manageOrg_misc3")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, misc4: !customPowers.misc4 });
+                setCustomPowers({
+                  ...customPowers,
+                  misc4: !customPowers.misc4,
+                });
               }}
               active={customPowers.misc4}
               description={Translated.byKey("manageOrg_misc4")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, misc5: !customPowers.misc5 });
+                setCustomPowers({
+                  ...customPowers,
+                  misc5: !customPowers.misc5,
+                });
               }}
               active={customPowers.misc5}
               description={Translated.byKey("manageOrg_misc5")}
             />
             <GetToggleItem
               onClick={() => {
-                setCustomPowers({ ...customPowers, misc6: !customPowers.misc6 });
+                setCustomPowers({
+                  ...customPowers,
+                  misc6: !customPowers.misc6,
+                });
               }}
               active={customPowers.misc6}
               description={Translated.byKey("manageOrg_misc6")}

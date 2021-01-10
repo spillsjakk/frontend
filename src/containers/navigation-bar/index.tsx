@@ -54,7 +54,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
   function isOrganizationManager() {
     return (
       user.authenticated &&
-      user.info?.level &&
+      !!user.info?.level &&
       user.info?.level >= Levels.OrganizationManager
     );
   }

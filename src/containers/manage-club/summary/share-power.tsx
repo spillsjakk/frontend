@@ -3,20 +3,36 @@ import { InputAdd } from "../../../components/input-add";
 import Translated from "../../../components/translated";
 import style from "../style.module.scss";
 import Toggle from "react-bootstrap-toggle";
+import { useOrganization } from "../../../context/organization";
+import { fetchJson } from "../../../functions";
 
 const SharePowerSummary: FunctionComponent<{}> = () => {
   const [allPackage, setAllPackage] = useState(false);
   const [arbiterPackage, setArbiterPackage] = useState(false);
   const [editorPackage, setEditPackage] = useState(false);
+  const organization = useOrganization();
+  function save(id: string) {
+    const data = [];
+    if (allPackage) {
+      data.push(`organization:all:${organization.id}`);
+    }
+    if (arbiterPackage) {
+      data.push(`organization:arbiter:${organization.id}`);
+    }
+    if (editorPackage) {
+      data.push(`organization:editor:${organization.id}`);
+    }
+
+    fetchJson(`/s/account/add-power/${id}`, "POST", { powers: data }, () => {
+      organization.updateData!();
+    });
+  }
   return (
     <div id={style["share-power"]}>
       <div className={style.label}>
         {Translated.byKey("manageOrg_sharePower")}
       </div>
-      <InputAdd
-        onAction={() => {}}
-        placeholder={Translated.byKey("addPlayerId")}
-      />
+      <InputAdd onAction={save} placeholder={Translated.byKey("addPlayerId")} />
       <div className={style.item}>
         <div className={style.toggle}>
           <Toggle
