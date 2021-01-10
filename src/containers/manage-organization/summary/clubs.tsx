@@ -10,7 +10,9 @@ const ClubsSummary: FunctionComponent<{}> = () => {
   function removeClub(id: string) {}
   return (
     <>
-      <div className={style.label}>Clubs within Organization:</div>
+      <div className={style.label}>
+        {Translated.byKey("manageOrg_orgsClubs")}
+      </div>
       <InputAdd
         onAction={() => {}}
         placeholder={Translated.byKey("addClubId")}

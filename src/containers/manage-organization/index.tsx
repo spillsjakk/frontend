@@ -11,7 +11,13 @@ import { Col, Row } from "react-bootstrap";
 import { useManageOrganizationPopup } from "../../context/manage-organization-popup";
 
 const ManageOrganization: FunctionComponent<{}> = () => {
-  const { openDetailEdit, openStats } = useManageOrganizationPopup();
+  const {
+    openDetailEdit,
+    openStats,
+    openClubList,
+    openPowerShare,
+    openPlayerList,
+  } = useManageOrganizationPopup();
   return (
     <Row className={style.row}>
       <Col className={style.col} xs="auto">
@@ -34,21 +40,27 @@ const ManageOrganization: FunctionComponent<{}> = () => {
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard
-          onAction={() => {}}
+          onAction={() => {
+            openClubList();
+          }}
           actionName={Translated.byKey("expandAll").toUpperCase()}
           content={<ClubsSummary />}
         />
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard
-          onAction={() => {}}
+          onAction={() => {
+            openPlayerList();
+          }}
           actionName={Translated.byKey("expandAll").toUpperCase()}
           content={<AccountsSummary />}
         />
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard
-          onAction={() => {}}
+          onAction={() => {
+            openPowerShare();
+          }}
           actionName={Translated.byKey("custom").toUpperCase()}
           content={<SharePowerSummary />}
         />

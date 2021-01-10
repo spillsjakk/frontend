@@ -15,6 +15,26 @@ body#organization-manage {
     background-color: #fafafa !important;
   }
 
+  .d-inline-flex {
+    width: 100%;
+    .m-5 {
+      width: 100%;
+
+      .recharts-wrapper {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .toggle.btn-xs {
+    width: 56px !important;
+    height: 34px !important;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
   .modal-content {
     background-color: #fafafa;
   }

@@ -9,7 +9,9 @@ const AccountsSummary: FunctionComponent<{}> = () => {
   const organization = useOrganization();
   return (
     <>
-      <div className={style.label}>Accounts within Organization:</div>
+      <div className={style.label}>
+        {Translated.byKey("manageOrg_orgsAccounts")}
+      </div>
       <InputAdd
         onAction={() => {}}
         placeholder={Translated.byKey("addPlayerId")}

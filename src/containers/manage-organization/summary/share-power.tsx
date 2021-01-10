@@ -9,8 +9,10 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
   const [arbiterPackage, setArbiterPackage] = useState(false);
   const [editorPackage, setEditPackage] = useState(false);
   return (
-    <div id={style["share-power-summary"]}>
-      <div className={style.label}>Share powers with an account:</div>
+    <div id={style["share-power"]}>
+      <div className={style.label}>
+        {Translated.byKey("manageOrg_sharePower")}
+      </div>
       <InputAdd
         onAction={() => {}}
         placeholder={Translated.byKey("addPlayerId")}
@@ -33,11 +35,8 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
           />
         </div>
         <div className={style.text}>
-          <strong>All powers package:</strong>
-          <div>
-            (this user will be able to do everything this Organization can do,
-            in its name)
-          </div>
+          <strong>{Translated.byKey("manageOrg_allPowersPackage")}</strong>
+          <div>{Translated.byKey("manageOrg_allPowersPackageDesc")}</div>
         </div>
       </div>
       <div className={style.item}>
@@ -58,11 +57,8 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
           />
         </div>
         <div className={style.text}>
-          <strong>Arbiter powers package:</strong>
-          <div>
-            (this user will have all arbiter powers in this Organization’s
-            events, and can create events)
-          </div>
+          <strong>{Translated.byKey("manageOrg_arbiterPowersPackage")}</strong>
+          <div>{Translated.byKey("manageOrg_arbiterPowersPackageDesc")}</div>
         </div>
       </div>
       <div className={style.item}>
@@ -83,11 +79,8 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
           />
         </div>
         <div className={style.text}>
-          <strong>Editor powers package:</strong>
-          <div>
-            (this user will have all author and editor powers, in all text
-            fields the Organization controls)
-          </div>
+          <strong>{Translated.byKey("manageOrg_editorPowersPackage")}</strong>
+          <div>{Translated.byKey("manageOrg_editorPowersPackageDesc")}</div>
         </div>
       </div>
     </div>

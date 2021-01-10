@@ -299,6 +299,8 @@ const en = {
   saveUpdates: "Save Updates",
   expandAll: "Expand All",
   custom: "Custom",
+  on: "on",
+  off: "off",
   manageOrg_orgsName: "Organization’s name: ",
   manageOrg_orgsNameDesc: "(this name will be publicly visible)",
   manageOrg_orgsId: "Organization’s URL (SpillSjakk ID): ",
@@ -322,6 +324,39 @@ const en = {
   manageOrg_email: "Email: ",
   manageOrg_emailDesc:
     "(a public email address if people have enquiries about your Organization)",
+  manageOrg_totalClubCount: "Total Club Count:",
+  manageOrg_totalPlayerCount: "Total Player Count:",
+  manageOrg_sharePower: "Share powers with an account:",
+  manageOrg_allPowersPackage: "All powers package:",
+  manageOrg_allPowersPackageDesc:
+    "(this user will be able to do everything this Organization can do, in its name)",
+  manageOrg_arbiterPowersPackage: "Arbiter powers package:",
+  manageOrg_arbiterPowersPackageDesc:
+    "(this user will have all arbiter powers in this Organization’s events, and can create events)",
+  manageOrg_editorPowersPackage: "Editor powers package:",
+  manageOrg_editorPowersPackageDesc:
+    "(this user will have all author and editor powers, in all text fields the Organization controls)",
+  manageOrg_aboutOrg: "About the Organization:",
+  manageOrg_orgsClubs: "Clubs within Organization:",
+  manageOrg_orgsAccounts: "Accounts within Organization:",
+  manageOrg_useCustomPowers: "USE CUSTOM POWERS",
+  manageOrg_usePredefinedPowers: "USE PREDEFINED POWERS",
+  manageOrg_customPowerDesc:
+    "(this user will have only the custom powers you toggle below)",
+  manageOrg_arbiter1: "make tournaments as the organizations",
+  manageOrg_arbiter2: "manually change results in tournaments",
+  manageOrg_arbiter3: "add time to players' clocks",
+  manageOrg_editor1: "edit text fields in tournaments",
+  manageOrg_editor2: "edit text fields on the profile page",
+  manageOrg_miscPowerPackage: "Miscellaneous powers package:",
+  manageOrg_misc1: "create or invite users to make new player accounts",
+  manageOrg_misc2: "create or invite users to make new club accounts",
+  manageOrg_misc3: "give other accounts power from this organization",
+  manageOrg_misc4:
+    "see all accounts, clubs, and stats linked to this organization, including personal data",
+  manageOrg_misc5:
+    "edit some of the details of accounts and clubs under this organization",
+  manageOrg_misc6: "move players to their team (within a club)",
 };
 
 export { en };

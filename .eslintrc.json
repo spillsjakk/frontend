@@ -45,10 +45,10 @@
       }
     ],
     "jest/lowercase-name": "off",
-    "@typescript-eslint/camelcase": "warn",
     "@typescript-eslint/no-empty-function": "warn",
-    "camelcase": "warn",
+    "camelcase": "off",
     "no-case-declarations": "warn",
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": "off"
   }
 }

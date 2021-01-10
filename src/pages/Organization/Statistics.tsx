@@ -194,9 +194,11 @@ class Statistics extends Component<Props, StatisticsState> {
   render() {
     return (
       <>
-        <Helmet>
-          <title>{title("organizationStatistics")}</title>
-        </Helmet>
+        {!this.props.popup && (
+          <Helmet>
+            <title>{title("organizationStatistics")}</title>
+          </Helmet>
+        )}
 
         <table className="mt-5">
           <tbody>
