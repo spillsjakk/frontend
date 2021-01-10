@@ -11,6 +11,7 @@ const InputAdd: FunctionComponent<Props> = ({ onAction, placeholder }) => {
   function onSearch(e: any) {
     e.preventDefault();
     onAction(inputText);
+    setInputText("");
   }
   return (
     <div className={style["input-add-form"]}>

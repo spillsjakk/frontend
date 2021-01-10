@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import style from "../style.module.scss";
 import Translated from "../../../components/translated";
+import { useManageClubPopup } from "../../../context/manage-club-popup";
+import { useClub } from "../../../context/club";
 import { fetchJson } from "../../../functions";
-import { useOrganization } from "../../../context/organization";
-import { useManageOrganizationPopup } from "../../../context/manage-organization-popup";
 
 const InputGroup: FunctionComponent<{
   label: string;
@@ -34,25 +34,25 @@ const EditForm: FunctionComponent<{}> = () => {
   const [website, setWebsite] = useState("");
   const [email, setEmail] = useState("");
 
-  const organization = useOrganization();
-  const { close } = useManageOrganizationPopup();
+  const { close } = useManageClubPopup();
+  const club = useClub();
 
   useEffect(() => {
-    if (organization) {
-      setId(organization.id || "");
-      setOrgName(organization.name || "");
-      setDescription(organization.description || "");
-      setBannerPhoto(organization.banner_picture || "");
-      setProfilePhoto(organization.profile_picture || "");
-      setAddress(organization.address || "");
-      setWebsite(organization.website || "");
-      setEmail(organization.email || "");
+    if (club) {
+      setId(club.id || "");
+      setOrgName(club.name || "");
+      setDescription(club.description || "");
+      setBannerPhoto(club.banner_picture || "");
+      setProfilePhoto(club.profile_picture || "");
+      setAddress(club.address || "");
+      setWebsite(club.website || "");
+      setEmail(club.email || "");
     }
-  }, [organization]);
+  }, [club]);
 
   function save() {
     fetchJson(
-      `/s/organization/edit`,
+      `/s/club/edit`,
       "POST",
       {
         id,
@@ -66,7 +66,7 @@ const EditForm: FunctionComponent<{}> = () => {
       },
       () => {
         close();
-        organization.updateData!();
+        club.updateData!();
       }
     );
   }
@@ -80,59 +80,59 @@ const EditForm: FunctionComponent<{}> = () => {
         }}
       >
         <InputGroup
-          label={Translated.byKey("manageOrg_orgsName")}
-          description={Translated.byKey("manageOrg_orgsNameDesc")}
+          label={Translated.byKey("manageClub_clubsName")}
+          description={Translated.byKey("manageClub_clubsNameDesc")}
           value={orgName}
           onChange={(value: string) => setOrgName(value)}
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_orgsId")}
-          description={Translated.byKey("manageOrg_orgsIdDesc")}
+          label={Translated.byKey("manageClub_clubsId")}
+          description={Translated.byKey("manageClub_clubsIdDesc")}
           value={id}
           onChange={(value: string) => setId(value)}
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_orgsDesc")}
-          description={Translated.byKey("manageOrg_orgsDescDesc")}
+          label={Translated.byKey("manageClub_aboutClub")}
+          description={Translated.byKey("manageClub_aboutClubDesc")}
           value={description}
           onChange={(value: string) => setDescription(value)}
           textArea
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_bannerPhoto")}
-          description={Translated.byKey("manageOrg_bannerPhotoDesc")}
+          label={Translated.byKey("manageClub_bannerPhoto")}
+          description={Translated.byKey("manageClub_bannerPhotoDesc")}
           value={bannerPhoto}
           onChange={(value: string) => setBannerPhoto(value)}
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_profilePhoto")}
-          description={Translated.byKey("manageOrg_profilePhotoDesc")}
+          label={Translated.byKey("manageClub_profilePhoto")}
+          description={Translated.byKey("manageClub_profilePhotoDesc")}
           value={profilePhoto}
           onChange={(value: string) => setProfilePhoto(value)}
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_address")}
-          description={Translated.byKey("manageOrg_addressDesc")}
+          label={Translated.byKey("manageClub_address")}
+          description={Translated.byKey("manageClub_addressDesc")}
           value={address}
           onChange={(value: string) => setAddress(value)}
           textArea
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_website")}
-          description={Translated.byKey("manageOrg_websiteDesc")}
+          label={Translated.byKey("manageClub_website")}
+          description={Translated.byKey("manageClub_websiteDesc")}
           value={website}
           onChange={(value: string) => setWebsite(value)}
         />
 
         <InputGroup
-          label={Translated.byKey("manageOrg_email")}
-          description={Translated.byKey("manageOrg_emailDesc")}
+          label={Translated.byKey("manageClub_email")}
+          description={Translated.byKey("manageClub_emailDesc")}
           value={email}
           onChange={(value: string) => setEmail(value)}
         />

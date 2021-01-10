@@ -1,30 +1,30 @@
 import React, { FunctionComponent } from "react";
 import Translated from "../../../components/translated";
-import { useOrganization } from "../../../context/organization";
+import { useClub } from "../../../context/club";
 import style from "../style.module.scss";
 
 const DetailSummaryContent: FunctionComponent<{}> = () => {
-  const organization = useOrganization();
+  const club = useClub();
   return (
     <>
-      {organization && (
+      {club && (
         <>
           <div className={style.label}>
-            {Translated.byKey("manageOrg_orgsName")}
+            {Translated.byKey("manageClub_clubsName")}
           </div>
-          <div>{organization.name}</div>
+          <div>{club.name}</div>
           <div className={style.label}>
-            {Translated.byKey("manageOrg_orgsId")}
+            {Translated.byKey("manageClub_clubsId")}
           </div>
           <div>
-            <a href={`/organization/view/${organization.id}`}>
-              spillsjakk.no/organization/view/{organization.id}
+            <a href={`/club/view/${club.id}`}>
+              spillsjakk.no/club/view/{club.id}
             </a>
           </div>
           <div className={style.label}>
-            {Translated.byKey("manageOrg_aboutOrg")}
+            {Translated.byKey("manageClub_aboutClub")}
           </div>
-          <div>{organization.description}</div>
+          <div>{club.description}</div>
         </>
       )}
     </>

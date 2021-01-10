@@ -21,6 +21,7 @@ import GameLobby from "./pages/Game/Lobby";
 import GamePlay from "./pages/Game/play/Play";
 import GameView from "./pages/Game/View";
 import ClubManage from "./pages/Club/Manage";
+import { ManageClubPage } from "./pages/Club/manage/index";
 import ClubView from "./pages/Club/View";
 import { ManageOrganizationPage } from "./pages/Organization/manage/index";
 import OrgAllAccounts from "./pages/Organization/AllAccounts";
@@ -94,7 +95,7 @@ const Main = () => {
       <Route exact path="/game/play/:id" component={GamePlay}></Route>
       <Route exact path="/game/view/:id" component={GameView}></Route>
 
-      <Route exact path="/club/manage" component={ClubManage}></Route>
+      <Route exact path="/club/manage" component={ManageClubPage}></Route>
       <Route exact path="/club/view/:cid" component={ClubView}></Route>
 
       <Route

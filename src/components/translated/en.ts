@@ -357,6 +357,35 @@ const en = {
   manageOrg_misc5:
     "edit some of the details of accounts and clubs under this organization",
   manageOrg_misc6: "move players to their team (within a club)",
+  manageClub_clubsName: "Club's name: ",
+  manageClub_clubsNameDesc: "(this name will be publicly visible)",
+  manageClub_clubsId: "Club's URL (SpillSjakk ID): ",
+  manageClub_clubsIdDesc:
+    "(this field will appear at the end of web URLs on SpillSjakk, e.g., spillsjakk.no/club/view/CUSTOMURL)",
+  manageClub_aboutClub: "About the Club: ",
+  manageClub_totalTeamCount: "Total Team Count:",
+  manageClub_totalPlayerCount: "Total Player Count:",
+  players: "Players",
+  manageClub_teamsInClub: "Teams within Club",
+  manageClub_addNewTeam: "new team",
+  manageClub_accounts: "Accounts within Club",
+  manageClub_aboutClubDesc:
+    "(this is publicly viewable and is a chance to tell the public about your club)",
+  manageClub_bannerPhoto: "Banner photo: ",
+  manageClub_bannerPhotoDesc:
+    "(this is a larger picture appearing on your profile page - do you have sponsors or a photo you’d like to publicly share? Just copy a URL ending in .jpg or .png below)",
+  manageClub_profilePhoto: "Profile photo: ",
+  manageClub_profilePhotoDesc:
+    "(this should be your brand or logo - it will appear on tournaments you make via SpillSjakk, and on your profile page. Just copy a URL ending in .jpg or .png below)",
+  manageClub_address: "Address: ",
+  manageClub_addressDesc:
+    "(your postal address or primary physical location will be shared on your profile page)",
+  manageClub_website: "Website & Social media: ",
+  manageClub_websiteDesc:
+    "(your Club’s website, twitter, facebook, etc, will be shared on your profile page)",
+  manageClub_email: "Email: ",
+  manageClub_emailDesc:
+    "(a public email address if people have enquiries about your Club)",
 };
 
 export { en };

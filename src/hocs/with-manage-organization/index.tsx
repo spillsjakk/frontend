@@ -62,8 +62,13 @@ const WithManageOrganization: FunctionComponent<{}> = ({ children }) => {
       console.error(e);
     }
   }, []);
+  function updateData() {
+    fetchOrganizationData();
+  }
   return (
-    <OrganizationProvider value={organization}>{children}</OrganizationProvider>
+    <OrganizationProvider value={{ ...organization, updateData }}>
+      {children}
+    </OrganizationProvider>
   );
 };
 

@@ -20,6 +20,7 @@ type AllAccountsState = {
 
 interface Props extends RouteComponentProps<AllAccountsProps> {
   popup?: boolean;
+  forClubs?: boolean;
 }
 
 class AllAccounts extends Component<Props, AllAccountsState> {
@@ -77,11 +78,21 @@ class AllAccounts extends Component<Props, AllAccountsState> {
     }
 
     fetchJson(
-      `/s/organization/all-accounts/${this.props.match.params.oid}`,
+      this.props.forClubs
+        ? `/s/club/members/${this.props.match.params.oid}`
+        : `/s/organization/all-accounts/${this.props.match.params.oid}`,
       "GET",
       undefined,
       (accountData) => {
-        this.setState({ accountData });
+        if (Array.isArray(accountData)) {
+          if (this.props.forClubs) {
+            accountData = accountData.map((account) => ({
+              ...account,
+              id: account.account_id,
+            }));
+          }
+          this.setState({ accountData });
+        }
       }
     );
   }

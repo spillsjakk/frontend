@@ -1,0 +1,68 @@
+body#club-manage {
+  background-color: #fafafa;
+  color: black !important;
+  font-family: Montserrat;
+
+  .nav-item {
+    background-color: gray;
+  }
+
+  .table {
+    color: black !important;
+  }
+
+  .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+  }
+
+  .d-inline-flex {
+    width: 100%;
+    .m-5 {
+      width: 100%;
+
+      .recharts-wrapper {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .toggle.btn-xs {
+    width: 56px !important;
+    height: 34px !important;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  .modal-content {
+    background-color: #fafafa;
+  }
+
+  .modal-body {
+    .recharts-surface {
+      width: 400px;
+    }
+  }
+
+  #content-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  main {
+    width: calc(min(90vw, 1200px));
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 0px 10px 0px;
+
+      .text {
+        color: #469a88;
+        font-weight: bold;
+        font-size: calc(min(6vw, 30px));
+      }
+    }
+  }
+}

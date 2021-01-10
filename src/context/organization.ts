@@ -7,8 +7,13 @@ export interface Organization {
   manager: string;
   country: string;
   profile_picture: string;
+  banner_picture?: string;
+  website?: string;
+  address?: string;
+  email?: string;
   clubs?: Array<any>;
   accounts?: Array<any>;
+  updateData?: () => void;
 }
 
 const OrganizationContext: Context<Partial<Organization>> = React.createContext(

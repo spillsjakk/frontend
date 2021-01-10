@@ -3,8 +3,8 @@ import style from "./style.module.scss";
 
 interface Props {
   content: any;
-  actionName: string;
-  onAction: () => void;
+  actionName?: string;
+  onAction?: () => void;
 }
 
 const SummaryCard: FunctionComponent<Props> = ({
@@ -15,9 +15,11 @@ const SummaryCard: FunctionComponent<Props> = ({
   return (
     <div className={style["card-container"]}>
       <div className={style.content}>{content}</div>
-      <div className={style.action}>
-        <button onClick={onAction}>{actionName}</button>
-      </div>
+      {actionName && onAction && (
+        <div className={style.action}>
+          <button onClick={onAction}>{actionName}</button>
+        </div>
+      )}
     </div>
   );
 };
