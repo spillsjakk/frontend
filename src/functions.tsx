@@ -93,7 +93,8 @@ export function fetchCall(
   url: string,
   method: string,
   body: any | undefined,
-  handler: (_: any) => void
+  onSuccess: (_: any) => void,
+  onError?: (_: any) => void
 ) {
   return fetch(url, {
     method,
@@ -105,12 +106,14 @@ export function fetchCall(
       if (response.status < 400) {
         return response.json();
       } else {
-        return Promise.resolve({ error: response.status.toString() });
+        return { error: response.status.toString() };
       }
     })
     .then((json) => {
       if (!json.error) {
-        handler(json);
+        onSuccess(json);
+      } else if (onError) {
+        onError(json.error);
       }
     });
 }

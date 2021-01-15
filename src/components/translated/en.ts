@@ -386,6 +386,9 @@ const en = {
   manageClub_email: "Email: ",
   manageClub_emailDesc:
     "(a public email address if people have enquiries about your Club)",
+  invite: "Invite",
+  organizationInvitations: "Organization Invitations",
+  clubInvitations: "Club Invitations",
 };
 
 export { en };

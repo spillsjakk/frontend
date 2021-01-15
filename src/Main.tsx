@@ -20,7 +20,8 @@ import AccountSettings from "./pages/Account/Settings";
 import GameLobby from "./pages/Game/Lobby";
 import GamePlay from "./pages/Game/play/Play";
 import GameView from "./pages/Game/View";
-import ClubManage from "./pages/Club/Manage";
+import { OnboardInvitation } from "./pages/registration/onboard-invitation";
+import { GenerateInvitation } from "./pages/registration/generate-invitation";
 import { ManageClubPage } from "./pages/Club/manage/index";
 import ClubView from "./pages/Club/View";
 import { ManageOrganizationPage } from "./pages/Organization/manage/index";
@@ -114,7 +115,12 @@ const Main = () => {
         component={OrgStatistics}
       ></Route>
       <Route exact path="/organization/view/:oid" component={OrgView}></Route>
-
+      <Route exact path="/invitation/:id" component={OnboardInvitation}></Route>
+      <Route
+        exact
+        path="/registration/generate/invitation"
+        component={GenerateInvitation}
+      ></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );

@@ -106,11 +106,19 @@ const NavigationBar: FunctionComponent<{}> = () => {
             <div className="link">
               {Translated.byKey("navbarAccountCreation")}
               {hasLevel() && (
-                <div className="menu">
-                  <a href="/account/create" className="item">
-                    {Translated.byKey("createAccounts")}
-                  </a>
-                </div>
+                <>
+                  <div className="menu">
+                    <a href="/account/create" className="item">
+                      {Translated.byKey("createAccounts")}
+                    </a>
+                    <a
+                      href="/registration/generate/invitation"
+                      className="item"
+                    >
+                      {Translated.byKey("invite")}
+                    </a>
+                  </div>
+                </>
               )}
             </div>
 

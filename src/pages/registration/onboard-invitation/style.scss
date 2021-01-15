@@ -1,0 +1,29 @@
+body#registration-onboarding-invitation {
+  background-color: #fafafa;
+  color: black;
+  .name-container {
+    position: relative;
+    h1 {
+      border-left: 2px solid white;
+    }
+    img {
+      position: absolute;
+      top: 30px;
+      left: -15px;
+    }
+  }
+
+  #main-container {
+    .nav-item {
+      background-color: gray;
+    }
+
+    .table {
+      color: black !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n + 1) {
+      background-color: #fafafa !important;
+    }
+  }
+}
