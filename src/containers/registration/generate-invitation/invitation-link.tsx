@@ -13,7 +13,7 @@ const InvitationLink: FunctionComponent<Props> = ({ invitationId }) => {
       className="invitation"
       onClick={() => {
         navigator.clipboard.writeText(
-          `${window.location.origin}/invite/${invitationId}`
+          `${window.location.origin}/invitation/${invitationId}`
         );
         setCopied(true);
         setTimeout(() => setCopied(false), 1000);
@@ -29,7 +29,7 @@ const InvitationLink: FunctionComponent<Props> = ({ invitationId }) => {
         }
       >
         <div>
-          {window.location.origin}/invite/{invitationId}
+          {window.location.origin}/invitation/{invitationId}
         </div>
       </OverlayTrigger>
     </div>

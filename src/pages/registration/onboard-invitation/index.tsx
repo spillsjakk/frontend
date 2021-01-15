@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { OnboardInvitation as Container } from "../../../containers/registration/onboard-invitation";
 import "./style.scss";
 
 const OnboardInvitation: FunctionComponent<{}> = () => {
@@ -7,8 +7,11 @@ const OnboardInvitation: FunctionComponent<{}> = () => {
     document.getElementsByTagName("body")[0].id =
       "registration-onboarding-invitation";
   }, []);
-  const params = useParams<{ id: string }>();
-  return <>{params.id}</>;
+  return (
+    <>
+      <Container />
+    </>
+  );
 };
 
 export { OnboardInvitation };

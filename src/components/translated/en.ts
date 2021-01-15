@@ -391,6 +391,12 @@ const en = {
   clubInvitations: "Club Invitations",
   clickToCopy: "Click to Copy",
   copied: "Copied",
+  createYourAccount: "Create Your Spillsjakk Account",
+  youHaveBeenInvited:
+    "You’ve been invited to play for $name on SpillSjakk. It’s quick, easy and lets you play in their custom tournaments!",
+  next: "Next",
+  alreadyHaveAccount: "Already have a SpillSjakk account?",
+  oneClickJoin: "One-click join",
 };
 
 export { en };
