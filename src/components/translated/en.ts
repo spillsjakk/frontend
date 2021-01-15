@@ -389,6 +389,8 @@ const en = {
   invite: "Invite",
   organizationInvitations: "Organization Invitations",
   clubInvitations: "Club Invitations",
+  clickToCopy: "Click to Copy",
+  copied: "Copied",
 };
 
 export { en };
