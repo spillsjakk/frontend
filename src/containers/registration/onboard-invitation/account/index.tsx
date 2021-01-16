@@ -1,18 +1,15 @@
 import React, { FunctionComponent, useState } from "react";
-import { useParams } from "react-router-dom";
-import Translated from "../../../components/translated";
-import { WithInvitation } from "../../../hocs/invitation";
+import Translated from "../../../../components/translated";
 import { FirstInfo } from "./first-info";
 import { FideInfo } from "./fide-info";
 import { Form } from "./form";
+import { WithUserRegistration } from "../../../../hocs/registration/user";
 
-const OnboardInvitation: FunctionComponent<{}> = () => {
+const AccountOnboarding: FunctionComponent<{}> = () => {
   const [step, setStep] = useState(0);
 
-  const { id } = useParams<{ id: string }>();
-
   return (
-    <WithInvitation id={id}>
+    <WithUserRegistration>
       <main>
         <div className="header">
           {Translated.byKey("createYourAccount").toUpperCase()}
@@ -23,8 +20,8 @@ const OnboardInvitation: FunctionComponent<{}> = () => {
           {step === 2 && <Form />}
         </div>
       </main>
-    </WithInvitation>
+    </WithUserRegistration>
   );
 };
 
-export { OnboardInvitation };
+export { AccountOnboarding };

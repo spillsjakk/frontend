@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
-import Translated from "../../../components/translated";
-import { useInvitation } from "../../../context/invitation";
-import { ErrorComponent, fetchCall } from "../../../functions";
+import Translated from "../../../../components/translated";
+import { useInvitation } from "../../../../context/invitation";
+import { ErrorComponent, fetchCall } from "../../../../functions";
 
 function getLink(type: 0 | 1, id: string) {
   if (type === 0) {
@@ -14,7 +14,7 @@ function getLink(type: 0 | 1, id: string) {
 }
 
 function getInvitationText(type: 0 | 1, id: string, name: string) {
-  const parts = Translated.byKey("youHaveBeenInvited").split("$name");
+  const parts = Translated.byKey("clubYouHaveBeenInvited").split("$name");
   return `${parts[0]}<a href="${getLink(type, id)}">${name}</a>${parts[1]}`;
 }
 
@@ -29,13 +29,13 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
 
   function joinToClub() {
     fetchCall(
-      "/s/registrations/accounts",
+      "/s/registrations/clubs",
       "PATCH",
       {
         invitation_id: invitation.id,
       },
-      (response) => {
-        history.push(`/club/view/${response.club_id}`);
+      () => {
+        history.push(`/club/manage`);
       },
       (error) => {
         if (error === "404") {

@@ -409,6 +409,9 @@ const en = {
   usernameExists:
     "Username exists, please select different username and try again",
   loginAndTryAgain: "Please login and try again",
+  loginFirst: "Please login first",
+  clubYouHaveBeenInvited:
+    "You’ve been invited to add your Club by $name on SpillSjakk. It’s quick, easy, and lets you invite your Club’s players to join in large team tournaments. Additionally, your Club can use SpillSjakk’s online and offline pairing tools for internal tournaments.",
 };
 
 export { en };

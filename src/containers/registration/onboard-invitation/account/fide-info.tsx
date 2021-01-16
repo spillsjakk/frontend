@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import Translated from "../../../components/translated";
+import Translated from "../../../../components/translated";
 import style from "./style.module.scss";
 
 const FideInfo: FunctionComponent<{ onNext: () => void }> = ({ onNext }) => {

@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 import { Col, Row } from "react-bootstrap";
-import { useUserRegistration } from "../../../context/registration";
-import FederationDropdown from "../../../components/FederationDropdown";
-import SexDropdown from "../../../components/SexDropdown";
-import Translated from "../../../components/translated";
+import { useUserRegistration } from "../../../../context/registration";
+import FederationDropdown from "../../../../components/FederationDropdown";
+import SexDropdown from "../../../../components/SexDropdown";
+import Translated from "../../../../components/translated";
 import style from "./style.module.scss";
-import { useInvitation } from "../../../context/invitation";
+import { useInvitation } from "../../../../context/invitation";
 
 const Form: FunctionComponent<{}> = () => {
   const userRegistration = useUserRegistration();
