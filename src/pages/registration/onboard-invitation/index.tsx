@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { OnboardInvitation as Container } from "../../../containers/registration/onboard-invitation";
+import { WithUserRegistration } from "../../../hocs/registration/user";
 import "./style.scss";
 
 const OnboardInvitation: FunctionComponent<{}> = () => {
@@ -8,9 +9,9 @@ const OnboardInvitation: FunctionComponent<{}> = () => {
       "registration-onboarding-invitation";
   }, []);
   return (
-    <>
+    <WithUserRegistration>
       <Container />
-    </>
+    </WithUserRegistration>
   );
 };
 

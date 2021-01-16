@@ -1,0 +1,164 @@
+import React, { FunctionComponent } from "react";
+import { Col, Row } from "react-bootstrap";
+import { useUserRegistration } from "../../../context/registration";
+import FederationDropdown from "../../../components/FederationDropdown";
+import SexDropdown from "../../../components/SexDropdown";
+import Translated from "../../../components/translated";
+import style from "./style.module.scss";
+import { useInvitation } from "../../../context/invitation";
+
+const Form: FunctionComponent<{}> = () => {
+  const userRegistration = useUserRegistration();
+  const { invitation } = useInvitation();
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        userRegistration.register(invitation.id);
+      }}
+    >
+      <div className={style["input-group"]}>
+        <label htmlFor="username" className={`${style.label} bold`}>
+          {Translated.byKey("username")}
+        </label>
+        <input
+          id="username"
+          value={userRegistration.user.username}
+          onChange={(e) => userRegistration.changeUsername(e.target.value)}
+          required
+        />
+      </div>
+      <Row>
+        <Col sm="auto">
+          <div className={style["input-group"]}>
+            <label htmlFor="firstName" className={`${style.label} bold`}>
+              {Translated.byKey("firstName")}
+            </label>
+            <input
+              id="firstName"
+              value={userRegistration.user.firstName}
+              onChange={(e) => userRegistration.changeFirstname(e.target.value)}
+              required
+            />
+          </div>
+        </Col>
+        <Col sm="auto">
+          <div className={style["input-group"]}>
+            <label htmlFor="lastName" className={`${style.label} bold`}>
+              {Translated.byKey("lastName")}
+            </label>
+            <input
+              id="lastName"
+              value={userRegistration.user.lastName}
+              onChange={(e) => userRegistration.changeLastname(e.target.value)}
+              required
+            />
+          </div>
+        </Col>
+      </Row>
+      <p
+        dangerouslySetInnerHTML={{
+          __html: `${Translated.byKey("namePrivacyInfo").replace(
+            "$privacypolicy",
+            `<a href="/privacy-policy" target="__blank">${Translated.byKey(
+              "privacyPolicy"
+            )}</a>`
+          )}`,
+        }}
+      ></p>
+      <div className={style["input-group"]}>
+        <label htmlFor="password" className={`${style.label} bold`}>
+          {Translated.byKey("password")}
+        </label>
+        <input
+          id="password"
+          value={userRegistration.user.password}
+          onChange={(e) => userRegistration.changePassword(e.target.value)}
+          required
+          type="password"
+          autoComplete="new-password"
+        />
+      </div>
+      <div className={style["input-group"]}>
+        <label htmlFor="country" className={`${style.label} bold`}>
+          {Translated.byKey("country")}
+        </label>
+        <FederationDropdown
+          id="country"
+          required
+          value={userRegistration.user.country}
+          onChange={(e) => userRegistration.changeCountry(e.target.value)}
+        />
+      </div>
+      {userRegistration.user.country === "NOR" && (
+        <div className={style["input-group"]}>
+          <label htmlFor="region" className={`${style.label} bold`}>
+            {Translated.byKey("region")}
+          </label>
+          <select
+            id="region"
+            required
+            name="region"
+            value={userRegistration.user.region}
+            onChange={(e) => userRegistration.changeRegion(e.target.value)}
+          >
+            <option value=""></option>
+            <option value="Oslo">Oslo</option>
+            <option value="Rogaland">Rogaland</option>
+            <option value="Møre og Romsdal">Møre og Romsdal</option>
+            <option value="Nordland">Nordland</option>
+            <option value="Viken">Viken</option>
+            <option value="Innlandet">Innlandet</option>
+            <option value="Vestfold og Telemark">Vestfold og Telemark</option>
+            <option value="Agder">Agder</option>
+            <option value="Vestland">Vestland</option>
+            <option value="Trøndelag">Trøndelag</option>
+            <option value="Troms og Finnmark">Troms og Finnmark</option>
+          </select>
+        </div>
+      )}
+      <div className={style["input-group"]}>
+        <label htmlFor="gender" className={`${style.label} bold`}>
+          {Translated.byKey("gender")}
+        </label>
+        <SexDropdown
+          value={userRegistration.user.gender}
+          id="gender"
+          onChange={(e) => userRegistration.changeGender(e.target.value)}
+        />
+      </div>
+      <p>{Translated.byKey("notDisplayedPublicly")}</p>
+      <div className={style["input-group"]}>
+        <label htmlFor="birthday" className={`${style.label} bold`}>
+          {Translated.byKey("birthday")}
+        </label>
+        <input
+          value={userRegistration.user.birthDate}
+          id="birthday"
+          type="date"
+          onChange={(e) => userRegistration.changeBirthdate(e.target.value)}
+          required
+        />
+      </div>
+      <p>{Translated.byKey("notDisplayedPublicly")}</p>
+      <div className={style["input-group"]}>
+        <label htmlFor="email" className={`${style.label} bold`}>
+          {Translated.byKey("email")}
+        </label>
+        <input
+          id="email"
+          type="email"
+          value={userRegistration.user.email}
+          onChange={(e) => userRegistration.changeEmail(e.target.value)}
+          required
+        />
+      </div>
+      <p>{Translated.byKey("notDisplayedPublicly")}</p>
+      <button className="action-button" type="submit">
+        {Translated.byKey("create")}
+      </button>
+    </form>
+  );
+};
+
+export { Form };

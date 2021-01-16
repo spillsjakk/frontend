@@ -1,36 +1,29 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
-
-function getInvitationText(id: string) {
-  const parts = Translated.byKey("youHaveBeenInvited").split("$name");
-  return `${parts[0]}<span class="green pointer">${id}</span>${parts[1]}`;
-}
+import { WithInvitation } from "../../../hocs/invitation";
+import { FirstInfo } from "./first-info";
+import { FideInfo } from "./fide-info";
+import { Form } from "./form";
 
 const OnboardInvitation: FunctionComponent<{}> = () => {
+  const [step, setStep] = useState(0);
+
   const { id } = useParams<{ id: string }>();
+
   return (
-    <main>
-      <div className="header">
-        {Translated.byKey("createYourAccount").toUpperCase()}
-      </div>
-      <div className="box">
-        <div
-          className="bold"
-          dangerouslySetInnerHTML={{ __html: getInvitationText(id) }}
-        ></div>
-        <button className="action-button">
-          {Translated.byKey("next").toUpperCase()}
-        </button>
-        <div className="text-align-end italic">
-          {Translated.byKey("alreadyHaveAccount")}
-          <span className="green pointer">
-            {" "}
-            {Translated.byKey("oneClickJoin")}
-          </span>
+    <WithInvitation id={id}>
+      <main>
+        <div className="header">
+          {Translated.byKey("createYourAccount").toUpperCase()}
         </div>
-      </div>
-    </main>
+        <div className="box">
+          {step === 0 && <FirstInfo onNext={() => setStep(1)} />}
+          {step === 1 && <FideInfo onNext={() => setStep(2)} />}
+          {step === 2 && <Form />}
+        </div>
+      </main>
+    </WithInvitation>
   );
 };
 

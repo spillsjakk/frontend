@@ -397,6 +397,15 @@ const en = {
   next: "Next",
   alreadyHaveAccount: "Already have a SpillSjakk account?",
   oneClickJoin: "One-click join",
+  fideInfoText:
+    "Do you have a FIDE (the International Chess Federation) rating? If you do, you will have a FIDE-ID number. Please enter your FIDE-ID number in the field below. If you don’t have one, don’t worry - you can still sign up, it’ll just take a little longer. ",
+  whatIsFide: "What is a FIDE rating?",
+  findoutFide: "How do I find out if I have a FIDE ID number?",
+  whyFide: "Why does SpillSjakk need my FIDE ID number?",
+  namePrivacyInfo:
+    "Your real name is normally hidden publicly, except for certain tournaments. You will be notified if a tournament will display your real name. Otherwise, only the admins of Clubs and Organisations you join will see this. For more information, please read our $privacypolicy. ",
+  privacyPolicy: "privacy policy",
+  notDisplayedPublicly: "This is not displayed publicly",
 };
 
 export { en };
