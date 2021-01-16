@@ -1,6 +1,9 @@
 import React, { FunctionComponent } from "react";
+import ReactDOM from "react-dom";
+import { useHistory } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { useInvitation } from "../../../context/invitation";
+import { ErrorComponent, fetchCall } from "../../../functions";
 
 function getLink(type: 0 | 1, id: string) {
   if (type === 0) {
@@ -21,6 +24,33 @@ interface Props {
 
 const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
   const { invitation } = useInvitation();
+
+  const history = useHistory();
+
+  function joinToClub() {
+    fetchCall(
+      "/s/registrations/accounts",
+      "PATCH",
+      {
+        invitation_id: invitation.id,
+      },
+      (response) => {
+        history.push(`/club/view/${response.club_id}`);
+      },
+      (error) => {
+        if (error === "404") {
+          ReactDOM.render(
+            <>
+              <ErrorComponent err={Translated.byKey("loginAndTryAgain")} />
+            </>,
+            document.getElementById("error")
+          );
+          history.push(`/login?path=/invitation/${invitation.id}`);
+        }
+      }
+    );
+  }
+
   return (
     <>
       {invitation && (
@@ -40,7 +70,7 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
       </button>
       <div className="text-align-end italic">
         {Translated.byKey("alreadyHaveAccount")}
-        <span className="green pointer">
+        <span className="green pointer" onClick={joinToClub}>
           {" "}
           {Translated.byKey("oneClickJoin")}
         </span>

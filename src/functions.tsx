@@ -6,7 +6,7 @@ type ErrorProps = {
   err: string;
 };
 
-function ErrorComponent(props: ErrorProps) {
+export function ErrorComponent(props: ErrorProps) {
   return (
     <div
       style={{

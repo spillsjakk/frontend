@@ -90,33 +90,6 @@ const Form: FunctionComponent<{}> = () => {
           onChange={(e) => userRegistration.changeCountry(e.target.value)}
         />
       </div>
-      {userRegistration.user.country === "NOR" && (
-        <div className={style["input-group"]}>
-          <label htmlFor="region" className={`${style.label} bold`}>
-            {Translated.byKey("region")}
-          </label>
-          <select
-            id="region"
-            required
-            name="region"
-            value={userRegistration.user.region}
-            onChange={(e) => userRegistration.changeRegion(e.target.value)}
-          >
-            <option value=""></option>
-            <option value="Oslo">Oslo</option>
-            <option value="Rogaland">Rogaland</option>
-            <option value="Møre og Romsdal">Møre og Romsdal</option>
-            <option value="Nordland">Nordland</option>
-            <option value="Viken">Viken</option>
-            <option value="Innlandet">Innlandet</option>
-            <option value="Vestfold og Telemark">Vestfold og Telemark</option>
-            <option value="Agder">Agder</option>
-            <option value="Vestland">Vestland</option>
-            <option value="Trøndelag">Trøndelag</option>
-            <option value="Troms og Finnmark">Troms og Finnmark</option>
-          </select>
-        </div>
-      )}
       <div className={style["input-group"]}>
         <label htmlFor="gender" className={`${style.label} bold`}>
           {Translated.byKey("gender")}

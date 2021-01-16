@@ -406,6 +406,9 @@ const en = {
     "Your real name is normally hidden publicly, except for certain tournaments. You will be notified if a tournament will display your real name. Otherwise, only the admins of Clubs and Organisations you join will see this. For more information, please read our $privacypolicy. ",
   privacyPolicy: "privacy policy",
   notDisplayedPublicly: "This is not displayed publicly",
+  usernameExists:
+    "Username exists, please select different username and try again",
+  loginAndTryAgain: "Please login and try again",
 };
 
 export { en };

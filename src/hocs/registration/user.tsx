@@ -1,24 +1,60 @@
 import React, { FunctionComponent, useState } from "react";
+import ReactDOM from "react-dom";
+import { useHistory } from "react-router-dom";
+import Translated from "../../components/translated";
+import { useUser } from "../../components/UserContext";
 import {
   UserRegistrationProvider,
   User,
   defaultUserRegistrationContext,
 } from "../../context/registration";
-import { fetchCall } from "../../functions";
+import { ErrorComponent, fetchCall } from "../../functions";
 
 const WithUserRegistration: FunctionComponent<{}> = ({ children }) => {
   const [user, setUser] = useState<User>(defaultUserRegistrationContext.user);
 
+  const history = useHistory();
+  const userContext = useUser();
+
   function register(invitationId: string) {
     fetchCall(
-      "/s/registration",
+      "/s/registrations/accounts",
       "POST",
       {
-        ...user,
-        invitationId,
+        username: user.username,
+        first_name: user.firstName,
+        last_name: user.lastName,
+        country: user.country,
+        gender: user.gender,
+        email: user.email,
+        fide_id: user.fideId || undefined,
+        birth_date: user.birthDate,
+        password: user.password,
+        invitation_id: invitationId,
       },
-      (response) => {
-        console.log("response", response);
+      () => {
+        fetchCall(
+          "/s/account/login",
+          "POST",
+          {
+            id: user.username,
+            password: user.password,
+          },
+          (user) => {
+            userContext.setUser(user);
+            history.push("/");
+          }
+        );
+      },
+      (error) => {
+        if (error === "409") {
+          ReactDOM.render(
+            <>
+              <ErrorComponent err={Translated.byKey("usernameExists")} />
+            </>,
+            document.getElementById("error")
+          );
+        }
       }
     );
   }
@@ -39,9 +75,6 @@ const WithUserRegistration: FunctionComponent<{}> = ({ children }) => {
         },
         changeCountry: (country: string) => {
           setUser({ ...user, country });
-        },
-        changeRegion: (region: string) => {
-          setUser({ ...user, region });
         },
         changeGender: (gender: any) => {
           setUser({ ...user, gender });

@@ -5,7 +5,6 @@ export interface User {
   firstName: string;
   lastName: string;
   country: string;
-  region: string;
   gender: "M" | "F";
   email: string;
   birthDate: string;
@@ -20,7 +19,6 @@ export interface UserRegistrationContext {
   changeFirstname: (value: string) => void;
   changeLastname: (value: string) => void;
   changeCountry: (value: string) => void;
-  changeRegion: (value: string) => void;
   changeGender: (value: string) => void;
   changeEmail: (value: string) => void;
   changeFideId: (fideId: string) => void;
@@ -34,7 +32,6 @@ export const defaultUserRegistrationContext: UserRegistrationContext = {
     firstName: "",
     lastName: "",
     country: "NOR",
-    region: "",
     gender: "M",
     email: "",
     fideId: "",
@@ -46,7 +43,6 @@ export const defaultUserRegistrationContext: UserRegistrationContext = {
   changeFirstname: () => {},
   changeLastname: () => {},
   changeCountry: () => {},
-  changeRegion: () => {},
   changeGender: () => {},
   changeEmail: () => {},
   changeFideId: () => {},
