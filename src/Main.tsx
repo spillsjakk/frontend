@@ -34,6 +34,8 @@ import { Home } from "./pages/Home/index";
 import { Inbox } from "./pages/inbox/index";
 import { OrganizationsAndClubs } from "./pages/organizations-and-clubs/index";
 import { TournamentDetail } from "./pages/Tournament/detail";
+import { UserAgreement } from "./pages/contracts/user-agreement";
+import { PrivacyNotice } from "./pages/contracts/privacy-notice";
 
 const Main = () => {
   return (
@@ -121,6 +123,8 @@ const Main = () => {
         path="/registration/generate/invitation"
         component={GenerateInvitation}
       ></Route>
+      <Route exact path="/user-agreement" component={UserAgreement}></Route>
+      <Route exact path="/privacy-notice" component={PrivacyNotice}></Route>
       <Route component={NotFound}></Route>
     </Switch>
   );
