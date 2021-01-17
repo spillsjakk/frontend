@@ -294,8 +294,22 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
                 <Translated str="roundRobin" />
               </label>
             </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="kind"
+                id="kind9"
+                value={9}
+                checked={form.kind === 9}
+                onChange={(e) => form.changeKind(9)}
+              />
+              <label className="form-check-label" htmlFor="kind9">
+                <Translated str="teamRoundRobin" />
+              </label>
+            </div>
           </div>
-          {![0, 2, 7, 8].includes(form.kind) && (
+          {![0, 2, 7, 8, 9].includes(form.kind) && (
             <div className="form-group mt-4" id="roundNb-group">
               <label htmlFor="rounds">
                 <Translated str="roundNb" />:
@@ -310,7 +324,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               />
             </div>
           )}
-          {[2, 3, 7].includes(form.kind) && (
+          {[2, 3, 7, 9].includes(form.kind) && (
             <div className="form-group mt-4" id="nbMembers-group">
               <label htmlFor="per_team">
                 <Translated str="membersPerTeam" />:
@@ -539,6 +553,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
             </label>
             &nbsp;
             <input
+              disabled
               type="number"
               id="win_points"
               name="win_points"
@@ -554,6 +569,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
             </label>
             &nbsp;
             <input
+              disabled
               type="number"
               id="draw_points"
               name="draw_points"
@@ -569,6 +585,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
             </label>
             &nbsp;
             <input
+              disabled
               type="number"
               id="loss_points"
               name="loss_points"

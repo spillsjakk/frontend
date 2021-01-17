@@ -666,9 +666,10 @@ class View extends Component<
               (this.context.user.info?.level || 0) >=
                 Levels.OrganizationManager) && (
               <div className="mt-4">
-                {this.state.info?.tournament.kind === "RoundRobin" && (
-                  <SetupRoundButton roundNumber={i + 1} />
-                )}
+                {this.state.info?.tournament.kind === "RoundRobin" ||
+                  (this.state.info?.tournament.kind === "TeamRoundRobin" && (
+                    <SetupRoundButton roundNumber={i + 1} />
+                  ))}
                 <a
                   href={
                     "/s/tournament/printout/boardcards/" +

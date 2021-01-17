@@ -11,7 +11,8 @@ const TimeSection: FunctionComponent<{}> = () => {
     if (tournament) {
       if (
         tournament?.kind === "ManualPairing" ||
-        tournament?.kind === "RoundRobin"
+        tournament?.kind === "RoundRobin" ||
+        tournament?.kind === "TeamRoundRobin"
       ) {
         if (Array.isArray(rounds) && rounds.length > 0) {
           const sortedRounds = [...rounds];
@@ -41,7 +42,8 @@ const TimeSection: FunctionComponent<{}> = () => {
     <div className={style["time-section"]}>
       {tournament &&
         (tournament.kind === "ManualPairing" ||
-          tournament.kind === "RoundRobin") &&
+          tournament.kind === "RoundRobin" ||
+          tournament.kind === "TeamRoundRobin") &&
         rounds &&
         rounds.length > 0 && (
           <>
@@ -57,7 +59,7 @@ const TimeSection: FunctionComponent<{}> = () => {
         )}
       {tournament &&
         tournament.kind !== "ManualPairing" &&
-        tournament.kind !== "RoundRobin" && (
+        tournament.kind !== "RoundRobin" && tournament.kind !== "TeamRoundRobin" && (
           <>
             <div className={style["round-time-starts"]}>
               <div className={style.text}>
