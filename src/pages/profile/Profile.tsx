@@ -15,6 +15,7 @@ import ToolkitProvider, {
 import { TimestampString } from "../../components/Timestamp";
 import { UserContext } from "../../components/UserContext";
 import "./index.scss";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const { SearchBar } = Search;
 
@@ -166,14 +167,28 @@ class Profile extends Component<
           <title>{title(this.state.name)}</title>
         </Helmet>
         <div className="name-container">
-          <img
-            src={`/images/${
-              this.state.online ? "online" : "offline"
-            }-circle.svg`}
-            height={25}
-            width={25}
-            alt={`this.state.online ? "online" : "offline"`}
-          />
+          <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="online">
+                {this.state.online && (
+                  <strong>{Translated.byKey("online")}</strong>
+                )}
+                {!this.state.online && (
+                  <strong>{Translated.byKey("offline")}</strong>
+                )}
+              </Tooltip>
+            }
+          >
+            <img
+              src={`/images/${
+                this.state.online ? "online" : "offline"
+              }-circle.svg`}
+              height={25}
+              width={25}
+              alt={`this.state.online ? "online" : "offline"`}
+            />
+          </OverlayTrigger>
           <h1 className="mt-4 p-3">{this.state.name}</h1>
         </div>
 

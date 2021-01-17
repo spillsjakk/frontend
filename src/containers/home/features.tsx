@@ -39,7 +39,7 @@ const Features: FunctionComponent<{}> = () => {
         activeIndex={index}
         onSelect={onCarouselSelect}
         className={`${style["features-carousel"]} ${style.box}`}
-        interval={2000}
+        interval={8000}
         prevIcon={
           <img
             src="/icons/caret-left-fill.svg"
