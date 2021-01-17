@@ -2,10 +2,10 @@ import React, { FunctionComponent } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import Translated from "../../../../components/translated";
-import { useInvitation } from "../../../../context/invitation";
+import { InviterType, useInvitation } from "../../../../context/invitation";
 import { ErrorComponent, fetchCall } from "../../../../functions";
 
-function getLink(type: 0 | 1, id: string) {
+function getLink(type: InviterType, id: string) {
   if (type === 0) {
     return `/organization/view/${id}`;
   } else if (type === 1) {
@@ -13,7 +13,7 @@ function getLink(type: 0 | 1, id: string) {
   }
 }
 
-function getInvitationText(type: 0 | 1, id: string, name: string) {
+function getInvitationText(type: InviterType, id: string, name: string) {
   const parts = Translated.byKey("youHaveBeenInvited").split("$name");
   return `${parts[0]}<a href="${getLink(type, id)}">${name}</a>${parts[1]}`;
 }

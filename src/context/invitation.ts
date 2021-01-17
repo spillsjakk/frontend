@@ -1,8 +1,10 @@
 import React, { Context, useContext } from "react";
 
+export type InviterType = 0 | 1 | null;
+
 export type Invitation = {
   id: string;
-  invitertype: 0 | 1;
+  invitertype: InviterType;
   inviterid: string;
   invitername: string;
 };
@@ -14,7 +16,7 @@ export interface InvitationContext {
 export const defaultInvitationContext: InvitationContext = {
   invitation: {
     id: "",
-    invitertype: 0,
+    invitertype: null,
     inviterid: "",
     invitername: "",
   },

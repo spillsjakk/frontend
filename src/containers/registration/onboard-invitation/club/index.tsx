@@ -6,6 +6,7 @@ import { useUser } from "../../../../components/UserContext";
 import { useHistory, useParams } from "react-router-dom";
 import { ErrorComponent } from "../../../../functions";
 import ReactDOM from "react-dom";
+import { useInvitation } from "../../../../context/invitation";
 
 const ClubOnboarding: FunctionComponent<{}> = () => {
   const [step, setStep] = useState(0);
