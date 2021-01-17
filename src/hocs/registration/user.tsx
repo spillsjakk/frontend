@@ -26,7 +26,7 @@ const WithUserRegistration: FunctionComponent<{}> = ({ children }) => {
         last_name: user.lastName,
         country: user.country,
         gender: user.gender,
-        email: user.email,
+        email: user.email ? user.email : undefined,
         fide_id: user.fideId || undefined,
         birth_date: user.birthDate,
         password: user.password,
@@ -82,7 +82,7 @@ const WithUserRegistration: FunctionComponent<{}> = ({ children }) => {
         changeEmail: (email: string) => {
           setUser({ ...user, email });
         },
-        changeFideId: (fideId: string) => {
+        changeFideId: (fideId: number) => {
           setUser({ ...user, fideId });
         },
         changeBirthdate: (birthDate: string) => {
@@ -90,6 +90,9 @@ const WithUserRegistration: FunctionComponent<{}> = ({ children }) => {
         },
         changePassword: (password: string) => {
           setUser({ ...user, password });
+        },
+        changeUser: (userFields: any) => {
+          setUser({ ...user, ...userFields });
         },
       }}
     >

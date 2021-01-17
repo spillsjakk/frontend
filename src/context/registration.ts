@@ -8,7 +8,7 @@ export interface User {
   gender: "M" | "F";
   email: string;
   birthDate: string;
-  fideId: string;
+  fideId: number;
   password: string;
 }
 
@@ -21,9 +21,10 @@ export interface UserRegistrationContext {
   changeCountry: (value: string) => void;
   changeGender: (value: string) => void;
   changeEmail: (value: string) => void;
-  changeFideId: (fideId: string) => void;
+  changeFideId: (fideId: number) => void;
   changeBirthdate: (fideId: string) => void;
   changePassword: (fideId: string) => void;
+  changeUser: (user: any) => void;
 }
 
 export const defaultUserRegistrationContext: UserRegistrationContext = {
@@ -34,7 +35,7 @@ export const defaultUserRegistrationContext: UserRegistrationContext = {
     country: "NOR",
     gender: "M",
     email: "",
-    fideId: "",
+    fideId: 0,
     birthDate: "",
     password: "",
   },
@@ -48,6 +49,7 @@ export const defaultUserRegistrationContext: UserRegistrationContext = {
   changeFideId: () => {},
   changeBirthdate: () => {},
   changePassword: () => {},
+  changeUser: (user: any) => {},
 };
 
 const UserRegistrationContext: Context<UserRegistrationContext> = React.createContext(

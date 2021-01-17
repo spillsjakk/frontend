@@ -60,7 +60,7 @@ const Form: FunctionComponent<{}> = () => {
         dangerouslySetInnerHTML={{
           __html: `${Translated.byKey("namePrivacyInfo").replace(
             "$privacypolicy",
-            `<a href="/privacy-policy" target="__blank">${Translated.byKey(
+            `<a href="/privacy-notice" target="__blank">${Translated.byKey(
               "privacyPolicy"
             )}</a>`
           )}`,
@@ -103,7 +103,7 @@ const Form: FunctionComponent<{}> = () => {
       <p>{Translated.byKey("notDisplayedPublicly")}</p>
       <div className={style["input-group"]}>
         <label htmlFor="birthday" className={`${style.label} bold`}>
-          {Translated.byKey("birthday")}
+          {Translated.byKey("birthDate")}
         </label>
         <input
           value={userRegistration.user.birthDate}
@@ -123,11 +123,19 @@ const Form: FunctionComponent<{}> = () => {
           type="email"
           value={userRegistration.user.email}
           onChange={(e) => userRegistration.changeEmail(e.target.value)}
-          required
         />
       </div>
       <p>{Translated.byKey("notDisplayedPublicly")}</p>
-      <button className="action-button" type="submit">
+      <input required id="contract" type="checkbox" />
+      <label style={{ marginLeft: "10px" }} htmlFor="contract">
+        I agree with <a href="/user-agreement">User Agreement</a> and{" "}
+        <a href="/privacy-notice">Privacy Notice</a>
+      </label>
+      <button
+        className="action-button"
+        type="submit"
+        style={{ display: "block" }}
+      >
         {Translated.byKey("create")}
       </button>
     </form>

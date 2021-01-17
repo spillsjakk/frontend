@@ -412,6 +412,7 @@ const en = {
   loginFirst: "Please login first",
   clubYouHaveBeenInvited:
     "You’ve been invited to add your Club by $name on SpillSjakk. It’s quick, easy, and lets you invite your Club’s players to join in large team tournaments. Additionally, your Club can use SpillSjakk’s online and offline pairing tools for internal tournaments.",
+  gender: "Gender",
 };
 
 export { en };
