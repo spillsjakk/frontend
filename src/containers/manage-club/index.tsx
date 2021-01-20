@@ -7,13 +7,13 @@ import { StatsSummary } from "./summary/stats";
 import { TeamsSummary } from "./summary/teams";
 import { AccountsSummary } from "./summary/accounts";
 import { SharePowerSummary } from "./summary/share-power";
+import { MessageSummary } from "./summary/message";
 import { Col, Row } from "react-bootstrap";
 import { useManageClubPopup } from "../../context/manage-club-popup";
 
 const ManageClub: FunctionComponent<{}> = () => {
   const {
     openDetailEdit,
-    openStats,
     openClubList,
     openPowerShare,
     openPlayerList,
@@ -57,6 +57,15 @@ const ManageClub: FunctionComponent<{}> = () => {
           }}
           actionName={Translated.byKey("custom").toUpperCase()}
           content={<SharePowerSummary />}
+        />
+      </Col>
+      <Col className={style.col} xs="auto">
+        <SummaryCard
+          onAction={() => {
+            openPowerShare();
+          }}
+          actionName={Translated.byKey("expandAll").toUpperCase()}
+          content={<MessageSummary />}
         />
       </Col>
     </Row>

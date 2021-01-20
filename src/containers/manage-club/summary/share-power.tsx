@@ -3,28 +3,28 @@ import { InputAdd } from "../../../components/input-add";
 import Translated from "../../../components/translated";
 import style from "../style.module.scss";
 import Toggle from "react-bootstrap-toggle";
-import { useOrganization } from "../../../context/organization";
 import { fetchJson } from "../../../functions";
+import { useClub } from "../../../context/club";
 
 const SharePowerSummary: FunctionComponent<{}> = () => {
   const [allPackage, setAllPackage] = useState(false);
   const [arbiterPackage, setArbiterPackage] = useState(false);
   const [editorPackage, setEditPackage] = useState(false);
-  const organization = useOrganization();
+  const club = useClub();
   function save(id: string) {
     const data = [];
     if (allPackage) {
-      data.push(`organization:all:${organization.id}`);
+      data.push(`club:all:${club.id}`);
     }
     if (arbiterPackage) {
-      data.push(`organization:arbiter:${organization.id}`);
+      data.push(`club:arbiter:${club.id}`);
     }
     if (editorPackage) {
-      data.push(`organization:editor:${organization.id}`);
+      data.push(`club:editor:${club.id}`);
     }
 
     fetchJson(`/s/account/add-power/${id}`, "POST", { powers: data }, () => {
-      organization.updateData!();
+      club.updateData!();
     });
   }
   return (
