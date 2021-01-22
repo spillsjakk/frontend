@@ -14,18 +14,23 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
   function save(id: string) {
     const data = [];
     if (allPackage) {
-      data.push(`organization:all:${organization.id}`);
+      data.push("all");
     }
     if (arbiterPackage) {
-      data.push(`organization:arbiter:${organization.id}`);
+      data.push("arbiter");
     }
     if (editorPackage) {
-      data.push(`organization:editor:${organization.id}`);
+      data.push("editor");
     }
 
-    fetchJson(`/s/account/add-power/${id}`, "POST", { powers: data }, () => {
-      organization.updateData!();
-    });
+    fetchJson(
+      `/s/account/add-power/organization/${id}`,
+      "POST",
+      { powers: data, id: organization.id },
+      () => {
+        organization.updateData!();
+      }
+    );
   }
   return (
     <div id={style["share-power"]}>

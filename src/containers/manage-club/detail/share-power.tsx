@@ -4,8 +4,8 @@ import Translated from "../../../components/translated";
 import style from "../style.module.scss";
 import Toggle from "react-bootstrap-toggle";
 import Collapse from "react-bootstrap/Collapse";
-import { useOrganization } from "../../../context/organization";
 import { fetchJson } from "../../../functions";
+import { useClub } from "../../../context/club";
 
 const GetToggleItem: FunctionComponent<{
   onClick: () => void;
@@ -51,57 +51,62 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
     misc5: false,
     misc6: false,
   });
-  const organization = useOrganization();
+  const club = useClub();
   function save(id: string) {
     const data = [];
     if (!custom) {
       if (allPackage) {
-        data.push(`organization:all:${organization.id}`);
+        data.push("all");
       }
       if (arbiterPackage) {
-        data.push(`organization:arbiter:${organization.id}`);
+        data.push("arbiter");
       }
       if (editorPackage) {
-        data.push(`organization:editor:${organization.id}`);
+        data.push("editor");
       }
     } else {
       if (customPowers.arbiter1) {
-        data.push(`organization:arbiter1:${organization.id}`);
+        data.push("arbiter1");
       }
       if (customPowers.arbiter2) {
-        data.push(`organization:arbiter2:${organization.id}`);
+        data.push("arbiter2");
       }
       if (customPowers.arbiter3) {
-        data.push(`organization:arbiter3:${organization.id}`);
+        data.push("arbiter3");
       }
       if (customPowers.editor1) {
-        data.push(`organization:editor1:${organization.id}`);
+        data.push("editor1");
       }
       if (customPowers.editor2) {
-        data.push(`organization:editor2:${organization.id}`);
+        data.push("editor2");
       }
       if (customPowers.misc1) {
-        data.push(`organization:misc1:${organization.id}`);
+        data.push("misc1");
       }
       if (customPowers.misc2) {
-        data.push(`organization:misc2:${organization.id}`);
+        data.push("misc2");
       }
       if (customPowers.misc3) {
-        data.push(`organization:misc3:${organization.id}`);
+        data.push("misc3");
       }
       if (customPowers.misc4) {
-        data.push(`organization:misc4:${organization.id}`);
+        data.push("misc4");
       }
       if (customPowers.misc5) {
-        data.push(`organization:misc5:${organization.id}`);
+        data.push("misc5");
       }
       if (customPowers.misc6) {
-        data.push(`organization:misc6:${organization.id}`);
+        data.push("misc6");
       }
     }
-    fetchJson(`/s/account/add-power/${id}`, "POST", { powers: data }, () => {
-      organization.updateData!();
-    });
+    fetchJson(
+      `/s/account/add-power/club/${id}`,
+      "POST",
+      { powers: data, id: club.id },
+      () => {
+        club.updateData!();
+      }
+    );
   }
   return (
     <>
