@@ -10,6 +10,11 @@
   pointer-events: none;
 }
 
+.scroll-max-70 {
+  max-height: 70%;
+  overflow: scroll;
+}
+
 .items {
   margin: 20px 10px;
   overflow: scroll;

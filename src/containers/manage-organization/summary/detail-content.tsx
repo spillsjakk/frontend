@@ -24,7 +24,9 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
           <div className={style.label}>
             {Translated.byKey("manageOrg_aboutOrg")}
           </div>
-          <div>{organization.description}</div>
+          <div className={style["scroll-max-70"]}>
+            {organization.description}
+          </div>
         </>
       )}
     </>
