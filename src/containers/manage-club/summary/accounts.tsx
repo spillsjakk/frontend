@@ -28,8 +28,8 @@ const AccountsSummary: FunctionComponent<{}> = () => {
       />
       <div className={style.items}>
         {Array.isArray(club.members) &&
-          club.members.map((account) => (
-            <div key={account.account_id} className={style.item}>
+          club.members.map((account, i) => (
+            <div key={i} className={style.item}>
               <UserLink
                 id={account.account_id}
                 name={account.first_name}

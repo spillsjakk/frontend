@@ -7,6 +7,8 @@ import { Form } from "react-bootstrap";
 
 const MessageSummary: FunctionComponent<{}> = () => {
   const [clubMessage, setClubMessage] = useState("");
+  const [teamMessage, setTeamMessage] = useState("");
+  const [team, setTeam] = useState("");
   const club = useClub();
   function messageMembers(e: FormEvent) {
     e.preventDefault();
@@ -17,6 +19,18 @@ const MessageSummary: FunctionComponent<{}> = () => {
       { text: clubMessage },
       (_) => {
         setClubMessage("");
+      }
+    );
+  }
+  function messageTeamMembers(e: FormEvent) {
+    e.preventDefault();
+
+    fetchJson(
+      `/s/team/message-members/${team}`,
+      "POST",
+      { text: teamMessage },
+      (_) => {
+        setTeamMessage("");
       }
     );
   }
@@ -38,9 +52,29 @@ const MessageSummary: FunctionComponent<{}> = () => {
       <div className={style.label}>
         {Translated.byKey("messageJustToTeamMembers")}
       </div>
-      <Form onSubmit={messageMembers}>
+      <Form onSubmit={messageTeamMembers}>
         <Form.Group>
-          <textarea required />
+          <textarea
+            required
+            onChange={(e) => {
+              setTeamMessage(e.target.value);
+            }}
+            value={teamMessage}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Control
+            as="select"
+            value={team}
+            onChange={(e) => setTeam(e.target.value)}
+          >
+            {club.teams &&
+              club.teams.map((team, i) => (
+                <option key={i.toString()} value={team.id}>
+                  {team.name}
+                </option>
+              ))}
+          </Form.Control>
         </Form.Group>
         <button type="submit">{Translated.byKey("send")}</button>
       </Form>
