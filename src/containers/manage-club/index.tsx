@@ -60,13 +60,7 @@ const ManageClub: FunctionComponent<{}> = () => {
         />
       </Col>
       <Col className={style.col} xs="auto">
-        <SummaryCard
-          onAction={() => {
-            openPowerShare();
-          }}
-          actionName={Translated.byKey("expandAll").toUpperCase()}
-          content={<MessageSummary />}
-        />
+        <SummaryCard content={<MessageSummary />} />
       </Col>
     </Row>
   );
