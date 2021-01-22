@@ -3,6 +3,7 @@ import style from "../style.module.scss";
 import Translated from "../../../components/translated";
 import { fetchJson } from "../../../functions";
 import { useClub } from "../../../context/club";
+import { Form } from "react-bootstrap";
 
 const MessageSummary: FunctionComponent<{}> = () => {
   const [clubMessage, setClubMessage] = useState("");
@@ -20,12 +21,29 @@ const MessageSummary: FunctionComponent<{}> = () => {
     );
   }
   return (
-    <div id="message">
+    <div id={style.message}>
       <div className={style.label}>{Translated.byKey("messageMembers")}</div>
-      <form onSubmit={messageMembers}>
-        <textarea />
+      <Form onSubmit={messageMembers}>
+        <Form.Group>
+          <textarea
+            required
+            onChange={(e) => {
+              setClubMessage(e.target.value);
+            }}
+            value={clubMessage}
+          />
+        </Form.Group>
         <button type="submit">{Translated.byKey("send")}</button>
-      </form>
+      </Form>
+      <div className={style.label}>
+        {Translated.byKey("messageJustToTeamMembers")}
+      </div>
+      <Form onSubmit={messageMembers}>
+        <Form.Group>
+          <textarea required />
+        </Form.Group>
+        <button type="submit">{Translated.byKey("send")}</button>
+      </Form>
     </div>
   );
 };
