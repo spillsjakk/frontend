@@ -12,6 +12,8 @@
 
 .items {
   margin: 20px 10px;
+  overflow: scroll;
+  max-height: 90%;
   .item {
     display: flex;
     flex-direction: row;
