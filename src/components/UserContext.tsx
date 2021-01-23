@@ -6,6 +6,15 @@ export type UserContextDataType = {
     id: string;
     name: string;
     level: number;
+    powers: {
+      organization_all: boolean;
+      organization_arbiter: boolean;
+      organization_editor: boolean;
+      club_all: boolean;
+      club_arbiter: boolean;
+      club_editor: boolean;
+      team_captain: boolean;
+    };
   };
 };
 

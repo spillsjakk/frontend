@@ -59,10 +59,34 @@ const NavigationBar: FunctionComponent<{}> = () => {
     );
   }
 
-  function isAdmin() {
+  function showBuildTournament() {
     return (
-      user.authenticated && user.info?.level && user.info?.level >= Levels.Admin
+      hasLevel() ||
+      user.info?.powers.organization_all ||
+      user.info?.powers.club_all ||
+      user.info?.powers.organization_arbiter ||
+      user.info?.powers.club_arbiter
     );
+  }
+
+  function showManageClub() {
+    return (
+      hasLevel() ||
+      user.info?.powers.organization_all ||
+      user.info?.powers.club_all
+    );
+  }
+
+  function showAccountCreation() {
+    return (
+      hasLevel() ||
+      user.info?.powers.organization_all ||
+      user.info?.powers.club_all
+    );
+  }
+
+  function showManageOrganization() {
+    return isOrganizationManager() || user.info?.powers.organization_all;
   }
 
   return (
@@ -77,7 +101,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
                 <a href="/game/lobby" className="item">
                   {Translated.byKey("myTournamentCalendar")}
                 </a>
-                {hasLevel() && (
+                {showBuildTournament() && (
                   <a href="/tournament/build" className="item">
                     {Translated.byKey("buildTournament")}
                   </a>
@@ -90,12 +114,12 @@ const NavigationBar: FunctionComponent<{}> = () => {
                 <a href="/browse" className="item">
                   {Translated.byKey("browse")}
                 </a>
-                {hasLevel() && (
+                {showManageClub() && (
                   <a href="/club/manage" className="item">
                     {Translated.byKey("manageClub")}
                   </a>
                 )}
-                {isOrganizationManager() && (
+                {showManageOrganization() && (
                   <a href="/organization/manage" className="item">
                     {Translated.byKey("manageOrganization")}
                   </a>
@@ -105,7 +129,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
 
             <div className="link">
               {Translated.byKey("navbarAccountCreation")}
-              {hasLevel() && (
+              {showAccountCreation() && (
                 <>
                   <div className="menu">
                     <a href="/account/create" className="item">
