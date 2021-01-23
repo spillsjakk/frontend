@@ -121,6 +121,7 @@ const Form: FunctionComponent<{}> = () => {
         <input
           id="email"
           type="email"
+          required
           value={userRegistration.user.email}
           onChange={(e) => userRegistration.changeEmail(e.target.value)}
         />

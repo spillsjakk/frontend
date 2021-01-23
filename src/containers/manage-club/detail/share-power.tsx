@@ -255,7 +255,7 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
                 });
               }}
               active={customPowers.misc1}
-              description={Translated.byKey("manageOrg_misc1")}
+              description={Translated.byKey("manageClub_misc1")}
             />
             <GetToggleItem
               onClick={() => {
@@ -265,7 +265,7 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
                 });
               }}
               active={customPowers.misc2}
-              description={Translated.byKey("manageOrg_misc2")}
+              description={Translated.byKey("manageClub_misc2")}
             />
             <GetToggleItem
               onClick={() => {
@@ -275,7 +275,7 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
                 });
               }}
               active={customPowers.misc3}
-              description={Translated.byKey("manageOrg_misc3")}
+              description={Translated.byKey("manageClub_misc3")}
             />
             <GetToggleItem
               onClick={() => {
@@ -285,27 +285,7 @@ const SharePowerDetail: FunctionComponent<{}> = () => {
                 });
               }}
               active={customPowers.misc4}
-              description={Translated.byKey("manageOrg_misc4")}
-            />
-            <GetToggleItem
-              onClick={() => {
-                setCustomPowers({
-                  ...customPowers,
-                  misc5: !customPowers.misc5,
-                });
-              }}
-              active={customPowers.misc5}
-              description={Translated.byKey("manageOrg_misc5")}
-            />
-            <GetToggleItem
-              onClick={() => {
-                setCustomPowers({
-                  ...customPowers,
-                  misc6: !customPowers.misc6,
-                });
-              }}
-              active={customPowers.misc6}
-              description={Translated.byKey("manageOrg_misc6")}
+              description={Translated.byKey("manageClub_misc4")}
             />
           </div>
         </Collapse>

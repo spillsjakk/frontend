@@ -26,14 +26,17 @@ function fetchAccounts(id: string) {
   });
 }
 
-const WithManageOrganization: FunctionComponent<{}> = ({ children }) => {
+const WithManageOrganization: FunctionComponent<{ id: string }> = ({
+  children,
+  id,
+}) => {
   const [organization, setOrganization] = useState<Organization>({} as any);
   async function fetchOrganizationData() {
     return new Promise((resolve, reject) => {
-      fetchJson("/s/organization/manage", "GET", undefined, (result) => {
-        if (Array.isArray(result) && result.length > 0) {
-          setOrganization(result[0]);
-          const id = result[0].id;
+      fetchJson(`/s/organization/manage/${id}`, "GET", undefined, (result) => {
+        if (result) {
+          setOrganization(result);
+          const id = result.id;
           Promise.all([fetchClub(id), fetchAccounts(id)]).then(
             ([clubs, accounts]) => {
               const values: any = {};
@@ -45,7 +48,7 @@ const WithManageOrganization: FunctionComponent<{}> = ({ children }) => {
                 values.accounts = accounts;
               }
 
-              setOrganization({ ...result[0], ...values });
+              setOrganization({ ...result, ...values });
               resolve({});
             }
           );

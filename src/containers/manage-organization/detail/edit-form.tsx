@@ -26,7 +26,6 @@ const InputGroup: FunctionComponent<{
 
 const EditForm: FunctionComponent<{}> = () => {
   const [orgName, setOrgName] = useState("");
-  const [id, setId] = useState("");
   const [description, setDescription] = useState("");
   const [bannerPhoto, setBannerPhoto] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
@@ -39,7 +38,6 @@ const EditForm: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     if (organization) {
-      setId(organization.id || "");
       setOrgName(organization.name || "");
       setDescription(organization.description || "");
       setBannerPhoto(organization.banner_picture || "");
@@ -52,10 +50,9 @@ const EditForm: FunctionComponent<{}> = () => {
 
   function save() {
     fetchJson(
-      `/s/organization/edit`,
+      `/s/organization/edit/${organization.id}`,
       "POST",
       {
-        id,
         name: orgName,
         description,
         profile_picture: profilePhoto,
@@ -84,13 +81,6 @@ const EditForm: FunctionComponent<{}> = () => {
           description={Translated.byKey("manageOrg_orgsNameDesc")}
           value={orgName}
           onChange={(value: string) => setOrgName(value)}
-        />
-
-        <InputGroup
-          label={Translated.byKey("manageOrg_orgsId")}
-          description={Translated.byKey("manageOrg_orgsIdDesc")}
-          value={id}
-          onChange={(value: string) => setId(value)}
         />
 
         <InputGroup

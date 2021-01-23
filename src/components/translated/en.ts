@@ -357,6 +357,12 @@ const en = {
   manageOrg_misc5:
     "edit some of the details of accounts and clubs under this organization",
   manageOrg_misc6: "move players to their team (within a club)",
+  manageClub_misc1: "create accounts under this Organization’s umbrella",
+  manageClub_misc2: "give other accounts powers from this Organization",
+  manageClub_misc3:
+    "see all accounts, clubs, and stats of the Organization, including personal data",
+  manageClub_misc4:
+    "edit some details of accounts and clubs under this Organization",
   manageClub_clubsName: "Club's name: ",
   manageClub_clubsNameDesc: "(this name will be publicly visible)",
   manageClub_clubsId: "Club's URL (SpillSjakk ID): ",
