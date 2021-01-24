@@ -20,7 +20,6 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 const { SearchBar } = Search;
 
 type ProfileState = {
-  name: string;
   account?: Account;
   tournamentData: Tournament[];
   tournamentColumns: any[];
@@ -61,7 +60,6 @@ class Profile extends Component<
   constructor(props: RouteComponentProps<ProfileParams>) {
     super(props);
     this.state = {
-      name: "",
       tournamentData: [],
       tournamentColumns: [
         {
@@ -150,7 +148,6 @@ class Profile extends Component<
           };
         });
         this.setState({
-          name: data.name,
           tournamentData,
           gameData,
           account: data.account,
@@ -164,7 +161,7 @@ class Profile extends Component<
     return (
       <>
         <Helmet>
-          <title>{title(this.state.name)}</title>
+          <title>{title(this.state.account?.username || "")}</title>
         </Helmet>
         <div className="name-container">
           <OverlayTrigger
@@ -189,7 +186,7 @@ class Profile extends Component<
               alt={`this.state.online ? "online" : "offline"`}
             />
           </OverlayTrigger>
-          <h1 className="mt-4 p-3">{this.state.name}</h1>
+          <h1 className="mt-4 p-3">{this.state.account?.username}</h1>
         </div>
 
         {this.props.match.params.uid === this.context.user.info?.id && (
