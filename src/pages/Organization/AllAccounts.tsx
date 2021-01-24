@@ -100,7 +100,7 @@ class AllAccounts extends Component<Props, AllAccountsState> {
 
     fetchJson(
       this.props.forClubs
-        ? `/s/club/members/${this.props.match.params.oid}`
+        ? `/s/club/all-accounts/${this.props.match.params.oid}`
         : `/s/organization/all-accounts/${this.props.match.params.oid}`,
       "GET",
       undefined,
