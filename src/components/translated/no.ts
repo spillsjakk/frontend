@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable */
 const no = {
 	"403": "403 - Forbudt, du er ikke innlogget og har ingen tilgang.",
 	"404": "404 - Ressurs ikke tilgjengelig, hvis du mener dette er feil - sjekk at du er innlogget.",

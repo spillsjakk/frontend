@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable */
 const en = {
 	"403": "403 - Forbidden. You are not logged in, or don't have the permissions to do this.",
 	"404": "404 - Resource not found. If it should exist, check that you are logged in.",
