@@ -18,6 +18,7 @@ export type Tournament = {
   current_online_pairing_time: string;
   self_joinable: boolean;
   show_only_top_nr?: number;
+  show_only_usernames: number;
   online_pairing_interval_n: number;
   online_pairing_interval_t: number;
   fide_rated: boolean;
@@ -48,6 +49,7 @@ export type Participant = {
   tb2?: number;
   tb3?: number;
   tb4?: number;
+  username?: string;
 };
 
 export type TeamParticipant = {
@@ -72,6 +74,8 @@ export type Pairing = {
   white_name?: string;
   black: string;
   black_name?: string;
+  white_username?: string;
+  black_username?: string;
   outcome?: number;
   forfeit: boolean;
   white_ghost?: boolean;

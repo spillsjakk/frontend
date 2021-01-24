@@ -402,6 +402,10 @@ const en = {
     "can send messages to the members and move users from a club into their team",
   pleaseSelect: "Please Select",
   continue: "Continue",
+  showOnlyUsernames:
+    "Show only username's of players on tournament detail page",
+  confirmTournamentWithVisibleNames:
+    "Users's names will be visible on the tournament detail page, if you do not want the users', please check the ",
 };
 
 export { en };

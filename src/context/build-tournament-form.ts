@@ -57,6 +57,8 @@ export interface FormContext {
   changeRounds?: (value: number) => void;
   perTeam?: number;
   changePerTeam?: (value: number) => void;
+  showOnlyUsernames: boolean;
+  changeShowOnlyUsernames: (value: boolean) => void;
 }
 
 const initalValues = {
@@ -112,6 +114,8 @@ const initalValues = {
   changeTb4: (value: string) => {},
   fideRated: false,
   changeFideRated: (value: boolean) => {},
+  showOnlyUsernames: true,
+  changeShowOnlyUsernames: (value: boolean) => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);

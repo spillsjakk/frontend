@@ -59,7 +59,9 @@ const Pairings: FunctionComponent<{}> = () => {
                 <span className="title">{pairing.white_title}</span>&nbsp;
               </>
             )}
-            {pairing.white_name}
+            {tournament.show_only_usernames
+              ? pairing.white_username
+              : pairing.white_name}
           </td>
         );
 
@@ -82,7 +84,9 @@ const Pairings: FunctionComponent<{}> = () => {
                 <span className="title">{pairing.black_title}</span>&nbsp;
               </>
             )}
-            {pairing.black_name}
+            {tournament.show_only_usernames
+              ? pairing.black_username
+              : pairing.black_name}
           </td>
         );
 

@@ -7,9 +7,7 @@ import { Countdown } from "../../components/count-down/index";
 
 const BuildTournamentForm: FunctionComponent<{}> = () => {
   const form = useForm();
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-
+  function buildTournament() {
     const pairingDateTime = new Date(
       form.firstPairingDate + "T" + form.firstPairingTime
     );
@@ -43,11 +41,24 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
       rounds: form.rounds,
       fide_rated: form.fideRated,
       per_team: form.perTeam,
+      show_only_usernames: form.showOnlyUsernames,
     };
 
     fetchJson(`/s/tournament/build`, "POST", body, (result) => {
       window.location.assign(`/tournament/view/${result.id}`);
     });
+  }
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (
+      !form.showOnlyUsernames &&
+      window.confirm(Translated.byKey("confirmTournamentWithVisibleNames"))
+    ) {
+      buildTournament();
+    } else if (form.showOnlyUsernames) {
+      buildTournament();
+    }
   };
 
   return (
@@ -515,9 +526,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               <option value={0}>minutes</option>
               <option value={1}>hours</option>
               <option value={2}>days</option>
-              <option value={3} selected>
-                weeks
-              </option>
+              <option value={3}>weeks</option>
             </select>
           </div>
           <div className="form-group mt-4">
@@ -595,6 +604,16 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               value={form.lossPoints}
               onChange={(e) => form.changeLossPoints(Number(e.target.value))}
             />
+          </div>
+          <div className="mt-4">
+            <input
+              type="checkbox"
+              name="show_only_top"
+              checked={form.showOnlyUsernames}
+              onChange={(e) => form.changeShowOnlyUsernames(e.target.checked)}
+            />
+            &nbsp;
+            <Translated str="showOnlyUsernames" />
           </div>
           <div className="form-group mt-4">
             <button type="submit" className="btn btn-success p-3">

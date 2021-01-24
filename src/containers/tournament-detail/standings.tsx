@@ -13,7 +13,6 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Participant, TeamParticipant } from "../../pages/Tournament/Types";
 import { Link } from "react-router-dom";
 import FederationDisplay from "../../components/FederationDisplay";
-import UserLink from "../../components/UserLink";
 
 const { SearchBar } = Search;
 
@@ -23,20 +22,6 @@ function headerFormatter(column: any, _: any, components: any) {
       {Translated.byKey(column.text)}
       {components.sortElement}
     </>
-  );
-}
-
-function onParticipantsColumnMatch({
-  searchText,
-  value,
-  column,
-  row,
-}: SearchMatchProps<any>) {
-  return (
-    (value !== null &&
-      value !== undefined &&
-      value.toString().toLowerCase().includes(searchText)) ||
-    (row.first_name + " " + row.last_name).toLowerCase().includes(searchText)
   );
 }
 
@@ -61,6 +46,32 @@ const Standings: FunctionComponent<{}> = () => {
   );
   const [participantColumns, setParticipantColumns] = useState<any[]>([]);
 
+  function getUsername(
+    username: string | undefined,
+    firstName: string | undefined,
+    lastName: string | undefined
+  ) {
+    return tournament?.show_only_usernames
+      ? username || ""
+      : `${firstName} ${lastName}`;
+  }
+
+  function onParticipantsColumnMatch({
+    searchText,
+    value,
+    column,
+    row,
+  }: SearchMatchProps<any>) {
+    return (
+      (value !== null &&
+        value !== undefined &&
+        value.toString().toLowerCase().includes(searchText)) ||
+      getUsername(row.username, row.first_name, row.last_name)
+        .toLowerCase()
+        .includes(searchText)
+    );
+  }
+
   function setup() {
     setSswColumn({
       dataField: "none",
@@ -81,11 +92,14 @@ const Standings: FunctionComponent<{}> = () => {
         headerFormatter,
         formatter: function (_: any, row: Participant, __: any, ___: any) {
           const participantLink = (
-            <UserLink
-              id={row.account}
-              name={row.first_name + " " + row.last_name}
-              ghost={row.ghost ?? true}
-            />
+            <Link to={"/profile/" + row.account}>
+              <span
+                className="d-inline-block text-truncate"
+                style={{ maxWidth: "80px" }}
+              >
+                {(row as any).getUsername()}
+              </span>
+            </Link>
           );
           const titleSpan = row.title ? <span>{row.title}</span> : <></>;
           if (row.eliminated) {
@@ -110,7 +124,14 @@ const Standings: FunctionComponent<{}> = () => {
         headerFormatter,
         formatter: function f(_: any, row: Participant, __: any, ___: any) {
           return row.team ? (
-            <Link to={"/team/view/" + row.team}>{row.team_name}</Link>
+            <Link to={"/team/view/" + row.team}>
+              <span
+                className="d-inline-block text-truncate"
+                style={{ maxWidth: "80px" }}
+              >
+                {row.team_name}
+              </span>
+            </Link>
           ) : (
             <></>
           );
@@ -249,7 +270,16 @@ const Standings: FunctionComponent<{}> = () => {
                 <Tab.Pane eventKey="standings-i-tab">
                   <ToolkitProvider
                     keyField="account"
-                    data={participants || []}
+                    data={
+                      participants.map((participant) => ({
+                        ...participant,
+                        getUsername: () => {
+                          return tournament.show_only_usernames
+                            ? participant.username
+                            : `${participant.first_name} ${participant.last_name}`;
+                        },
+                      })) || []
+                    }
                     columns={
                       tournament?.kind === "SwissDutch"
                         ? participantColumns.concat(tbColumns as any)
