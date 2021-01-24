@@ -68,6 +68,7 @@ const MessageSummary: FunctionComponent<{}> = () => {
             value={team}
             onChange={(e) => setTeam(e.target.value)}
           >
+            <option value="">{Translated.byKey("pleaseSelect")}</option>
             {club.teams &&
               club.teams.map((team, i) => (
                 <option key={i.toString()} value={team.id}>

@@ -26,14 +26,17 @@ function fetchMembers(id: string) {
   });
 }
 
-const WithManageClub: FunctionComponent<{}> = ({ children }) => {
+const WithManageClub: FunctionComponent<{ id: string }> = ({
+  children,
+  id,
+}) => {
   const [club, setClub] = useState<Club>({} as any);
   async function fetchClubData() {
     return new Promise((resolve, reject) => {
-      fetchJson("/s/club/manage", "GET", undefined, (result) => {
-        if (Array.isArray(result) && result.length > 0) {
-          setClub(result[0]);
-          const id = result[0].id;
+      fetchJson(`/s/club/manage/${id}`, "GET", undefined, (result) => {
+        if (result) {
+          setClub(result);
+          const id = result.id;
           Promise.all([fetchTeams(id), fetchMembers(id)]).then(
             ([teams, members]) => {
               const values: any = {};
@@ -45,7 +48,7 @@ const WithManageClub: FunctionComponent<{}> = ({ children }) => {
                 values.members = members;
               }
 
-              setClub({ ...result[0], ...values });
+              setClub({ ...result, ...values });
               resolve({});
             }
           );
