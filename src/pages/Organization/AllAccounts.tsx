@@ -23,6 +23,19 @@ interface Props extends RouteComponentProps<AllAccountsProps> {
   forClubs?: boolean;
 }
 
+function getUserLink(text: string, id: string) {
+  return (
+    <Link to={"/profile/" + id}>
+      <span
+        className="d-inline-block text-truncate"
+        style={{ maxWidth: "80px" }}
+      >
+        {text}
+      </span>
+    </Link>
+  );
+}
+
 class AllAccounts extends Component<Props, AllAccountsState> {
   constructor(props: RouteComponentProps<AllAccountsProps>) {
     super(props);
@@ -35,7 +48,7 @@ class AllAccounts extends Component<Props, AllAccountsState> {
           text: Translated.byKey("firstName"),
           sort: true,
           formatter: function (_: any, row: Account, __: any, ___: any) {
-            return <Link to={"/profile/" + row.id}>{row.first_name}</Link>;
+            return getUserLink(row.first_name, row.id);
           },
         },
         {
@@ -43,7 +56,15 @@ class AllAccounts extends Component<Props, AllAccountsState> {
           text: Translated.byKey("lastName"),
           sort: true,
           formatter: function (_: any, row: Account, __: any, ___: any) {
-            return <Link to={"/profile/" + row.id}>{row.last_name}</Link>;
+            return getUserLink(row.last_name, row.id);
+          },
+        },
+        {
+          dataField: "username",
+          text: Translated.byKey("username"),
+          sort: true,
+          formatter: function (_: any, row: Account, __: any, ___: any) {
+            return getUserLink(row.username, row.id);
           },
         },
         {

@@ -401,6 +401,7 @@ const en = {
   manageClub_teamCaptainPackageDesc:
     "can send messages to the members and move users from a club into their team",
   pleaseSelect: "Please Select",
+  continue: "Continue",
 };
 
 export { en };
