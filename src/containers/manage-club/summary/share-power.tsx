@@ -5,11 +5,14 @@ import style from "../style.module.scss";
 import Toggle from "react-bootstrap-toggle";
 import { fetchJson } from "../../../functions";
 import { useClub } from "../../../context/club";
+import { Form } from "react-bootstrap";
 
 const SharePowerSummary: FunctionComponent<{}> = () => {
   const [allPackage, setAllPackage] = useState(false);
   const [arbiterPackage, setArbiterPackage] = useState(false);
   const [editorPackage, setEditPackage] = useState(false);
+  const [teamId, setTeamId] = useState("");
+  const [teamCaptain, setTeamCaptain] = useState(false);
   const club = useClub();
   function save(id: string) {
     const data = [];
@@ -21,6 +24,14 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
     }
     if (editorPackage) {
       data.push("editor");
+    }
+
+    if (teamCaptain && !teamId) {
+      return;
+    }
+
+    if (teamCaptain && teamId) {
+      data.push(`team:captain:${teamId}`);
     }
 
     fetchJson(
@@ -102,6 +113,45 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
         <div className={style.text}>
           <strong>{Translated.byKey("manageOrg_editorPowersPackage")}</strong>
           <div>{Translated.byKey("manageOrg_editorPowersPackageDesc")}</div>
+        </div>
+      </div>
+      <div className={style.item}>
+        <div className={style.toggle}>
+          <Toggle
+            onClick={() => {
+              if (!teamCaptain) {
+                setArbiterPackage(false);
+                setAllPackage(false);
+              }
+              setTeamCaptain(!teamCaptain);
+            }}
+            on={<div>ON</div>}
+            off={<div>OFF</div>}
+            size="xs"
+            offstyle="danger"
+            active={teamCaptain}
+          />
+        </div>
+        <div className={style.text}>
+          <strong>{Translated.byKey("manageClub_teamCaptainPackage")}</strong>
+          <div>{Translated.byKey("manageClub_teamCaptainPackageDesc")}</div>
+          {teamCaptain && (
+            <Form.Control
+              value={teamId}
+              as="select"
+              onChange={(e) => setTeamId(e.target.value)}
+            >
+              <option value="" disabled>
+                {Translated.byKey("pleaseSelect")}
+              </option>
+              {Array.isArray(club.teams) &&
+                club.teams.map((team, i) => (
+                  <option key={i} value={team.id}>
+                    {team.name}
+                  </option>
+                ))}
+            </Form.Control>
+          )}
         </div>
       </div>
     </div>

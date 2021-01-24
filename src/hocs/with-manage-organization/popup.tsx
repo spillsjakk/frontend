@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState } from "react";
 import { ManageOrganizationPopupProvider } from "../../context/manage-organization-popup";
 import { Modal } from "react-bootstrap";
 import { EditForm } from "../../containers/manage-organization/detail/edit-form";
-import { SharePowerDetail } from "../../containers/manage-organization/detail/share-power";
 import Statistics from "../../pages/Organization/Statistics";
 import { useOrganization } from "../../context/organization";
 import { ClubsSummary } from "../../containers/manage-organization/summary/clubs";
@@ -14,7 +13,6 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
   const [isStatsOpen, setStatsOpen] = useState(false);
   const [isClubListOpen, setClubListOpen] = useState(false);
   const [isPlayerListOpen, setPlayerListOpen] = useState(false);
-  const [isPowerShareOpen, setPowerShareOpen] = useState(false);
 
   function getModalSize() {
     if (isPlayerListOpen) {
@@ -37,10 +35,6 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
     setPlayerListOpen(true);
     setOpen(true);
   }
-  function openPowerShare() {
-    setPowerShareOpen(true);
-    setOpen(true);
-  }
   function openStats() {
     setStatsOpen(true);
     setOpen(true);
@@ -51,7 +45,6 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
     setClubListOpen(false);
     setPlayerListOpen(false);
     setStatsOpen(false);
-    setPowerShareOpen(false);
     setOpen(false);
   }
 
@@ -62,7 +55,6 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
         openDetailEdit,
         openClubList,
         openPlayerList,
-        openPowerShare,
         openStats,
         close,
       }}
@@ -88,7 +80,6 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
               } as any)}
             />
           )}
-          {isPowerShareOpen && <SharePowerDetail />}
         </Modal.Body>
       </Modal>
     </ManageOrganizationPopupProvider>

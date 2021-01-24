@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { Team } from "../Tournament/Types";
 import { UserContext } from "../../components/UserContext";
@@ -10,16 +10,16 @@ import { TeamMember } from "./Types";
 
 type ViewProps = {
   tid: string;
-}
+};
 
 type ViewState = {
-  loaded: boolean
+  loaded: boolean;
   info?: {
-    team: Team
-    members: TeamMember[],
-    club_manager: string
-  }
-}
+    team: Team;
+    members: TeamMember[];
+    club_manager: string;
+  };
+};
 
 class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   static contextType = UserContext;
@@ -34,7 +34,12 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Team-View";
 
-    fetchJson(`/s/team/view/${this.props.match.params.tid}`, "GET", undefined, result => this.setState({ loaded: true, info: result }));
+    fetchJson(
+      `/s/team/view/${this.props.match.params.tid}`,
+      "GET",
+      undefined,
+      (result) => this.setState({ loaded: true, info: result })
+    );
   }
 
   render() {
@@ -53,16 +58,29 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
         <p>{info.team.description}</p>
 
-        {this.context.user.authenticated && this.context.user.info?.id === info.club_manager &&
-          <Link className="mt-4 p-3 btn btn-primary" to={"/team/manage/" + info.team.id}><Translated str="manage" /></Link>
-        }
+        {this.context.user.authenticated &&
+          (this.context.user.info?.id === info.club_manager ||
+            this.context.user.info?.powers.team_captain) && (
+            <Link
+              className="mt-4 p-3 btn btn-primary"
+              to={"/team/manage/" + info.team.id}
+            >
+              <Translated str="manage" />
+            </Link>
+          )}
 
         <table className="table mt-4">
-          {info.members.map(member =>
+          {info.members.map((member) => (
             <tr>
-              <td><UserLink id={member.account_id} name={member.first_name + " " + member.last_name} ghost={false} /></td>
+              <td>
+                <UserLink
+                  id={member.account_id}
+                  name={member.first_name + " " + member.last_name}
+                  ghost={false}
+                />
+              </td>
             </tr>
-          )}
+          ))}
         </table>
       </>
     );

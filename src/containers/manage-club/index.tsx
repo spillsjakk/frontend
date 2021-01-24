@@ -12,12 +12,7 @@ import { Col, Row } from "react-bootstrap";
 import { useManageClubPopup } from "../../context/manage-club-popup";
 
 const ManageClub: FunctionComponent<{}> = () => {
-  const {
-    openDetailEdit,
-    openClubList,
-    openPowerShare,
-    openPlayerList,
-  } = useManageClubPopup();
+  const { openDetailEdit, openClubList, openPlayerList } = useManageClubPopup();
   return (
     <Row className={style.row}>
       <Col className={style.col} xs="auto">
@@ -51,13 +46,7 @@ const ManageClub: FunctionComponent<{}> = () => {
         />
       </Col>
       <Col className={style.col} xs="auto">
-        <SummaryCard
-          onAction={() => {
-            openPowerShare();
-          }}
-          actionName={Translated.byKey("custom").toUpperCase()}
-          content={<SharePowerSummary />}
-        />
+        <SummaryCard content={<SharePowerSummary />} />
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard content={<MessageSummary />} />

@@ -15,7 +15,6 @@ const ManageOrganization: FunctionComponent<{}> = () => {
     openDetailEdit,
     openStats,
     openClubList,
-    openPowerShare,
     openPlayerList,
   } = useManageOrganizationPopup();
   return (
@@ -57,13 +56,7 @@ const ManageOrganization: FunctionComponent<{}> = () => {
         />
       </Col>
       <Col className={style.col} xs="auto">
-        <SummaryCard
-          onAction={() => {
-            openPowerShare();
-          }}
-          actionName={Translated.byKey("custom").toUpperCase()}
-          content={<SharePowerSummary />}
-        />
+        <SummaryCard content={<SharePowerSummary />} />
       </Col>
     </Row>
   );

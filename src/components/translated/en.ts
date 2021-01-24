@@ -339,30 +339,6 @@ const en = {
   manageOrg_aboutOrg: "About the Organization:",
   manageOrg_orgsClubs: "Clubs within Organization:",
   manageOrg_orgsAccounts: "Accounts within Organization:",
-  manageOrg_useCustomPowers: "USE CUSTOM POWERS",
-  manageOrg_usePredefinedPowers: "USE PREDEFINED POWERS",
-  manageOrg_customPowerDesc:
-    "(this user will have only the custom powers you toggle below)",
-  manageOrg_arbiter1: "make tournaments as the organizations",
-  manageOrg_arbiter2: "manually change results in tournaments",
-  manageOrg_arbiter3: "add time to players' clocks",
-  manageOrg_editor1: "edit text fields in tournaments",
-  manageOrg_editor2: "edit text fields on the profile page",
-  manageOrg_miscPowerPackage: "Miscellaneous powers package:",
-  manageOrg_misc1: "create or invite users to make new player accounts",
-  manageOrg_misc2: "create or invite users to make new club accounts",
-  manageOrg_misc3: "give other accounts power from this organization",
-  manageOrg_misc4:
-    "see all accounts, clubs, and stats linked to this organization, including personal data",
-  manageOrg_misc5:
-    "edit some of the details of accounts and clubs under this organization",
-  manageOrg_misc6: "move players to their team (within a club)",
-  manageClub_misc1: "create accounts under this Organization’s umbrella",
-  manageClub_misc2: "give other accounts powers from this Organization",
-  manageClub_misc3:
-    "see all accounts, clubs, and stats of the Organization, including personal data",
-  manageClub_misc4:
-    "edit some details of accounts and clubs under this Organization",
   manageClub_clubsName: "Club's name: ",
   manageClub_clubsNameDesc: "(this name will be publicly visible)",
   manageClub_clubsId: "Club's URL (SpillSjakk ID): ",
@@ -421,6 +397,10 @@ const en = {
   gender: "Gender",
   teamRoundRobin: "Team Round Robin",
   messageJustToTeamMembers: "Message just to team members",
+  manageClub_teamCaptainPackage: "Team Captain",
+  manageClub_teamCaptainPackageDesc:
+    "can send messages to the members and move users from a club into their team",
+  pleaseSelect: "Please Select",
 };
 
 export { en };

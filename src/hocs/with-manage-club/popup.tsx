@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState } from "react";
 import { ManageClubPopupProvider } from "../../context/manage-club-popup";
 import { Modal } from "react-bootstrap";
 import { EditForm } from "../../containers/manage-club/detail/edit-form";
-import { SharePowerDetail } from "../../containers/manage-club/detail/share-power";
 import { useClub } from "../../context/club";
 import { TeamsSummary } from "../../containers/manage-club/summary/teams";
 import AllAccounts from "../../pages/Organization/AllAccounts";
@@ -10,10 +9,10 @@ import AllAccounts from "../../pages/Organization/AllAccounts";
 const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
   const [isOpen, setOpen] = useState(false);
   const [isDetailEditOpen, setDetailEditOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [isStatsOpen, setStatsOpen] = useState(false);
   const [isClubListOpen, setClubListOpen] = useState(false);
   const [isPlayerListOpen, setPlayerListOpen] = useState(false);
-  const [isPowerShareOpen, setPowerShareOpen] = useState(false);
 
   function getModalSize() {
     if (isPlayerListOpen) {
@@ -36,10 +35,6 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
     setPlayerListOpen(true);
     setOpen(true);
   }
-  function openPowerShare() {
-    setPowerShareOpen(true);
-    setOpen(true);
-  }
   function openStats() {
     setStatsOpen(true);
     setOpen(true);
@@ -50,7 +45,6 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
     setClubListOpen(false);
     setPlayerListOpen(false);
     setStatsOpen(false);
-    setPowerShareOpen(false);
     setOpen(false);
   }
 
@@ -61,7 +55,6 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
         openDetailEdit,
         openClubList,
         openPlayerList,
-        openPowerShare,
         openStats,
         close,
       }}
@@ -72,8 +65,6 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
           {isDetailEditOpen && <EditForm />}
 
           {isClubListOpen && <TeamsSummary />}
-
-          {isPowerShareOpen && <SharePowerDetail />}
 
           {isPlayerListOpen && club && (
             <AllAccounts
