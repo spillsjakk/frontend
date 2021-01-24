@@ -36,6 +36,29 @@ const FormInputs: FunctionComponent<{}> = () => {
           style={{ height: "250px" }}
         />
       </div>
+
+      <div className="form-group mt-4">
+        <label htmlFor="id">{Translated.byKey("profile_picture")}</label>
+        <input
+          type="text"
+          className="form-control"
+          id="profile-picture"
+          name="profile-picture"
+          value={form.profilePicture}
+          onChange={(e) => form.changeProfilePicture(e.target.value)}
+        />
+      </div>
+      <div className="form-group mt-4">
+        <label htmlFor="id">{Translated.byKey("banner_picture")}</label>
+        <input
+          type="text"
+          className="form-control"
+          id="banner-picture"
+          name="banner-picture"
+          value={form.bannerPicture}
+          onChange={(e) => form.changeBannerPicture(e.target.value)}
+        />
+      </div>
       <div className="form-group mt-4">
         <label htmlFor="start_date">
           <Translated str="startDate" />:
@@ -447,9 +470,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           <option value={0}>minutes</option>
           <option value={1}>hours</option>
           <option value={2}>days</option>
-          <option value={3} selected>
-            weeks
-          </option>
+          <option value={3}>weeks</option>
         </select>
       </div>
       <div className="form-group mt-4">
@@ -524,6 +545,16 @@ const FormInputs: FunctionComponent<{}> = () => {
           value={form.lossPoints}
           onChange={(e) => form.changeLossPoints(Number(e.target.value))}
         />
+        <div className="mt-4">
+          <input
+            type="checkbox"
+            name="show_only_top"
+            checked={form.showOnlyUsernames}
+            onChange={(e) => form.changeShowOnlyUsernames(e.target.checked)}
+          />
+          &nbsp;
+          <Translated str="showOnlyUsernames" />
+        </div>
       </div>
     </>
   );

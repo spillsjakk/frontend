@@ -35,6 +35,28 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
         />
       </div>
       <div className="form-group mt-4">
+        <label htmlFor="id">{Translated.byKey("profile_picture")}</label>
+        <input
+          type="text"
+          className="form-control"
+          id="profile-picture"
+          name="profile-picture"
+          value={form.profilePicture}
+          onChange={(e) => form.changeProfilePicture(e.target.value)}
+        />
+      </div>
+      <div className="form-group mt-4">
+        <label htmlFor="id">{Translated.byKey("banner_picture")}</label>
+        <input
+          type="text"
+          className="form-control"
+          id="banner-picture"
+          name="banner-picture"
+          value={form.bannerPicture}
+          onChange={(e) => form.changeBannerPicture(e.target.value)}
+        />
+      </div>
+      <div className="form-group mt-4">
         <label htmlFor="start_date">
           <Translated str="startDate" />:
         </label>

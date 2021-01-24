@@ -59,6 +59,10 @@ export interface FormContext {
   changePerTeam?: (value: number) => void;
   showOnlyUsernames: boolean;
   changeShowOnlyUsernames: (value: boolean) => void;
+  profilePicture: string;
+  changeProfilePicture: (value: string) => void;
+  bannerPicture: string;
+  changeBannerPicture: (value: string) => void;
 }
 
 const initalValues = {
@@ -116,6 +120,10 @@ const initalValues = {
   changeFideRated: (value: boolean) => {},
   showOnlyUsernames: true,
   changeShowOnlyUsernames: (value: boolean) => {},
+  profilePicture: "",
+  changeProfilePicture: (value: string) => {},
+  bannerPicture: "",
+  changeBannerPicture: (value: string) => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);

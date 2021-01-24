@@ -42,6 +42,8 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
       fide_rated: form.fideRated,
       per_team: form.perTeam,
       show_only_usernames: form.showOnlyUsernames,
+      profile_picture: form.profilePicture,
+      banner_picture: form.bannerPicture,
     };
 
     fetchJson(`/s/tournament/build`, "POST", body, (result) => {
@@ -113,6 +115,28 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
               value={form.description}
               onChange={(e) => form.changeDescription(e.target.value)}
               style={{ height: "250px" }}
+            />
+          </div>
+          <div className="form-group mt-4">
+            <label htmlFor="id">{Translated.byKey("profile_picture")}</label>
+            <input
+              type="text"
+              className="form-control"
+              id="profile-picture"
+              name="profile-picture"
+              value={form.profilePicture}
+              onChange={(e) => form.changeProfilePicture(e.target.value)}
+            />
+          </div>
+          <div className="form-group mt-4">
+            <label htmlFor="id">{Translated.byKey("banner_picture")}</label>
+            <input
+              type="text"
+              className="form-control"
+              id="banner-picture"
+              name="banner-picture"
+              value={form.bannerPicture}
+              onChange={(e) => form.changeBannerPicture(e.target.value)}
             />
           </div>
           <div className="form-group mt-4">

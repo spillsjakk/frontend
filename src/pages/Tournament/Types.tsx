@@ -12,13 +12,15 @@ export type Tournament = {
   random_seeding: boolean;
   per_team_limit?: number;
   first_online_pairing: string;
+  profile_picture?: string;
+  banner_picture?: string;
   online_pairing_interval: number;
   initial_time: number;
   increment: number;
   current_online_pairing_time: string;
   self_joinable: boolean;
   show_only_top_nr?: number;
-  show_only_usernames: number;
+  show_only_usernames: boolean;
   online_pairing_interval_n: number;
   online_pairing_interval_t: number;
   fide_rated: boolean;

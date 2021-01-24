@@ -406,6 +406,7 @@ const en = {
     "Show only username's of players on tournament detail page",
   confirmTournamentWithVisibleNames:
     "Users's names will be visible on the tournament detail page, if you do not want the users', please check the ",
+  banner_picture: "Banner Picture",
 };
 
 export { en };

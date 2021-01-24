@@ -82,6 +82,9 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       rounds: form.rounds,
       fide_rated: form.fideRated,
       per_team: form.perTeam,
+      show_only_usernames: form.showOnlyUsernames,
+      profile_picture: form.profilePicture,
+      banner_picture: form.bannerPicture,
     };
 
     fetchJson(`/s/tournament/${getId()}`, "PUT", body, (result) => {
@@ -120,6 +123,9 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       form.changeWinPoints(tournament.win_points);
       form.changeDrawPoints(tournament.draw_points);
       form.changeLossPoints(tournament.loss_points);
+      form.changeShowOnlyUsernames(tournament.show_only_usernames);
+      form.changeBannerPicture(tournament.banner_picture || "");
+      form.changeProfilePicture(tournament.profile_picture || "");
       if (tournament.per_team_limit) {
         form.changePerTeam!(tournament.per_team_limit);
       }

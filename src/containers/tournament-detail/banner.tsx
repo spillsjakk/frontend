@@ -1,16 +1,26 @@
 import React, { FunctionComponent } from "react";
-import { useOrganization } from "../../context/organization";
+import { useTournamentDetail } from "../../context/tournament-detail";
 import style from "./style.module.scss";
 
 const Banner: FunctionComponent<{}> = () => {
-  const organization = useOrganization();
-  function getProfilePicture() {
-    if (organization && organization.profile_picture) {
+  const { tournament } = useTournamentDetail();
+  function getBannerPicture() {
+    if (tournament && tournament.banner_picture) {
       return (
-        <img
-          className={style["pp-custom"]}
-          src={organization.profile_picture}
-        />
+        <img className={style["banner-pic"]} src={tournament.banner_picture} />
+      );
+    }
+    return (
+      <img
+        className={style["banner-pic"]}
+        src={"/images/tournament/banner-placeholder.png"}
+      />
+    );
+  }
+  function getProfilePicture() {
+    if (tournament && tournament.profile_picture) {
+      return (
+        <img className={style["pp-custom"]} src={tournament.profile_picture} />
       );
     }
     return (
@@ -19,10 +29,7 @@ const Banner: FunctionComponent<{}> = () => {
   }
   return (
     <div className={style.banner}>
-      <img
-        className={style["banner-pic"]}
-        src={"/images/tournament/banner-placeholder.png"}
-      />
+      {getBannerPicture()}
       {getProfilePicture()}
     </div>
   );

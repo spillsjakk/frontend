@@ -31,6 +31,8 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [rounds, setRounds] = useState<number>();
   const [perTeam, setPerTeam] = useState<number>();
   const [showOnlyUsernames, setShowOnlyUsernames] = useState<boolean>(true);
+  const [profilePicture, setProfilePicture] = useState<string>("");
+  const [bannerPicture, setBannerPicture] = useState<string>("");
 
   const changeShow = useCallback((value: boolean) => {
     setShow(value);
@@ -148,6 +150,14 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
     setShowOnlyUsernames(value);
   }, []);
 
+  const changeProfilePicture = useCallback((value: string) => {
+    setProfilePicture(value);
+  }, []);
+
+  const changeBannerPicture = useCallback((value: string) => {
+    setBannerPicture(value);
+  }, []);
+
   return (
     <FormProvider
       value={{
@@ -209,6 +219,10 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
         changePerTeam,
         showOnlyUsernames,
         changeShowOnlyUsernames,
+        profilePicture,
+        changeProfilePicture,
+        bannerPicture,
+        changeBannerPicture,
       }}
     >
       {children}
