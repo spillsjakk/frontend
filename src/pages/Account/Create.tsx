@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent, FormEvent } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { UserContext } from "../../components/UserContext";
 import UserLink from "../../components/UserLink";
@@ -10,20 +10,21 @@ import TitleDropdown from "../../components/TitleDropdown";
 import SexDropdown from "../../components/SexDropdown";
 
 type CreateState = {
-  first_name: string
-  last_name: string
-  fide_number: string
-  title: string
-  fide_rating: string
-  fide_federation: string
-  birth_date: string
-  sex: string
-  email: string
-  level: string
-  accounts: any[]
-  passwords: string[][]
-  passwordCsv: string
-}
+  username: string;
+  first_name: string;
+  last_name: string;
+  fide_number: string;
+  title: string;
+  fide_rating: string;
+  fide_federation: string;
+  birth_date: string;
+  sex: string;
+  email: string;
+  level: string;
+  accounts: any[];
+  passwords: string[][];
+  passwordCsv: string;
+};
 
 class Create extends Component<{}, CreateState> {
   static contextType = UserContext;
@@ -33,6 +34,7 @@ class Create extends Component<{}, CreateState> {
     super(props);
 
     this.state = {
+      username: "",
       first_name: "",
       last_name: "",
       fide_number: "",
@@ -45,7 +47,7 @@ class Create extends Component<{}, CreateState> {
       level: "0",
       accounts: [],
       passwords: [],
-      passwordCsv: "data:text/plain;charset=utf-8,"
+      passwordCsv: "data:text/plain;charset=utf-8,",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -64,23 +66,31 @@ class Create extends Component<{}, CreateState> {
       return;
     }
 
-    fetchJson(`/s/account/fide-autocomplete/${this.state.fide_number}`, "GET", undefined, json => {
-      const newState: any = {};
-      newState.first_name = json.first_name;
-      newState.last_name = json.last_name;
-      newState.title = json.title;
-      newState.fide_rating = json.rating;
-      newState.fide_federation = json.federation;
-      newState.birth_date = json.birth_year ? json.birth_year.toString() + "-01-01" : undefined;
-      newState.sex = json.sex;
-      this.setState(newState);
-    });
+    fetchJson(
+      `/s/account/fide-autocomplete/${this.state.fide_number}`,
+      "GET",
+      undefined,
+      (json) => {
+        const newState: any = {};
+        newState.first_name = json.first_name;
+        newState.last_name = json.last_name;
+        newState.title = json.title;
+        newState.fide_rating = json.rating;
+        newState.fide_federation = json.federation;
+        newState.birth_date = json.birth_year
+          ? json.birth_year.toString() + "-01-01"
+          : undefined;
+        newState.sex = json.sex;
+        this.setState(newState);
+      }
+    );
   }
 
   addNewAcc(e: FormEvent) {
     e.preventDefault();
 
     const data = {
+      username: this.state.username,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       fide_number: parseInt(this.state.fide_number, 10) || undefined,
@@ -91,11 +101,12 @@ class Create extends Component<{}, CreateState> {
       sex: this.state.sex || undefined,
       email: this.state.email || undefined,
       level: parseInt(this.state.level, 10) || 0,
-      ghost: false
+      ghost: false,
     };
-    fetchJson(`/s/account/create`, "POST", data, result => {
+    fetchJson(`/s/account/create`, "POST", data, (result) => {
       result.level = data.level;
       this.setState({
+        username: "",
         first_name: "",
         last_name: "",
         fide_number: "",
@@ -106,8 +117,12 @@ class Create extends Component<{}, CreateState> {
         sex: "M",
         email: "",
         accounts: this.state.accounts.concat([result]),
-        passwords: this.state.passwords.concat([[result.id, result.password]]),
-        passwordCsv: this.state.passwordCsv + encodeURIComponent(`${result.id},${result.password}\n`)
+        passwords: this.state.passwords.concat([
+          [result.username, result.password],
+        ]),
+        passwordCsv:
+          this.state.passwordCsv +
+          encodeURIComponent(`${result.id},${result.password}\n`),
       });
     });
   }
@@ -122,33 +137,73 @@ class Create extends Component<{}, CreateState> {
         <Helmet>
           <title>{title("createAccounts")}</title>
         </Helmet>
-        <h1 className="mt-5 p-3"><Translated str="createAccounts" /></h1>
+        <div className="header">
+          <Translated str="createAccounts" />
+        </div>
 
         <form onSubmit={this.addNewAcc}>
           <table className="table">
             <thead>
               <tr>
-                <th scope="col"><Translated str="firstName" /></th>
-                <th scope="col"><Translated str="lastName" /></th>
-                <th scope="col"><Translated str="fideNumber" /></th>
-                <th scope="col"><Translated str="title" /></th>
-                <th scope="col"><Translated str="fideRating" /></th>
-                <th scope="col"><Translated str="fideFederation" /></th>
-                <th scope="col"><Translated str="birthDate" /></th>
-                <th scope="col"><Translated str="sex" /></th>
-                <th scope="col"><Translated str="email" /></th>
-                <th scope="col"><Translated str="permissions" /></th>
+                <th scope="col">
+                  <Translated str="username" />
+                </th>
+                <th scope="col">
+                  <Translated str="firstName" />
+                </th>
+                <th scope="col">
+                  <Translated str="lastName" />
+                </th>
+                <th scope="col">
+                  <Translated str="fideNumber" />
+                </th>
+                <th scope="col">
+                  <Translated str="title" />
+                </th>
+                <th scope="col">
+                  <Translated str="fideRating" />
+                </th>
+                <th scope="col">
+                  <Translated str="fideFederation" />
+                </th>
+                <th scope="col">
+                  <Translated str="birthDate" />
+                </th>
+                <th scope="col">
+                  <Translated str="sex" />
+                </th>
+                <th scope="col">
+                  <Translated str="email" />
+                </th>
+                <th scope="col">
+                  <Translated str="permissions" />
+                </th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              {this.state.accounts.map(account =>
-                <tr>
+              {this.state.accounts.map((account, i) => (
+                <tr key={i}>
                   <td>
-                    <UserLink id={account.id} name={account.first_name} ghost={false} />
+                    <UserLink
+                      id={account.id}
+                      name={account.username}
+                      ghost={false}
+                    />
                   </td>
                   <td>
-                    <UserLink id={account.id} name={account.last_name} ghost={false} />
+                    <UserLink
+                      id={account.id}
+                      name={account.first_name}
+                      ghost={false}
+                    />
+                  </td>
+                  <td>
+                    <UserLink
+                      id={account.id}
+                      name={account.last_name}
+                      ghost={false}
+                    />
                   </td>
                   <td>{account.fide_number}</td>
                   <td>{account.title}</td>
@@ -159,39 +214,153 @@ class Create extends Component<{}, CreateState> {
                   <td>{account.email}</td>
                   <td>{account.level}</td>
                 </tr>
-              )}
+              ))}
               <tr>
-                <td><input type="text" id="firstNameInput" name="first_name" value={this.state.first_name} onChange={this.handleChange} required /></td>
-                <td><input type="text" id="lastNameInput" name="last_name" value={this.state.last_name} onChange={this.handleChange} required /></td>
-                <td><input type="number" id="fideNumberInput" name="fide_number" value={this.state.fide_number} onChange={this.handleChange} onBlur={this.fideNumberBlur} /></td>
-                <td><TitleDropdown id="titleInput" name="title" value={this.state.title} onChange={this.handleChange} /></td>
-                <td><input type="number" id="fideRatingInput" name="fide_rating" value={this.state.fide_rating} onChange={this.handleChange} /></td>
-                <td><FederationDropdown id="fideFederationInput" name="fide_federation" value={this.state.fide_federation} onChange={this.handleChange} /></td>
-                <td><input type="date" id="birthDateInput" name="birth_date" value={this.state.birth_date} onChange={this.handleChange} required /></td>
-                <td><SexDropdown id="sexInput" name="sex" value={this.state.sex} onChange={this.handleChange} /></td>
-                <td><input type="email" id="email" name="email" value={this.state.email} onChange={this.handleChange} /></td>
                 <td>
-                  <select id="level" name="level" value={this.state.level} onChange={this.handleChange}>
-                    <option value="0" selected>Player</option>
-                    {(this.context.user.info?.level || 0) > 1 && <>
-                      <option value="1">Club Manager</option>
-                      {(this.context.user.info?.level || 0) > 2 &&
-                        <option value="2">Org Manager</option>
-                      }
-                    </>}
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="firstNameInput"
+                    name="first_name"
+                    value={this.state.first_name}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    id="lastNameInput"
+                    name="last_name"
+                    value={this.state.last_name}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    id="fideNumberInput"
+                    name="fide_number"
+                    value={this.state.fide_number}
+                    onChange={this.handleChange}
+                    onBlur={this.fideNumberBlur}
+                  />
+                </td>
+                <td>
+                  <TitleDropdown
+                    id="titleInput"
+                    name="title"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    id="fideRatingInput"
+                    name="fide_rating"
+                    value={this.state.fide_rating}
+                    onChange={this.handleChange}
+                  />
+                </td>
+                <td>
+                  <FederationDropdown
+                    id="fideFederationInput"
+                    name="fide_federation"
+                    value={this.state.fide_federation}
+                    onChange={this.handleChange}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="date"
+                    id="birthDateInput"
+                    name="birth_date"
+                    value={this.state.birth_date}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </td>
+                <td>
+                  <SexDropdown
+                    id="sexInput"
+                    name="sex"
+                    value={this.state.sex}
+                    onChange={this.handleChange}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                  />
+                </td>
+                <td>
+                  <select
+                    id="level"
+                    name="level"
+                    value={this.state.level}
+                    onChange={this.handleChange}
+                  >
+                    <option value="0">Player</option>
+                    {(this.context.user.info?.level || 0) > 1 && (
+                      <>
+                        <option value="1">Club Manager</option>
+                        {(this.context.user.info?.level || 0) > 2 && (
+                          <option value="2">Org Manager</option>
+                        )}
+                      </>
+                    )}
                   </select>
                 </td>
-                <td><button type="submit" className="btn btn-primary" id="addButton">+</button></td>
+                <td>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    id="addButton"
+                  >
+                    +
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
         </form>
 
-        <h3 className="mt-5"><Translated str="passwords" /></h3>
-        <p><Translated str="thisIsTheOnlyTimeYouSeeThesePasswords" /></p>
-        <p><a href={this.state.passwordCsv} download="accounts.csv" id="csvDownloadLink"><Translated str="downloadAsCsv" /></a></p>
+        <h3 className="mt-5">
+          <Translated str="passwords" />
+        </h3>
+        <p>
+          <Translated str="thisIsTheOnlyTimeYouSeeThesePasswords" />
+        </p>
+        <p>
+          <a
+            href={this.state.passwordCsv}
+            download="accounts.csv"
+            id="csvDownloadLink"
+          >
+            <Translated str="downloadAsCsv" />
+          </a>
+        </p>
         <div>
-          {this.state.passwords.map(up => <p>{up[0]}: <code>{up[1]}</code></p>)}
+          {this.state.passwords.map((up, i) => (
+            <p key={i}>
+              {up[0]}: <code>{up[1]}</code>
+            </p>
+          ))}
         </div>
       </>
     );
