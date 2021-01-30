@@ -21,14 +21,14 @@ body#Account-Create {
     font-family: Montserrat;
 }
 
-.nav-item {
+body#Account-Create .nav-item {
     background-color: gray;
 }
 
-.table {
+body#Account-Create .table {
     color: black !important;
 }
 
-.table-striped tbody tr:nth-of-type(2n + 1) {
+body#Account-Create .table-striped tbody tr:nth-of-type(2n + 1) {
     background-color: #fafafa !important;
 }

@@ -11,25 +11,7 @@ import { FormInputs } from "./form-inputs";
 import { ShortFormInputs } from "./short-form-inputs";
 import { useTournamentRound } from "../../context/tournament-round";
 import { useTournament } from "../../context/tournament";
-
-const kind: Record<string, number> = {
-  Knockout: 0,
-  SwissDutch: 1,
-  TeamKnockout: 2,
-  TeamSwissDutch: 3,
-  TeamMonrad: 4,
-  TeamKonrad: 5,
-  TeamOlympiad: 6,
-};
-
-const Tiebreaker: Record<string, number> = {
-  AverageOpponentRating: 0,
-  Buchholz: 1,
-  MedianBuchholz: 2,
-  MedianBuchholz2: 3,
-  BuchholzCut1: 4,
-  BuchholzCut2: 5,
-};
+import { KIND, TIEBREAKER } from "../../constants";
 
 const EditTournamentForm: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -96,7 +78,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
     if (tournament && tournament.id) {
       form.changeName(tournament.name);
       form.changeDescription(tournament.description);
-      form.changeKind(kind[tournament.kind]);
+      form.changeKind((KIND as any)[tournament.kind]);
       form.changeDefaultGameLocation(tournament.default_otb ? 0 : 1);
       form.changeStartDate(tournament.start_date);
       form.changeEndDate(tournament.end_date);
@@ -130,16 +112,16 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
         form.changePerTeam!(tournament.per_team_limit);
       }
       form.changeTb1(
-        tournament.tb1 ? Tiebreaker[tournament.tb1].toString() : ""
+        tournament.tb1 ? (TIEBREAKER as any)[tournament.tb1].toString() : ""
       );
       form.changeTb2(
-        tournament.tb2 ? Tiebreaker[tournament.tb2].toString() : ""
+        tournament.tb2 ? (TIEBREAKER as any)[tournament.tb2].toString() : ""
       );
       form.changeTb3(
-        tournament.tb3 ? Tiebreaker[tournament.tb3].toString() : ""
+        tournament.tb3 ? (TIEBREAKER as any)[tournament.tb3].toString() : ""
       );
       form.changeTb4(
-        tournament.tb4 ? Tiebreaker[tournament.tb4].toString() : ""
+        tournament.tb4 ? (TIEBREAKER as any)[tournament.tb4].toString() : ""
       );
       if (tournament.rounds) {
         form.changeRounds!(tournament.rounds);

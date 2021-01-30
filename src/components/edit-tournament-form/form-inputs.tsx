@@ -3,6 +3,7 @@ import { useForm } from "../../context/build-tournament-form";
 import Translated from "../translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 import { Countdown } from "../../components/count-down/index";
+import { KIND } from "../../constants";
 
 const FormInputs: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -142,10 +143,10 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind0"
-            value={0}
+            value={KIND.Knockout}
             required
-            checked={form.kind === 0}
-            onChange={(e) => form.changeKind(0)}
+            checked={form.kind === KIND.Knockout}
+            onChange={(e) => form.changeKind(KIND.Knockout)}
           />
           <label className="form-check-label" htmlFor="kind0">
             <Translated str="knockout" />
@@ -157,9 +158,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind1"
-            value={1}
-            checked={form.kind === 1}
-            onChange={(e) => form.changeKind(1)}
+            value={KIND.SwissDutch}
+            checked={form.kind === KIND.SwissDutch}
+            onChange={(e) => form.changeKind(KIND.SwissDutch)}
           />
           <label className="form-check-label" htmlFor="kind1">
             <Translated str="swissDutch" />
@@ -171,9 +172,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind2"
-            value={2}
-            checked={form.kind === 2}
-            onChange={(e) => form.changeKind(2)}
+            value={KIND.TeamKnockout}
+            checked={form.kind === KIND.TeamKnockout}
+            onChange={(e) => form.changeKind(KIND.TeamKnockout)}
           />
           <label className="form-check-label" htmlFor="kind2">
             <Translated str="teamKnockout" />
@@ -185,9 +186,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind3"
-            value={3}
-            checked={form.kind === 3}
-            onChange={(e) => form.changeKind(3)}
+            value={KIND.TeamSwissDutch}
+            checked={form.kind === KIND.TeamSwissDutch}
+            onChange={(e) => form.changeKind(KIND.TeamSwissDutch)}
           />
           <label className="form-check-label" htmlFor="kind3">
             <Translated str="teamSwissDutch" />
@@ -199,9 +200,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind4"
-            value={4}
-            checked={form.kind === 4}
-            onChange={(e) => form.changeKind(4)}
+            value={KIND.TeamMonrad}
+            checked={form.kind === KIND.TeamMonrad}
+            onChange={(e) => form.changeKind(KIND.TeamMonrad)}
           />
           <label className="form-check-label" htmlFor="kind4">
             <Translated str="teamMonrad" />
@@ -213,9 +214,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind5"
-            value={5}
-            checked={form.kind === 5}
-            onChange={(e) => form.changeKind(5)}
+            value={KIND.TeamKonrad}
+            checked={form.kind === KIND.TeamKonrad}
+            onChange={(e) => form.changeKind(KIND.TeamKonrad)}
           />
           <label className="form-check-label" htmlFor="kind5">
             <Translated str="teamKonrad" />
@@ -227,9 +228,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind7"
-            value={7}
-            checked={form.kind === 7}
-            onChange={(e) => form.changeKind(7)}
+            value={KIND.ManualPairing}
+            checked={form.kind === KIND.ManualPairing}
+            onChange={(e) => form.changeKind(KIND.ManualPairing)}
           />
           <label className="form-check-label" htmlFor="kind7">
             <Translated str="manualPairing" />
@@ -241,9 +242,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind8"
-            value={8}
-            checked={form.kind === 8}
-            onChange={(e) => form.changeKind(8)}
+            value={KIND.RoundRobin}
+            checked={form.kind === KIND.RoundRobin}
+            onChange={(e) => form.changeKind(KIND.RoundRobin)}
           />
           <label className="form-check-label" htmlFor="kind8">
             <Translated str="roundRobin" />
@@ -255,9 +256,9 @@ const FormInputs: FunctionComponent<{}> = () => {
             type="radio"
             name="kind"
             id="kind9"
-            value={9}
-            checked={form.kind === 9}
-            onChange={(e) => form.changeKind(9)}
+            value={KIND.TeamRoundRobin}
+            checked={form.kind === KIND.TeamRoundRobin}
+            onChange={(e) => form.changeKind(KIND.TeamRoundRobin)}
           />
           <label className="form-check-label" htmlFor="kind9">
             <Translated str="teamRoundRobin" />
@@ -267,7 +268,7 @@ const FormInputs: FunctionComponent<{}> = () => {
       {![0, 2, 7, 8, 9].includes(form.kind) && (
         <div className="form-group mt-4" id="roundNb-group">
           <label htmlFor="rounds">
-            <Translated str="roundNb" />:
+            <Translated str="roundNb" />
           </label>
           <input
             className="form-control w-25"
