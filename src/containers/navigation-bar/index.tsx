@@ -98,7 +98,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
             <div className="link">
               {Translated.byKey("navbarTournaments")}
               <div className="menu">
-                <a href="/game/lobby" className="item">
+                <a href="/calendar" className="item">
                   {Translated.byKey("myTournamentCalendar")}
                 </a>
                 {showBuildTournament() && (

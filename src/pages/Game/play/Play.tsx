@@ -1128,7 +1128,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
             </Button>
             <Button
               variant="primary"
-              onClick={() => window.location.assign("/game/lobby")}
+              onClick={() => window.location.assign("/calendar")}
             >
               {Translated.byKey("nextGame")}
             </Button>

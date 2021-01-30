@@ -36,6 +36,7 @@ import { OrganizationsAndClubs } from "./pages/organizations-and-clubs/index";
 import { TournamentDetail } from "./pages/Tournament/detail";
 import { UserAgreement } from "./pages/contracts/user-agreement";
 import { PrivacyNotice } from "./pages/contracts/privacy-notice";
+import { Lobby } from "./pages/lobby/index";
 
 const Main = () => {
   return (
@@ -94,6 +95,7 @@ const Main = () => {
       ></Route>
       <Route exact path="/account/settings" component={AccountSettings}></Route>
 
+      <Route exact path="/calendar" component={Lobby}></Route>
       <Route exact path="/game/lobby" component={GameLobby}></Route>
       <Route exact path="/game/play/:id" component={GamePlay}></Route>
       <Route exact path="/game/view/:id" component={GameView}></Route>

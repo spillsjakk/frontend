@@ -371,7 +371,10 @@ const en = {
 	"winPoints": "Points for a win",
 	"yes": "Yes",
 	"you": "You",
-	"youHaveBeenInvited": "You’ve been invited to play for $name on SpillSjakk. It’s quick, easy and lets you play in their custom tournaments!"
+	"youHaveBeenInvited": "You’ve been invited to play for $name on SpillSjakk. It’s quick, easy and lets you play in their custom tournaments!",
+	"nextGameIsIn": "your next game is in",
+	"goToTournamentDetail": "Go to Tournament Detail",
+	"tournamentSchedule": "Tournament Schedule"
 };
 
 export { en };

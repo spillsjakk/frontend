@@ -47,7 +47,7 @@ class GameNotifier extends PureComponent<
           }
 
           if (
-            location.pathname === "/game/lobby" ||
+            location.pathname === "/calendar" ||
             location.pathname === "/game/play/" + this.state.gameId
           ) {
             this.setState({ mayShowNotification: false });
@@ -79,7 +79,7 @@ class GameNotifier extends PureComponent<
           shouldPlay: true,
           gameId: result.id,
           mayShowNotification: !(
-            this.props.location.pathname === "/game/lobby" ||
+            this.props.location.pathname === "/calendar" ||
             this.props.location.pathname === "/game/play/" + result.id
           ),
         });
@@ -112,7 +112,7 @@ class GameNotifier extends PureComponent<
       >
         <strong>
           <Translated str="aboutToPlay" />{" "}
-          <Link to="/game/lobby">
+          <Link to="/calendar">
             <Translated str="goToLobby" />
           </Link>
         </strong>
