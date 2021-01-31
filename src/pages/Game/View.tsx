@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
-import { GameOutcome, numToSquare } from "./play/Play";
+import { GameOutcome } from "./play";
+import { numToSquare } from "./play/clock";
 import { RouteComponentProps } from "react-router-dom";
 import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";

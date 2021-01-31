@@ -371,7 +371,10 @@ const no = {
 	"winPoints": "Poeng for seier",
 	"yes": "Ja",
 	"you": "",
-	"youHaveBeenInvited": ""
+	"youHaveBeenInvited": "",
+	"nextGameIsIn": "",
+	"goToTournamentDetail": "",
+	"tournamentSchedule": ""
 };
 
 export { no };

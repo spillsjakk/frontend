@@ -1,0 +1,193 @@
+#Game-Play {
+  $board-height: calc(min(85vw, 80vh));
+  .clock {
+    font-size: 4vh;
+  }
+  .clock:not(.running) {
+    opacity: 0.3;
+  }
+  .wrapper {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    .board-area {
+      .play-box {
+        padding-right: 1vh;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        .self-box {
+          margin-top: 10px !important;
+        }
+        .user-box {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 4vh;
+
+          .user-info {
+            display: flex;
+            margin: 1vh 2vh;
+            font-size: 2vh;
+            align-items: center;
+
+            .name {
+              display: flex;
+              margin-left: 1.5vh;
+            }
+
+            img {
+              height: 2vh;
+            }
+          }
+        }
+      }
+    }
+    .info-area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      flex-basis: 20%;
+
+      .info-wrapper {
+        display: grid;
+        grid-gap: 10px;
+
+        .tournament-info {
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          height: 40px;
+        }
+      }
+
+      .decide-buttons {
+        display: flex;
+        justify-content: center;
+        color: white;
+        margin-top: 5px;
+      }
+
+      .action-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #375a7f;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        color: white;
+        border: none;
+        height: 40px;
+        font-weight: 500;
+        border-radius: 35px;
+        cursor: pointer;
+      }
+    }
+    .png-area {
+      margin-top: 10px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      height: 40px;
+      flex-grow: 1;
+      flex-basis: 90%;
+      display: flex;
+      align-items: center;
+      max-width: 90vw;
+      overflow: hidden;
+      overflow-x: scroll;
+
+      #move-div {
+        display: flex;
+
+        .item {
+          margin: 0 5px;
+
+          span:nth-child(2) {
+            margin: 0 2px;
+          }
+
+          .highlight-blue {
+            padding: 5px;
+            box-shadow: inset 0 0 2px 2px blue;
+          }
+        }
+      }
+    }
+    .png-area::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  background-color: #fafafa;
+  color: black;
+
+  #resign-btn,
+  #draw-btn,
+  #yes-draw-btn,
+  #no-draw-btn {
+    color: white;
+  }
+
+  .tournament-link {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .initial-countdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #content-container {
+    max-width: 1200px;
+  }
+
+  #promotion-dialog img,
+  #promotion-dialog span {
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+  }
+
+  #promotion-dialog img {
+    width: 80px;
+    height: 80px;
+  }
+
+  #promotion-dialog span {
+    color: orangered;
+    font-size: 18pt;
+  }
+
+  .btn-container {
+    margin-left: 20px;
+  }
+  div.cg-wrap,
+  cg-container {
+    width: 90vh !important; /* Firefox mobile compat */
+    width: $board-height !important;
+    height: 90vw !important;
+    height: $board-height !important;
+  }
+  #game-result-div {
+    font-size: 24pt;
+  }
+  #white-name,
+  #black-name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  [data-square],
+  [data-piece] {
+    touch-action: none;
+  }
+
+  #outcome-popup .modal-content {
+    background-color: #fafafa;
+  }
+}

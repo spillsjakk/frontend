@@ -18,7 +18,7 @@ import AccountCreate from "./pages/Account/Create";
 import AccountRecover from "./pages/Account/Recover";
 import AccountSettings from "./pages/Account/Settings";
 import GameLobby from "./pages/Game/Lobby";
-import GamePlay from "./pages/Game/play/Play";
+import GamePlay from "./pages/Game/play";
 import GameView from "./pages/Game/View";
 import { OnboardInvitation } from "./pages/registration/onboard-invitation";
 import { GenerateInvitation } from "./pages/registration/generate-invitation";

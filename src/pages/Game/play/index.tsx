@@ -2,15 +2,14 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-var */
 /* eslint-disable no-unused-expressions */
-import React, { Component, RefObject, PureComponent } from "react";
+import React, { Component, RefObject } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../../components/translated";
 import { CircularSecondsCountDown } from "../../../components/circular-seconds-count-down";
-import { UserInfoBox } from "./user-info-box";
 import { RouteComponentProps } from "react-router-dom";
 import { fetchJson, title, fetchCall } from "../../../functions";
 import "react-chessground/dist/styles/chessground.css";
-import "./Play.css";
+import "./style.scss";
 import "../chessground-theme.css";
 import Chessground from "react-chessground";
 import Chess from "chess.js";
@@ -22,76 +21,8 @@ import { Modal, Button } from "react-bootstrap";
 import { GameChat } from "../../../containers/game-chat";
 import { WithChatService } from "../../../hocs/with-chat-service";
 import { Message } from "../../../context/chat-service";
-
-export function numToSquare(num: number) {
-  const file = "abcdefgh"[num % 8];
-  const rank = Math.floor(num / 8) + 1;
-  return file + rank.toString();
-}
-
-type ClockState = {
-  cache: number;
-  checkpoint: Date;
-  current: number;
-};
-
-class Clock extends PureComponent<{}, ClockState> {
-  constructor(props: {}) {
-    super(props);
-
-    this.state = {
-      cache: 0,
-      checkpoint: new Date(),
-      current: 0,
-    };
-
-    this.tick = this.tick.bind(this);
-    this.updateAndCache = this.updateAndCache.bind(this);
-    this.check = this.check.bind(this);
-  }
-
-  tick() {
-    this.setState({
-      current:
-        this.state.cache -
-        (new Date().getTime() - this.state.checkpoint.getTime()) / 1000,
-    });
-  }
-
-  updateAndCache(t: number) {
-    this.setState({ cache: t, current: t });
-  }
-
-  check() {
-    this.setState({ checkpoint: new Date() });
-  }
-
-  render() {
-    const total_seconds = Math.max(0, this.state.current);
-    const hours_f = total_seconds / 3600;
-    const hours = Math.floor(hours_f);
-    const seconds_left = total_seconds % 3600;
-    const minutes_f = seconds_left / 60;
-    const minutes = Math.floor(minutes_f);
-    const seconds = Math.floor(seconds_left % 60);
-
-    if (hours != 0) {
-      return (
-        <>
-          {hours}:{minutes.toString().padStart(2, "0")}:
-          {seconds.toString().padStart(2, "0")}
-        </>
-      );
-    } else {
-      return (
-        <>
-          &nbsp;{minutes.toString().padStart(2, "0")}:
-          {seconds.toString().padStart(2, "0")}&nbsp;
-        </>
-      );
-    }
-  }
-}
+import { Clock, numToSquare } from "./clock";
+import UserLink from "../../../components/UserLink";
 
 type PlayProps = {
   id: string;
@@ -148,6 +79,9 @@ type PlayState = {
   whiteCountdownTemp: number;
   blackCountdownTemp: number;
   messages: Array<Message>;
+  round: number;
+  initialTime: number;
+  incrementTime: number;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -155,7 +89,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   groundRef: RefObject<typeof Chessground>;
   whiteClockRef: RefObject<Clock> | undefined;
   blackClockRef: RefObject<Clock> | undefined;
-  moveTableRef: RefObject<HTMLTableElement>;
   moveSound: Howl;
   timeout = 250;
 
@@ -211,9 +144,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       whiteCountdownTemp: 0,
       blackCountdownTemp: 0,
       messages: [],
+      round: 0,
+      initialTime: 0,
+      incrementTime: 0,
     };
     this.groundRef = React.createRef();
-    this.moveTableRef = React.createRef();
     this.moveSound = new Howl({
       src: ["/sounds/move.mp3"],
     });
@@ -242,6 +177,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     document.getElementsByTagName("body")[0].id = "Game-Play";
 
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
+
+    const pngArea = document.getElementsByClassName("png-area")[0];
+    pngArea.scrollLeft += pngArea.scrollWidth;
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, (json) => {
       if (
@@ -275,6 +213,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         whiteName: json.game_info.white_name,
         blackId: json.game_info.black,
         blackName: json.game_info.black_name,
+        round: json.game_info.round,
+        initialTime: json.game_info.initial_time,
+        incrementTime: json.game_info.increment,
       });
 
       this.whiteClockRef = React.createRef();
@@ -481,8 +422,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         this.groundRef.current?.cg?.state?.drawable?.shapes || [];
 
       this.setState(newState);
-      // eslint-disable-next-line no-unused-expressions
-      this.moveTableRef.current?.scrollIntoView(false);
+      const pngArea = document.getElementsByClassName("png-area")[0];
+      pngArea.scrollLeft += pngArea.scrollWidth;
 
       if (this.state.premove) {
         this.onMove(this.state.premoveData.source, this.state.premoveData.dest);
@@ -568,7 +509,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   resignFirst() {
-    this.setState({ showResignConfirm: true });
+    this.setState({ showResignConfirm: !this.state.showResignConfirm });
   }
 
   resignYes() {
@@ -588,7 +529,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   drawFirst() {
     if (this.state.pendingDrawOffer !== 1) {
-      this.setState({ showDrawConfirm: true });
+      this.setState({ showDrawConfirm: !this.state.showDrawConfirm });
     }
   }
 
@@ -609,50 +550,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     });
   }
 
-  secondsToString(total_seconds: number) {
-    const hours_f = total_seconds / 3600;
-    const hours = Math.floor(hours_f);
-    const seconds_left = total_seconds % 3600;
-    const minutes_f = seconds_left / 60;
-    const minutes = Math.floor(minutes_f);
-    const seconds = Math.floor(seconds_left % 60);
-    if (total_seconds < 10) {
-      const fraction = total_seconds - Math.floor(total_seconds);
-      const tenths = Math.floor(fraction * 10);
-      // eslint-disable-next-line no-var
-      var tenthsStr = "." + tenths.toString();
-    } else {
-      // eslint-disable-next-line no-var
-      var tenthsStr = "";
-    }
-    if (hours != 0) {
-      return (
-        hours.toString() +
-        ":" +
-        minutes.toString().padStart(2, "0") +
-        ":" +
-        seconds.toString().padStart(2, "0")
-      );
-    } else if (tenthsStr === "") {
-      return (
-        "&nbsp;" +
-        minutes.toString().padStart(2, "0") +
-        ":" +
-        seconds.toString().padStart(2, "0") +
-        "&nbsp;"
-      );
-    } else {
-      return (
-        minutes.toString().padStart(2, "0") +
-        ":" +
-        seconds.toString().padStart(2, "0") +
-        tenthsStr
-      );
-    }
-  }
-
   clockTick() {
-    if (this.state.clocksRunning && this.whiteClockRef && this.blackClockRef) {
+    if (
+      this.state.clocksRunning &&
+      this.whiteClockRef &&
+      this.blackClockRef &&
+      !this.state.showBlackInitialCountdown &&
+      !this.state.showWhiteInitialCountdown
+    ) {
       const side = this.state.game.turn();
       const clockRef = (side === "w" ? this.whiteClockRef : this.blackClockRef)
         .current;
@@ -669,6 +574,158 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         }
       }
     }
+  }
+
+  getResult() {
+    let text = <Translated str="itsADraw" />;
+    if (this.state.outcome === GameOutcome.WhiteWins) {
+      text = <Translated str="whiteWins" />;
+    } else if (this.state.outcome === GameOutcome.BlackWins) {
+      text = <Translated str="blackWins" />;
+    }
+    return (
+      <>
+        {this.state.outcome !== GameOutcome.Ongoing && (
+          <div id="game-result-div">{text}</div>
+        )}
+      </>
+    );
+  }
+
+  getSelfCountdown() {
+    return (
+      <>
+        {this.state.orientation === "black" ? (
+          <>
+            {this.state.showBlackInitialCountdown && (
+              <div className="initial-countdown">
+                <CircularSecondsCountDown
+                  start={this.state.blackInitialCountdown}
+                  onEnd={() => {
+                    this.setState({ showBlackInitialCountdown: false }, () => {
+                      if (this.whiteClockRef && this.blackClockRef) {
+                        this.whiteClockRef.current?.updateAndCache(
+                          this.state.whiteCountdownTemp
+                        );
+                        this.blackClockRef.current?.updateAndCache(
+                          this.state.blackCountdownTemp
+                        );
+                        if (this.state.turn === "white") {
+                          this.whiteClockRef.current?.check();
+                        } else {
+                          this.blackClockRef.current?.check();
+                        }
+                      }
+                    });
+                  }}
+                />
+                <div className="move-text">
+                  {Translated.byKey("toMakeFirstMove")}
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {this.state.showWhiteInitialCountdown && (
+              <div className="initial-countdown">
+                <CircularSecondsCountDown
+                  start={this.state.whiteInitialCountdown}
+                  onEnd={() => {
+                    this.setState({ showWhiteInitialCountdown: false }, () => {
+                      if (this.whiteClockRef && this.blackClockRef) {
+                        this.whiteClockRef.current?.updateAndCache(
+                          this.state.whiteCountdownTemp
+                        );
+                        this.blackClockRef.current?.updateAndCache(
+                          this.state.blackCountdownTemp
+                        );
+                        if (this.state.turn === "white") {
+                          this.whiteClockRef.current?.check();
+                        } else {
+                          this.blackClockRef.current?.check();
+                        }
+                      }
+                    });
+                  }}
+                />
+                <div className="move-text">
+                  {Translated.byKey("toMakeFirstMove")}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </>
+    );
+  }
+
+  getOpponentCountdown() {
+    return (
+      <>
+        {this.state.orientation === "black" ? (
+          <>
+            {this.state.showWhiteInitialCountdown && (
+              <div className="initial-countdown">
+                <CircularSecondsCountDown
+                  start={this.state.whiteInitialCountdown}
+                  onEnd={() => {
+                    this.setState({ showWhiteInitialCountdown: false }, () => {
+                      if (this.whiteClockRef && this.blackClockRef) {
+                        this.whiteClockRef.current?.updateAndCache(
+                          this.state.whiteCountdownTemp
+                        );
+                        this.blackClockRef.current?.updateAndCache(
+                          this.state.blackCountdownTemp
+                        );
+                        if (this.state.turn === "white") {
+                          this.whiteClockRef.current?.check();
+                        } else {
+                          this.blackClockRef.current?.check();
+                        }
+                      }
+                    });
+                  }}
+                />
+                <div className="move-text">
+                  {Translated.byKey("toMakeFirstMove")}
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {this.state.showBlackInitialCountdown && (
+              <div className="initial-countdown">
+                <CircularSecondsCountDown
+                  start={this.state.blackInitialCountdown}
+                  onEnd={() => {
+                    this.setState({ showBlackInitialCountdown: false }, () => {
+                      if (this.whiteClockRef && this.blackClockRef) {
+                        this.whiteClockRef.current?.updateAndCache(
+                          this.state.whiteCountdownTemp
+                        );
+                        this.blackClockRef.current?.updateAndCache(
+                          this.state.blackCountdownTemp
+                        );
+                        if (this.state.turn === "white") {
+                          this.whiteClockRef.current?.check();
+                        } else {
+                          this.blackClockRef.current?.check();
+                        }
+                      }
+                    });
+                  }}
+                />
+                <div className="move-text">
+                  {Translated.byKey("toMakeFirstMove")}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </>
+    );
   }
 
   getOpponentInfo() {
@@ -697,32 +754,86 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   renderOpponentBox() {
     const opponent = this.getOpponentInfo();
+    const federation =
+      opponent.id === this.state.whiteId
+        ? this.state.white_fide_federation
+        : this.state.black_fide_federation;
     return (
-      <UserInfoBox
-        federation={
-          opponent.id === this.state.whiteId
-            ? this.state.white_fide_federation
-            : this.state.black_fide_federation
-        }
-        id={opponent.id}
-        name={opponent.name}
-      />
+      <>
+        <div className="user-info">
+          {federation && <img src={`/images/flags/${federation}.png`} />}
+          <div className="name">
+            <UserLink id={opponent.id} name={opponent.name} ghost={false} />
+          </div>
+        </div>
+        {this.renderOpponentClock()}
+      </>
     );
   }
 
   renderSelfBox() {
     const player = this.getSelfInfo();
+    const federation =
+      player.id === this.state.whiteId
+        ? this.state.white_fide_federation
+        : this.state.black_fide_federation;
     return (
-      <UserInfoBox
-        federation={
-          player.id === this.state.whiteId
-            ? this.state.white_fide_federation
-            : this.state.black_fide_federation
-        }
-        id={player.id}
-        name={player.name}
-      />
+      <>
+        <div className="user-info">
+          {federation && <img src={`/images/flags/${federation}.png`} />}
+          <div className="name">
+            <UserLink id={player.id} name={player.name} ghost={false} />
+          </div>
+        </div>
+        {this.renderSelfClock()}
+      </>
     );
+  }
+
+  getWhiteClock() {
+    if (
+      !this.state.showWhiteInitialCountdown &&
+      this.state.whiteCountdownTemp - this.state.blackCountdownTemp !== 20
+    ) {
+      return (
+        <div
+          className={"clock" + (this.state.turn === "white" ? " running" : "")}
+        >
+          <Clock ref={this.whiteClockRef} />
+        </div>
+      );
+    }
+  }
+
+  getBlackClock() {
+    if (
+      !this.state.showBlackInitialCountdown &&
+      this.state.whiteCountdownTemp - this.state.blackCountdownTemp !== 20
+    ) {
+      return (
+        <div
+          className={"clock" + (this.state.turn === "black" ? " running" : "")}
+        >
+          <Clock ref={this.blackClockRef} />
+        </div>
+      );
+    }
+  }
+
+  renderOpponentClock() {
+    if (this.state.orientation === "white") {
+      return this.getBlackClock();
+    } else {
+      return this.getWhiteClock();
+    }
+  }
+
+  renderSelfClock() {
+    if (this.state.orientation === "black") {
+      return this.getBlackClock();
+    } else {
+      return this.getWhiteClock();
+    }
   }
 
   render() {
@@ -731,12 +842,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     if (this.state.pgn !== "") {
       for (let i = 0; i < splitMovePgn.length; i += 3) {
         rows.push(
-          <tr key={i}>
-            <td>{splitMovePgn[i]}</td>
-            <td className={!splitMovePgn[i + 2] ? "highlight-blue" : undefined}>
+          <div key={i} className="item">
+            <span>{splitMovePgn[i]}</span>
+            <span
+              className={!splitMovePgn[i + 2] ? "highlight-blue" : undefined}
+            >
               {splitMovePgn[i + 1]}
-            </td>
-            <td
+            </span>
+            <span
               className={
                 !splitMovePgn[i + 3] && splitMovePgn[i + 2]
                   ? "highlight-blue"
@@ -744,8 +857,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               }
             >
               {splitMovePgn[i + 2]}
-            </td>
-          </tr>
+            </span>
+          </div>
         );
       }
     }
@@ -755,14 +868,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         <Helmet>
           <title>{title("playGame")}</title>
         </Helmet>
-
-        <div className="mt-5">
-          <div className="tournament-link">
-            <a href={`/tournament/view/${this.state.tournament}`}>
-              {Translated.byKey("backToTournament")}
-            </a>
-          </div>
-        </div>
 
         {this.state.isPromoting && (
           <div className="d-flex flex-row justify-content-around">
@@ -796,18 +901,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           </div>
         )}
 
-        <div className="d-flex flex-row justify-content-between">
-          <div id="move-div">
-            <table id="move-table" ref={this.moveTableRef}>
-              <tbody>{rows}</tbody>
-            </table>
-          </div>
-
-          <div className="d-flex flex-column play-box">
-            <div className="d-flex flex-row user-box">
-              {this.renderOpponentBox()}
-            </div>
-            <div className="d-flex flex-row">
+        <div className="wrapper">
+          <div className="board-area">
+            <div className="play-box">
+              <div className="user-box">{this.renderOpponentBox()}</div>
               <Chessground
                 fen={this.state.fen}
                 orientation={this.state.orientation}
@@ -849,265 +946,106 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 lastMove={this.state.lastMove}
                 check={this.state.check}
               />
-            </div>
-            <div className="d-flex flex-row user-box">
-              {this.renderSelfBox()}
+              <div className="user-box self-box">{this.renderSelfBox()}</div>
             </div>
           </div>
-          <div className="d-flex flex-column justify-content-between">
-            {this.state.orientation === "black" ? (
-              <>
-                {this.state.showWhiteInitialCountdown ? (
-                  <div className="initial-countdown">
-                    <CircularSecondsCountDown
-                      start={this.state.whiteInitialCountdown}
-                      onEnd={() => {
-                        this.setState(
-                          { showWhiteInitialCountdown: false },
-                          () => {
-                            if (this.whiteClockRef && this.blackClockRef) {
-                              this.whiteClockRef.current?.updateAndCache(
-                                this.state.whiteCountdownTemp
-                              );
-                              this.blackClockRef.current?.updateAndCache(
-                                this.state.blackCountdownTemp
-                              );
-                              if (this.state.turn === "white") {
-                                this.whiteClockRef.current?.check();
-                              } else {
-                                this.blackClockRef.current?.check();
-                              }
-                            }
-                          }
-                        );
-                      }}
-                    />
-                    <div className="move-text">
-                      {Translated.byKey("toMakeFirstMove")}
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={
-                      "clock" + (this.state.turn === "white" ? " running" : "")
-                    }
-                  >
-                    <Clock ref={this.whiteClockRef} />
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                {this.state.showBlackInitialCountdown ? (
-                  <div className="initial-countdown">
-                    <CircularSecondsCountDown
-                      start={this.state.blackInitialCountdown}
-                      onEnd={() => {
-                        this.setState(
-                          { showBlackInitialCountdown: false },
-                          () => {
-                            if (this.whiteClockRef && this.blackClockRef) {
-                              this.whiteClockRef.current?.updateAndCache(
-                                this.state.whiteCountdownTemp
-                              );
-                              this.blackClockRef.current?.updateAndCache(
-                                this.state.blackCountdownTemp
-                              );
-                              if (this.state.turn === "white") {
-                                this.whiteClockRef.current?.check();
-                              } else {
-                                this.blackClockRef.current?.check();
-                              }
-                            }
-                          }
-                        );
-                      }}
-                    />
-                    <div className="move-text">
-                      {Translated.byKey("toMakeFirstMove")}
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={
-                      "clock" + (this.state.turn === "black" ? " running" : "")
-                    }
-                  >
-                    <Clock ref={this.blackClockRef} />
-                  </div>
-                )}
-              </>
-            )}
+          <div className="info-area">
+            <div className="info-wrapper">
+              {this.getOpponentCountdown()}
 
-            {this.state.isPlayer && this.state.outcome === GameOutcome.Ongoing && (
-              <>
-                <div className="btn-container">
-                  <a
-                    className="btn btn-primary"
-                    id="resign-btn"
-                    onClick={this.resignFirst}
-                  >
-                    <Translated str="resign" />
-                  </a>
-                  {this.state.showResignConfirm && (
-                    <div className="mt-4">
-                      <a
-                        className="btn btn-danger"
-                        id="no-resign-btn"
-                        onClick={this.resignNo}
-                      >
-                        <Translated str="no" />
-                      </a>
-                      <a
-                        className="btn btn-success"
-                        id="yes-resign-btn"
-                        onClick={this.resignYes}
-                      >
-                        <Translated str="yes" />
-                      </a>
-                    </div>
-                  )}
-                </div>
+              {this.getResult()}
 
-                <WithChatService
-                  messages={this.state.messages}
-                  gameId={this.gameId}
-                  side={this.state.myColor === "white" ? 0 : 1}
-                >
-                  <GameChat color={this.state.myColor} />
-                </WithChatService>
+              <div className="tournament-info">
+                Round: {this.state.round}, {this.state.initialTime}+
+                {this.state.incrementTime}
+              </div>
 
-                <div className="btn-container">
-                  <a
-                    className="btn btn-primary"
-                    id="draw-btn"
-                    onClick={this.drawFirst}
-                  >
-                    {this.state.pendingDrawOffer === 2 ? (
-                      <Translated str="acceptDraw" />
-                    ) : this.state.pendingDrawOffer === 1 ? (
-                      <Translated str="drawOfferPending" />
-                    ) : (
-                      <Translated str="offerDraw" />
-                    )}
-                  </a>
-                  {this.state.showDrawConfirm && (
-                    <div className="mt-4">
+              {this.state.isPlayer &&
+                this.state.outcome === GameOutcome.Ongoing && (
+                  <>
+                    <div>
                       <a
-                        className="btn btn-danger"
-                        id="no-draw-btn"
-                        onClick={this.drawNo}
+                        className="action-button"
+                        id="resign-btn"
+                        onClick={this.resignFirst}
                       >
-                        <Translated str="no" />
+                        <Translated str="resign" />
                       </a>
-                      <a
-                        className="btn btn-success"
-                        id="yes-draw-btn"
-                        onClick={this.drawYes}
-                      >
-                        <Translated str="yes" />
-                      </a>
+                      {this.state.showResignConfirm && (
+                        <div className="decide-buttons">
+                          <a
+                            className="btn btn-danger"
+                            id="no-resign-btn"
+                            onClick={this.resignNo}
+                          >
+                            <Translated str="no" />
+                          </a>
+                          <a
+                            className="btn btn-success"
+                            id="yes-resign-btn"
+                            onClick={this.resignYes}
+                          >
+                            <Translated str="yes" />
+                          </a>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </>
-            )}
 
-            {this.state.orientation === "black" ? (
-              <>
-                {this.state.showBlackInitialCountdown ? (
-                  <div className="initial-countdown">
-                    <CircularSecondsCountDown
-                      start={this.state.blackInitialCountdown}
-                      onEnd={() => {
-                        this.setState(
-                          { showBlackInitialCountdown: false },
-                          () => {
-                            if (this.whiteClockRef && this.blackClockRef) {
-                              this.whiteClockRef.current?.updateAndCache(
-                                this.state.whiteCountdownTemp
-                              );
-                              this.blackClockRef.current?.updateAndCache(
-                                this.state.blackCountdownTemp
-                              );
-                              if (this.state.turn === "white") {
-                                this.whiteClockRef.current?.check();
-                              } else {
-                                this.blackClockRef.current?.check();
-                              }
-                            }
-                          }
-                        );
-                      }}
-                    />
-                    <div className="move-text">
-                      {Translated.byKey("toMakeFirstMove")}
+                    <div>
+                      <a
+                        className="action-button"
+                        id="draw-btn"
+                        onClick={this.drawFirst}
+                      >
+                        {this.state.pendingDrawOffer === 2 ? (
+                          <Translated str="acceptDraw" />
+                        ) : this.state.pendingDrawOffer === 1 ? (
+                          <Translated str="drawOfferPending" />
+                        ) : (
+                          <Translated str="offerDraw" />
+                        )}
+                      </a>
+                      {this.state.showDrawConfirm && (
+                        <div className="decide-buttons">
+                          <a
+                            className="btn btn-danger"
+                            id="no-draw-btn"
+                            onClick={this.drawNo}
+                          >
+                            <Translated str="no" />
+                          </a>
+                          <a
+                            className="btn btn-success"
+                            id="yes-draw-btn"
+                            onClick={this.drawYes}
+                          >
+                            <Translated str="yes" />
+                          </a>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ) : (
-                  <div
-                    className={
-                      "clock" + (this.state.turn === "black" ? " running" : "")
-                    }
-                  >
-                    <Clock ref={this.blackClockRef} />
-                  </div>
+
+                    <WithChatService
+                      messages={this.state.messages}
+                      gameId={this.gameId}
+                      side={this.state.myColor === "white" ? 0 : 1}
+                    >
+                      <GameChat color={this.state.myColor} />
+                    </WithChatService>
+                  </>
                 )}
-              </>
-            ) : (
-              <>
-                {this.state.showWhiteInitialCountdown ? (
-                  <div className="initial-countdown">
-                    <CircularSecondsCountDown
-                      start={this.state.whiteInitialCountdown}
-                      onEnd={() => {
-                        this.setState(
-                          { showWhiteInitialCountdown: false },
-                          () => {
-                            if (this.whiteClockRef && this.blackClockRef) {
-                              this.whiteClockRef.current?.updateAndCache(
-                                this.state.whiteCountdownTemp
-                              );
-                              this.blackClockRef.current?.updateAndCache(
-                                this.state.blackCountdownTemp
-                              );
-                              if (this.state.turn === "white") {
-                                this.whiteClockRef.current?.check();
-                              } else {
-                                this.blackClockRef.current?.check();
-                              }
-                            }
-                          }
-                        );
-                      }}
-                    />
-                    <div className="move-text">
-                      {Translated.byKey("toMakeFirstMove")}
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={
-                      "clock" + (this.state.turn === "white" ? " running" : "")
-                    }
-                  >
-                    <Clock ref={this.whiteClockRef} />
-                  </div>
-                )}
-              </>
-            )}
+
+              {this.getSelfCountdown()}
+              <div className="tournament-link">
+                <a href={`/tournament/view/${this.state.tournament}`}>
+                  {Translated.byKey("backToTournament")}
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className="mt-5" id="game-result-div">
-          {this.state.outcome !== GameOutcome.Ongoing &&
-            (this.state.outcome === GameOutcome.WhiteWins ? (
-              <Translated str="whiteWins" />
-            ) : this.state.outcome === GameOutcome.BlackWins ? (
-              <Translated str="blackWins" />
-            ) : (
-              <Translated str="itsADraw" />
-            ))}
+          <div className="png-area">
+            <div id="move-div">{rows}</div>
+          </div>
         </div>
 
         <Modal

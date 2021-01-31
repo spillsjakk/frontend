@@ -6,7 +6,7 @@
 #Game-View #content-container {
   max-width: 1200px;
 }
-#Game-View div.cg-wrap, #Game-Play cg-container {
+#Game-View div.cg-wrap, #Game-View cg-container {
   width: 90vh !important; /* Firefox mobile compat */
   width: min(525px, 90vh) !important;
   height: 90vw !important;

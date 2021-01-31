@@ -29,7 +29,7 @@ const en = {
 	"areYouAtSpillsjakkDiscord": "Are you at SpillSjakk Discord?",
 	"averageAge": "Average age",
 	"averageOpponentRating": "Average opponent rating",
-	"backToTournament": "Back to tournament",
+	"backToTournament": "Return to tournament",
 	"banner_picture": "Banner Picture",
 	"birthDate": "Birth date",
 	"black": "Black",

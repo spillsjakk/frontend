@@ -39,7 +39,7 @@ const GameChat: FunctionComponent<Props> = ({ color }) => {
           messages.map((message, i) => {
             return (
               <div className="item" key={i}>
-                {getName(message.side)}:{" "}
+                <strong>{getName(message.side)}:</strong>{" "}
                 {preapprovedMessages[message.message_id]}
               </div>
             );
