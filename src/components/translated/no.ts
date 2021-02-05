@@ -227,7 +227,7 @@ const no = {
 	"myTournamentCalendar": "Min turneringskalender",
 	"name": "Navn",
 	"nameOfThePlayer": "Spillerens navn eller FIDE-ID",
-	"namePrivacyInfo": "Ditt virkelige navn kan vises i noen turneringer. Du vil få beskjed om dette når du melder deg på en turnering. Når bare brukernavn er synlig er det kun admininistrarorer i klubben eller organisasjonen som vil se virkelige navn. For mer informasjon, les vår $personvernerklæring.”,
+	"namePrivacyInfo": "Ditt virkelige navn kan vises i noen turneringer. Du vil få beskjed om dette når du melder deg på en turnering. Når bare brukernavn er synlig er det kun admininistrarorer i klubben eller organisasjonen som vil se virkelige navn. For mer informasjon, les vår $personvernerklæring.",
 	"navbarAccountCreation": "OPPRETT KONTO",
 	"navbarInfo": "INFO",
 	"navbarLogin": "LOGG INN",
