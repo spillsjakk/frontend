@@ -5,6 +5,8 @@ import Translated from "../../components/translated";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
 import { defaultDate } from "../../constants";
+import { Miniboards } from "../../components/miniboards";
+import Toggle from "react-bootstrap-toggle";
 
 function outcomeToStr(outcome: number | undefined) {
   switch (outcome) {
@@ -22,6 +24,8 @@ function outcomeToStr(outcome: number | undefined) {
 const Pairings: FunctionComponent<{}> = () => {
   const [pairingPanes, setPairingPanes] = useState<any>([]);
   const [pairingNav, setPairingNav] = useState<any>([]);
+  const [showMiniboards, setShowMiniboards] = useState(false);
+  const [gameData, setGameData] = useState<any>({});
 
   const {
     pairings,
@@ -30,6 +34,49 @@ const Pairings: FunctionComponent<{}> = () => {
     games,
     rounds,
   } = useTournamentDetail();
+
+  function getGameData() {
+    const result: any = {};
+    if (!(Array.isArray(pairings) && pairings.length && tournament && games)) {
+      return [];
+    }
+    pairings.forEach((pairing) => {
+      if (pairing.white === "bye" || pairing.black === "bye") {
+        return;
+      }
+      let localGames =
+        games[
+          pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
+        ] ||
+        games[
+          pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
+        ] ||
+        [];
+      localGames = localGames.map((game) => ({
+        ...game,
+        outcome: pairing.outcome,
+        round: pairing.round,
+        whiteName: tournament.show_only_usernames
+          ? pairing.white_username
+          : pairing.white_name,
+        blackName: tournament.show_only_usernames
+          ? pairing.black_username
+          : pairing.black_name,
+      }));
+      if (result[pairing.round]) {
+        if (
+          !result[pairing.round].find((game) =>
+            localGames.find((lgame) => lgame.id === game.id)
+          )
+        ) {
+          result[pairing.round].push(...localGames);
+        }
+      } else {
+        result[pairing.round] = localGames;
+      }
+    });
+    return result;
+  }
 
   useEffect(() => {
     if (Array.isArray(pairings) && pairings.length && tournament && games) {
@@ -175,33 +222,39 @@ const Pairings: FunctionComponent<{}> = () => {
                 round?.start_date || 0
               ).toLocaleString()}`}</div>
             )}
-            <table className="table table-striped mt-4 dense pairing-table">
-              <thead>
-                <tr>
-                  <th>
-                    <Translated str="player" />
-                  </th>
-                  <th>
-                    <Translated str="result" />
-                  </th>
-                  <th>
-                    <Translated str="player" />
-                  </th>
-                  <th>
-                    <Translated str="online" />?
-                  </th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>{r}</tbody>
-            </table>
+            {!showMiniboards && (
+              <table className="table table-striped mt-4 dense pairing-table">
+                <thead>
+                  <tr>
+                    <th>
+                      <Translated str="player" />
+                    </th>
+                    <th>
+                      <Translated str="result" />
+                    </th>
+                    <th>
+                      <Translated str="player" />
+                    </th>
+                    <th>
+                      <Translated str="online" />?
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>{r}</tbody>
+              </table>
+            )}
+            {showMiniboards && gameData && (
+              <Miniboards data={gameData[round.number]} />
+            )}
           </Tab.Pane>
         );
       });
       setPairingNav(pairingNav);
       setPairingPanes(pairingPanes);
+      setGameData(getGameData());
     }
-  }, [pairings, tournament, tko_separation, games, rounds]);
+  }, [pairings, tournament, tko_separation, games, rounds, showMiniboards]);
 
   return (
     <>
@@ -211,6 +264,18 @@ const Pairings: FunctionComponent<{}> = () => {
             <h3 className="mt-4">
               <Translated str="pairings" />
             </h3>
+            <div className={style["pairing-view-toggle"]}>
+              <Toggle
+                onClick={() => {
+                  setShowMiniboards(!showMiniboards);
+                }}
+                on={<div>List</div>}
+                off={<div>Miniboards</div>}
+                size="xs"
+                offstyle="success"
+                active={showMiniboards}
+              />
+            </div>
           </div>
           <Tab.Container
             defaultActiveKey={"round-tab-" + pairingPanes.length.toString()}

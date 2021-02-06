@@ -1,0 +1,17 @@
+#miniboards {
+  margin-top: 20px;
+}
+
+#board {
+  width: 210px;
+  .info {
+    display: flex;
+    justify-content: space-between;
+
+    .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

@@ -106,12 +106,6 @@ class AllAccounts extends Component<Props, AllAccountsState> {
       undefined,
       (accountData) => {
         if (Array.isArray(accountData)) {
-          if (this.props.forClubs) {
-            accountData = accountData.map((account) => ({
-              ...account,
-              id: account.account_id,
-            }));
-          }
           this.setState({ accountData });
         }
       }
