@@ -14,4 +14,15 @@
       white-space: nowrap;
     }
   }
+
+  .outcome {
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    background-color: white;
+    font-weight: 600;
+    z-index: 2;
+    padding: 5px;
+    max-width: 100px;
+  }
 }

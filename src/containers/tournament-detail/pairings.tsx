@@ -62,6 +62,8 @@ const Pairings: FunctionComponent<{}> = () => {
         blackName: tournament.show_only_usernames
           ? pairing.black_username
           : pairing.black_name,
+        white: pairing.white,
+        black: pairing.black,
       }));
       if (result[pairing.round]) {
         if (

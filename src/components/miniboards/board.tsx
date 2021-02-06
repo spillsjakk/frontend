@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable no-unused-expressions */
 import React, {
   FunctionComponent,
@@ -9,11 +10,10 @@ import React, {
 import "react-chessground/dist/styles/chessground.css";
 import Chessground from "react-chessground";
 import Chess from "chess.js";
-import { Chess as OpsChess } from "chessops";
-import { parseFen } from "chessops/fen";
-import { chessgroundDests } from "chessops/compat";
 import { Clock } from "./clock";
 import style from "./style.module.scss";
+import Translated from "../translated";
+import UserLink from "../UserLink";
 
 export function numToSquare(num: number) {
   const file = "abcdefgh"[num % 8];
@@ -36,6 +36,8 @@ type Game = {
   outcome: number | null;
   round: number;
   finished: boolean;
+  white: string;
+  black: string;
 };
 
 interface Props {
@@ -43,26 +45,31 @@ interface Props {
 }
 
 const Board: FunctionComponent<Props> = ({
-  game: { id, whiteName, blackName },
+  game: { id, whiteName, blackName, finished, start, white, black },
 }) => {
   const [ws, setWs] = useState<WebSocket>();
   const [fen, setFen] = useState(
     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
   );
   const [turn, setTurn] = useState("white");
-  const [groundRef, setGroundRef] = useState<RefObject<typeof Chessground>>();
-  const [whiteClockRef, setWhiteClockRef] = useState<RefObject<Clock>>();
-  const [blackClockRef, setBlackClockRef] = useState<RefObject<Clock>>();
+  const [groundRef] = useState<RefObject<typeof Chessground>>(createRef());
+  const [whiteClockRef] = useState<RefObject<Clock>>(createRef());
+  const [blackClockRef] = useState<RefObject<Clock>>(createRef());
   const [lastMove, setLastMove] = useState<Array<string>>();
   const [game, setGame] = useState<typeof Chess>();
-  const [pgn, setPgn] = useState<string>();
-  const [dests, setDests] = useState<any>();
   const [outcome, setOutcome] = useState<number>();
-  const [clocksRunning, setClocksRunning] = useState<boolean>();
-  const [whiteCountdownTemp, setWhiteCountdownTemp] = useState<number>();
-  const [blackCountdownTemp, setBlackCountdownTemp] = useState<number>();
-  const [whiteInitialCountdown, setWhiteInitialCountdown] = useState<number>();
-  const [blackInitialCountdown, setBlackInitialCountdown] = useState<number>();
+  const [started, setStarted] = useState(() => {
+    if (start) {
+      const startDate = new Date(start);
+      return new Date().getTime() - startDate.getTime() > 0;
+    } else {
+      return false;
+    }
+  });
+  const [whiteInitialCountdown, setWhiteInitialCountdown] = useState(0);
+  const [blackInitialCountdown, setBlackInitialCountdown] = useState(0);
+  const [whiteClockTemp, setWhiteClockTemp] = useState(0);
+  const [blackClockTemp, setBlackClockTemp] = useState(0);
 
   function reconstructGame(b64moves: string) {
     const game = new Chess();
@@ -88,55 +95,55 @@ const Board: FunctionComponent<Props> = ({
 
       const [game, lastMove] = reconstructGame(data.moves);
       setGame(game);
-      setPgn(
-        game
-          .pgn()
-          .replace(/N/g, "♞")
-          .replace(/B/g, "♝")
-          .replace(/R/g, "♜")
-          .replace(/Q/g, "♛")
-          .replace(/K/g, "♚")
-      );
       newState.fen = game.fen();
-
-      setClocksRunning(!data.finished);
-      setLastMove(lastMove);
       newState.turn = game.turn() === "w" ? "white" : "black";
 
-      const opsGame = OpsChess.fromSetup(
-        parseFen(newState.fen).unwrap()
-      ).unwrap();
+      setLastMove(lastMove);
 
       const wc = data.wc - (data.wic > 0 ? 20 : 0);
       const bc = data.bc - (data.bic > 0 ? 20 : 0);
 
-      setWhiteCountdownTemp(wc);
-      setBlackCountdownTemp(bc);
+      setWhiteClockTemp(wc);
+      setBlackClockTemp(bc);
       if (newState.turn === "white" && data.wic > 0) {
         setWhiteInitialCountdown(data.wic);
         if (blackClockRef) {
-          blackClockRef.current?.updateAndCache(bc);
+          whiteClockRef.current?.updateAndCache(data.wc);
+          blackClockRef.current?.updateAndCache(data.bc);
+          whiteClockRef.current?.check();
         }
       } else if (newState.turn === "black" && data.bic > 0) {
+        setWhiteInitialCountdown(0);
         setBlackInitialCountdown(data.bic);
-        setTurn(newState.turn);
-        if (whiteClockRef) {
-          whiteClockRef.current?.updateAndCache(wc);
-          whiteClockRef.current?.check();
+        if (whiteClockRef && blackClockRef) {
+          whiteClockRef.current?.updateAndCache(data.wc);
+          blackClockRef.current?.updateAndCache(data.bc);
+          blackClockRef.current?.check();
         }
       } else if (whiteClockRef && blackClockRef) {
-        whiteClockRef.current?.updateAndCache(wc);
-        blackClockRef.current?.updateAndCache(bc);
-        if (game.turn() === "w") {
-          whiteClockRef.current?.check();
+        if (blackInitialCountdown > 0) {
+          setBlackInitialCountdown(0);
+          if (blackClockRef && whiteClockRef) {
+            whiteClockRef.current?.updateAndCache(wc);
+            blackClockRef.current?.updateAndCache(bc);
+            if (game.turn() === "w") {
+              whiteClockRef.current?.check();
+            } else {
+              blackClockRef.current?.check();
+            }
+          }
         } else {
-          blackClockRef.current?.check();
+          whiteClockRef.current?.updateAndCache(wc);
+          blackClockRef.current?.updateAndCache(bc);
+          if (game.turn() === "w") {
+            whiteClockRef.current?.check();
+          } else {
+            blackClockRef.current?.check();
+          }
         }
       }
 
-      if (!data.finished) {
-        setDests(chessgroundDests(opsGame));
-      } else {
+      if (data.finished) {
         if (data.result === 1) {
           setOutcome(GameOutcome.WhiteWins);
         } else if (data.result === -1) {
@@ -177,8 +184,54 @@ const Board: FunctionComponent<Props> = ({
     };
   }
 
+  function clockTick() {
+    if (!finished && whiteClockRef && blackClockRef) {
+      const side = game.turn();
+      const clockRef = (side === "w" ? whiteClockRef : blackClockRef).current;
+      if (clockRef) {
+        clockRef.tick();
+      }
+    }
+  }
+
   useEffect(() => {
-    setGroundRef(createRef());
+    if (game) {
+      const clockInterval = setInterval(clockTick, 100);
+      return () => {
+        clearInterval(clockInterval);
+      };
+    }
+  }, [game]);
+
+  useEffect(() => {
+    if (
+      started &&
+      whiteClockRef &&
+      blackClockRef &&
+      whiteClockTemp &&
+      blackClockTemp
+    ) {
+      whiteClockRef.current?.updateAndCache(whiteClockTemp);
+      blackClockRef.current?.updateAndCache(blackClockTemp + 20);
+    }
+  }, [started]);
+
+  useEffect(() => {
+    const checkStartedInterval = setInterval(() => {
+      if (!started && start) {
+        const startDate = new Date(start);
+        if (new Date().getTime() - startDate.getTime() > 0) {
+          setStarted(true);
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(checkStartedInterval);
+    };
+  }, []);
+
+  useEffect(() => {
     connect();
 
     return () => {
@@ -188,15 +241,32 @@ const Board: FunctionComponent<Props> = ({
     };
   }, []);
 
+  function getWhoWon() {
+    if (outcome === GameOutcome.WhiteWins) {
+      return Translated.byKey("whiteWon");
+    } else if (outcome === GameOutcome.BlackWins) {
+      return Translated.byKey("blackWon");
+    } else if (outcome === GameOutcome.Draw) {
+      return Translated.byKey("draw");
+    } else {
+      return Translated.byKey("finished");
+    }
+  }
+
   return (
     <div id={style.board}>
+      {outcome && <div className={style.outcome}>{getWhoWon()}</div>}
       <div className={style.info}>
-        <div className={style.name}>{blackName}</div>
+        <div className={style.name}>
+          <UserLink id={black} name={blackName} ghost={false} />
+        </div>
         <div className="clock">
-          <Clock ref={blackClockRef} />
+          {blackClockRef && started && !outcome && (
+            <Clock ref={blackClockRef} />
+          )}
         </div>
       </div>
-      <div className={style.board}>
+      <a href={`/game/play/${id}`} target="_blank" className={style.board}>
         <Chessground
           fen={fen}
           orientation={"white"}
@@ -207,13 +277,18 @@ const Board: FunctionComponent<Props> = ({
             pointerEvents: "none",
             width: "200px",
             height: "200px",
+            opacity: typeof outcome !== "undefined" ? 0.4 : 1,
           }}
         />
-      </div>
+      </a>
       <div className={`${style.info} mt-2`}>
-        <div className={style.name}>{whiteName}</div>
+        <div className={style.name}>
+          <UserLink id={white} name={whiteName} ghost={false} />
+        </div>
         <div className="clock">
-          <Clock ref={whiteClockRef} />
+          {whiteClockRef && started && !outcome && (
+            <Clock ref={whiteClockRef} />
+          )}
         </div>
       </div>
     </div>
