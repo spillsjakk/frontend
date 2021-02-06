@@ -21,11 +21,15 @@ function outcomeToStr(outcome: number | undefined) {
   }
 }
 
-const Pairings: FunctionComponent<{}> = () => {
+const Pairings: FunctionComponent<{
+  showHeader?: boolean;
+  defaultMiniboards?: boolean;
+}> = ({ showHeader = true, defaultMiniboards = false }) => {
   const [pairingPanes, setPairingPanes] = useState<any>([]);
   const [pairingNav, setPairingNav] = useState<any>([]);
-  const [showMiniboards, setShowMiniboards] = useState(false);
+  const [showMiniboards, setShowMiniboards] = useState(defaultMiniboards);
   const [gameData, setGameData] = useState<any>({});
+  const [pairingDefaultActiveKey, setPairingDefaultActiveKey] = useState(1);
 
   const {
     pairings,
@@ -77,6 +81,10 @@ const Pairings: FunctionComponent<{}> = () => {
         result[pairing.round] = localGames;
       }
     });
+    setPairingDefaultActiveKey(
+      Object.values(result).filter((r) => Array.isArray(r) && r.length > 0)
+        .length
+    );
     return result;
   }
 
@@ -246,7 +254,7 @@ const Pairings: FunctionComponent<{}> = () => {
                 <tbody>{r}</tbody>
               </table>
             )}
-            {showMiniboards && gameData && (
+            {showMiniboards && gameData && round && (
               <Miniboards data={gameData[round.number]} />
             )}
           </Tab.Pane>
@@ -254,6 +262,7 @@ const Pairings: FunctionComponent<{}> = () => {
       });
       setPairingNav(pairingNav);
       setPairingPanes(pairingPanes);
+      setPairingDefaultActiveKey(pairingPanes.length);
       setGameData(getGameData());
     }
   }, [pairings, tournament, tko_separation, games, rounds, showMiniboards]);
@@ -263,24 +272,28 @@ const Pairings: FunctionComponent<{}> = () => {
       {Array.isArray(pairingPanes) && pairingPanes.length > 0 && (
         <div>
           <div className={style["centered-container"]}>
-            <h3 className="mt-4">
-              <Translated str="pairings" />
-            </h3>
-            <div className={style["pairing-view-toggle"]}>
-              <Toggle
-                onClick={() => {
-                  setShowMiniboards(!showMiniboards);
-                }}
-                on={<div>List</div>}
-                off={<div>Miniboards</div>}
-                size="xs"
-                offstyle="success"
-                active={showMiniboards}
-              />
-            </div>
+            {showHeader && (
+              <>
+                <h3 className="mt-4">
+                  <Translated str="pairings" />
+                </h3>
+                <div className={style["pairing-view-toggle"]}>
+                  <Toggle
+                    onClick={() => {
+                      setShowMiniboards(!showMiniboards);
+                    }}
+                    on={<div>{Translated.byKey("list")}</div>}
+                    off={<div>{Translated.byKey("miniboards")}</div>}
+                    size="xs"
+                    offstyle="success"
+                    active={showMiniboards}
+                  />
+                </div>
+              </>
+            )}
           </div>
           <Tab.Container
-            defaultActiveKey={"round-tab-" + pairingPanes.length.toString()}
+            defaultActiveKey={"round-tab-" + pairingDefaultActiveKey}
           >
             {pairingNav}
             <Tab.Content>{pairingPanes}</Tab.Content>

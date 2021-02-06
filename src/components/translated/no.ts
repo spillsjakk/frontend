@@ -1,7 +1,7 @@
 /* eslint-disable */
 const no = {
 	"403": "403 - Forbudt, du er ikke innlogget og har ingen tilgang.",
-	
+
 	"404": "404 - Ressursen er ikke tilgjengelig, hvis du mener dette er feil - sjekk om du er innlogget.",
 	"500": "500 - Intern feil på serveren",
 	"BETA": "BETA",
@@ -375,7 +375,10 @@ const no = {
 	"youHaveBeenInvited": "Du har blitt invitert til å bli med for $name på SpillSjakk. Opprett konto raskt og enkelt for å kunne spille turneringer!",
 	"nextGameIsIn": "",
 	"goToTournamentDetail": "",
-	"tournamentSchedule": ""
+	"tournamentSchedule": "",
+	"recentTournament": "",
+	"list": "",
+	"miniboards": ""
 };
 
 export { no };

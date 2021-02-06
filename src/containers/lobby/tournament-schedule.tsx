@@ -12,6 +12,12 @@ import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import {
+  TournamentDetail,
+  TournamentDetailProvider,
+} from "../../context/tournament-detail";
+import { Round } from "../../context/tournament-round";
+import { Pairings } from "../tournament-detail/pairings";
 
 type Tournament = {
   id: string;
@@ -34,6 +40,11 @@ type Game = {
 const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
   userId,
 }) => {
+  const [tournamentDetail, setTournamentDetail] = useState<
+    Partial<TournamentDetail>
+  >({});
+  const [rounds, setRounds] = useState<Array<Round>>([]);
+
   const [tournamentData, setTournamentData] = useState<any>();
   const [tournamentColumns] = useState([
     {
@@ -76,6 +87,34 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
     },
     { dataField: "result", text: Translated.byKey("result"), sort: true },
   ]);
+
+  function fetchTournament(id: string) {
+    fetchJson("/s/tournament/view/" + id, "GET", undefined, (json) => {
+      setTournamentDetail(json);
+    });
+  }
+
+  async function fetchRounds(id: string) {
+    fetch(`/s/rounds?tournament=${id}`, {
+      method: "GET",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+    }).then(async (response) => {
+      if (response.status < 400) {
+        const result = await response.json();
+        if (Array.isArray(result)) {
+          setRounds(result);
+        }
+      }
+    });
+  }
+
+  useEffect(() => {
+    if (Array.isArray(tournamentData)) {
+      fetchTournament(tournamentData[0].id);
+      fetchRounds(tournamentData[0].id);
+    }
+  }, [tournamentData]);
 
   useEffect(() => {
     if (!userId) {
@@ -124,6 +163,25 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
 
   return (
     <>
+      {tournamentDetail && (
+        <>
+          <div className="header">
+            {Translated.byKey("recentTournament").toUpperCase()}:
+          </div>
+          <TournamentDetailProvider value={{ ...tournamentDetail, rounds }}>
+            <div
+              style={{
+                color: "black",
+                display: "flex",
+                marginTop: "10px",
+                flexDirection: "column",
+              }}
+            >
+              <Pairings showHeader={false} defaultMiniboards={true} />
+            </div>
+          </TournamentDetailProvider>
+        </>
+      )}
       <div className="header">
         {Translated.byKey("tournamentSchedule").toUpperCase()}:
       </div>

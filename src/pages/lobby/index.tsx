@@ -45,7 +45,6 @@ const Lobby: FunctionComponent<{}> = () => {
       }
 
       const localRedirectAt = new Date();
-      console.log("a", localRedirectAt);
       localRedirectAt.setTime(localRedirectAt.getTime() + json.next + 200);
       setRedirectAt(localRedirectAt);
       setGameId(json.id);

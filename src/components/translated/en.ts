@@ -374,7 +374,10 @@ const en = {
 	"youHaveBeenInvited": "You’ve been invited to play for $name on SpillSjakk. It’s quick, easy and lets you play in their custom tournaments!",
 	"nextGameIsIn": "your next game is in",
 	"goToTournamentDetail": "Go to Tournament Detail",
-	"tournamentSchedule": "Tournament Schedule"
+	"tournamentSchedule": "Tournament Schedule",
+	"recentTournament": "Recent Tournament",
+	"list": "List",
+	"miniboards": "Miniboards"
 };
 
 export { en };
