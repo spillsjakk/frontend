@@ -39,6 +39,17 @@ body#registration-invitation-generation {
       line-height: 17px;
     }
 
+    .red-button {
+      height: 40px;
+      width: 100px;
+      background-color: red;
+      border: none;
+      color: white;
+      border-radius: 3px;
+      font-size: 14px;
+      line-height: 17px;
+    }
+
     .invitation {
       color: #469a88;
       cursor: pointer;

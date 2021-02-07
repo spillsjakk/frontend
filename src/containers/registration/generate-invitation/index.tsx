@@ -52,6 +52,22 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
     );
   }
 
+  async function deleteInvitation(id: string, invitation: string, type: 0 | 1) {
+    fetchCall(
+      `/s/registrations/${id}/invitations`,
+      "DELETE",
+      {
+        invitertype: type,
+        invitation,
+      },
+      (response) => {
+        if (response) {
+          fetchInvitationLinks();
+        }
+      }
+    );
+  }
+
   useEffect(() => {
     document.getElementsByTagName("body")[0].id =
       "registration-invitation-generation";
@@ -80,7 +96,17 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
                 )}
               {Array.isArray(organization.invitations) &&
                 organization.invitations.map((invitation) => (
-                  <InvitationLink key={invitation} invitationId={invitation} />
+                  <div className="row-flex" key={invitation}>
+                    <InvitationLink invitationId={invitation} />
+                    <button
+                      onClick={() =>
+                        deleteInvitation(organization.id, invitation, 0)
+                      }
+                      className="red-button"
+                    >
+                      {Translated.byKey("delete")}
+                    </button>
+                  </div>
                 ))}
             </div>
           </div>
@@ -104,7 +130,15 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
               )}
               {Array.isArray(club.invitations) &&
                 club.invitations.map((invitation) => (
-                  <InvitationLink key={invitation} invitationId={invitation} />
+                  <div className="row-flex" key={invitation}>
+                    <InvitationLink invitationId={invitation} />
+                    <button
+                      onClick={() => deleteInvitation(club.id, invitation, 1)}
+                      className="red-button"
+                    >
+                      {Translated.byKey("delete")}
+                    </button>
+                  </div>
                 ))}
             </div>
           </div>

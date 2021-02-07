@@ -10,7 +10,7 @@ const InvitationLink: FunctionComponent<Props> = ({ invitationId }) => {
   const [copied, setCopied] = useState(false);
   return (
     <div
-      className="invitation"
+      className="invitation  mr-1"
       onClick={() => {
         navigator.clipboard.writeText(
           `${window.location.origin}/invitation/${invitationId}`
