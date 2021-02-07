@@ -90,6 +90,7 @@ const Pairings: FunctionComponent<{
 
   useEffect(() => {
     if (Array.isArray(pairings) && pairings.length && tournament && games) {
+      setGameData(getGameData());
       const pairingTabLinks = [];
       const pairingRows: any[][] = [];
       for (const pairing of pairings) {
@@ -263,7 +264,6 @@ const Pairings: FunctionComponent<{
       setPairingNav(pairingNav);
       setPairingPanes(pairingPanes);
       setPairingDefaultActiveKey(pairingPanes.length);
-      setGameData(getGameData());
     }
   }, [pairings, tournament, tko_separation, games, rounds, showMiniboards]);
 
