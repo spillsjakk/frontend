@@ -254,8 +254,8 @@ const Pairings: FunctionComponent<{
                 <tbody>{r}</tbody>
               </table>
             )}
-            {showMiniboards && gameData && round && (
-              <Miniboards data={gameData[round.number]} />
+            {showMiniboards && gameData && (
+              <Miniboards data={gameData[i + 1]} />
             )}
           </Tab.Pane>
         );
