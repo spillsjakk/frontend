@@ -64,6 +64,14 @@ const NavigationBar: FunctionComponent<{}> = () => {
     );
   }
 
+  function isAdmin() {
+    return (
+      user.authenticated &&
+      !!user.info?.level &&
+      user.info?.level >= Levels.Admin
+    );
+  }
+
   function showBuildTournament() {
     return (
       hasLevel() ||
@@ -153,6 +161,11 @@ const NavigationBar: FunctionComponent<{}> = () => {
                         >
                           {Translated.byKey("invite")}
                         </a>
+                        {isAdmin() && (
+                          <a href="/registration/organization" className="item">
+                            {Translated.byKey("createOrganization")}
+                          </a>
+                        )}
                       </div>
                     </>
                   )}

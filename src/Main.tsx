@@ -22,6 +22,7 @@ import GamePlay from "./pages/Game/play";
 import GameView from "./pages/Game/View";
 import { OnboardInvitation } from "./pages/registration/onboard-invitation";
 import { GenerateInvitation } from "./pages/registration/generate-invitation";
+import { CreateOrganization } from "./pages/registration/organization";
 import { ManageClubPage } from "./pages/Club/manage/index";
 import ClubView from "./pages/Club/View";
 import { ManageOrganizationPage } from "./pages/Organization/manage/index";
@@ -124,6 +125,11 @@ const Main = () => {
         exact
         path="/registration/generate/invitation"
         component={GenerateInvitation}
+      ></Route>
+      <Route
+        exact
+        path="/registration/organization"
+        component={CreateOrganization}
       ></Route>
       <Route exact path="/user-agreement" component={UserAgreement}></Route>
       <Route exact path="/privacy-notice" component={PrivacyNotice}></Route>

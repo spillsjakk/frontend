@@ -1,0 +1,93 @@
+body#registration-organization {
+  background-color: #fafafa;
+  color: black;
+
+  #main-container {
+    .nav-item {
+      background-color: gray;
+    }
+
+    .table {
+      color: black !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n + 1) {
+      background-color: #fafafa !important;
+    }
+  }
+
+  main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .row-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+    }
+
+    .action-button:focus {
+      outline: none;
+    }
+
+    .action-button {
+      height: 40px;
+      width: 150px;
+      background-color: #469a88;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      font-size: 14px;
+      margin: 15px 0px;
+      line-height: 17px;
+    }
+
+    .invitation {
+      color: #469a88;
+      cursor: pointer;
+    }
+
+    .box {
+      background: #fafafa;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      padding: 20px 20px 10px 20px;
+      margin-top: 10px;
+
+      .name {
+        font-size: 18px;
+      }
+    }
+
+    .header {
+      font-size: calc(min(6vw, 30px));
+      color: #469a88;
+      margin: 5px 0;
+      font-family: Montserrat;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+
+    .text-align-end {
+      text-align: end;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .green {
+      color: #469a88;
+    }
+
+    .pointer {
+      cursor: pointer;
+    }
+
+    .italic {
+      font-style: italic;
+    }
+  }
+}

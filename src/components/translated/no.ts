@@ -1,7 +1,6 @@
 /* eslint-disable */
 const no = {
 	"403": "403 - Forbudt, du er ikke innlogget og har ingen tilgang.",
-
 	"404": "404 - Ressursen er ikke tilgjengelig, hvis du mener dette er feil - sjekk om du er innlogget.",
 	"500": "500 - Intern feil på serveren",
 	"BETA": "BETA",
@@ -77,6 +76,7 @@ const no = {
 	"createATeam": "Opprett et lag",
 	"createAccounts": "Opprett kontoer",
 	"createYourAccount": "Opprett din konto på SpillSjakk",
+	"createYourClub": "Opprett klubben din på SpillSjakk",
 	"currentPassword": "Nåværende passord",
 	"custom": "Redigere",
 	"dateTime": "Dato og tid",
@@ -378,7 +378,16 @@ const no = {
 	"tournamentSchedule": "",
 	"recentTournament": "",
 	"list": "",
-	"miniboards": ""
+	"miniboards": "",
+	"createOrganization": "Create Organization",
+	"createOrg_name": "",
+	"createOrg_nameDesc": "",
+	"createOrg_id": "",
+	"createOrg_idDesc": "",
+	"createOrg_desc": "",
+	"createOrg_descDesc": "",
+	"createOrg_manager": "",
+	"createOrg_managerDesc": "",
 };
 
 export { no };

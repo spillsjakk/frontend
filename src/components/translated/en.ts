@@ -76,6 +76,7 @@ const en = {
 	"createATeam": "Create a team",
 	"createAccounts": "Create accounts",
 	"createYourAccount": "Create Your Spillsjakk Account",
+	"createYourClub": "Create Your Spillsjakk Club",
 	"currentPassword": "Current password",
 	"custom": "Custom",
 	"dateTime": "Date/time",
@@ -377,7 +378,16 @@ const en = {
 	"tournamentSchedule": "Tournament Schedule",
 	"recentTournament": "Recent Tournament",
 	"list": "List",
-	"miniboards": "Miniboards"
+	"miniboards": "Miniboards",
+	"createOrganization": "Create Organization",
+	"createOrg_name": "Organization's Name",
+	"createOrg_nameDesc": "(this name will be publicly visible)",
+	"createOrg_id": "Organization's URL (SpillSjakk ID): ",
+	"createOrg_idDesc": "(this field will appear at the end of web URLs on SpillSjakk, e.g., spillsjakk.no/organization/view/CUSTOMURL)",
+	"createOrg_desc": "About the Organization: ",
+	"createOrg_descDesc": "(this is publicly viewable and is a chance to tell the public about your organization)",
+	"createOrg_manager": "Organization Manager",
+	"createOrg_managerDesc": "User id of the account that will manage the organization",
 };
 
 export { en };
