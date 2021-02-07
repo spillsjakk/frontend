@@ -388,6 +388,9 @@ const en = {
 	"createOrg_descDesc": "(this is publicly viewable and is a chance to tell the public about your organization)",
 	"createOrg_manager": "Organization Manager",
 	"createOrg_managerDesc": "User id of the account that will manage the organization",
+	"tournamentHistory": "Tournament History",
+	"gameHistory": "Game History",
+	"memberships": "Memberships & Affiliations",
 };
 
 export { en };

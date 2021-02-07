@@ -388,6 +388,9 @@ const no = {
 	"createOrg_descDesc": "",
 	"createOrg_manager": "",
 	"createOrg_managerDesc": "",
+	"tournamentHistory": "",
+	"gameHistory": "",
+	"memberships": "",
 };
 
 export { no };
