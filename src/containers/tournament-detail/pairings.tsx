@@ -28,7 +28,6 @@ const Pairings: FunctionComponent<{
   const [pairingPanes, setPairingPanes] = useState<any>([]);
   const [pairingNav, setPairingNav] = useState<any>([]);
   const [showMiniboards, setShowMiniboards] = useState(defaultMiniboards);
-  const [gameData, setGameData] = useState<any>({});
   const [pairingDefaultActiveKey, setPairingDefaultActiveKey] = useState(1);
 
   const {
@@ -90,7 +89,7 @@ const Pairings: FunctionComponent<{
 
   useEffect(() => {
     if (Array.isArray(pairings) && pairings.length && tournament && games) {
-      setGameData(getGameData());
+      const gameData = getGameData();
       const pairingTabLinks = [];
       const pairingRows: any[][] = [];
       for (const pairing of pairings) {
