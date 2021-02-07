@@ -15,13 +15,21 @@ const Tournaments: FunctionComponent<{}> = () => {
       "/s/tournament/find",
       "GET",
       undefined,
-      (data: { ongoing: Array<Tournament>; upcoming: Array<Tournament> }) => {
+      (data: {
+        ongoing: Array<Tournament>;
+        upcoming: Array<Tournament>;
+        privates?: Array<Tournament>;
+      }) => {
         if (
           data &&
           Array.isArray(data.ongoing) &&
           Array.isArray(data.upcoming)
         ) {
-          setTournaments([...data.ongoing, ...data.upcoming]);
+          const localTournaments = [...data.ongoing, ...data.upcoming];
+          if (Array.isArray(data.privates)) {
+            localTournaments.unshift(...data.privates);
+          }
+          setTournaments(localTournaments);
         }
       }
     );
