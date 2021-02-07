@@ -12,7 +12,8 @@ const InputGroup: FunctionComponent<{
   value: string;
   onChange: (value: string) => void;
   textArea?: boolean;
-}> = ({ label, description, value, onChange, textArea }) => (
+  pattern?: string;
+}> = ({ label, description, value, onChange, textArea, pattern }) => (
   <div className={style.group}>
     <div className={style.label}>{label}</div>
     <div className={style.description}>{description}</div>
@@ -20,7 +21,17 @@ const InputGroup: FunctionComponent<{
       <textarea value={value} onChange={(e) => onChange(e.target.value)} />
     )}
     {!textArea && (
-      <input value={value} onChange={(e) => onChange(e.target.value)} />
+      <>
+        {pattern ? (
+          <input
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            pattern={pattern}
+          />
+        ) : (
+          <input value={value} onChange={(e) => onChange(e.target.value)} />
+        )}
+      </>
     )}
   </div>
 );
@@ -83,6 +94,7 @@ const Form: FunctionComponent<{}> = () => {
           description={Translated.byKey("manageClub_clubsIdDesc")}
           value={id}
           onChange={(value: string) => setId(value)}
+          pattern="[a-zA-Z0-9-_]+"
         />
 
         <InputGroup

@@ -23,6 +23,7 @@ const Form: FunctionComponent<{}> = () => {
         </label>
         <input
           id="username"
+          pattern="[a-zA-Z0-9-_]+"
           value={userRegistration.user.username}
           onChange={(e) => userRegistration.changeUsername(e.target.value)}
           required
