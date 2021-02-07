@@ -7,7 +7,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [kind, setKind] = useState(0);
-  const [defaultGameLocation, setDefaultGameLocation] = useState(0);
+  const [defaultGameLocation, setDefaultGameLocation] = useState(1);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [publiclyViewable, setPubliclyViewable] = useState(false);
