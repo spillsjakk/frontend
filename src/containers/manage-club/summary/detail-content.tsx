@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { HelpBox, helpboxNames } from "../../../components/help-box";
 import Translated from "../../../components/translated";
 import { useClub } from "../../../context/club";
 import style from "../style.module.scss";
@@ -8,24 +9,31 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
   return (
     <>
       {club && (
-        <>
-          <div className={style.label}>
-            {Translated.byKey("manageClub_clubsName")}
-          </div>
-          <div>{club.name}</div>
-          <div className={style.label}>
-            {Translated.byKey("manageClub_clubsId")}
-          </div>
-          <div>
-            <a href={`/club/view/${club.id}`}>
-              spillsjakk.no/club/view/{club.id}
-            </a>
-          </div>
-          <div className={style.label}>
-            {Translated.byKey("manageClub_aboutClub")}
-          </div>
-          <div className={style["scroll-max-70"]}>{club.description}</div>
-        </>
+        <HelpBox
+          placement="bottom"
+          name={helpboxNames.clubManageDetail}
+          text={Translated.byKey("clubManageDetailHelpbox")}
+          show={true}
+        >
+          <>
+            <div className={style.label}>
+              {Translated.byKey("manageClub_clubsName")}
+            </div>
+            <div>{club.name}</div>
+            <div className={style.label}>
+              {Translated.byKey("manageClub_clubsId")}
+            </div>
+            <div>
+              <a href={`/club/view/${club.id}`}>
+                spillsjakk.no/club/view/{club.id}
+              </a>
+            </div>
+            <div className={style.label}>
+              {Translated.byKey("manageClub_aboutClub")}
+            </div>
+            <div className={style["scroll-max-70"]}>{club.description}</div>
+          </>
+        </HelpBox>
       )}
     </>
   );

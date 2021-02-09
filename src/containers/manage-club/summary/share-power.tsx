@@ -6,6 +6,7 @@ import Toggle from "react-bootstrap-toggle";
 import { fetchJson } from "../../../functions";
 import { useClub } from "../../../context/club";
 import { Form } from "react-bootstrap";
+import { HelpBox, helpboxNames } from "../../../components/help-box";
 
 const SharePowerSummary: FunctionComponent<{}> = () => {
   const [allPackage, setAllPackage] = useState(false);
@@ -45,9 +46,16 @@ const SharePowerSummary: FunctionComponent<{}> = () => {
   }
   return (
     <div id={style["share-power"]}>
-      <div className={style.label}>
-        {Translated.byKey("manageOrg_sharePower")}
-      </div>
+      <HelpBox
+        placement="bottom"
+        name={helpboxNames.clubManageSharePower}
+        text={Translated.byKey("clubManageSharePowerHelpbox")}
+        show={true}
+      >
+        <div className={style.label}>
+          {Translated.byKey("manageOrg_sharePower")}
+        </div>
+      </HelpBox>
       <InputAdd onAction={save} placeholder={Translated.byKey("addPlayerId")} />
       <div className={style.item}>
         <div className={style.toggle}>

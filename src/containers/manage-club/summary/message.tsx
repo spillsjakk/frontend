@@ -4,6 +4,7 @@ import Translated from "../../../components/translated";
 import { fetchJson } from "../../../functions";
 import { useClub } from "../../../context/club";
 import { Form } from "react-bootstrap";
+import { HelpBox, helpboxNames } from "../../../components/help-box";
 
 const MessageSummary: FunctionComponent<{}> = () => {
   const [clubMessage, setClubMessage] = useState("");
@@ -36,7 +37,14 @@ const MessageSummary: FunctionComponent<{}> = () => {
   }
   return (
     <div id={style.message}>
-      <div className={style.label}>{Translated.byKey("messageMembers")}</div>
+      <HelpBox
+        placement="bottom"
+        name={helpboxNames.clubManageMessage}
+        text={Translated.byKey("clubManageMessageHelpbox")}
+        show={true}
+      >
+        <div className={style.label}>{Translated.byKey("messageMembers")}</div>
+      </HelpBox>
       <Form onSubmit={messageMembers}>
         <Form.Group>
           <textarea

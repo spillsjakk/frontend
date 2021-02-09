@@ -5,6 +5,7 @@ import Translated from "../../components/translated";
 import { Levels, useUser } from "../../components/UserContext";
 import { fetchJson } from "../../functions";
 import { Logo } from "./logo";
+import { HelpBox, helpboxNames } from "../../components/help-box";
 import "./style.scss";
 
 const NavigationBar: FunctionComponent<{}> = () => {
@@ -113,7 +114,14 @@ const NavigationBar: FunctionComponent<{}> = () => {
         <nav id="navigation-bar">
           <div className="wrapper">
             <div className="left">
-              <Logo />
+              <HelpBox
+                placement="right"
+                name={helpboxNames.logo}
+                text={Translated.byKey("logoHelpbox")}
+                show={authenticated()}
+              >
+                <Logo />
+              </HelpBox>
               <nav className="links">
                 <div className="link">
                   {Translated.byKey("navbarTournaments")}
@@ -197,7 +205,14 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {authenticated() && (
                 <div className="link">
                   {hasMessage && <div className="unread-icon"></div>}
-                  <img src="/images/user.svg" width="35px" />
+                  <HelpBox
+                    placement="left"
+                    name={helpboxNames.userIcon}
+                    text={Translated.byKey("userIconHelpbox")}
+                    show={authenticated()}
+                  >
+                    <img src="/images/user.svg" width="35px" />
+                  </HelpBox>
                   <div className="menu">
                     <a href={"/profile/" + user.info?.id} className="item">
                       {user?.info?.name}

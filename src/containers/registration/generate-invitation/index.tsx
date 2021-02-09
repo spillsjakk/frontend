@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import Translated from "../../../components/translated";
 import { InvitationLink } from "./invitation-link";
 import { fetchCall } from "../../../functions";
+import { HelpBox, helpboxNames } from "../../../components/help-box";
 
 type Invitations = {
   clubs: Array<{
@@ -121,17 +122,34 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
             <div className="box row-flex">
               <div className="name">{club.name}</div>
               {Array.isArray(club.invitations) && !club.invitations.length && (
-                <button
-                  onClick={() => createInvitation(club.id, 1)}
-                  className="blue-button"
+                <HelpBox
+                  placement="bottom"
+                  name={helpboxNames.generateInvitationLink}
+                  text={Translated.byKey("generateInvitationLinkHelpbox")}
+                  show={true}
                 >
-                  {Translated.byKey("create")}
-                </button>
+                  <button
+                    onClick={() => createInvitation(club.id, 1)}
+                    className="blue-button"
+                  >
+                    {Translated.byKey("create")}
+                  </button>
+                </HelpBox>
               )}
               {Array.isArray(club.invitations) &&
                 club.invitations.map((invitation) => (
                   <div className="row-flex" key={invitation}>
-                    <InvitationLink invitationId={invitation} />
+                    <HelpBox
+                      placement="bottom"
+                      name={helpboxNames.invitationLinkDescription}
+                      text={Translated.byKey(
+                        "invitationLinkDescriptionHelpbox"
+                      )}
+                      show={true}
+                    >
+                      <InvitationLink invitationId={invitation} />
+                    </HelpBox>
+
                     <button
                       onClick={() => deleteInvitation(club.id, invitation, 1)}
                       className="red-button"

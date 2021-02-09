@@ -36,6 +36,7 @@ import { TournamentParticipantsProvider } from "../../context/tournament-partici
 import { WithTournamentRound } from "../../hocs/tournament-round";
 import { WithTournamentPairing } from "../../hocs/tournament-pairing";
 import { WithRoundSetupPopup } from "../../hocs/with-round-setup-popup";
+import { HelpBox, helpboxNames } from "../../components/help-box";
 
 const { SearchBar } = Search;
 
@@ -752,12 +753,23 @@ class View extends Component<
                           >
                             <Translated str="start" />
                           </Button>
-                          <Link
-                            className="p-3 btn btn-primary ml-5 mb-3"
-                            to={"/tournament/players/" + info.tournament.id}
+                          <HelpBox
+                            placement="bottom"
+                            name={
+                              helpboxNames.manageTournamentManageParticipants
+                            }
+                            text={Translated.byKey(
+                              "manageTournamentManageParticipantsHelpbox"
+                            )}
+                            show={true}
                           >
-                            <Translated str="manageParticipants" />
-                          </Link>
+                            <Link
+                              className="p-3 btn btn-primary ml-5 mb-3"
+                              to={"/tournament/players/" + info.tournament.id}
+                            >
+                              <Translated str="manageParticipants" />
+                            </Link>
+                          </HelpBox>
                           {!info.can_start && (
                             <div
                               className="p-3 btn btn-danger ml-5 mb-3"
@@ -832,11 +844,20 @@ class View extends Component<
                         this.context.user.info?.id ===
                           info.tournament.organizer && (
                           <form onSubmit={this.onUpdatePairingTime}>
-                            <label htmlFor="next_pairing_date">
-                              <Translated str="changeNextPairingDateTime" />{" "}
-                              (hh:mm, <Translated str="localTime" />
-                              !):
-                            </label>
+                            <HelpBox
+                              placement="bottom"
+                              name={helpboxNames.manageTournamentChangeTime}
+                              text={Translated.byKey(
+                                "manageTournamentChangeTimeHelpbox"
+                              )}
+                              show={true}
+                            >
+                              <label htmlFor="next_pairing_date">
+                                <Translated str="changeNextPairingDateTime" />{" "}
+                                (hh:mm, <Translated str="localTime" />
+                                !):
+                              </label>
+                            </HelpBox>
                             <input
                               ref={this.pairingDateRef}
                               type="date"
@@ -929,10 +950,16 @@ class View extends Component<
                   this.context.user.info?.id === info.tournament.organizer && (
                     <ManageRoundsAndPairings />
                   )}
-
-                <h3 className="mt-5 mb-4">
-                  <Translated str="standings" />
-                </h3>
+                <HelpBox
+                  placement="top"
+                  name={helpboxNames.manageTournamentStandings}
+                  text={Translated.byKey("manageTournamentStandingsHelpbox")}
+                  show={true}
+                >
+                  <h3 className="mt-5 mb-4">
+                    <Translated str="standings" />
+                  </h3>
+                </HelpBox>
 
                 <Tab.Container defaultActiveKey="standings-i-tab">
                   <Nav className="nav-tabs">

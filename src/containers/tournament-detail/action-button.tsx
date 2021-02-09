@@ -5,6 +5,7 @@ import { useUser } from "../../components/UserContext";
 import style from "./style.module.scss";
 import { fetchJson } from "../../functions";
 import { useParams, useHistory } from "react-router-dom";
+import { HelpBox, helpboxNames } from "../../components/help-box";
 
 const ActionButton: FunctionComponent<{}> = () => {
   const {
@@ -64,7 +65,16 @@ const ActionButton: FunctionComponent<{}> = () => {
 
   return (
     <>
-      {authenticated && isOrganizer() && manageTournamentButton()}
+      {authenticated && isOrganizer() && (
+        <HelpBox
+          placement="bottom"
+          name={helpboxNames.tournamentDetailManageTournament}
+          text={Translated.byKey("tournamentDetailManageTournamentHelpbox")}
+          show={true}
+        >
+          {manageTournamentButton()}
+        </HelpBox>
+      )}
       {authenticated &&
         tournament &&
         tournament.self_joinable &&

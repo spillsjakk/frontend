@@ -8,6 +8,7 @@ import "./Create.css";
 import FederationDropdown from "../../components/FederationDropdown";
 import TitleDropdown from "../../components/TitleDropdown";
 import SexDropdown from "../../components/SexDropdown";
+import { HelpBox, helpboxNames } from "../../components/help-box";
 
 type CreateState = {
   username: string;
@@ -137,6 +138,7 @@ class Create extends Component<{}, CreateState> {
         <Helmet>
           <title>{title("createAccounts")}</title>
         </Helmet>
+
         <div className="header">
           <Translated str="createAccounts" />
         </div>
@@ -265,15 +267,23 @@ class Create extends Component<{}, CreateState> {
                     onChange={this.handleChange}
                   />
                 </td>
-                <td>
-                  <input
-                    type="number"
-                    id="fideRatingInput"
-                    name="fide_rating"
-                    value={this.state.fide_rating}
-                    onChange={this.handleChange}
-                  />
-                </td>
+                <HelpBox
+                  placement="bottom"
+                  name={helpboxNames.createAccountsInputs}
+                  text={Translated.byKey("createAccountsInputsHelpbox")}
+                  show={true}
+                >
+                  <td>
+                    <input
+                      type="number"
+                      id="fideRatingInput"
+                      name="fide_rating"
+                      value={this.state.fide_rating}
+                      onChange={this.handleChange}
+                    />
+                  </td>
+                </HelpBox>
+
                 <td>
                   <FederationDropdown
                     id="fideFederationInput"
@@ -328,13 +338,20 @@ class Create extends Component<{}, CreateState> {
                   </select>
                 </td>
                 <td>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    id="addButton"
+                  <HelpBox
+                    placement="bottom"
+                    name={helpboxNames.createAccountsAction}
+                    text={Translated.byKey("createAccountsActionHelpbox")}
+                    show={true}
                   >
-                    +
-                  </button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      id="addButton"
+                    >
+                      +
+                    </button>
+                  </HelpBox>
                 </td>
               </tr>
             </tbody>

@@ -16,6 +16,7 @@ import { TimestampString } from "../../components/Timestamp";
 import { UserContext } from "../../components/UserContext";
 import "./index.scss";
 import { Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { HelpBox, helpboxNames } from "../../components/help-box";
 
 const { SearchBar } = Search;
 
@@ -197,6 +198,10 @@ class Profile extends Component<
     });
   }
 
+  isUserSelf() {
+    return this.props.match.params.uid === this.context.user.info?.id;
+  }
+
   render() {
     return (
       <>
@@ -232,12 +237,19 @@ class Profile extends Component<
 
             <div className="username">{this.state.account?.username}</div>
           </div>
-          {this.props.match.params.uid === this.context.user.info?.id && (
-            <div className="settings">
-              <Link to="/account/settings">
-                <Translated str="accountSettings" />
-              </Link>
-            </div>
+          {this.isUserSelf() && (
+            <HelpBox
+              placement="left"
+              name={helpboxNames.userProfileAccountSettings}
+              text={Translated.byKey("userProfileAccountSettingsHelpbox")}
+              show={this.isUserSelf()}
+            >
+              <div className="settings">
+                <Link to="/account/settings">
+                  <Translated str="accountSettings" />
+                </Link>
+              </div>
+            </HelpBox>
           )}
         </div>
 
@@ -281,25 +293,34 @@ class Profile extends Component<
           )}
 
         <div className="header">{Translated.byKey("tournamentHistory")}</div>
-        <div className="box">
-          <ToolkitProvider
-            keyField="id"
-            data={this.state.tournamentData}
-            columns={this.state.tournamentColumns}
-            bootstrap4={true}
-            search={{ onColumnMatch: this.onColumnMatch }}
-          >
-            {(props) => (
-              <>
-                <SearchBar {...props.searchProps} />
-                <BootstrapTable
-                  {...props.baseProps}
-                  pagination={paginationFactory({})}
-                />
-              </>
-            )}
-          </ToolkitProvider>
-        </div>
+
+        <HelpBox
+          placement="top"
+          name={helpboxNames.userProfileTournament}
+          text={Translated.byKey("userProfileTournamentHelpbox")}
+          show={this.isUserSelf()}
+        >
+          <div className="box">
+            <ToolkitProvider
+              keyField="id"
+              data={this.state.tournamentData}
+              columns={this.state.tournamentColumns}
+              bootstrap4={true}
+              search={{ onColumnMatch: this.onColumnMatch }}
+            >
+              {(props) => (
+                <>
+                  <SearchBar {...props.searchProps} />
+                  <BootstrapTable
+                    {...props.baseProps}
+                    pagination={paginationFactory({})}
+                  />
+                </>
+              )}
+            </ToolkitProvider>
+          </div>
+        </HelpBox>
+
         <div className="header">{Translated.byKey("gameHistory")}</div>
 
         <div className="box">
