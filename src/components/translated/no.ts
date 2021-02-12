@@ -62,7 +62,7 @@ const no = {
 	"clickToCopy": "Trykk for å kopiere",
 	"clubCount": "Antall klubber",
 	"clubInvitations": "Klubb-invitasjoner",
-	"clubYouHaveBeenInvited": "Du har blitt invitert til å bli med for $name på SpillSjakk. Opprett konto raskt og enkelt for å kunne spille turneringer!",
+	"clubYouHaveBeenInvited": "Du er invitert av $name til å legge til din klubb på SpillSjakk. Opprett konto raskt og enkelt for å la spillerne i klubben delta i større turneringer. I tillegg kan klubben organisere interne turneringer på nett og over brett.",
 	"clubs": "Klubber",
 	"confirmTournamentDeletion": "Vil du virkelig slette turneringen?",
 	"confirmTournamentWithVisibleNames": "Brukernes navn blir synlig i turneringen, hvis du ikke ønsker det velger du",
