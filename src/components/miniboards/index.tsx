@@ -8,7 +8,6 @@ interface Props {
 }
 
 const Miniboards: FunctionComponent<Props> = ({ data }) => {
-  console.log("data", data);
   return (
     <>
       <Container id={style.miniboards}>

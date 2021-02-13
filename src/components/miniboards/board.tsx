@@ -44,9 +44,17 @@ interface Props {
   game: Game;
 }
 
-const Board: FunctionComponent<Props> = ({
-  game: { id, whiteName, blackName, finished, start, white, black },
-}) => {
+const Board: FunctionComponent<Props> = (props) => {
+  const {
+    id,
+    whiteName,
+    blackName,
+    finished,
+    start,
+    white,
+    black,
+  } = props.game;
+
   const [ws, setWs] = useState<WebSocket>();
   const [fen, setFen] = useState(
     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
@@ -232,13 +240,27 @@ const Board: FunctionComponent<Props> = ({
   }, []);
 
   useEffect(() => {
-    connect();
+    if (!finished) {
+      connect();
 
-    return () => {
-      if (ws) {
-        ws.close();
+      return () => {
+        if (ws) {
+          ws.close();
+        }
+      };
+    } else {
+      let outcome;
+      if (props.game.outcome === -1) {
+        outcome = GameOutcome.WhiteWins;
+      } else if (props.game.outcome === 0) {
+        outcome = GameOutcome.Draw;
+      } else if (props.game.outcome === 1) {
+        outcome = GameOutcome.BlackWins;
+      } else {
+        outcome = props.game.outcome;
       }
-    };
+      setOutcome(outcome);
+    }
   }, []);
 
   function getWhoWon() {
