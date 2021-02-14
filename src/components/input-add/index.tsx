@@ -4,9 +4,14 @@ import style from "./style.module.scss";
 interface Props {
   onAction: (text: string) => void;
   placeholder: string;
+  pattern?: string;
 }
 
-const InputAdd: FunctionComponent<Props> = ({ onAction, placeholder }) => {
+const InputAdd: FunctionComponent<Props> = ({
+  onAction,
+  placeholder,
+  pattern,
+}) => {
   const [inputText, setInputText] = useState("");
   function onSearch(e: any) {
     e.preventDefault();
@@ -21,6 +26,7 @@ const InputAdd: FunctionComponent<Props> = ({ onAction, placeholder }) => {
             placeholder={placeholder}
             value={inputText}
             type="text"
+            pattern={pattern}
             onChange={(e) => setInputText(e.target.value)}
           />
           <button type="submit" className="btn">

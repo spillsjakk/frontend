@@ -153,6 +153,7 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
               name="newName"
               id="newName"
               required
+              pattern="[a-zA-Z0-9-_\s]+"
               value={this.state.newName}
               onChange={this.handleChange}
             />

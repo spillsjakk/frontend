@@ -32,6 +32,7 @@ const TeamsSummary: FunctionComponent<{}> = () => {
         </div>
         <InputAdd
           onAction={addTeam}
+          pattern="[a-zA-Z0-9-_\s]+"
           placeholder={Translated.byKey("manageClub_addNewTeam")}
         />
         <div className={style.items}>
