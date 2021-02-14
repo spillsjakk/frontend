@@ -411,6 +411,7 @@ const en = {
 	"manageTournamentManageParticipantsHelpbox": "Add the groups of players you want to allow access to the tournament here. If self-joining is turned on, they will see a button on the tournament page letting them access the tournament. Otherwise, you can manually add just those you want to allow access to.",
 	"manageTournamentChangeTimeHelpbox": "You can change the time of the next pairing either during a round, or x minutes before it’s scheduled to start.",
 	"manageTournamentStandingsHelpbox": "After the tournament starts and results come in, you will also see pairings here. You can manually change the result of a game by clicking the score which should have been given.",
+	"tournamentBuildBannerDesc": "Please provide an image whose aspect ratio is close to 4.2/1 (if height is (x) px, width should be (4.2 * x) px)",
 };
 
 export { en };

@@ -55,6 +55,7 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
           value={form.bannerPicture}
           onChange={(e) => form.changeBannerPicture(e.target.value)}
         />
+        <span>{Translated.byKey("tournamentBuildBannerDesc")}</span>
       </div>
       <div className="form-group mt-4">
         <label htmlFor="start_date">
