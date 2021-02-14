@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable */
 export default {
   "title1": "Terms of Service - User Agreement",
   "p1_1": "In summary - be most excellent towards each other, act legally, and have fun.",

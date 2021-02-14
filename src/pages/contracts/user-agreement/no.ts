@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable */
 export default {
   "title1": "",
   "p1_1": "",

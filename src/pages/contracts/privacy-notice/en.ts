@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable */
 export default {
   "title1": "Privacy Notice",
   "p1_1": "This privacy notice tells you what to expect us to do with your personal information when you make contact with us, register an account with us, or use one of our services.",
