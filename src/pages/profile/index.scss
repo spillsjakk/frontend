@@ -24,6 +24,8 @@
   #main-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+
     .nav-item {
       background-color: gray;
     }

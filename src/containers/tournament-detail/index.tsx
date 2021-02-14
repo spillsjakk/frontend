@@ -17,7 +17,7 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       <Description />
       <TimeSection />
       <Standings />
-      <Pairings />
+      <Pairings defaultMiniboards={true} />
     </div>
   );
 };

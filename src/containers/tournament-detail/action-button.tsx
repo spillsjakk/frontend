@@ -10,7 +10,6 @@ import { HelpBox, helpboxNames } from "../../components/help-box";
 const ActionButton: FunctionComponent<{}> = () => {
   const {
     tournament,
-    pairings,
     is_participating,
     update,
     self_join_teams,
@@ -75,41 +74,37 @@ const ActionButton: FunctionComponent<{}> = () => {
           {manageTournamentButton()}
         </HelpBox>
       )}
-      {authenticated &&
-        tournament &&
-        tournament.self_joinable &&
-        Array.isArray(pairings) &&
-        pairings.length === 0 && (
-          <>
-            {!is_participating ? (
-              <>
-                {self_join_teams &&
-                  self_join_teams?.map((t, i) => (
-                    <form onSubmit={onClickSelfJoin(t.id)} key={i}>
-                      <div
-                        key={t.id}
-                        className={`${style["action-button"]} ${style["join-tournament"]}`}
-                      >
-                        <button type="submit">
-                          <Translated str="joinFor" /> &quot;{t.name}&quot;
-                        </button>
-                      </div>
-                    </form>
-                  ))}
-              </>
-            ) : (
-              <form onSubmit={onClickSelfLeave}>
-                <div
-                  className={`${style["action-button"]} ${style["leave-tournament"]}`}
-                >
-                  <button type="submit">
-                    <Translated str="leave" />
-                  </button>
-                </div>
-              </form>
-            )}
-          </>
-        )}
+      {authenticated && tournament && tournament.self_joinable && (
+        <>
+          {!is_participating ? (
+            <>
+              {self_join_teams &&
+                self_join_teams?.map((t, i) => (
+                  <form onSubmit={onClickSelfJoin(t.id)} key={i}>
+                    <div
+                      key={t.id}
+                      className={`${style["action-button"]} ${style["join-tournament"]}`}
+                    >
+                      <button type="submit">
+                        <Translated str="joinFor" /> &quot;{t.name}&quot;
+                      </button>
+                    </div>
+                  </form>
+                ))}
+            </>
+          ) : (
+            <form onSubmit={onClickSelfLeave}>
+              <div
+                className={`${style["action-button"]} ${style["leave-tournament"]}`}
+              >
+                <button type="submit">
+                  <Translated str="leave" />
+                </button>
+              </div>
+            </form>
+          )}
+        </>
+      )}
     </>
   );
 };

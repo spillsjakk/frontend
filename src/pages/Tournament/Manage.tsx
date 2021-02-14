@@ -778,25 +778,25 @@ class View extends Component<
                               <Translated str="deleteTournament" />
                             </div>
                           )}
-                          {info.managed_teams &&
-                            info.managed_teams?.map((t) => (
-                              <Link
-                                key={t.id}
-                                className="p-3 btn btn-primary ml-5 mb-3"
-                                to={
-                                  "/tournament/manage-team/" +
-                                  info.tournament.id +
-                                  "/" +
-                                  t.id
-                                }
-                              >
-                                <Translated str="manage" /> &quot;{t.name}&quot;
-                              </Link>
-                            ))}
                         </>
                       )}
+                      {info.managed_teams &&
+                        info.managed_teams?.map((t) => (
+                          <Link
+                            key={t.id}
+                            className="p-3 btn btn-primary ml-5 mb-3"
+                            to={
+                              "/tournament/manage-team/" +
+                              info.tournament.id +
+                              "/" +
+                              t.id
+                            }
+                          >
+                            <Translated str="manage" /> &quot;{t.name}&quot;
+                          </Link>
+                        ))}
                       <Link
-                        className={`p-3 btn btn-primary ${
+                        className={`p-3 ml-3 btn btn-primary ${
                           info.pairings.length === 0 ? "ml-5" : ""
                         } mb-3`}
                         to={"/tournament/edit/" + info.tournament.id}
