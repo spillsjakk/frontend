@@ -77,6 +77,7 @@ const Standings: FunctionComponent<{}> = () => {
       dataField: "none",
       isDummyField: true,
       text: "weighted",
+      sort: true,
       headerFormatter,
       formatter: function (_: any, row: any, __: number, ___: any) {
         return Math.ceil(row.ssw);
