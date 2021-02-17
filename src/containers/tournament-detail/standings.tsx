@@ -78,8 +78,8 @@ const Standings: FunctionComponent<{}> = () => {
       isDummyField: true,
       text: "weighted",
       headerFormatter,
-      formatter: function (_: any, __: any, rowIndex: number, ___: any) {
-        return ssw?.[rowIndex];
+      formatter: function (_: any, row: any, __: number, ___: any) {
+        return row.ssw;
       },
     });
 
@@ -304,7 +304,14 @@ const Standings: FunctionComponent<{}> = () => {
                   <Tab.Pane eventKey="standings-t-tab">
                     <ToolkitProvider
                       keyField="team_id"
-                      data={teams || []}
+                      data={
+                        ssw
+                          ? teams.map((team, index) => ({
+                              ...team,
+                              ssw: ssw[index],
+                            }))
+                          : teams || []
+                      }
                       columns={
                         ssw
                           ? teamParticipantColumns.concat([sswColumn])
