@@ -79,7 +79,7 @@ const Standings: FunctionComponent<{}> = () => {
       text: "weighted",
       headerFormatter,
       formatter: function (_: any, row: any, __: number, ___: any) {
-        return row.ssw;
+        return Math.ceil(row.ssw);
       },
     });
 
