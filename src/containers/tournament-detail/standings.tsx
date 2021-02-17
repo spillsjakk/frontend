@@ -7,7 +7,6 @@ import ToolkitProvider, {
 } from "react-bootstrap-table2-toolkit";
 import style from "./style.module.scss";
 import Translated from "../../components/translated";
-import {} from "../../containers/tournament-detail";
 import { useTournamentDetail } from "../../context/tournament-detail";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { Participant, TeamParticipant } from "../../pages/Tournament/Types";
@@ -74,13 +73,12 @@ const Standings: FunctionComponent<{}> = () => {
 
   function setup() {
     setSswColumn({
-      dataField: "none",
-      isDummyField: true,
+      dataField: "ssw",
       text: "weighted",
       sort: true,
       headerFormatter,
       formatter: function (_: any, row: any, __: number, ___: any) {
-        return Math.ceil(row.ssw);
+        return Math.round(row.ssw);
       },
     });
 
