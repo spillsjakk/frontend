@@ -5,6 +5,7 @@ import Translated from "../../../components/translated";
 import { fetchJson } from "../../../functions";
 import FederationDropdown from "../../../components/FederationDropdown";
 import { useHistory } from "react-router";
+import { Levels, useUser } from "../../../components/UserContext";
 
 const InputGroup: FunctionComponent<{
   label: string;
@@ -34,6 +35,7 @@ const CreateOrganization: FunctionComponent<{}> = () => {
   const [country, setCountry] = useState("NOR");
 
   const history = useHistory();
+  const { user } = useUser();
 
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "registration-organization";
@@ -59,65 +61,67 @@ const CreateOrganization: FunctionComponent<{}> = () => {
 
   return (
     <div id={style.form}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          save();
-        }}
-      >
-        <InputGroup
-          label={Translated.byKey("createOrg_name")}
-          description={Translated.byKey("createOrg_nameDesc")}
-          value={orgName}
-          onChange={(value: string) => setOrgName(value)}
-        />
-
-        <InputGroup
-          label={Translated.byKey("createOrg_id")}
-          description={Translated.byKey("createOrg_idDesc")}
-          value={id}
-          onChange={(value: string) => setId(value)}
-        />
-
-        <InputGroup
-          label={Translated.byKey("createOrg_desc")}
-          description={Translated.byKey("createOrg_descDesc")}
-          value={description}
-          onChange={(value: string) => setDescription(value)}
-          textArea
-        />
-
-        <InputGroup
-          label={Translated.byKey("manageClub_profilePhoto")}
-          description={Translated.byKey("manageClub_profilePhotoDesc")}
-          value={profilePicture}
-          onChange={(value: string) => setProfilePicture(value)}
-        />
-
-        <InputGroup
-          label={Translated.byKey("createOrg_manager")}
-          description={Translated.byKey("createOrg_managerDesc")}
-          value={manager}
-          onChange={(value: string) => setManager(value)}
-        />
-
-        <div className={style["input-group"]}>
-          <div className={`${style.label} bold`}>
-            {Translated.byKey("country")}
-          </div>
-          <FederationDropdown
-            id="country"
-            required
-            className="form-control w-25"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+      {user && user.authenticated && user.info.level === Levels.Admin && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            save();
+          }}
+        >
+          <InputGroup
+            label={Translated.byKey("createOrg_name")}
+            description={Translated.byKey("createOrg_nameDesc")}
+            value={orgName}
+            onChange={(value: string) => setOrgName(value)}
           />
-        </div>
 
-        <button type="submit">
-          {Translated.byKey("create").toUpperCase()}
-        </button>
-      </form>
+          <InputGroup
+            label={Translated.byKey("createOrg_id")}
+            description={Translated.byKey("createOrg_idDesc")}
+            value={id}
+            onChange={(value: string) => setId(value)}
+          />
+
+          <InputGroup
+            label={Translated.byKey("createOrg_desc")}
+            description={Translated.byKey("createOrg_descDesc")}
+            value={description}
+            onChange={(value: string) => setDescription(value)}
+            textArea
+          />
+
+          <InputGroup
+            label={Translated.byKey("manageClub_profilePhoto")}
+            description={Translated.byKey("manageClub_profilePhotoDesc")}
+            value={profilePicture}
+            onChange={(value: string) => setProfilePicture(value)}
+          />
+
+          <InputGroup
+            label={Translated.byKey("createOrg_manager")}
+            description={Translated.byKey("createOrg_managerDesc")}
+            value={manager}
+            onChange={(value: string) => setManager(value)}
+          />
+
+          <div className={style["input-group"]}>
+            <div className={`${style.label} bold`}>
+              {Translated.byKey("country")}
+            </div>
+            <FederationDropdown
+              id="country"
+              required
+              className="form-control w-25"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
+
+          <button type="submit">
+            {Translated.byKey("create").toUpperCase()}
+          </button>
+        </form>
+      )}
     </div>
   );
 };
