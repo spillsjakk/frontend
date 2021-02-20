@@ -303,7 +303,7 @@ const no = {
 	"reviewGame": "Se på partiet",
 	"round": "Runde",
 	"roundNb": "Antall runder",
-	"roundRobin": "Round Robin",
+	"roundRobin": "Berger",
 	"rounds": "runder",
 	"saveUpdates": "Lagre oppdateringer",
 	"score": "Resultater",
