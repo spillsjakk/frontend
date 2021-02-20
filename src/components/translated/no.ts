@@ -136,7 +136,7 @@ const no = {
 	"invalidCredentials": "Feil brukernavn og/eller passord.",
 	"invalidPasswordRecoveryCode": "Koden for gjenoppretting av passord er ugylding.",
 	"invite": "Invitere",
-	"itsADraw": "Remis 1/2 -1/2",
+	"itsADraw": "Remis 1/2 - 1/2",
 	"join": "Bli med",
 	"joinFor": "Bli med for",
 	"joinOrganization": "Bli med i en organisasjon",
