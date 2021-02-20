@@ -117,7 +117,7 @@ const Board: FunctionComponent<Props> = (props) => {
       if (newState.turn === "white" && data.wic > 0) {
         setWhiteInitialCountdown(data.wic);
         if (blackClockRef) {
-          whiteClockRef.current?.updateAndCache(data.wc);
+          whiteClockRef.current?.updateAndCache(data.wc - (20 - data.wic));
           blackClockRef.current?.updateAndCache(data.bc);
           whiteClockRef.current?.check();
         }
@@ -126,7 +126,7 @@ const Board: FunctionComponent<Props> = (props) => {
         setBlackInitialCountdown(data.bic);
         if (whiteClockRef && blackClockRef) {
           whiteClockRef.current?.updateAndCache(data.wc);
-          blackClockRef.current?.updateAndCache(data.bc);
+          blackClockRef.current?.updateAndCache(data.bc - (20 - data.bic));
           blackClockRef.current?.check();
         }
       } else if (whiteClockRef && blackClockRef) {
