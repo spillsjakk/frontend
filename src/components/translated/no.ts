@@ -415,6 +415,8 @@ const no = {
 	"format": "",
 	"howToMakeAccount": "",
 	"howToMakeAccountDesc": "",
+	"clubProfile": "",
+	"organizationProfile": "",
 };
 
 export { no };

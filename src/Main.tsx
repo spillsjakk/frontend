@@ -26,7 +26,7 @@ import { CreateOrganization } from "./pages/registration/organization";
 import { ManageClubPage } from "./pages/Club/manage/index";
 import { ClubView } from "./pages/Club/view/index";
 import { ManageOrganizationPage } from "./pages/Organization/manage/index";
-import OrgView from "./pages/Organization/View";
+import { OrganizationView } from "./pages/Organization/view/index";
 import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
 import { Home } from "./pages/Home/index";
@@ -107,7 +107,11 @@ const Main = () => {
         path="/organization/manage"
         component={ManageOrganizationPage}
       ></Route>
-      <Route exact path="/organization/view/:oid" component={OrgView}></Route>
+      <Route
+        exact
+        path="/organization/view/:oid"
+        component={OrganizationView}
+      ></Route>
       <Route exact path="/invitation/:id" component={OnboardInvitation}></Route>
       <Route
         exact
