@@ -412,6 +412,7 @@ const no = {
 	"manageTournamentChangeTimeHelpbox": "",
 	"manageTournamentStandingsHelpbox": "",
 	"tournamentBuildBannerDesc": "",
+	"format": "",
 };
 
 export { no };

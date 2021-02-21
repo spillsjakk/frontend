@@ -412,6 +412,7 @@ const en = {
 	"manageTournamentChangeTimeHelpbox": "You can change the time of the next pairing either during a round, or x minutes before it’s scheduled to start.",
 	"manageTournamentStandingsHelpbox": "After the tournament starts and results come in, you will also see pairings here. You can manually change the result of a game by clicking the score which should have been given.",
 	"tournamentBuildBannerDesc": "for best results, please select an image which is 4x more wide than it is tall",
+	"format": "Format",
 };
 
 export { en };

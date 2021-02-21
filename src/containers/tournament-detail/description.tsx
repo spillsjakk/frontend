@@ -38,6 +38,9 @@ const Description: FunctionComponent<{}> = () => {
             </div>
             <div className={`${style.box} ${style.item}`}>
               <div className={style.heading}>
+                <Translated str="format" />
+              </div>
+              <p>
                 <Translated
                   str={
                     tournament
@@ -48,8 +51,7 @@ const Description: FunctionComponent<{}> = () => {
                 />
                 {tournament?.per_team_limit &&
                   ` - ${tournament.per_team_limit} per team`}
-              </div>
-              <p>{/* {TODO: tournament kind's description} */}</p>
+              </p>
             </div>
             <div className={`${style.box} ${style.item}`}>
               <div className={style.heading}>
@@ -73,7 +75,13 @@ const Description: FunctionComponent<{}> = () => {
                 {Translated.byKey("startDate")} - {Translated.byKey("endDate")}
               </div>
               <p>
-                {tournament?.start_date} - {tournament?.end_date}
+                {`${new Date(
+                  tournament?.first_online_pairing
+                ).toLocaleDateString()} ${new Date(
+                  tournament?.first_online_pairing
+                ).toLocaleTimeString()} - ${new Date(
+                  tournament?.end_date
+                ).toLocaleDateString()}`}
               </p>
             </div>
             <ActionButton />
