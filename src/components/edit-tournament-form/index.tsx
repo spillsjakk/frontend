@@ -25,8 +25,19 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
   const getId = () => window.location.pathname.split("/")[3];
 
   useEffect(() => {
-    setTournamentStarted(Array.isArray(rounds) && rounds.length > 0);
+    if (Array.isArray(rounds) && rounds.length > 0) {
+      setTournamentStarted(true);
+    }
   }, [rounds]);
+
+  useEffect(() => {
+    if (tournament) {
+      const startDate = new Date(tournament.first_online_pairing);
+      if (new Date().getTime() - startDate.getTime() > 0) {
+        setTournamentStarted(true);
+      }
+    }
+  }, [tournament]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
