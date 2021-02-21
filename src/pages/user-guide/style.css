@@ -1,0 +1,18 @@
+
+body#User-Guide {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#User-Guide .nav-item {
+    background-color: gray;
+}
+
+body#User-Guide .table {
+    color: black !important;
+}
+
+body#User-Guide .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

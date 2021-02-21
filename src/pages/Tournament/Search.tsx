@@ -4,6 +4,7 @@ import Translated from "../../components/translated";
 import { Tournament } from "./Types";
 import { Link } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
+import "./Search.css";
 
 type SearchState = {
   query: string,

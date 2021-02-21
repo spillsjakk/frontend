@@ -1,10 +1,14 @@
-import React, { FunctionComponent, useContext } from "react";
+import React, { FunctionComponent, useContext, useEffect } from "react";
 import LangContext from "../../components/LangContext";
 import { getDictionary } from "./translations";
+import "./style.css";
 
 const UserGuide: FunctionComponent<{}> = () => {
   const { lang } = useContext(LangContext);
   const { getString } = getDictionary(lang);
+  useEffect(() => {
+    document.getElementsByTagName("body")[0].id = "User-Guide";
+  });
   return (
     <main style={{ marginTop: "30px" }}>
       <h2>{getString("title")}</h2>
@@ -34,8 +38,8 @@ const UserGuide: FunctionComponent<{}> = () => {
         </li>
         <ul>
           <li>
-          <a href="#6a">{getString("c6a")}</a>
-        </li>
+            <a href="#6a">{getString("c6a")}</a>
+          </li>
         </ul>
         <li>
           <a href="#7">{getString("c7")}</a>

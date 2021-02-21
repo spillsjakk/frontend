@@ -1,0 +1,18 @@
+
+body#About {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#About .nav-item {
+    background-color: gray;
+}
+
+body#About .table {
+    color: black !important;
+}
+
+body#About .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

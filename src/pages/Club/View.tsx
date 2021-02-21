@@ -5,6 +5,7 @@ import { fetchJson } from "../../functions";
 import UserLink from "../../components/UserLink";
 import { Link, RouteComponentProps } from "react-router-dom";
 import FederationDisplay from "../../components/FederationDisplay";
+import "./View.css";
 
 type ViewProps = {
   cid: string;

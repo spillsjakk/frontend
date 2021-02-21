@@ -1,0 +1,18 @@
+
+body#Tournament-Find {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#Tournament-Find .nav-item {
+    background-color: gray;
+}
+
+body#Tournament-Find .table {
+    color: black !important;
+}
+
+body#Tournament-Find .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

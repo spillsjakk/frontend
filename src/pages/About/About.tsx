@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../components/translated";
-import { title } from "../functions";
-import LangContext from "../components/LangContext";
-import LogoFooter from "../components/LogoFooter";
+import Translated from "../../components/translated";
+import { title } from "../../functions";
+import LangContext from "../../components/LangContext";
+import LogoFooter from "../../components/LogoFooter";
+import "./style.css";
 
 class About extends PureComponent {
   static contextType = LangContext;

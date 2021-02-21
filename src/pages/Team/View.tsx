@@ -7,6 +7,7 @@ import UserLink from "../../components/UserLink";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import { TeamMember } from "./Types";
+import "./View.css";
 
 type ViewProps = {
   tid: string;

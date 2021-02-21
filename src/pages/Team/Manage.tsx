@@ -7,6 +7,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { fetchJson } from "../../functions";
 import { TeamMember } from "./Types";
 import { Form } from "react-bootstrap";
+import "./Manage.css";
 
 type ManageProps = {
   tid: string;

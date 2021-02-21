@@ -1,0 +1,18 @@
+
+body#Tournament-TeamPlayers {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#Tournament-TeamPlayers .nav-item {
+    background-color: gray;
+}
+
+body#Tournament-TeamPlayers .table {
+    color: black !important;
+}
+
+body#Tournament-TeamPlayers .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

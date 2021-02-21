@@ -4,6 +4,7 @@ import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
 import { Link, RouteComponentProps } from "react-router-dom";
 import FederationDisplay from "../../components/FederationDisplay";
+import "./View.css";
 
 type ViewProps = {
   oid: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import About from "./pages/About";
+import About from "./pages/About/About";
 import { UserGuide } from "./pages/user-guide/index";
 import { Contact } from "./pages/contact/index";
 import NotFound from "./pages/NotFound";
@@ -26,8 +26,6 @@ import { CreateOrganization } from "./pages/registration/organization";
 import { ManageClubPage } from "./pages/Club/manage/index";
 import ClubView from "./pages/Club/View";
 import { ManageOrganizationPage } from "./pages/Organization/manage/index";
-import OrgAllAccounts from "./pages/Organization/AllAccounts";
-import OrgStatistics from "./pages/Organization/Statistics";
 import OrgView from "./pages/Organization/View";
 import { BuildTournament } from "./pages/Tournament/build/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
@@ -108,16 +106,6 @@ const Main = () => {
         exact
         path="/organization/manage"
         component={ManageOrganizationPage}
-      ></Route>
-      <Route
-        exact
-        path="/organization/all-accounts/:oid"
-        component={OrgAllAccounts}
-      ></Route>
-      <Route
-        exact
-        path="/organization/statistics/:oid"
-        component={OrgStatistics}
       ></Route>
       <Route exact path="/organization/view/:oid" component={OrgView}></Route>
       <Route exact path="/invitation/:id" component={OnboardInvitation}></Route>

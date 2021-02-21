@@ -1,0 +1,18 @@
+
+body#Account-Settings {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#Account-Settings .nav-item {
+    background-color: gray;
+}
+
+body#Account-Settings .table {
+    color: black !important;
+}
+
+body#Account-Settings .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

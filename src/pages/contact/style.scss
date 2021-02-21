@@ -23,3 +23,21 @@ body#contact-page {
     }
   }
 }
+
+body#contact-page {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#contact-page .nav-item {
+    background-color: gray;
+}
+
+body#contact-page .table {
+    color: black !important;
+}
+
+body#contact-page .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

@@ -5,6 +5,7 @@ import { Tournament } from "./Types";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
+import "./TeamPlayers.css";
 
 type TeamPlayersProps = {
   tournamentId: string;

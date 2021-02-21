@@ -3,6 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { fetchJson, title } from "../../functions";
+import "./Recover.css";
 
 type RecoverProps = {
   b64?: string
@@ -36,7 +37,7 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
   }
 
   componentDidMount() {
-    document.body.className = "Account-Recover";
+    document.body.id = "Account-Recover";
 
     if (this.props.match.params.b64) {
       fetchJson(`/s/account/test-recovery/${this.props.match.params.b64}`, "POST", undefined, result => {

@@ -1,0 +1,18 @@
+
+body#Team-Manage {
+    background-color: #fafafa;
+    color: black !important;
+    font-family: Montserrat;
+}
+
+body#Team-Manage .nav-item {
+    background-color: gray;
+}
+
+body#Team-Manage .table {
+    color: black !important;
+}
+
+body#Team-Manage .table-striped tbody tr:nth-of-type(2n + 1) {
+    background-color: #fafafa !important;
+}

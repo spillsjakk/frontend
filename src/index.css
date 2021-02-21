@@ -1,19 +1,18 @@
 html {
   height: 100%;
 }
+
 body {
   position: relative;
   padding-bottom: 195px;
   min-height: 100%;
   font-family: Roboto, "Open Sans", sans-serif;
 }
-.nav-link:hover img,
-.nav-link:hover span {
+
+.nav-link:hover img, .nav-link:hover span {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }
-h1 {
-  border-left: 2px solid white;
-}
+
 footer {
   position: absolute;
   left: 0;
@@ -21,41 +20,51 @@ footer {
   bottom: 0;
   padding-bottom: 15px;
 }
+
 footer img {
   height: 120px;
 }
-img.nsf,
-img.usf {
+
+img.nsf, img.usf {
   filter: invert(1);
 }
+
 #main-container {
   width: 100%;
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
 .container {
   max-width: 100%;
 }
+
 #content-container {
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
 .navbar.bg-light {
   background: rgba(0, 0, 0, 0) !important;
 }
+
 .navbar-brand {
   font-size: 2rem;
 }
+
 #logo {
   height: 2.75rem;
 }
+
 .nav-link {
   font-size: 0.9rem;
   color: white !important;
 }
+
 .nav-link:hover {
   color: #00bc8c !important;
 }
+
 @media screen and (max-width: 992px) {
   .navbar-brand {
     font-size: 4.5vh;
@@ -77,4 +86,10 @@ img.usf {
 #Tournament-Build {
   background-color: #fafafa;
   color: black;
+}
+
+body#NotFound {
+  background-color: #fafafa;
+  color: black !important;
+  font-family: Montserrat;
 }
