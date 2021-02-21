@@ -175,8 +175,6 @@ class About extends PureComponent {
             </p>
           </>
         )}
-
-        <LogoFooter />
       </>
     );
   }
