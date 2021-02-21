@@ -413,6 +413,8 @@ const en = {
 	"manageTournamentStandingsHelpbox": "After the tournament starts and results come in, you will also see pairings here. You can manually change the result of a game by clicking the score which should have been given.",
 	"tournamentBuildBannerDesc": "for best results, please select an image which is 4x more wide than it is tall",
 	"format": "Format",
+	"howToMakeAccount": "How can I make an account?",
+	"howToMakeAccountDesc": "Currently, SpillSjakk is still in active development, with major changes regularly.Trial accounts are being given out to certain schools, chess clubs, and initiatives in Norway.Unless invited from one of these early adopters, there is no way to make a general account right now.",
 };
 
 export { en };

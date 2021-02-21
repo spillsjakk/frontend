@@ -413,6 +413,8 @@ const no = {
 	"manageTournamentStandingsHelpbox": "",
 	"tournamentBuildBannerDesc": "",
 	"format": "",
+	"howToMakeAccount": "",
+	"howToMakeAccountDesc": "",
 };
 
 export { no };

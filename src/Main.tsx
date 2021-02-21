@@ -5,7 +5,7 @@ import About from "./pages/About/About";
 import { UserGuide } from "./pages/user-guide/index";
 import { Contact } from "./pages/contact/index";
 import NotFound from "./pages/NotFound";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import TournamentManage from "./pages/Tournament/Manage";
 import TournamentPlayers from "./pages/Tournament/Players";
