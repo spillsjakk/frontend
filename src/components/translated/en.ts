@@ -415,6 +415,7 @@ const en = {
 	"format": "Format",
 	"howToMakeAccount": "How can I make an account?",
 	"howToMakeAccountDesc": "Currently, SpillSjakk is still in active development, with major changes regularly.Trial accounts are being given out to certain schools, chess clubs, and initiatives in Norway.Unless invited from one of these early adopters, there is no way to make a general account right now.",
+	"clubProfile": "Club Profile"
 };
 
 export { en };

@@ -24,7 +24,7 @@ import { OnboardInvitation } from "./pages/registration/onboard-invitation";
 import { GenerateInvitation } from "./pages/registration/generate-invitation";
 import { CreateOrganization } from "./pages/registration/organization";
 import { ManageClubPage } from "./pages/Club/manage/index";
-import ClubView from "./pages/Club/View";
+import { ClubView } from "./pages/Club/view/index";
 import { ManageOrganizationPage } from "./pages/Organization/manage/index";
 import OrgView from "./pages/Organization/View";
 import { BuildTournament } from "./pages/Tournament/build/index";
