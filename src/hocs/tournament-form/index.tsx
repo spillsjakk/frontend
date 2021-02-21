@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { FunctionComponent, useCallback, useState } from "react";
 import { FormProvider } from "../../context/build-tournament-form";
 
@@ -9,12 +8,14 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [description, setDescription] = useState("");
   const [kind, setKind] = useState(0);
   const [defaultGameLocation, setDefaultGameLocation] = useState(1);
-  const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
-  const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+  const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 10));
   const [publiclyViewable, setPubliclyViewable] = useState(false);
   const [firstPairingTime, setFirstPairingTime] = useState("");
   const [firstPairingDate, setFirstPairingDate] = useState(
-    moment().format("YYYY-MM-DD")
+    new Date().toISOString().slice(0, 10)
   );
   const [onlinePairingIntervalN, setOnlinePairingIntervalN] = useState(0);
   const [onlinePairingIntervalT, setOnlinePairingIntervalT] = useState(0);
