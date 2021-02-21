@@ -1,12 +1,27 @@
-import React, { FormEvent, FunctionComponent } from "react";
+import React, {
+  FormEvent,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from "react";
 import { useForm } from "../../context/build-tournament-form";
 import Translated from "../translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 import { fetchJson } from "../../functions";
 import { Countdown } from "../../components/count-down/index";
+import { KIND } from "../../constants";
 
 const BuildTournamentForm: FunctionComponent<{}> = () => {
+  const [pointsSettingEnabled, setPointsSettingEnabled] = useState(false);
+
   const form = useForm();
+
+  useEffect(() => {
+    if (form.kind === KIND.TeamMonrad) {
+      setPointsSettingEnabled(true);
+    }
+  }, [form.kind]);
+
   function buildTournament() {
     const pairingDateTime = new Date(
       form.firstPairingDate + "T" + form.firstPairingTime
@@ -587,7 +602,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
             </label>
             &nbsp;
             <input
-              disabled
+              disabled={!pointsSettingEnabled}
               type="number"
               id="win_points"
               name="win_points"
@@ -603,7 +618,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
             </label>
             &nbsp;
             <input
-              disabled
+              disabled={!pointsSettingEnabled}
               type="number"
               id="draw_points"
               name="draw_points"
@@ -619,7 +634,7 @@ const BuildTournamentForm: FunctionComponent<{}> = () => {
             </label>
             &nbsp;
             <input
-              disabled
+              disabled={!pointsSettingEnabled}
               type="number"
               id="loss_points"
               name="loss_points"
