@@ -412,11 +412,11 @@ const no = {
 	"manageTournamentChangeTimeHelpbox": "Du kan endre tidspunktet for neste rundeoppsett i løpet av en runde eller x minutter før den er planlagt å starte.",
 	"manageTournamentStandingsHelpbox": "Etter at turneringen starter og resultatene kommer inn, vil du også se oppsettet her. Du kan endre resultatet av et spill manuelt ved å klikke på poengsummen som skulle vært gitt.",
 	"tournamentBuildBannerDesc": "for beste resultat, velg et bilde som er 4 ganger bredere enn det er høyt",
-	"format": "",
-	"howToMakeAccount": "",
-	"howToMakeAccountDesc": "",
-	"clubProfile": "",
-	"organizationProfile": "",
+	"format": "Format",
+	"howToMakeAccount": "Hvordan kan jeg opprette en konto?",
+	"howToMakeAccountDesc": "SpillSjakk er fortsatt under utvikling, større oppdateringer skjer hyppig. Midlertidige kontoer blir gitt til utvalgte skoler, sjakklubber og prosjekter i regi av NSF/USF.  Per nå er det kun disse som kan tildele spillerkontoer på plattformen.",
+	"clubProfile": "Klubbprofil",
+	"organizationProfile": "Organisasjonsprofil",
 };
 
 export { no };
