@@ -252,11 +252,11 @@ const Board: FunctionComponent<Props> = (props) => {
     } else {
       let outcome;
       if (props.game.outcome === -1) {
-        outcome = GameOutcome.WhiteWins;
+        outcome = GameOutcome.BlackWins;
       } else if (props.game.outcome === 0) {
         outcome = GameOutcome.Draw;
       } else if (props.game.outcome === 1) {
-        outcome = GameOutcome.BlackWins;
+        outcome = GameOutcome.WhiteWins;
       } else {
         outcome = props.game.outcome;
       }
