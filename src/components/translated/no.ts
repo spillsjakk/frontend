@@ -417,6 +417,12 @@ const no = {
 	"howToMakeAccountDesc": "SpillSjakk er fortsatt under utvikling, større oppdateringer skjer hyppig. Midlertidige kontoer blir gitt til utvalgte skoler, sjakklubber og prosjekter i regi av NSF/USF.  Per nå er det kun disse som kan tildele spillerkontoer på plattformen.",
 	"clubProfile": "Klubbprofil",
 	"organizationProfile": "Organisasjonsprofil",
+	"tournamentCalendar": "",
+	"signup": "",
+	"readMore": "",
+	"homev2Desc": "",
+	"onSpillsjakk": "",
+	"invitePairPlay": ""
 };
 
 export { no };

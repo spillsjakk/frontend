@@ -417,6 +417,12 @@ const en = {
 	"howToMakeAccountDesc": "Currently, SpillSjakk is still in active development, with major changes regularly. Trial accounts are being given out to certain schools, chess clubs, and initiatives in Norway. Unless invited from one of these early adopters, there is no way to make a general account right now.",
 	"clubProfile": "Club Profile",
 	"organizationProfile": "Organization Profile",
+	"tournamentCalendar": "tournament calendar",
+	"signup": "signup",
+	"readMore": "read more",
+	"homev2Desc": "An efficient pairing and playing tool for clubs and event organisers. Supporting online, over the board, or hybrid tournament and casual play.",
+	"onSpillsjakk": "on SpillSjakk",
+	"invitePairPlay": "Invite · Pair · Play"
 };
 
 export { en };
