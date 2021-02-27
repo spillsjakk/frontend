@@ -7,8 +7,19 @@ import { Tournament } from "../../../pages/Tournament/Types";
 import { Card } from "./card";
 import style from "./style.module.scss";
 
+function dateDiffInDays(dt1, dt2) {
+  return Math.floor(
+    (Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) -
+      Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) /
+      (1000 * 60 * 60 * 24)
+  );
+}
+
 const Home: FunctionComponent<{}> = () => {
   const [tournaments, setTournaments] = useState<Array<Tournament>>([]);
+  const [today, setToday] = useState<Array<Tournament>>([]);
+  const [soon, setSoon] = useState<Array<Tournament>>([]);
+  const [later, setLater] = useState<Array<Tournament>>([]);
 
   const { user } = useUser();
 
@@ -38,6 +49,30 @@ const Home: FunctionComponent<{}> = () => {
   }
 
   useEffect(() => {
+    if (Array.isArray(tournaments) && tournaments.length) {
+      const localToday = [];
+      const localSoon = [];
+      const localLater = [];
+      tournaments.forEach((tournament) => {
+        const days = dateDiffInDays(
+          new Date(),
+          new Date(tournament.start_date)
+        );
+        if (days <= 0) {
+          localToday.unshift(tournament);
+        } else if (days < 7) {
+          localSoon.unshift(tournament);
+        } else {
+          localLater.unshift(tournament);
+        }
+      });
+      setToday(localToday);
+      setSoon(localSoon);
+      setLater(localLater);
+    }
+  }, [tournaments]);
+
+  useEffect(() => {
     fetchTournaments();
   }, []);
 
@@ -57,12 +92,12 @@ const Home: FunctionComponent<{}> = () => {
             </div>
           </div>
           <div className={style["action-buttons"]}>
-            <div className={style.button}>
+            <a href="/user-guide" className={style.button}>
               {Translated.byKey("readMore").toUpperCase()}
-            </div>
-            <div className={style.button}>
+            </a>
+            <a href="/login#account-modal=true" className={style.button}>
               {Translated.byKey("signup").toUpperCase()}
-            </div>
+            </a>
           </div>
         </div>
       </div>
@@ -77,11 +112,11 @@ const Home: FunctionComponent<{}> = () => {
           show={user && user.authenticated === true}
         >
           <div className={style.wrapper}>
-            <div className={style.row}>
-              <div className={style.heading}>TODAY</div>
-              <div className={style.content}>
-                {Array.isArray(tournaments) &&
-                  tournaments.map((tournament, i) => (
+            {Array.isArray(today) && today.length > 0 && (
+              <div className={style.row}>
+                <div className={style.heading}>TODAY</div>
+                <div className={style.content}>
+                  {today.map((tournament, i) => (
                     <div key={i}>
                       <Card
                         id={tournament.id}
@@ -97,8 +132,55 @@ const Home: FunctionComponent<{}> = () => {
                       />
                     </div>
                   ))}
+                </div>
               </div>
-            </div>
+            )}
+            {Array.isArray(soon) && soon.length > 0 && (
+              <div className={style.row}>
+                <div className={style.heading}>SOON</div>
+                <div className={style.content}>
+                  {soon.map((tournament, i) => (
+                    <div key={i}>
+                      <Card
+                        id={tournament.id}
+                        name={tournament.name}
+                        timeControl={tournament.online_pairing_interval_n}
+                        timeControlInterval={
+                          tournament.online_pairing_interval_t
+                        }
+                        format={tournament.kind}
+                        rounds={tournament.rounds}
+                        startDate={tournament.first_online_pairing}
+                        profile={tournament.profile_picture}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {Array.isArray(later) && later.length > 0 && (
+              <div className={style.row}>
+                <div className={style.heading}>LATER</div>
+                <div className={style.content}>
+                  {later.map((tournament, i) => (
+                    <div key={i}>
+                      <Card
+                        id={tournament.id}
+                        name={tournament.name}
+                        timeControl={tournament.online_pairing_interval_n}
+                        timeControlInterval={
+                          tournament.online_pairing_interval_t
+                        }
+                        format={tournament.kind}
+                        rounds={tournament.rounds}
+                        startDate={tournament.first_online_pairing}
+                        profile={tournament.profile_picture}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </HelpBox>
       </div>

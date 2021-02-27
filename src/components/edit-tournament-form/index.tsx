@@ -96,9 +96,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       form.changePubliclyViewable(tournament.publicly_viewable);
       const firstOnlinePairingDate = new Date(tournament.first_online_pairing);
       form.changeFirstPairingDate(
-        `${firstOnlinePairingDate.getFullYear()}-${
-          firstOnlinePairingDate.getMonth() + 1
-        }-${firstOnlinePairingDate.getDate()}`
+        firstOnlinePairingDate.toISOString().split("T")[0]
       );
       form.changeFirstPairingTime(
         firstOnlinePairingDate.toTimeString().substring(0, 5)

@@ -20,7 +20,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
   } else {
     return (
       <span>
-        {days ? `${days}:` : ""}
+        {days ? `${days} ${Translated.byKey("days")} ` : ""}
         {hours}:{minutes}:{seconds}
       </span>
     );
