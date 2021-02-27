@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import "./style.css";
-import { Home as HomeContainer } from "../../containers/home/index";
+import { Home as HomeContainer } from "../../containers/home/v2";
 import { Helmet } from "react-helmet";
 import { title } from "../../functions";
 

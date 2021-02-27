@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { fetchJson } from "../../functions";
-import { Tournament } from "../../pages/Tournament/Types";
+import { fetchJson } from "../../../functions";
+import { Tournament } from "../../../pages/Tournament/Types";
 import style from "./style.module.scss";
 
 const Tournaments: FunctionComponent<{}> = () => {

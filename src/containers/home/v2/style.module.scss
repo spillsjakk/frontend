@@ -1,0 +1,45 @@
+#home {
+  font-family: Montserrat;
+  #image {
+    background-image: url("https://s3-alpha-sig.figma.com/img/dc9a/69a6/0ef849a3f8a0ee851d12dc1cca983b27?Expires=1615161600&Signature=JM4WluMT0LaPneQeoQru-xDZuPVTWFAbCa5zBsvSXQNDnhP5irwzCe4twDJhw6BUXXt~lM9wVRPgVOtlW7HSAAcriVj9Z3VyBP34szr1-lcFs9CDtB4hcRSVOVrtQfKjPMZNysUtsbpQSQPKqM6sWVjT2XTxhS-FpUJP1pM~s0JbBwqRPYIT15AXWnuVGCmNiKKr-AI72rHw3k24pwZCn3IE9dBuTYYWJg0~1EgIU1XhDUtQCKi57IR8yo-2lwpZoOIkan4Sbi7AeY5NKHsglTGmfUquPTW33-~cFYcoamLBlgRUdx8gYn6GtmdBPGYqsmJijpMRmWy3Q91LFmFpnQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA");
+    background-position: center center;
+    background-size: cover;
+    height: 450px;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .pane {
+      width: calc(min(40rem, 80%));
+      box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      margin-right: 10vw;
+      margin-left: 10vw;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+
+      .title {
+        font-size: calc(min(6vw, 25px));
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #469a88;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+
+        div:nth-of-type(1) {
+          font-size: calc(min(7vw, 40px));
+        }
+
+        div:nth-of-type(2) {
+          font-size: calc(min(4vw, 20px));
+        }
+
+        div:nth-of-type(3) {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}

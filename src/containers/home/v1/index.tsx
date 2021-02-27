@@ -2,9 +2,9 @@ import React, { FunctionComponent } from "react";
 import { Features } from "./features";
 import { Tournaments } from "./tournaments";
 import style from "./style.module.scss";
-import Translated from "../../components/translated";
-import { HelpBox, helpboxNames } from "../../components/help-box";
-import { useUser } from "../../components/UserContext";
+import Translated from "../../../components/translated";
+import { HelpBox, helpboxNames } from "../../../components/help-box";
+import { useUser } from "../../../components/UserContext";
 
 const Home: FunctionComponent<{}> = () => {
   const { user } = useUser();
