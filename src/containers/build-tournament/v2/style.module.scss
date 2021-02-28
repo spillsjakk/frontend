@@ -1,4 +1,4 @@
-.heading {
+#heading {
   font-size: calc(min(6vw, 30px));
   color: #469a88;
   margin-top: 20px;
@@ -6,3 +6,31 @@
   font-weight: bold;
 }
 
+#stepper {
+  .heading {
+    background-color: #469a88;
+    color: white;
+    border-radius: 0 0 50px 0;
+    font-size: calc(min(3vw, 20px));
+    padding: 5px;
+    padding-left: 15px;
+  }
+
+  .content {
+    .description {
+      margin: 10px 0px;
+    }
+
+    .inputs {
+      margin: 10px 0px;
+    }
+
+    .actions {
+      margin-top: 10px;
+
+      button {
+        margin: 10px;
+      }
+    }
+  }
+}

@@ -1,18 +1,22 @@
 import React, { Context, useContext } from "react";
-import { Option } from "../components/dropdown/interface";
+
+export interface Option {
+  name: string;
+  value: number;
+}
 
 export interface TemplateContext {
-  selectedTemplate: string;
+  selectedTemplate: number;
   templates: Array<Option>;
-  onSelect: (value: string) => void;
+  onSelect: (value: number) => void;
   placeholder: Option;
 }
 
 const initalValues = {
-  selectedTemplate: "",
-  templates: [{ name: "", value: "" }],
-  onSelect: (value: string) => {},
-  placeholder: { name: "", value: "" },
+  selectedTemplate: 0,
+  templates: [{ name: "", value: 0 }],
+  onSelect: (value: number) => {},
+  placeholder: { name: "", value: 0 },
 };
 
 const TemplateContext: Context<TemplateContext> = React.createContext(

@@ -8,11 +8,11 @@ const SelectTemplate: FunctionComponent<{}> = () => {
 
   return (
     <div id="select-template">
-      <Dropdown
+      {/* <Dropdown
         options={templates}
         onSelect={onSelect}
         placeholder={placeholder}
-      />
+      /> */}
     </div>
   );
 };

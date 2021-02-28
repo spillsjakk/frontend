@@ -1,0 +1,11 @@
+body#Tournament-Build {
+  font-family: Montserrat;
+  #content-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  main {
+    width: calc(min(90vw, 1200px));
+  }
+}

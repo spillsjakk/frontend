@@ -9,6 +9,7 @@ import { UserContext, UserContextDataType } from "./components/UserContext";
 
 import { fetchJson } from "./functions";
 import GameNotifier from "./components/GameNotifier";
+import { WithTheme } from "./hocs/with-theme";
 
 type AppState = {
   lang: string;
@@ -46,7 +47,7 @@ class App extends Component<{}, AppState> {
       setUser: (u: UserContextDataType) => this.setState({ user: u }),
     };
     return (
-      <>
+      <WithTheme>
         <LangContext.Provider value={langProviderValue}>
           <UserContext.Provider value={userProviderValue}>
             <NavigationBar />
@@ -59,7 +60,7 @@ class App extends Component<{}, AppState> {
             </Container>
           </UserContext.Provider>
         </LangContext.Provider>
-      </>
+      </WithTheme>
     );
   }
 }
