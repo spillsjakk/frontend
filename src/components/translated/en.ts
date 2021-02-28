@@ -424,6 +424,7 @@ const en = {
 	"onSpillsjakk": "on SpillSjakk",
 	"editAccount": "Edit Account",
 	"edit": "Edit",
+	"confirmRemoveUser": "Do you want to remove user?",
 	"invitePairPlay": "Invite · Pair · Play"
 };
 

@@ -97,9 +97,20 @@ class AllAccounts extends Component<Props, AllAccountsState> {
           text: "",
           formatter: function (_: any, row: Account, __: any, ___: any) {
             return (
-              <Button onClick={() => (row as any).edit(row)}>
-                {Translated.byKey("edit")}
-              </Button>
+              <>
+                <Button onClick={() => (row as any).edit(row)}>
+                  {Translated.byKey("edit")}
+                </Button>
+                {(row as any).forClubs && (
+                  <Button
+                    style={{ marginTop: "10px" }}
+                    variant="danger"
+                    onClick={() => (row as any).remove(row.id)}
+                  >
+                    {Translated.byKey("remove")}
+                  </Button>
+                )}
+              </>
             );
           },
         },
@@ -147,6 +158,19 @@ class AllAccounts extends Component<Props, AllAccountsState> {
             edit: (account: Account) => {
               this.setState({ showEditModal: true, accountToEdit: account });
             },
+            remove: (id: string) => {
+              if (window.confirm(Translated.byKey("confirmRemoveUser"))) {
+                fetchJson(
+                  `/s/club/remove-member/${this.props.match.params.oid}/${id}`,
+                  "POST",
+                  { id: id },
+                  () => {
+                    this.fetchUserData();
+                  }
+                );
+              }
+            },
+            forClubs: this.props.forClubs,
           }))}
           columns={this.state.accountColumns}
           bootstrap4={true}
