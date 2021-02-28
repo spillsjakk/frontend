@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { useForm } from "../../context/build-tournament-form";
-import Translated from "../../components/translated";
+import { useForm } from "../../../context/build-tournament-form";
+import Translated from "../../../components/translated";
 
 const Continue: FunctionComponent<{}> = () => {
   const form = useForm();

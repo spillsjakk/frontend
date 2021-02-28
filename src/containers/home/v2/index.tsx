@@ -114,7 +114,9 @@ const Home: FunctionComponent<{}> = () => {
           <div className={style.wrapper}>
             {Array.isArray(today) && today.length > 0 && (
               <div className={style.row}>
-                <div className={style.heading}>TODAY</div>
+                <div className={style.heading}>
+                  {Translated.byKey("today").toUpperCase()}
+                </div>
                 <div className={style.content}>
                   {today.map((tournament, i) => (
                     <div key={i}>
@@ -137,7 +139,9 @@ const Home: FunctionComponent<{}> = () => {
             )}
             {Array.isArray(soon) && soon.length > 0 && (
               <div className={style.row}>
-                <div className={style.heading}>SOON</div>
+                <div className={style.heading}>
+                  {Translated.byKey("soon").toUpperCase()}
+                </div>
                 <div className={style.content}>
                   {soon.map((tournament, i) => (
                     <div key={i}>
@@ -160,7 +164,9 @@ const Home: FunctionComponent<{}> = () => {
             )}
             {Array.isArray(later) && later.length > 0 && (
               <div className={style.row}>
-                <div className={style.heading}>LATER</div>
+                <div className={style.heading}>
+                  {Translated.byKey("later").toUpperCase()}
+                </div>
                 <div className={style.content}>
                   {later.map((tournament, i) => (
                     <div key={i}>

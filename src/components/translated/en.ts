@@ -425,7 +425,10 @@ const en = {
 	"editAccount": "Edit Account",
 	"edit": "Edit",
 	"confirmRemoveUser": "Do you want to remove user?",
-	"invitePairPlay": "Invite · Pair · Play"
+	"invitePairPlay": "Invite · Pair · Play",
+	"soon": "soon",
+	"later": "later",
+	"today": "today"
 };
 
 export { en };

@@ -424,7 +424,11 @@ const no = {
 	"onSpillsjakk": "",
 	"editAccount": "",
 	"edit": "",
-	"invitePairPlay": ""
+	"confirmRemoveUser": "",
+	"invitePairPlay": "",
+	"soon": "",
+	"later": "",
+	"today": ""
 };
 
 export { no };
