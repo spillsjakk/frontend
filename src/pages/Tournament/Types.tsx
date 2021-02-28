@@ -115,4 +115,5 @@ export type Account = {
   sex?: string;
   ghost: boolean;
   provisional_fide_rating?: number;
+  email?: string;
 };

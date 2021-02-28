@@ -422,6 +422,8 @@ const en = {
 	"readMore": "read more",
 	"homev2Desc": "An efficient pairing and playing tool for clubs and event organisers. Supporting online, over the board, or hybrid tournament and casual play.",
 	"onSpillsjakk": "on SpillSjakk",
+	"editAccount": "Edit Account",
+	"edit": "Edit",
 	"invitePairPlay": "Invite · Pair · Play"
 };
 

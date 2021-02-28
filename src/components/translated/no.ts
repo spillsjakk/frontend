@@ -422,6 +422,8 @@ const no = {
 	"readMore": "",
 	"homev2Desc": "",
 	"onSpillsjakk": "",
+	"editAccount": "",
+	"edit": "",
 	"invitePairPlay": ""
 };
 

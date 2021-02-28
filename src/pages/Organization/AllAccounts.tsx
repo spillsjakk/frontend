@@ -7,6 +7,8 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { Account } from "../Tournament/Types";
+import { EditAccountModal } from "../../components/edit-account-modal";
+import { Button } from "react-bootstrap";
 const { SearchBar } = Search;
 
 type AllAccountsProps = {
@@ -16,6 +18,8 @@ type AllAccountsProps = {
 type AllAccountsState = {
   accountData: Account[];
   accountColumns: any[];
+  showEditModal: boolean;
+  accountToEdit?: Account;
 };
 
 interface Props extends RouteComponentProps<AllAccountsProps> {
@@ -89,15 +93,22 @@ class AllAccounts extends Component<Props, AllAccountsState> {
           sort: true,
         },
         { dataField: "sex", text: Translated.byKey("sex"), sort: true },
+        {
+          text: "",
+          formatter: function (_: any, row: Account, __: any, ___: any) {
+            return (
+              <Button onClick={() => (row as any).edit(row)}>
+                {Translated.byKey("edit")}
+              </Button>
+            );
+          },
+        },
       ],
+      showEditModal: false,
     };
   }
 
-  componentDidMount() {
-    if (!this.props.popup) {
-      document.getElementsByTagName("body")[0].id = "Organization-AllAccounts";
-    }
-
+  fetchUserData() {
     fetchJson(
       this.props.forClubs
         ? `/s/club/all-accounts/${this.props.match.params.oid}`
@@ -112,6 +123,14 @@ class AllAccounts extends Component<Props, AllAccountsState> {
     );
   }
 
+  componentDidMount() {
+    if (!this.props.popup) {
+      document.getElementsByTagName("body")[0].id = "Organization-AllAccounts";
+    }
+
+    this.fetchUserData();
+  }
+
   render() {
     return (
       <>
@@ -122,8 +141,13 @@ class AllAccounts extends Component<Props, AllAccountsState> {
         )}
 
         <ToolkitProvider
-          keyField="id"
-          data={this.state.accountData}
+          keyField="username"
+          data={this.state.accountData.map((data) => ({
+            ...data,
+            edit: (account: Account) => {
+              this.setState({ showEditModal: true, accountToEdit: account });
+            },
+          }))}
           columns={this.state.accountColumns}
           bootstrap4={true}
           search={true}
@@ -138,6 +162,12 @@ class AllAccounts extends Component<Props, AllAccountsState> {
             </>
           )}
         </ToolkitProvider>
+        <EditAccountModal
+          show={this.state.showEditModal}
+          account={this.state.accountToEdit}
+          hide={() => this.setState({ showEditModal: false })}
+          success={() => this.fetchUserData()}
+        />
       </>
     );
   }
