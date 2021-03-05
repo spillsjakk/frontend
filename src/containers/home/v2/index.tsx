@@ -92,7 +92,7 @@ const Home: FunctionComponent<{}> = () => {
             </div>
           </div>
           <div className={style["action-buttons"]}>
-            <a href="/user-guide" className={style.button}>
+            <a href="/about" className={style.button}>
               {Translated.byKey("readMore").toUpperCase()}
             </a>
             <a href="/login#account-modal=true" className={style.button}>
