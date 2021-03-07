@@ -428,7 +428,23 @@ const no = {
 	"invitePairPlay": "",
 	"soon": "",
 	"later": "",
-	"today": ""
+	"today": "",
+	"onlyShowScoresOfTop3": "",
+	"realWorld": "",
+	"back": "",
+	"customSettings": "",
+	"buildTournament_chooseTemplateDesc": "",
+	"buildTournament_timeAllowance": "",
+	"buildTournament_timeAdded": "",
+	"buildTournament_intervalGames": "",
+	"buildTournament_templateSelection": "",
+	"buildTournament_location": "",
+	"buildTournament_reviewAll": "",
+	"buildTournament_useTemplate": "",
+	"buildTournament_privacyAdvanced": "",
+	"buildTournament_startDateTime": "",
+	"buildTournament_format": "",
+	"buildTournament_timeControl": "",
 };
 
 export { no };

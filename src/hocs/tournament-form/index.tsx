@@ -13,7 +13,9 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   );
   const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 10));
   const [publiclyViewable, setPubliclyViewable] = useState(false);
-  const [firstPairingTime, setFirstPairingTime] = useState("");
+  const [firstPairingTime, setFirstPairingTime] = useState(
+    new Date().toISOString().slice(11, 16)
+  );
   const [firstPairingDate, setFirstPairingDate] = useState(
     new Date().toISOString().slice(0, 10)
   );

@@ -428,7 +428,23 @@ const en = {
 	"invitePairPlay": "Invite · Pair · Play",
 	"soon": "soon",
 	"later": "later",
-	"today": "today"
+	"today": "today",
+	"onlyShowScoresOfTop3": "Only show the scores of the top 3 players",
+	"realWorld": "Real World",
+	"back": "Back",
+	"customSettings": "Custom Settings",
+	"buildTournament_chooseTemplateDesc": "Choose from saved templates or tweak every setting related to the tournament",
+	"buildTournament_timeAllowance": "Time Allowance Per Player",
+	"buildTournament_timeAdded": "Time Added After Each Move",
+	"buildTournament_intervalGames": "Interval Between Games",
+	"buildTournament_templateSelection": "Template Selection",
+	"buildTournament_location": "Tournament Location",
+	"buildTournament_reviewAll": "Review All",
+	"buildTournament_useTemplate": "Use Template",
+	"buildTournament_privacyAdvanced": "Privacy & Advanced Settings",
+	"buildTournament_startDateTime": "Start Date and Time",
+	"buildTournament_format": "Format",
+	"buildTournament_timeControl": "Time Control",
 };
 
 export { en };
