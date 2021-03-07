@@ -59,11 +59,11 @@ const Home: FunctionComponent<{}> = () => {
           new Date(tournament.start_date)
         );
         if (days <= 0) {
-          localToday.unshift(tournament);
+          localToday.push(tournament);
         } else if (days < 7) {
-          localSoon.unshift(tournament);
+          localSoon.push(tournament);
         } else {
-          localLater.unshift(tournament);
+          localLater.push(tournament);
         }
       });
       setToday(localToday);
