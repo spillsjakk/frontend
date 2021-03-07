@@ -1,7 +1,7 @@
 import React, { Component, SyntheticEvent, FormEvent, RefObject } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
-import { fetchJson, title } from "../../functions";
+import { fetchCall, fetchJson, title } from "../../functions";
 import { RouteComponentProps, Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
@@ -39,6 +39,29 @@ import { WithRoundSetupPopup } from "../../hocs/with-round-setup-popup";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 
 const { SearchBar } = Search;
+
+function ChangeTime(props: { white: boolean; add: boolean; id: string }) {
+  return (
+    <button
+      className="btn-primary"
+      style={{ margin: "5px 10px" }}
+      onClick={() => {
+        fetchCall(
+          `/s/game/time/${props.id}`,
+          "POST",
+          {
+            white: props.white,
+            add: props.add,
+          },
+          () => {}
+        );
+      }}
+    >
+      {props.white ? "w " : "b "}
+      {props.add ? "60s+" : "60s-"}
+    </button>
+  );
+}
 
 type FullTournamentInfo = {
   tournament: Tournament;
@@ -567,9 +590,13 @@ class View extends Component<
         <td rowSpan={info.tournament.kind === "TeamKnockout" ? 2 : 1}>
           {sortedGames.map((g) => (
             <div key={g.id}>
+              <ChangeTime white={true} add={true} id={g.id} />
+              <ChangeTime white={true} add={false} id={g.id} />
               <Link to={"/game/play/" + g.id}>
                 <Translated str={g.finished ? "finished" : "ongoing"} />
               </Link>
+              <ChangeTime white={false} add={true} id={g.id} />
+              <ChangeTime white={false} add={false} id={g.id} />
             </div>
           ))}
         </td>
