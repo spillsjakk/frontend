@@ -150,6 +150,11 @@ const Standings: FunctionComponent<{}> = () => {
         dataField: "score",
         text: "score",
         sort: true,
+        style: {
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        },
         headerFormatter,
         formatter: function (
           _: any,
@@ -193,6 +198,11 @@ const Standings: FunctionComponent<{}> = () => {
         dataField: "match_score",
         text: "matchScore",
         sort: true,
+        style: {
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        },
         headerFormatter,
         formatter: function (
           _: any,
@@ -215,6 +225,11 @@ const Standings: FunctionComponent<{}> = () => {
         dataField: "game_score",
         text: "gameScore",
         sort: true,
+        style: {
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        },
         headerFormatter,
         formatter: function (
           _: any,
