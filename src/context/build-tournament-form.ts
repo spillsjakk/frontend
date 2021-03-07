@@ -63,6 +63,10 @@ export interface FormContext {
   changeProfilePicture: (value: string) => void;
   bannerPicture: string;
   changeBannerPicture: (value: string) => void;
+  organiser: string;
+  changeOrganiser: (value: string) => void;
+  organiserType: string;
+  changeOrganiserType: (value: string) => void;
 }
 
 const initalValues = {
@@ -124,6 +128,10 @@ const initalValues = {
   changeProfilePicture: (value: string) => {},
   bannerPicture: "",
   changeBannerPicture: (value: string) => {},
+  organiser: "",
+  changeOrganiser: (value: string) => {},
+  organiserType: "",
+  changeOrganiserType: (value: string) => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);

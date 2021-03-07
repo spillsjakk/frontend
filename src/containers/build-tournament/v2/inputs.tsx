@@ -16,6 +16,7 @@ import { useForm } from "../../../context/build-tournament-form";
 import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
+import { useOrgsClubs } from "./with-orgs-clubs";
 
 function TemplateSelection() {
   const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();
@@ -484,6 +485,47 @@ function Format() {
   );
 }
 
+function SelectClubOrg() {
+  const form = useForm();
+  const { orgs, clubs } = useOrgsClubs();
+  return (
+    <div className={style.content}>
+      <div className={style.inputs}>
+        <Select
+          onChange={(e) => {
+            const value = e.target.value;
+            if (orgs.find((org) => org.id === value)) {
+              form.changeOrganiserType("organization");
+            } else {
+              form.changeOrganiserType("club");
+            }
+            form.changeOrganiser(value as string);
+          }}
+          variant="outlined"
+          value={form.organiser}
+          native
+        >
+          <option value="">
+            {Translated.byKey("buildTournament_pleaseSelectOrganiser")}
+          </option>
+          {Array.isArray(orgs) &&
+            orgs.map((org) => (
+              <option key={org.id} value={org.id}>
+                {org.name}
+              </option>
+            ))}
+          {Array.isArray(clubs) &&
+            clubs.map((club) => (
+              <option key={club.id} value={club.id}>
+                {club.name}
+              </option>
+            ))}
+        </Select>
+      </div>
+    </div>
+  );
+}
+
 export {
   TemplateSelection,
   StartDate,
@@ -493,4 +535,5 @@ export {
   StartDateInterval,
   Format,
   Advanced,
+  SelectClubOrg,
 };

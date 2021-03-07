@@ -17,12 +17,14 @@ import {
   StartDateInterval,
   Format,
   Advanced,
+  SelectClubOrg,
 } from "./inputs";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { useTemplate } from "../../../context/build-tournament-template";
 import { FormContext, useForm } from "../../../context/build-tournament-form";
 import { fetchJson } from "../../../functions";
 import Translated from "../../../components/translated";
+import { WithOrgsClubs } from "./with-orgs-clubs";
 
 function ActionButtons({
   onLeftClick,
@@ -89,6 +91,8 @@ function buildTournament(form: FormContext) {
     show_only_usernames: form.showOnlyUsernames,
     profile_picture: form.profilePicture,
     banner_picture: form.bannerPicture,
+    organiser: form.organiser,
+    organiser_type: form.organiserType,
   };
 
   fetchJson(`/s/tournament/build`, "POST", body, (result) => {
@@ -124,6 +128,15 @@ function TemplateForm(props: { onCustom: () => void }) {
             leftText={Translated.byKey("customSettings")}
             rightDisabled={!selectedTemplate}
           />
+        </StepContent>
+      </Step>
+      <Step>
+        <StepLabel>
+          <Label text={Translated.byKey("organiser")} />
+        </StepLabel>
+        <StepContent>
+          <SelectClubOrg />
+          <ActionButtons onRightClick={next} onLeftClick={previous} />
         </StepContent>
       </Step>
       <Step>
@@ -179,6 +192,15 @@ function Form(props: { onTemplate: () => void }) {
             onLeftClick={props.onTemplate}
             leftText={Translated.byKey("buildTournament_useTemplate")}
           />
+        </StepContent>
+      </Step>
+      <Step>
+        <StepLabel>
+          <Label text={Translated.byKey("organiser")} />
+        </StepLabel>
+        <StepContent>
+          <SelectClubOrg />
+          <ActionButtons onRightClick={next} onLeftClick={previous} />
         </StepContent>
       </Step>
       <Step>
@@ -241,16 +263,17 @@ enum FormType {
 
 const FormStepper: FunctionComponent<{}> = () => {
   const [formType, setFormType] = useState(FormType.TEMPLATE);
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <>
+      <WithOrgsClubs>
         {formType === FormType.TEMPLATE && (
           <TemplateForm onCustom={() => setFormType(FormType.ALL)} />
         )}
         {formType === FormType.ALL && (
           <Form onTemplate={() => setFormType(FormType.TEMPLATE)} />
         )}
-      </>
+      </WithOrgsClubs>
     </MuiPickersUtilsProvider>
   );
 };

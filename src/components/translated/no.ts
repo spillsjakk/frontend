@@ -445,6 +445,7 @@ const no = {
 	"buildTournament_startDateTime": "",
 	"buildTournament_format": "",
 	"buildTournament_timeControl": "",
+	"buildTournament_pleaseSelectOrganiser": "",
 };
 
 export { no };

@@ -445,6 +445,7 @@ const en = {
 	"buildTournament_startDateTime": "Start Date and Time",
 	"buildTournament_format": "Format",
 	"buildTournament_timeControl": "Time Control",
+	"buildTournament_pleaseSelectOrganiser": "Please Select Organiser",
 };
 
 export { en };
