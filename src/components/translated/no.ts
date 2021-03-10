@@ -424,7 +424,7 @@ const no = {
 	"onSpillsjakk" : "på SpillSjakk" ,
 	"editAccount": "administrer konto",
 	"edit": "Administrer",
-	"invitePairPlay": "Inviter - Sett opp - Spill"
+	"invitePairPlay": "Inviter - Sett opp - Spill",
 	"soon": "snart",
 	"later": "senere",
     	"today": "i dag",
