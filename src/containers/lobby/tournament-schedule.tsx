@@ -110,7 +110,7 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
   }
 
   useEffect(() => {
-    if (Array.isArray(tournamentData)) {
+    if (Array.isArray(tournamentData) && tournamentData.length > 0) {
       fetchTournament(tournamentData[0].id);
       fetchRounds(tournamentData[0].id);
     }

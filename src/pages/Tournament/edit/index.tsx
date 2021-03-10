@@ -7,7 +7,7 @@ import { WithTournament } from "../../../hocs/with-tournament";
 
 const EditTournament: FunctionComponent<{}> = () => {
   useEffect(() => {
-    document.getElementsByTagName("body")[0].id = "Tournament-Build";
+    document.getElementsByTagName("body")[0].id = "Tournament-Edit";
   }, []);
   const { id } = useParams<{ id: string }>();
   return (
