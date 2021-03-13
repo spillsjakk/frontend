@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControlLabel,
   Radio,
@@ -257,9 +257,15 @@ function StartDateInterval() {
 }
 
 function Advanced() {
-  const [pointsSettingEnabled] = useState(false);
+  const [pointsSettingEnabled, setPointsSettingEnabled] = useState(false);
 
   const form = useForm();
+
+  useEffect(() => {
+    if (form.kind === KIND.TeamMonrad) {
+      setPointsSettingEnabled(true);
+    }
+  }, [form.kind]);
 
   return (
     <div className={style.content}>
@@ -401,7 +407,9 @@ function Format() {
               >
                 {Object.keys(KIND).map((kind) => (
                   <option value={KIND[kind]} key={KIND[kind]}>
-                    {kind}
+                    {Translated.byKey(
+                      kind.replace(/^.{1}/g, kind[0].toLowerCase())
+                    )}
                   </option>
                 ))}
               </Select>

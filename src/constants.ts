@@ -5,7 +5,7 @@ export const KIND = {
   SwissDutch: 1,
   TeamKnockout: 2,
   TeamSwissDutch: 3,
-  // TeamMonrad: 4,
+  TeamMonrad: 4,
   TeamKonrad: 5,
   // TeamOlympiad: 6,
   ManualPairing: 7,
