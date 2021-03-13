@@ -52,7 +52,10 @@ const Card: FunctionComponent<Props> = (props) => {
         />
         <div className={style.name}>{props.name}</div>
         <div className={style.time}>
-          {props.format} · {props.rounds} {Translated.byKey("rounds")}
+          {Translated.byKey(
+            props.format.replace(/^.{1}/g, props.format[0].toLowerCase())
+          )}{" "}
+          · {props.rounds} {Translated.byKey("rounds")}
         </div>
         <div className={style["round-time"]}>
           {
