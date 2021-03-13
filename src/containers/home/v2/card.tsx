@@ -53,7 +53,7 @@ const Card: FunctionComponent<Props> = (props) => {
           }
         </div>
         <a href={`/tournament/view/${props.id}`} className={style.button}>
-          {Translated.byKey("register").toUpperCase()}
+          {Translated.byKey("moreInfo").toUpperCase()}
         </a>
       </div>
     </>

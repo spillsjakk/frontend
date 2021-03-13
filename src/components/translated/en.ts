@@ -446,6 +446,7 @@ const en = {
 	"buildTournament_format": "Format",
 	"buildTournament_timeControl": "Time Control",
 	"buildTournament_pleaseSelectOrganiser": "Please Select Organiser",
+	"moreInfo": "More Info",
 };
 
 export { en };
