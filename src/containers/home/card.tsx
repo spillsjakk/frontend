@@ -14,14 +14,24 @@ interface Props {
   profile: string;
 }
 
+function getNumberWithZero(value: number) {
+  if (value < 10) {
+    return `0${value}`;
+  } else {
+    return value;
+  }
+}
+
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
+  console.log("--", typeof days);
   if (completed) {
     return "";
   } else {
     return (
       <span>
-        {days ? `${days} ${Translated.byKey("days")} ` : ""}
-        {hours}:{minutes}:{seconds}
+        {days ? `${getNumberWithZero(days)} ${Translated.byKey("days")} ` : ""}
+        {getNumberWithZero(hours)}:{getNumberWithZero(minutes)}:
+        {getNumberWithZero(seconds)}
       </span>
     );
   }
