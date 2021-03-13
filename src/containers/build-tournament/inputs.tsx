@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FormControlLabel,
   Radio,
@@ -9,13 +9,13 @@ import {
   Typography,
   Checkbox,
 } from "@material-ui/core";
-import { useTemplate } from "../../../context/build-tournament-template";
+import { useTemplate } from "../../context/build-tournament-template";
 import style from "./style.module.scss";
 import { DateTimePicker } from "@material-ui/pickers";
-import { useForm } from "../../../context/build-tournament-form";
-import { KIND } from "../../../constants";
-import Translated from "../../../components/translated";
-import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
+import { useForm } from "../../context/build-tournament-form";
+import { KIND } from "../../constants";
+import Translated from "../../components/translated";
+import { TiebreakerDropdownV2 } from "../../components/tie-breaker-dropdown";
 import { useOrgsClubs } from "./with-orgs-clubs";
 
 function TemplateSelection() {
@@ -257,15 +257,9 @@ function StartDateInterval() {
 }
 
 function Advanced() {
-  const [pointsSettingEnabled, setPointsSettingEnabled] = useState(false);
+  const [pointsSettingEnabled] = useState(false);
 
   const form = useForm();
-
-  useEffect(() => {
-    if (form.kind === KIND.TeamMonrad) {
-      setPointsSettingEnabled(true);
-    }
-  }, [form.kind]);
 
   return (
     <div className={style.content}>

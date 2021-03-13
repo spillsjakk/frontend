@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { fetchCall } from "../../../functions";
+import { fetchCall } from "../../functions";
 
 type Org = { id: string; name: string };
 

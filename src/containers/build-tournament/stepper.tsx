@@ -20,10 +20,10 @@ import {
   SelectClubOrg,
 } from "./inputs";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { useTemplate } from "../../../context/build-tournament-template";
-import { FormContext, useForm } from "../../../context/build-tournament-form";
-import { fetchJson } from "../../../functions";
-import Translated from "../../../components/translated";
+import { useTemplate } from "../../context/build-tournament-template";
+import { FormContext, useForm } from "../../context/build-tournament-form";
+import { fetchJson } from "../../functions";
+import Translated from "../../components/translated";
 import { WithOrgsClubs } from "./with-orgs-clubs";
 
 function ActionButtons({

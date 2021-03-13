@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { HelpBox, helpboxNames } from "../../../components/help-box";
-import Translated from "../../../components/translated";
-import { useUser } from "../../../components/UserContext";
-import { fetchCall } from "../../../functions";
-import { Tournament } from "../../../pages/Tournament/Types";
+import { HelpBox, helpboxNames } from "../../components/help-box";
+import Translated from "../../components/translated";
+import { useUser } from "../../components/UserContext";
+import { fetchCall } from "../../functions";
+import { Tournament } from "../../pages/Tournament/Types";
 import { Card } from "./card";
 import style from "./style.module.scss";
 

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import Translated from "../../../components/translated";
+import Translated from "../../components/translated";
 import style from "./style.module.scss";
 import { FormStepper } from "./stepper";
 
