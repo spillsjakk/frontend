@@ -7,6 +7,7 @@ import { StatsSummary } from "./summary/stats";
 import { ClubsSummary } from "./summary/clubs";
 import { AccountsSummary } from "./summary/accounts";
 import { SharePowerSummary } from "./summary/share-power";
+import { MessageSummary } from "./summary/message";
 import { Col, Row } from "react-bootstrap";
 import { useManageOrganizationPopup } from "../../context/manage-organization-popup";
 
@@ -57,6 +58,9 @@ const ManageOrganization: FunctionComponent<{}> = () => {
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard content={<SharePowerSummary />} />
+      </Col>
+      <Col className={style.col} xs="auto">
+        <SummaryCard content={<MessageSummary />} />
       </Col>
     </Row>
   );
