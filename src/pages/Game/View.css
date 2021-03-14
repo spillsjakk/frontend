@@ -51,6 +51,7 @@
 }
 #Game-View #controls {
   padding-left: 5px;
+  z-index: 1;
 }
 #Game-View .move-cell {
   cursor: pointer;
