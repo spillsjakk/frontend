@@ -8,6 +8,7 @@ import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { Account } from "../Tournament/Types";
 import { EditAccountModal } from "../../components/edit-account-modal";
+import { ChangePasswordModal } from "../../components/change-password-modal";
 import { Button } from "react-bootstrap";
 const { SearchBar } = Search;
 
@@ -19,6 +20,7 @@ type AllAccountsState = {
   accountData: Account[];
   accountColumns: any[];
   showEditModal: boolean;
+  showChangePasswordModal: boolean;
   accountToEdit?: Account;
 };
 
@@ -98,12 +100,35 @@ class AllAccounts extends Component<Props, AllAccountsState> {
           formatter: function (_: any, row: Account, __: any, ___: any) {
             return (
               <>
-                <Button onClick={() => (row as any).edit(row)}>
+                {!row.email && (
+                  <Button
+                    style={{
+                      marginTop: "10px",
+                      maxWidth: "100%",
+                      fontSize: "12px",
+                    }}
+                    onClick={() => (row as any).changePassword(row)}
+                  >
+                    {Translated.byKey("changePassword")}
+                  </Button>
+                )}
+                <Button
+                  style={{
+                    marginTop: "10px",
+                    maxWidth: "100%",
+                    fontSize: "12px",
+                  }}
+                  onClick={() => (row as any).edit(row)}
+                >
                   {Translated.byKey("edit")}
                 </Button>
                 {(row as any).forClubs && (
                   <Button
-                    style={{ marginTop: "10px" }}
+                    style={{
+                      marginTop: "10px",
+                      maxWidth: "100%",
+                      fontSize: "12px",
+                    }}
                     variant="danger"
                     onClick={() => (row as any).remove(row.id)}
                   >
@@ -116,6 +141,7 @@ class AllAccounts extends Component<Props, AllAccountsState> {
         },
       ],
       showEditModal: false,
+      showChangePasswordModal: false,
     };
   }
 
@@ -158,6 +184,12 @@ class AllAccounts extends Component<Props, AllAccountsState> {
             edit: (account: Account) => {
               this.setState({ showEditModal: true, accountToEdit: account });
             },
+            changePassword: (account: Account) => {
+              this.setState({
+                showChangePasswordModal: true,
+                accountToEdit: account,
+              });
+            },
             remove: (id: string) => {
               if (window.confirm(Translated.byKey("confirmRemoveUser"))) {
                 fetchJson(
@@ -190,6 +222,12 @@ class AllAccounts extends Component<Props, AllAccountsState> {
           show={this.state.showEditModal}
           account={this.state.accountToEdit}
           hide={() => this.setState({ showEditModal: false })}
+          success={() => this.fetchUserData()}
+        />
+        <ChangePasswordModal
+          show={this.state.showChangePasswordModal}
+          account={this.state.accountToEdit}
+          hide={() => this.setState({ showChangePasswordModal: false })}
           success={() => this.fetchUserData()}
         />
       </>

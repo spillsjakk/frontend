@@ -151,7 +151,6 @@ const EditAccountModal: FunctionComponent<Props> = ({
               />
             </div>
             <div className={style.row}>
-              <label> </label>
               <Button className={style.edit} type="submit" variant="primary">
                 {Translated.byKey("edit")}
               </Button>
