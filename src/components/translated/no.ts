@@ -446,6 +446,7 @@ const no = {
 	"buildTournament_timeControl": "Tidskontroll",
 	"buildTournament_pleaseSelectOrganiser": "Velg organisator",
 	"moreInfo": "informasjon",
+	"rank": "Rang",
 };
 
 export { no };

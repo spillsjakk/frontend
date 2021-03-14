@@ -83,6 +83,7 @@ const Standings: FunctionComponent<{}> = () => {
     });
 
     setParticipantColumns([
+      { dataField: "rank", text: "rank", sort: true, headerFormatter },
       { dataField: "seed", text: "seed", sort: true, headerFormatter },
       {
         dataField: "account",
@@ -295,7 +296,9 @@ const Standings: FunctionComponent<{}> = () => {
                       })) || []
                     }
                     columns={
-                      tournament?.kind === "SwissDutch"
+                      tournament?.kind === "SwissDutch" &&
+                      participants.filter((participant) => participant.tb1)
+                        .length
                         ? participantColumns.concat(tbColumns as any)
                         : participantColumns
                     }

@@ -43,6 +43,36 @@ const TournamentDetail: FunctionComponent<{}> = () => {
     if (tournamentDetail.tournament && tournamentDetail.tournament.id) {
       fetchRounds();
     }
+    if (
+      tournamentDetail &&
+      !tournamentDetail.sorted &&
+      Array.isArray(tournamentDetail.participants)
+    ) {
+      // sorting participants and adding ranks
+      tournamentDetail.participants.sort(function (a, b) {
+        if (a.score === b.score) {
+          if (a.tb1 === b.tb1) {
+            if (a.tb2 === b.tb2) {
+              if (a.tb3 === b.tb3) {
+                return b.tb4 - a.tb4;
+              }
+              return b.tb3 - a.tb3;
+            }
+            return b.tb2 - a.tb2;
+          }
+          return b.tb1 - a.tb1;
+        }
+        return a.score > b.score ? -1 : 1;
+      });
+      setTournamentDetail({
+        ...tournamentDetail,
+        participants: tournamentDetail.participants.map((detail, i) => ({
+          rank: i + 1,
+          ...detail,
+        })),
+        sorted: true,
+      });
+    }
   }, [tournamentDetail]);
 
   useEffect(() => {
