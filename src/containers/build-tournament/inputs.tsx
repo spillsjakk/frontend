@@ -257,15 +257,9 @@ function StartDateInterval() {
 }
 
 function Advanced() {
-  const [pointsSettingEnabled, setPointsSettingEnabled] = useState(false);
+  const pointsSettingEnabled = true;
 
   const form = useForm();
-
-  useEffect(() => {
-    if (form.kind === KIND.TeamMonrad) {
-      setPointsSettingEnabled(true);
-    }
-  }, [form.kind]);
 
   return (
     <div className={style.content}>
@@ -359,6 +353,7 @@ function Advanced() {
                 label={<Translated str="winPoints" />}
                 variant="outlined"
                 value={form.winPoints}
+                InputProps={{ inputProps: { min: 0, step: 0.5 }}}
                 onChange={(e) => form.changeWinPoints(Number(e.target.value))}
               />
             </Grid>
@@ -369,6 +364,7 @@ function Advanced() {
                 label={<Translated str="drawPoints" />}
                 variant="outlined"
                 value={form.drawPoints}
+                InputProps={{ inputProps: { min: 0, step: 0.5 }}}
                 onChange={(e) => form.changeDrawPoints(Number(e.target.value))}
               />
             </Grid>
@@ -379,6 +375,7 @@ function Advanced() {
                 label={<Translated str="lossPoints" />}
                 variant="outlined"
                 value={form.lossPoints}
+                InputProps={{ inputProps: { min: 0, step: 0.5 }}}
                 onChange={(e) => form.changeLossPoints(Number(e.target.value))}
               />
             </Grid>
