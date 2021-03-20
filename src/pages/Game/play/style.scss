@@ -98,6 +98,7 @@
 
       #move-div {
         display: flex;
+        white-space: nowrap;
 
         .item {
           margin: 0 5px;
