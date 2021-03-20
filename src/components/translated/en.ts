@@ -448,6 +448,7 @@ const en = {
 	"buildTournament_pleaseSelectOrganiser": "Please Select Organiser",
 	"moreInfo": "More Info",
 	"rank": "Rank",
+	"nextWithTemplate": "Next With Selected Template"
 };
 
 export { en };

@@ -28,13 +28,13 @@ import { WithOrgsClubs } from "./with-orgs-clubs";
 
 function ActionButtons({
   onLeftClick,
-  onRightClick,
+  onRightClick = () => {},
   leftText = Translated.byKey("back"),
   rightText = Translated.byKey("next"),
   rightDisabled = false,
 }: {
   onLeftClick: () => void;
-  onRightClick: () => void;
+  onRightClick?: () => void;
   leftText?: string;
   rightText?: string;
   rightDisabled?: boolean;
@@ -48,6 +48,7 @@ function ActionButtons({
         variant="contained"
         color="secondary"
         onClick={onRightClick}
+        type="submit"
       >
         {rightText}
       </Button>
@@ -122,12 +123,24 @@ function TemplateForm(props: { onCustom: () => void }) {
         </StepLabel>
         <StepContent>
           <TemplateSelection />
-          <ActionButtons
-            onRightClick={next}
-            onLeftClick={props.onCustom}
-            leftText={Translated.byKey("customSettings")}
-            rightDisabled={!selectedTemplate}
-          />
+          <div className={style.actions}>
+            <Button
+              onClick={() => props.onCustom()}
+              variant="contained"
+              color="secondary"
+            >
+              {Translated.byKey("customSettings")}
+            </Button>
+            <Button
+              className={style["ml-lg"]}
+              disabled={!selectedTemplate}
+              variant="contained"
+              color="primary"
+              onClick={() => next()}
+            >
+              {Translated.byKey("nextWithTemplate")}
+            </Button>
+          </div>
         </StepContent>
       </Step>
       <Step>
@@ -135,8 +148,15 @@ function TemplateForm(props: { onCustom: () => void }) {
           <Label text={Translated.byKey("organiser")} />
         </StepLabel>
         <StepContent>
-          <SelectClubOrg />
-          <ActionButtons onRightClick={next} onLeftClick={previous} />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              next();
+            }}
+          >
+            <SelectClubOrg />
+            <ActionButtons onLeftClick={previous} />
+          </form>
         </StepContent>
       </Step>
       <Step>
@@ -186,12 +206,18 @@ function Form(props: { onTemplate: () => void }) {
           <Label text={Translated.byKey("about")} />
         </StepLabel>
         <StepContent>
-          <About />
-          <ActionButtons
-            onRightClick={next}
-            onLeftClick={props.onTemplate}
-            leftText={Translated.byKey("buildTournament_useTemplate")}
-          />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              next();
+            }}
+          >
+            <About />
+            <ActionButtons
+              onLeftClick={props.onTemplate}
+              leftText={Translated.byKey("buildTournament_useTemplate")}
+            />
+          </form>
         </StepContent>
       </Step>
       <Step>
@@ -199,8 +225,15 @@ function Form(props: { onTemplate: () => void }) {
           <Label text={Translated.byKey("organiser")} />
         </StepLabel>
         <StepContent>
-          <SelectClubOrg />
-          <ActionButtons onRightClick={next} onLeftClick={previous} />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              next();
+            }}
+          >
+            <SelectClubOrg />
+            <ActionButtons onLeftClick={previous} />
+          </form>
         </StepContent>
       </Step>
       <Step>

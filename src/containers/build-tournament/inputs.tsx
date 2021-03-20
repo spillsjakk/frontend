@@ -53,6 +53,7 @@ function StartDate() {
       <div className={style.inputs}>
         <DateTimePicker
           variant="inline"
+          required
           label={Translated.byKey("startDate")}
           value={
             new Date(
@@ -142,8 +143,23 @@ function TimeControl() {
   );
 }
 
+function generateId(length: number) {
+  let result = "";
+  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 function About() {
   const form = useForm();
+  useEffect(() => {
+    if (form && !form.id) {
+      form.changeId(generateId(8));
+    }
+  }, []);
   return (
     <div className={style.content}>
       <div className={style.inputs}>
@@ -155,6 +171,7 @@ function About() {
               variant="outlined"
               value={form.name}
               onChange={(e) => form.changeName(e.target.value)}
+              required
             />
           </Grid>
           <Grid item xs={6}>
@@ -167,6 +184,7 @@ function About() {
                 const pattern = /^[A-Za-z0-9_-]*$/;
                 if (pattern.test(e.target.value)) form.changeId(e.target.value);
               }}
+              required
             />
           </Grid>
           <Grid item xs={6}>
@@ -195,6 +213,7 @@ function About() {
               multiline
               value={form.description}
               onChange={(e) => form.changeDescription(e.target.value)}
+              required
             />
           </Grid>
         </Grid>
@@ -353,7 +372,7 @@ function Advanced() {
                 label={<Translated str="winPoints" />}
                 variant="outlined"
                 value={form.winPoints}
-                InputProps={{ inputProps: { min: 0, step: 0.5 }}}
+                InputProps={{ inputProps: { min: 0, step: 0.5 } }}
                 onChange={(e) => form.changeWinPoints(Number(e.target.value))}
               />
             </Grid>
@@ -364,7 +383,7 @@ function Advanced() {
                 label={<Translated str="drawPoints" />}
                 variant="outlined"
                 value={form.drawPoints}
-                InputProps={{ inputProps: { min: 0, step: 0.5 }}}
+                InputProps={{ inputProps: { min: 0, step: 0.5 } }}
                 onChange={(e) => form.changeDrawPoints(Number(e.target.value))}
               />
             </Grid>
@@ -375,7 +394,7 @@ function Advanced() {
                 label={<Translated str="lossPoints" />}
                 variant="outlined"
                 value={form.lossPoints}
-                InputProps={{ inputProps: { min: 0, step: 0.5 }}}
+                InputProps={{ inputProps: { min: 0, step: 0.5 } }}
                 onChange={(e) => form.changeLossPoints(Number(e.target.value))}
               />
             </Grid>
@@ -503,8 +522,9 @@ function SelectClubOrg() {
           variant="outlined"
           value={form.organiser}
           native
+          required
         >
-          <option value="">
+          <option value="" disabled>
             {Translated.byKey("buildTournament_pleaseSelectOrganiser")}
           </option>
           {Array.isArray(orgs) &&
