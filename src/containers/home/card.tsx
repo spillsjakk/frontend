@@ -23,7 +23,6 @@ function getNumberWithZero(value: number) {
 }
 
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
-  console.log("--", typeof days);
   if (completed) {
     return "";
   } else {

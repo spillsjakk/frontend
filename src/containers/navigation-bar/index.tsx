@@ -42,6 +42,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
   function onLogout() {
     fetchJson("/s/account/logout", "POST", {}, (_) => {
       setUser({ authenticated: false });
+      window.location.assign("/");
     });
   }
 
@@ -220,7 +221,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
                     <a href="/inbox" className="item">
                       {Translated.byKey("inbox")}
                     </a>
-                    <a href="/" onClick={onLogout} className="item">
+                    <a onClick={onLogout} className="item">
                       {Translated.byKey("logout")}
                     </a>
                   </div>

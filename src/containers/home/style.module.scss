@@ -95,7 +95,8 @@
         }
 
         .content {
-          display: flex;
+          display: grid;
+          grid-auto-flow: column;
           gap: 30px;
           overflow-x: scroll;
           padding: 20px;

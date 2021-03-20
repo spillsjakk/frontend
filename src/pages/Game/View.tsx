@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { GameOutcome } from "./play";
 import { numToSquare } from "./play/clock";
 import { RouteComponentProps } from "react-router-dom";
@@ -33,6 +34,7 @@ type ViewState = {
   black_fide_federation: string;
   orientation: string;
   tournament: string;
+  pgnCopied: boolean;
 };
 
 class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
@@ -57,6 +59,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       black_fide_federation: "",
       orientation: "",
       tournament: "",
+      pgnCopied: false,
     };
 
     this.gameId = props.match.params.id;
@@ -155,6 +158,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
         lastMove,
       });
     }
+
+    // eslint-disable-next-line no-unused-expressions
+    document.querySelector(".highlight-blue")?.scrollIntoView(false);
   }
 
   getOpponentInfo() {
@@ -212,8 +218,6 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   }
 
   componentDidUpdate() {
-    // eslint-disable-next-line no-unused-expressions
-    document.querySelector(".highlight-blue")?.scrollIntoView(false);
     window.dispatchEvent(new Event("resize")); // apparently sometimes needed for chessground
   }
 
@@ -352,6 +356,29 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             <Translated str="rawPgn" />:
           </p>
           <code id="raw-pgn">{this.state.pgn}</code>
+          <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id={`tooltip-top-copy`}>
+                {!this.state.pgnCopied && (
+                  <strong>{Translated.byKey("clickToCopy")}</strong>
+                )}
+                {this.state.pgnCopied && (
+                  <strong>{Translated.byKey("copied")}</strong>
+                )}
+              </Tooltip>
+            }
+          >
+            <button
+              className="btn"
+              onClick={() => {
+                navigator.clipboard.writeText(this.state.pgn);
+                this.setState({ pgnCopied: true });
+              }}
+            >
+              <img src="/icons/clipboard-plus.svg" alt="Copy to clipboard" />
+            </button>
+          </OverlayTrigger>
         </div>
       </>
     );
