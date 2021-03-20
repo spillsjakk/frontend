@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import Translated from "../../../../components/translated";
@@ -23,11 +23,15 @@ interface Props {
 }
 
 const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
+  const [joining, setJoining] = useState(false);
+
   const { invitation } = useInvitation();
 
   const history = useHistory();
 
   function joinToClub() {
+    if (joining) return;
+    setJoining(true);
     fetchCall(
       "/s/registrations/clubs",
       "PATCH",
@@ -35,9 +39,11 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
         invitation_id: invitation.id,
       },
       () => {
+        setJoining(false);
         history.push(`/club/manage`);
       },
       (error) => {
+        setJoining(false);
         if (error === "404") {
           ReactDOM.render(
             <>
@@ -70,7 +76,10 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
       </button>
       <div className="text-align-end italic">
         {Translated.byKey("alreadyHaveAccount")}
-        <span className="green pointer" onClick={joinToClub}>
+        <span
+          className={`green pointer ${joining ? "disabled" : ""}`}
+          onClick={joinToClub}
+        >
           {" "}
           {Translated.byKey("oneClickJoin")}
         </span>
