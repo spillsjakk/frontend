@@ -10,6 +10,8 @@ export interface User {
   birthDate: string;
   fideId: number;
   password: string;
+  title?: string;
+  rating?: string;
 }
 
 export interface UserRegistrationContext {

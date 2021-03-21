@@ -31,6 +31,8 @@ const WithUserRegistration: FunctionComponent<{}> = ({ children }) => {
         birth_date: user.birthDate,
         password: user.password,
         invitation_id: invitationId,
+        title: user.title,
+        rating: user.rating,
       },
       () => {
         fetchCall(

@@ -21,6 +21,8 @@ const FideInfo: FunctionComponent<{ onNext: () => void }> = ({ onNext }) => {
               ? json.birth_year.toString() + "-01-01"
               : "",
             gender: json.sex,
+            rating: json.rating,
+            title: json.title,
           });
         }
       },

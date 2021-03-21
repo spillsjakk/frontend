@@ -59,6 +59,30 @@ const Form: FunctionComponent<{}> = () => {
           </div>
         </Col>
       </Row>
+      {userRegistration.user.title && userRegistration.user.rating && (
+        <Row>
+          <Col sm="auto">
+            <div className={style["input-group"]}>
+              <label htmlFor="title" className={`${style.label} bold`}>
+                {Translated.byKey("title")}
+              </label>
+              <input id="title" value={userRegistration.user.title} disabled />
+            </div>
+          </Col>
+          <Col sm="auto">
+            <div className={style["input-group"]}>
+              <label htmlFor="rating" className={`${style.label} bold`}>
+                {Translated.byKey("rating")}
+              </label>
+              <input
+                id="rating"
+                value={userRegistration.user.rating}
+                disabled
+              />
+            </div>
+          </Col>
+        </Row>
+      )}
       <p
         dangerouslySetInnerHTML={{
           __html: `${Translated.byKey("namePrivacyInfo").replace(
