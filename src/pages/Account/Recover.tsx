@@ -6,19 +6,23 @@ import { fetchJson, title } from "../../functions";
 import "./Recover.css";
 
 type RecoverProps = {
-  b64?: string
-}
-
-type RecoverState = {
-  showPasswordInput: boolean
-  userId: string
-  recoveryCode: string
-  newPassword1: string
-  newPassword2: string
-  message: number
+  b64?: string;
 };
 
-class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverState> {
+type RecoverState = {
+  showPasswordInput: boolean;
+  userId: string;
+  recoveryCode: string;
+  newPassword1: string;
+  newPassword2: string;
+  message: number;
+  email: string;
+};
+
+class Recover extends PureComponent<
+  RouteComponentProps<RecoverProps>,
+  RecoverState
+> {
   constructor(props: RouteComponentProps<RecoverProps>) {
     super(props);
 
@@ -28,7 +32,8 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
       recoveryCode: "",
       newPassword1: "",
       newPassword2: "",
-      message: 0
+      message: 0,
+      email: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,20 +45,25 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
     document.body.id = "Account-Recover";
 
     if (this.props.match.params.b64) {
-      fetchJson(`/s/account/test-recovery/${this.props.match.params.b64}`, "POST", undefined, result => {
-        if (result.valid) {
-          const decoded = atob(this.props.match.params.b64!);
-          const split = decoded.split(":");
-          this.setState({
-            userId: split[0],
-            recoveryCode: split[1]
-          });
-        } else {
-          this.setState({
-            message: 1
-          });
+      fetchJson(
+        `/s/account/test-recovery/${this.props.match.params.b64}`,
+        "POST",
+        undefined,
+        (result) => {
+          if (result.valid) {
+            const decoded = atob(this.props.match.params.b64!);
+            const split = decoded.split(":");
+            this.setState({
+              userId: split[0],
+              recoveryCode: split[1],
+            });
+          } else {
+            this.setState({
+              message: 1,
+            });
+          }
         }
-      });
+      );
     }
   }
 
@@ -66,22 +76,32 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
   submitRecovery(e: FormEvent) {
     e.preventDefault();
 
-    fetchJson(`/s/account/recover/${this.state.userId}`, "POST", undefined, _ => {
-      this.setState({ message: 2 });
-    });
+    fetchJson(
+      `/s/account/recover/${this.state.email}`,
+      "POST",
+      undefined,
+      (_) => {
+        this.setState({ message: 2 });
+      }
+    );
   }
 
   submitNewPassword(e: FormEvent) {
     e.preventDefault();
 
     if (this.state.newPassword1 === this.state.newPassword2) {
-      fetchJson(`/s/account/finish-recovery`, "POST", {
-        account: this.state.userId,
-        recovery_code: this.state.recoveryCode,
-        new_password: this.state.newPassword1
-      }, _ => {
-        this.props.history.push("/login");
-      });
+      fetchJson(
+        `/s/account/finish-recovery`,
+        "POST",
+        {
+          account: this.state.userId,
+          recovery_code: this.state.recoveryCode,
+          new_password: this.state.newPassword1,
+        },
+        (_) => {
+          this.props.history.push("/login");
+        }
+      );
     } else {
       alert("Passwords are not equal.");
     }
@@ -89,9 +109,17 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
 
   render() {
     if (this.state.message === 1) {
-      return <><Translated str="invalidPasswordRecoveryCode" /></>;
+      return (
+        <>
+          <Translated str="invalidPasswordRecoveryCode" />
+        </>
+      );
     } else if (this.state.message === 2) {
-      return <><Translated str="passwordRecoveryEmailSent" /></>;
+      return (
+        <>
+          <Translated str="passwordRecoveryEmailSent" />
+        </>
+      );
     }
 
     return (
@@ -100,31 +128,73 @@ class Recover extends PureComponent<RouteComponentProps<RecoverProps>, RecoverSt
           <title>{title("recoverAccount")}</title>
         </Helmet>
 
-        <h1 className="mt-5 p-3"><Translated str="recoverAccount" /></h1>
+        <h1 className="mt-5 p-3">
+          <Translated str="recoverAccount" />
+        </h1>
 
         <div className="mt-4"></div>
 
-        {!this.state.showPasswordInput ? <>
-          <form onSubmit={this.submitRecovery}>
-            <div className="form-group">
-              <label htmlFor="userId"><Translated str="username" /></label>
-              <input type="text" className="form-control w-25" name="userId" id="userId" value={this.state.userId} onChange={this.handleChange} required />
-            </div>
-            <button className="btn btn-primary"><Translated str="recover" /></button>
-          </form>
-        </> : <>
+        {!this.state.showPasswordInput ? (
+          <>
+            <form onSubmit={this.submitRecovery}>
+              <div className="form-group">
+                <label htmlFor="userId">
+                  <Translated str="email" />
+                </label>
+                <input
+                  type="email"
+                  className="form-control w-25"
+                  name="email"
+                  id="email"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
+              <button className="btn btn-primary">
+                <Translated str="recover" />
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
             <form onSubmit={this.submitNewPassword}>
               <div className="form-group">
-                <label htmlFor="newPassword1"><Translated str="newPassword" /></label>
-                <input type="password" className="form-control w-25" minLength={7} name="newPassword1" id="newPassword1" value={this.state.newPassword1} onChange={this.handleChange} required />
+                <label htmlFor="newPassword1">
+                  <Translated str="newPassword" />
+                </label>
+                <input
+                  type="password"
+                  className="form-control w-25"
+                  minLength={7}
+                  name="newPassword1"
+                  id="newPassword1"
+                  value={this.state.newPassword1}
+                  onChange={this.handleChange}
+                  required
+                />
               </div>
               <div className="form-group">
-                <label htmlFor="newPassword2"><Translated str="newPasswordAgain" /></label>
-                <input type="password" className="form-control w-25" minLength={7} name="newPassword2" id="newPassword2" value={this.state.newPassword2} onChange={this.handleChange} required />
+                <label htmlFor="newPassword2">
+                  <Translated str="newPasswordAgain" />
+                </label>
+                <input
+                  type="password"
+                  className="form-control w-25"
+                  minLength={7}
+                  name="newPassword2"
+                  id="newPassword2"
+                  value={this.state.newPassword2}
+                  onChange={this.handleChange}
+                  required
+                />
               </div>
-              <button className="btn btn-primary"><Translated str="submit" /></button>
+              <button className="btn btn-primary">
+                <Translated str="submit" />
+              </button>
             </form>
-          </>}
+          </>
+        )}
       </>
     );
   }
