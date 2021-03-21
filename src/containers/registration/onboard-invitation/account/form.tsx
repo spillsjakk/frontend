@@ -23,7 +23,7 @@ const Form: FunctionComponent<{}> = () => {
         </label>
         <input
           id="username"
-          pattern="[a-zA-Z0-9-_]+"
+          pattern="^[a-zA-Z0-9-_]+$"
           value={userRegistration.user.username}
           onChange={(e) => userRegistration.changeUsername(e.target.value)}
           required
@@ -38,7 +38,7 @@ const Form: FunctionComponent<{}> = () => {
             <input
               id="firstName"
               value={userRegistration.user.firstName}
-              pattern="[a-zA-Z0-9-_\s]+"
+              pattern="^[a-zA-Z0-9-_\s]+$"
               onChange={(e) => userRegistration.changeFirstname(e.target.value)}
               required
             />
@@ -52,7 +52,7 @@ const Form: FunctionComponent<{}> = () => {
             <input
               id="lastName"
               value={userRegistration.user.lastName}
-              pattern="[a-zA-Z0-9-_\s]+"
+              pattern="^[a-zA-Z0-9-_\s]+$"
               onChange={(e) => userRegistration.changeLastname(e.target.value)}
               required
             />

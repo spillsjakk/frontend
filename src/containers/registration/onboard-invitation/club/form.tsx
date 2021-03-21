@@ -87,7 +87,7 @@ const Form: FunctionComponent<{}> = () => {
           description={Translated.byKey("manageClub_clubsNameDesc")}
           value={orgName}
           onChange={(value: string) => setOrgName(value)}
-          pattern="[a-zA-Z0-9-_\s]+"
+          pattern="^[a-zA-Z0-9-_\s]+$"
         />
 
         <InputGroup
@@ -95,7 +95,7 @@ const Form: FunctionComponent<{}> = () => {
           description={Translated.byKey("manageClub_clubsIdDesc")}
           value={id}
           onChange={(value: string) => setId(value)}
-          pattern="[a-zA-Z0-9-_]+"
+          pattern="^[a-zA-Z0-9-_]+$"
         />
 
         <InputGroup

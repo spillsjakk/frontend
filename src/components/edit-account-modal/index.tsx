@@ -86,7 +86,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
               <label>{Translated.byKey("username")}: </label>
               <input
                 type="text"
-                pattern="[a-zA-Z0-9-_]+"
+                pattern="^[a-zA-Z0-9-_]+$"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required

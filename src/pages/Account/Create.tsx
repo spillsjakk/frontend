@@ -223,7 +223,7 @@ class Create extends Component<{}, CreateState> {
                     type="text"
                     id="username"
                     name="username"
-                    pattern="[a-zA-Z0-9-_]+"
+                    pattern="^[a-zA-Z0-9-_]+$"
                     value={this.state.username}
                     onChange={this.handleChange}
                     required

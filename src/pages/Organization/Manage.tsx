@@ -157,7 +157,7 @@ class Manage extends PureComponent<{}, ManageState> {
               value={this.state.id}
               disabled={this.state.exists}
               onChange={this.handleChange}
-              pattern="[a-z0-9_-]+"
+              pattern="^[a-z0-9_-]+$"
             />
           </div>
           <div className="form-group mt-4">
