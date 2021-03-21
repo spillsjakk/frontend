@@ -443,7 +443,7 @@ function Format() {
                 />
               </Grid>
             )}
-            {[2, 3, 7, 9].includes(form.kind) && (
+            {[2, 3, 9].includes(form.kind) && (
               <Grid item>
                 <TextField
                   label={<Translated str="membersPerTeam" />}
@@ -451,6 +451,7 @@ function Format() {
                   variant="outlined"
                   id="per_team"
                   name="per_team"
+                  required={[2, 3, 9].includes(form.kind)}
                   value={Number(form.perTeam)}
                   onChange={(e) => form.changePerTeam!(Number(e.target.value))}
                 />

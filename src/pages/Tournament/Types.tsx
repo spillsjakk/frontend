@@ -31,6 +31,7 @@ export type Tournament = {
   tb2: string | null;
   tb3: string | null;
   tb4: string | null;
+  started?: boolean;
 };
 
 export type Participant = {

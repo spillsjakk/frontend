@@ -259,8 +259,15 @@ function Form(props: { onTemplate: () => void }) {
           <Label text={Translated.byKey("buildTournament_format")} />
         </StepLabel>
         <StepContent>
-          <Format />
-          <ActionButtons onRightClick={next} onLeftClick={previous} />
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              next();
+            }}
+          >
+            <Format />
+            <ActionButtons onLeftClick={previous} />
+          </form>
         </StepContent>
       </Step>
       <Step>

@@ -770,7 +770,7 @@ class View extends Component<
                 {this.context.user.authenticated &&
                   this.context.user.info?.id === info.tournament.organizer && (
                     <form>
-                      {info.pairings.length === 0 && (
+                      {!info.tournament.started && (
                         <>
                           <Button
                             variant="primary"
