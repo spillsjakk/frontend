@@ -7,16 +7,18 @@ import { fetchCall } from "../../../functions";
 import { Link, useParams } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../../components/translated";
+import { Tournament } from "../../Tournament/Types";
 
 const defaultPic = "https://via.placeholder.com/150";
 
 const OrganizationView: FunctionComponent<{}> = () => {
+  const [tournaments, setTournaments] = useState<Array<Tournament>>([]);
   const [org, setOrg] = useState<any>();
   const [clubs, setClubs] = useState<Array<any>>();
 
   const { oid } = useParams<{ oid: string }>();
 
-  function getClubInfo() {
+  function getOrgInfo() {
     fetchCall(`/s/organization/get/${oid}`, "GET", undefined, (result) => {
       if (result.id) {
         setOrg(result);
@@ -27,10 +29,24 @@ const OrganizationView: FunctionComponent<{}> = () => {
     });
   }
 
+  function getTournaments() {
+    fetchCall(
+      `/s/tournament/by-organiser/${oid}`,
+      "GET",
+      undefined,
+      (result) => {
+        if (Array.isArray(result)) {
+          setTournaments(result);
+        }
+      }
+    );
+  }
+
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "Club-View";
 
-    getClubInfo();
+    getOrgInfo();
+    getTournaments();
   }, []);
 
   return (
@@ -64,6 +80,25 @@ const OrganizationView: FunctionComponent<{}> = () => {
                 </Col>
               ))}
           </Row>
+          <div className={`${style.header} mt-3`}>
+            {Translated.byKey("tournaments")}
+          </div>
+          <div className={style.box}>
+            <table className="mt-4 table">
+              <tbody>
+                {Array.isArray(tournaments) &&
+                  tournaments.map((tournament) => (
+                    <tr key={tournament.id}>
+                      <td>
+                        <Link to={"/tournament/view/" + tournament.id}>
+                          {tournament.name}
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </>

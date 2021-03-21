@@ -9,11 +9,13 @@ import { Club } from "../../../context/club";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../../components/translated";
 import UserLink from "../../../components/UserLink";
+import { Tournament } from "../../Tournament/Types";
 
 const defaultPic = "https://via.placeholder.com/150";
 
 const ClubView: FunctionComponent<{}> = () => {
   const [club, setClub] = useState<Club>();
+  const [tournaments, setTournaments] = useState<Array<Tournament>>([]);
   const [members, setMembers] = useState<Array<any>>();
   const [teams, setTeams] = useState<Array<any>>();
 
@@ -24,6 +26,7 @@ const ClubView: FunctionComponent<{}> = () => {
       setMembers(members);
     });
   }
+
   function getClubInfo() {
     fetchCall(`/s/club/get-info/${cid}`, "GET", undefined, (result) => {
       if (result.id) {
@@ -36,10 +39,24 @@ const ClubView: FunctionComponent<{}> = () => {
     });
   }
 
+  function getTournaments() {
+    fetchCall(
+      `/s/tournament/by-organiser/${cid}`,
+      "GET",
+      undefined,
+      (result) => {
+        if (Array.isArray(result)) {
+          setTournaments(result);
+        }
+      }
+    );
+  }
+
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "Club-View";
 
     getClubInfo();
+    getTournaments();
   }, []);
 
   return (
@@ -73,6 +90,25 @@ const ClubView: FunctionComponent<{}> = () => {
                 </Col>
               ))}
           </Row>
+          <div className={`${style.header} mt-3`}>
+            {Translated.byKey("tournaments")}
+          </div>
+          <div className={style.box}>
+            <table className="mt-4 table">
+              <tbody>
+                {Array.isArray(tournaments) &&
+                  tournaments.map((tournament) => (
+                    <tr key={tournament.id}>
+                      <td>
+                        <Link to={"/tournament/view/" + tournament.id}>
+                          {tournament.name}
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
           <div className={`${style.header} mt-3`}>
             {Translated.byKey("members")}
           </div>
