@@ -349,6 +349,7 @@ const en = {
 	"totalClubCount": "Total club count",
 	"totalPlayerCount": "Total player count",
 	"tournament": "Tournament",
+	"tournamentDoesNotExistOrIsDeleted": "This tournament does not exist, or has been deleted.",
 	"tournamentHomepage": "TOURNAMENT HOMEPAGE",
 	"tournamentName": "Tournament name",
 	"tournamentOrganizer": "Tournament organizer",
