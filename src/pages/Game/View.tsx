@@ -12,6 +12,7 @@ import { fetchJson, title } from "../../functions";
 import Chess from "chess.js";
 import "./View.css";
 import { UserInfoBox } from "./play/user-info-box";
+import { Tournament } from "../Tournament/Types";
 
 type ViewProps = {
   id: string;
@@ -34,6 +35,9 @@ type ViewState = {
   black_fide_federation: string;
   orientation: string;
   tournament: string;
+  round?: number;
+  startDate?: string;
+  tournamentData?: Tournament;
   pgnCopied: boolean;
 };
 
@@ -103,6 +107,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           blackId: result.game.black,
           whiteName: result.game.white_name,
           blackName: result.game.black_name,
+          startDate: result.game.start,
+          round: result.game.round,
+          tournamentData: result.tournament,
           outcome:
             result.game.outcome === 1
               ? GameOutcome.WhiteWins
@@ -185,6 +192,26 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           id: this.state.blackId,
           name: this.state.blackName,
         };
+  }
+
+  getPgn() {
+    return `
+      [Event "${this.state.tournamentData?.name}"]
+      [Site "spillsjakk.no"]
+      [Date "${this.state.startDate}"]
+      [round "${this.state.round}"]
+      [White "${this.state.whiteName}"]
+      [Black "${this.state.blackName}"]
+      [Result "${
+        this.state.outcome !== GameOutcome.Ongoing &&
+        (this.state.outcome === GameOutcome.WhiteWins
+          ? "1-0"
+          : this.state.outcome === GameOutcome.BlackWins
+          ? "0-1"
+          : "1/2-1/2")
+      }"]
+      ${this.state.pgn}
+    `;
   }
 
   renderOpponentBox() {
@@ -355,7 +382,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           <p>
             <Translated str="rawPgn" />:
           </p>
-          <code id="raw-pgn">{this.state.pgn}</code>
+          <code id="raw-pgn">{this.getPgn()}</code>
           <OverlayTrigger
             placement="top"
             overlay={
@@ -372,7 +399,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             <button
               className="btn"
               onClick={() => {
-                navigator.clipboard.writeText(this.state.pgn);
+                navigator.clipboard.writeText(this.getPgn());
                 this.setState({ pgnCopied: true });
               }}
             >
