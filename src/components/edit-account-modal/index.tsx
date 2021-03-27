@@ -22,11 +22,27 @@ const EditAccountModal: FunctionComponent<Props> = ({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
-  const [fideNumber, setFideNumber] = useState<number>();
-  const [fideRating, setFideRating] = useState<number>();
+  const [fideNumber, setFideNumber] = useState<number | undefined>();
+  const [fideRating, setFideRating] = useState<number | undefined>();
   const [title, setTitle] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [email, setEmail] = useState("");
+
+  function resetInputs() {
+    setFirstName("");
+    setLastName("");
+    setUsername("");
+    setFideNumber(undefined);
+    setFideRating(undefined);
+    setTitle("");
+    setBirthDate("");
+    setEmail("");
+  }
+
+  function close() {
+    resetInputs();
+    hide();
+  }
 
   useEffect(() => {
     if (account) {
@@ -56,7 +72,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
         email,
       },
       () => {
-        hide();
+        close();
         success();
       }
     );
@@ -68,7 +84,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
         backdropClassName={style.backdrop}
         className={style.dialog}
         show={show}
-        onHide={hide}
+        onHide={close}
       >
         <Modal.Header closeButton>
           <Modal.Title>
