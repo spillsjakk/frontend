@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import Translated from "../../components/translated";
 import { fetchJson } from "../../functions";
 import { Account } from "../../pages/Tournament/Types";
+import FederationDropdown from "../FederationDropdown";
 import TitleDropdown from "../TitleDropdown";
 import style from "./style.module.scss";
 
@@ -27,6 +28,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
   const [title, setTitle] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [email, setEmail] = useState("");
+  const [fideFederation, setFideFederation] = useState("");
 
   function resetInputs() {
     setFirstName("");
@@ -37,6 +39,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
     setTitle("");
     setBirthDate("");
     setEmail("");
+    setFideFederation("");
   }
 
   function close() {
@@ -54,6 +57,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
       setTitle(account.title);
       setBirthDate(account.birth_date);
       setEmail(account.email);
+      setFideFederation(account.fide_federation);
     }
   }, [account]);
 
@@ -68,6 +72,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
         fide_number: fideNumber,
         title,
         fide_rating: fideRating,
+        fide_federation: fideFederation,
         birth_date: birthDate,
         email,
       },
@@ -164,6 +169,13 @@ const EditAccountModal: FunctionComponent<Props> = ({
               <TitleDropdown
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className={style.row}>
+              <label>{Translated.byKey("federation")}: </label>
+              <FederationDropdown
+                value={fideFederation}
+                onChange={(e) => setFideFederation(e.target.value)}
               />
             </div>
             <div className={style.row}>

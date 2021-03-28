@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import Translated from "./translated";
 export default function FederationDropdown(props: {
   className?: string;
   value?: string;
@@ -16,6 +17,9 @@ export default function FederationDropdown(props: {
       name={props.name}
       id={props.id}
     >
+      <option value="" disabled>
+        {Translated.byKey("pleaseSelect")}
+      </option>
       <option value="AFG">Afghanistan</option>
       <option value="ALB">Albania</option>
       <option value="ALG">Algeria</option>
