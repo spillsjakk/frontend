@@ -447,7 +447,8 @@ const no = {
 	"buildTournament_pleaseSelectOrganiser": "Velg organisator",
 	"moreInfo": "informasjon",
 	"rank": "Rang",
-	"nextWithTemplate": "Neste med valgt mal"
+	"nextWithTemplate": "Neste med valgt mal",
+	"accountsWithPowers": "",
 };
 
 export { no };

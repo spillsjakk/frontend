@@ -5,6 +5,7 @@ import { EditForm } from "../../containers/manage-club/detail/edit-form";
 import { useClub } from "../../context/club";
 import { TeamsSummary } from "../../containers/manage-club/summary/teams";
 import AllAccounts from "../../pages/Organization/AllAccounts";
+import { AccountsWithPowersModal } from "../../components/accounts-with-powers-modal";
 
 const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
   const [isOpen, setOpen] = useState(false);
@@ -13,9 +14,10 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
   const [isStatsOpen, setStatsOpen] = useState(false);
   const [isClubListOpen, setClubListOpen] = useState(false);
   const [isPlayerListOpen, setPlayerListOpen] = useState(false);
+  const [isAccountsWithPowersOpen, setAccountsWithPowersOpen] = useState(false);
 
   function getModalSize() {
-    if (isPlayerListOpen) {
+    if (isPlayerListOpen || isAccountsWithPowersOpen) {
       return "xl";
     }
     return "md";
@@ -39,12 +41,17 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
     setStatsOpen(true);
     setOpen(true);
   }
+  function openAccountsWithPowers() {
+    setAccountsWithPowersOpen(true);
+    setOpen(true);
+  }
 
   function close() {
     setDetailEditOpen(false);
     setClubListOpen(false);
     setPlayerListOpen(false);
     setStatsOpen(false);
+    setAccountsWithPowersOpen(false);
     setOpen(false);
   }
 
@@ -56,6 +63,7 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
         openClubList,
         openPlayerList,
         openStats,
+        openAccountsWithPowers,
         close,
       }}
     >
@@ -74,6 +82,9 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
                 forClubs: true,
               } as any)}
             />
+          )}
+          {isAccountsWithPowersOpen && (
+            <AccountsWithPowersModal forClub={true} />
           )}
         </Modal.Body>
       </Modal>

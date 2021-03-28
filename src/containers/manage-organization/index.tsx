@@ -17,6 +17,7 @@ const ManageOrganization: FunctionComponent<{}> = () => {
     openStats,
     openClubList,
     openPlayerList,
+    openAccountsWithPowers,
   } = useManageOrganizationPopup();
   return (
     <Row className={style.row}>
@@ -52,7 +53,13 @@ const ManageOrganization: FunctionComponent<{}> = () => {
           onAction={() => {
             openPlayerList();
           }}
+          onSecondAction={() => {
+            openAccountsWithPowers();
+          }}
           actionName={Translated.byKey("expandAll").toUpperCase()}
+          secondActionName={Translated.byKey(
+            "accountsWithPowers"
+          ).toUpperCase()}
           content={<AccountsSummary />}
         />
       </Col>

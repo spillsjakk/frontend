@@ -449,7 +449,8 @@ const en = {
 	"buildTournament_pleaseSelectOrganiser": "Please Select Organiser",
 	"moreInfo": "More Info",
 	"rank": "Rank",
-	"nextWithTemplate": "Next With Selected Template"
+	"nextWithTemplate": "Next With Selected Template",
+	"accountsWithPowers": "Accounts with Powers",
 };
 
 export { en };

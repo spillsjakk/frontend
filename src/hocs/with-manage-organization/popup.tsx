@@ -5,6 +5,7 @@ import { EditForm } from "../../containers/manage-organization/detail/edit-form"
 import Statistics from "../../pages/Organization/Statistics";
 import { useOrganization } from "../../context/organization";
 import { ClubsSummary } from "../../containers/manage-organization/summary/clubs";
+import { AccountsWithPowersModal } from "../../components/accounts-with-powers-modal";
 import AllAccounts from "../../pages/Organization/AllAccounts";
 
 const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
@@ -13,9 +14,10 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
   const [isStatsOpen, setStatsOpen] = useState(false);
   const [isClubListOpen, setClubListOpen] = useState(false);
   const [isPlayerListOpen, setPlayerListOpen] = useState(false);
+  const [isAccountsWithPowersOpen, setAccountsWithPowersOpen] = useState(false);
 
   function getModalSize() {
-    if (isPlayerListOpen) {
+    if (isPlayerListOpen || isAccountsWithPowersOpen) {
       return "xl";
     }
     return "md";
@@ -39,12 +41,17 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
     setStatsOpen(true);
     setOpen(true);
   }
+  function openAccountsWithPowers() {
+    setAccountsWithPowersOpen(true);
+    setOpen(true);
+  }
 
   function close() {
     setDetailEditOpen(false);
     setClubListOpen(false);
     setPlayerListOpen(false);
     setStatsOpen(false);
+    setAccountsWithPowersOpen(false);
     setOpen(false);
   }
 
@@ -56,6 +63,7 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
         openClubList,
         openPlayerList,
         openStats,
+        openAccountsWithPowers,
         close,
       }}
     >
@@ -80,6 +88,7 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
               } as any)}
             />
           )}
+          {isAccountsWithPowersOpen && <AccountsWithPowersModal />}
         </Modal.Body>
       </Modal>
     </ManageOrganizationPopupProvider>
