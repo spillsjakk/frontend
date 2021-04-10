@@ -24,7 +24,6 @@ import { useTemplate } from "../../context/build-tournament-template";
 import { FormContext, useForm } from "../../context/build-tournament-form";
 import { fetchJson } from "../../functions";
 import Translated from "../../components/translated";
-import { WithOrgsClubs } from "./with-orgs-clubs";
 
 function ActionButtons({
   onLeftClick,
@@ -306,14 +305,14 @@ const FormStepper: FunctionComponent<{}> = () => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <WithOrgsClubs>
+      <>
         {formType === FormType.TEMPLATE && (
           <TemplateForm onCustom={() => setFormType(FormType.ALL)} />
         )}
         {formType === FormType.ALL && (
           <Form onTemplate={() => setFormType(FormType.TEMPLATE)} />
         )}
-      </WithOrgsClubs>
+      </>
     </MuiPickersUtilsProvider>
   );
 };

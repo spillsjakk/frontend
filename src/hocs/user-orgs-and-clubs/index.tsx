@@ -38,11 +38,11 @@ type Powers = {
   };
 };
 
-const WithOrgsClubs: FunctionComponent<{}> = (props) => {
+const WithUserOrgsClubs: FunctionComponent<{}> = (props) => {
   const [orgs, setOrgs] = useState([]);
   const [clubs, setClubs] = useState([]);
   useEffect(() => {
-    fetchCall("/s/account/powers", "GET", undefined, (data: Powers) => {
+    fetchCall("/s/account/powers", "GET", undefined, async (data: Powers) => {
       if (data && data.organizations) {
         const organizations = [];
         const ids = new Set([
@@ -51,7 +51,7 @@ const WithOrgsClubs: FunctionComponent<{}> = (props) => {
           ...data.organizations.manager,
         ]);
         for (const item of ids) {
-          fetchCall(
+          await fetchCall(
             `/s/organization/get/${item}`,
             "GET",
             undefined,
@@ -73,7 +73,7 @@ const WithOrgsClubs: FunctionComponent<{}> = (props) => {
           ...data.clubs.manager,
         ]);
         for (const item of ids) {
-          fetchCall(
+          await fetchCall(
             `/s/club/get-info/${item}`,
             "GET",
             undefined,
@@ -96,4 +96,4 @@ const WithOrgsClubs: FunctionComponent<{}> = (props) => {
   );
 };
 
-export { WithOrgsClubs };
+export { WithUserOrgsClubs };

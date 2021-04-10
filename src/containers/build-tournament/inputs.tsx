@@ -16,7 +16,7 @@ import { useForm } from "../../context/build-tournament-form";
 import { KIND } from "../../constants";
 import Translated from "../../components/translated";
 import { TiebreakerDropdownV2 } from "../../components/tie-breaker-dropdown";
-import { useOrgsClubs } from "./with-orgs-clubs";
+import { useOrgsClubs } from "../../hocs/user-orgs-and-clubs";
 
 function TemplateSelection() {
   const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();

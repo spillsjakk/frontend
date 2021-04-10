@@ -451,7 +451,7 @@ const en = {
 	"rank": "Rank",
 	"nextWithTemplate": "Next With Selected Template",
   "accountsWithPowers": "Accounts with Powers",
-  "buildLeague": "Build League"
+  "buildLeague": "Build League",
 };
 
 export { en };

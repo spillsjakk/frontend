@@ -5,6 +5,7 @@ import { BuildTournament as Container } from "../../../containers/build-tourname
 import { title } from "../../../functions";
 import { WithBuildTournamentTemplate } from "../../../hocs/build-tournament-template";
 import { WithTournamentForm } from "../../../hocs/tournament-form/index";
+import { WithUserOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 
 const BuildTournament: FunctionComponent<{}> = () => {
   useEffect(() => {
@@ -17,7 +18,9 @@ const BuildTournament: FunctionComponent<{}> = () => {
       </Helmet>
       <WithTournamentForm>
         <WithBuildTournamentTemplate>
-          <Container />
+          <WithUserOrgsClubs>
+            <Container />
+          </WithUserOrgsClubs>
         </WithBuildTournamentTemplate>
       </WithTournamentForm>
     </main>
