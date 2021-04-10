@@ -452,6 +452,7 @@ const en = {
 	"nextWithTemplate": "Next With Selected Template",
   "accountsWithPowers": "Accounts with Powers",
   "buildLeague": "Build League",
+  "leagueHomepage": "League Homepage"
 };
 
 export { en };

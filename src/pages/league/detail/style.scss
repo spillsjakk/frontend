@@ -1,0 +1,22 @@
+body#league-detail {
+  background-color: #fafafa;
+  color: black !important;
+
+  #main-container {
+    #content-container {
+      display: flex;
+      justify-content: center;
+    }
+    .nav-item {
+      background-color: gray;
+    }
+
+    .table {
+      color: black !important;
+    }
+
+    .table-striped tbody tr:nth-of-type(2n + 1) {
+      background-color: #fafafa !important;
+    }
+  }
+}
