@@ -4,7 +4,7 @@ import { Container } from "./container";
 import { WithLeague } from "../../../hocs/with-league/index";
 import "./style.scss";
 
-const LeagueDetail: FunctionComponent<{}> = () => {
+const LeagueManage: FunctionComponent<{}> = () => {
   const { leagueId } = useParams<{ leagueId: string }>();
   return (
     <WithLeague id={leagueId}>
@@ -13,4 +13,4 @@ const LeagueDetail: FunctionComponent<{}> = () => {
   );
 };
 
-export { LeagueDetail };
+export { LeagueManage };

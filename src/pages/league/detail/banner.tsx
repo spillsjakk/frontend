@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import style from "./style.module.scss";
-import { useLeague } from "../../hocs/with-league/index";
+import { useLeague } from "../../../hocs/with-league/index";
 
 const Banner: FunctionComponent<{}> = () => {
   const { league } = useLeague();

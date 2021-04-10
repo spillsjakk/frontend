@@ -5,7 +5,7 @@ import { Header } from "./header";
 import { Name } from "./name";
 import style from "./style.module.scss";
 
-const LeagueDetail: FunctionComponent<{}> = () => {
+const Container: FunctionComponent<{}> = () => {
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "league-detail";
   }, []);
@@ -19,4 +19,4 @@ const LeagueDetail: FunctionComponent<{}> = () => {
   );
 };
 
-export { LeagueDetail };
+export { Container };

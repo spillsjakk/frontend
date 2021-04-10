@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet";
 import { title } from "../../../functions";
 import { WithLeagueForm } from "../../../hocs/league-form";
 import { WithUserOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
-import { BuildLeagueContainer } from "../../../containers/build-league";
+import { Container } from "./container";
 import "./style.scss";
 
 type Props = {};
@@ -19,7 +19,7 @@ const BuildLeague: FunctionComponent<Props> = () => {
       </Helmet>
       <WithLeagueForm>
         <WithUserOrgsClubs>
-          <BuildLeagueContainer />
+          <Container />
         </WithUserOrgsClubs>
       </WithLeagueForm>
     </main>

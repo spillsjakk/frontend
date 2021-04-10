@@ -30,6 +30,7 @@ import { OrganizationView } from "./pages/Organization/view/index";
 import { BuildTournament } from "./pages/Tournament/build/index";
 import { BuildLeague } from "./pages/league/build/index";
 import { LeagueDetail } from "./pages/league/detail/index";
+import { LeagueManage } from "./pages/league/manage/index";
 import { EditTournament } from "./pages/Tournament/edit/index";
 import { Home } from "./pages/Home/index";
 import { Inbox } from "./pages/inbox/index";
@@ -66,6 +67,11 @@ const Main = () => {
         exact
         path="/league/view/:leagueId"
         component={LeagueDetail}
+      ></Route>
+      <Route
+        exact
+        path="/league/manage/:leagueId"
+        component={LeagueManage}
       ></Route>
       <Route exact path="/tournament/build" component={BuildTournament}></Route>
       <Route exact path="/league/build" component={BuildLeague}></Route>

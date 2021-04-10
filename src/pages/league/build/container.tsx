@@ -1,10 +1,10 @@
 import { Button, Grid, Select, TextField } from "@material-ui/core";
 import React, { FunctionComponent, useEffect, useState } from "react";
-import Translated from "../../components/translated";
-import { useLeagueForm } from "../../context/build-league-form";
-import { fetchJson } from "../../functions";
+import Translated from "../../../components/translated";
+import { useLeagueForm } from "../../../hocs/league-form";
+import { fetchJson } from "../../../functions";
 import style from "./style.module.scss";
-import { useOrgsClubs } from "../../hocs/user-orgs-and-clubs/index";
+import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs/index";
 
 type Props = {};
 
@@ -23,7 +23,7 @@ function SelectClubOrg() {
   const form = useLeagueForm();
   const { orgs, clubs } = useOrgsClubs();
   return (
-    <div className={style.content}>
+    <div className={style.select}>
       <div className={style.inputs}>
         <Select
           onChange={(e) => {
@@ -62,7 +62,7 @@ function SelectClubOrg() {
   );
 }
 
-const BuildLeagueContainer: FunctionComponent<Props> = () => {
+const Container: FunctionComponent<Props> = () => {
   const form = useLeagueForm();
 
   useEffect(() => {
@@ -174,4 +174,4 @@ const BuildLeagueContainer: FunctionComponent<Props> = () => {
     </form>
   );
 };
-export { BuildLeagueContainer };
+export { Container };
