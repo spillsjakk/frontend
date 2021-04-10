@@ -7,9 +7,12 @@ body {
   padding-bottom: 195px;
   min-height: 100%;
   font-family: Roboto, "Open Sans", sans-serif;
+  background-color: #fafafa;
+  color: black;
 }
 
-.nav-link:hover img, .nav-link:hover span {
+.nav-link:hover img,
+.nav-link:hover span {
   filter: invert(57%) sepia(15%) saturate(6988%) hue-rotate(126deg) brightness(92%) contrast(101%);
 }
 
@@ -25,7 +28,8 @@ footer img {
   height: 120px;
 }
 
-img.nsf, img.usf {
+img.nsf,
+img.usf {
   filter: invert(1);
 }
 
@@ -74,27 +78,6 @@ img.nsf, img.usf {
   }
 }
 
-#Login {
-  background-color: #fafafa;
-  color: black;
-}
-
-#Login form {
-  margin-top: 50px;
-}
-
-#Tournament-Build {
-  background-color: #fafafa;
-  color: black;
-}
-
-#Tournament-Edit {
-  background-color: #fafafa;
-  color: black;
-}
-
 body#NotFound {
-  background-color: #fafafa;
-  color: black !important;
   font-family: Montserrat;
 }

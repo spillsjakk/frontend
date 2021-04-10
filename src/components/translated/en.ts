@@ -450,7 +450,8 @@ const en = {
 	"moreInfo": "More Info",
 	"rank": "Rank",
 	"nextWithTemplate": "Next With Selected Template",
-	"accountsWithPowers": "Accounts with Powers",
+  "accountsWithPowers": "Accounts with Powers",
+  "buildLeague": "Build League"
 };
 
 export { en };
