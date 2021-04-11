@@ -50,6 +50,7 @@
     "no-case-declarations": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "react/display-name": "off"
   }
 }

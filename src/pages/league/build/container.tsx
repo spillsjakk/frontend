@@ -1,66 +1,12 @@
-import { Button, Grid, Select, TextField } from "@material-ui/core";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { Button, Grid, TextField } from "@material-ui/core";
+import React, { FunctionComponent, useEffect } from "react";
 import Translated from "../../../components/translated";
-import { useLeagueForm } from "../../../hocs/league-form";
-import { fetchJson } from "../../../functions";
+import { fetchJson, generateId } from "../../../functions";
 import style from "./style.module.scss";
-import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs/index";
+import { SelectClubOrg } from "./select-clubs-orgs";
+import { useLeagueForm } from "./with-form";
 
 type Props = {};
-
-function generateId(length: number) {
-  let result = "";
-  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
-
-function SelectClubOrg() {
-  const [type, setType] = useState("organization");
-  const form = useLeagueForm();
-  const { orgs, clubs } = useOrgsClubs();
-  return (
-    <div className={style.select}>
-      <div className={style.inputs}>
-        <Select
-          onChange={(e) => {
-            const value = e.target.value;
-            if (orgs.find((org) => org.id === value)) {
-              setType("organization");
-              form.changeOrganization(value as string);
-            } else {
-              setType("club");
-              form.changeClub(value as string);
-            }
-          }}
-          variant="outlined"
-          value={type === "organization" ? form.organization : form.club}
-          native
-          required
-        >
-          <option value="" disabled>
-            {Translated.byKey("buildTournament_pleaseSelectOrganiser")}
-          </option>
-          {Array.isArray(orgs) &&
-            orgs.map((org) => (
-              <option key={org.id} value={org.id}>
-                {org.name}
-              </option>
-            ))}
-          {Array.isArray(clubs) &&
-            clubs.map((club) => (
-              <option key={club.id} value={club.id}>
-                {club.name}
-              </option>
-            ))}
-        </Select>
-      </div>
-    </div>
-  );
-}
 
 const Container: FunctionComponent<Props> = () => {
   const form = useLeagueForm();
@@ -85,7 +31,7 @@ const Container: FunctionComponent<Props> = () => {
         organization: form.organization || undefined,
         club: form.club || undefined,
       },
-      (result) => {
+      () => {
         window.location.assign(`/league/view/${form.id}`);
       }
     );

@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useState } from "react";
 import { useUser } from "../../components/UserContext";
 import { useForm } from "../../context/build-tournament-form";
 import { TemplateProvider } from "../../context/build-tournament-template";
+import { generateId } from "../../functions";
 
 const templates = [
   {
@@ -43,16 +44,6 @@ export const placeholder = {
   name: "Please Select a Template",
   value: 0,
 };
-
-function generateId(length: number) {
-  let result = "";
-  const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
 
 const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
   const { user } = useUser();

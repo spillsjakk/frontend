@@ -117,4 +117,5 @@ const WithLeagueForm: FunctionComponent = ({ children }) => {
     </FormProvider>
   );
 };
+
 export { WithLeagueForm };

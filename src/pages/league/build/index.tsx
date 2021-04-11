@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { title } from "../../../functions";
-import { WithLeagueForm } from "../../../hocs/league-form";
 import { WithUserOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 import { Container } from "./container";
 import "./style.scss";
+import { WithLeagueForm } from "./with-form";
 
 type Props = {};
 
