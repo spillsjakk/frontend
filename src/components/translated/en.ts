@@ -453,7 +453,15 @@ const en = {
   "accountsWithPowers": "Accounts with Powers",
   "buildLeague": "Build League",
   "leagueHomepage": "League Homepage",
-  "createSeason": "Create Season"
+  "createSeason": "Create Season",
+  "createCategory": "Create Category",
+  "genderRestricted": "Gender Restricted",
+  "ageRestricted": "Age Restricted",
+  "ratingRestricted": "Rating Restricted",
+  "minimumAge": "Minimum Age",
+  "maximumAge": "Maximum Age",
+  "minimumRating": "Minimum Rating",
+  "maximumRating": "Maximum Rating",
 };
 
 export { en };

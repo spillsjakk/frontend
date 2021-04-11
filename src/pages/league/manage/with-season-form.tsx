@@ -28,7 +28,7 @@ const initalValues: FormContext = {
   changeName: (value: string) => {},
   description: "",
   changeDescription: (value: string) => {},
-  visible: false,
+  visible: true,
   changeVisible: (value: boolean) => {},
   startDate: new Date(),
   changeStartDate: (value: Date) => {},
@@ -46,7 +46,7 @@ const WithSeasonForm: FunctionComponent = ({ children }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
