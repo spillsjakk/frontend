@@ -31,6 +31,9 @@ const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
     const minutes_f = seconds_left / 60;
     const minutes = Math.floor(minutes_f);
     const seconds = seconds_left % 60;
+    if (!days && !hours && !minutes && !seconds) {
+      return;
+    }
     setProgress({
       days,
       hours,

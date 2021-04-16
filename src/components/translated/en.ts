@@ -462,6 +462,7 @@ const en = {
   "maximumAge": "Maximum Age",
   "minimumRating": "Minimum Rating",
   "maximumRating": "Maximum Rating",
+  "downloadPgns": "Download Pgn File",
 };
 
 export { en };

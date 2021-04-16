@@ -59,7 +59,8 @@ const TimeSection: FunctionComponent<{}> = () => {
         )}
       {tournament &&
         tournament.kind !== "ManualPairing" &&
-        tournament.kind !== "RoundRobin" && tournament.kind !== "TeamRoundRobin" && (
+        tournament.kind !== "RoundRobin" &&
+        tournament.kind !== "TeamRoundRobin" && (
           <>
             <div className={style["round-time-starts"]}>
               <div className={style.text}>

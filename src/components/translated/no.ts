@@ -449,6 +449,18 @@ const no = {
 	"rank": "Rang",
 	"nextWithTemplate": "Neste med valgt mal",
 	"accountsWithPowers": "",
+  "buildLeague": "",
+  "leagueHomepage": "",
+  "createSeason": "",
+  "createCategory": "",
+  "genderRestricted": "",
+  "ageRestricted": "",
+  "ratingRestricted": "",
+  "minimumAge": "",
+  "maximumAge": "",
+  "minimumRating": "",
+  "maximumRating": "",
+  "downloadPgns": "",
 };
 
 export { no };

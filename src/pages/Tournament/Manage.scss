@@ -14,6 +14,16 @@
   background-color: #fafafa;
   color: black;
 
+  .pairing-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .download {
+      height: 40px;
+    }
+  }
+
   #main-container {
     .nav-item {
       background-color: gray;

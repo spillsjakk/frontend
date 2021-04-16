@@ -14,6 +14,7 @@ import ToolkitProvider, {
 } from "react-bootstrap-table2-toolkit";
 import UserLink from "../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
+import Chess from "chess.js";
 import { UserContext, Levels } from "../../components/UserContext";
 import {
   Tournament,
@@ -37,6 +38,8 @@ import { WithTournamentRound } from "../../hocs/tournament-round";
 import { WithTournamentPairing } from "../../hocs/tournament-pairing";
 import { WithRoundSetupPopup } from "../../hocs/with-round-setup-popup";
 import { HelpBox, helpboxNames } from "../../components/help-box";
+import { GameOutcome } from "../Game/play";
+import { numToSquare } from "../Game/play/clock";
 
 const { SearchBar } = Search;
 
@@ -141,6 +144,7 @@ class View extends Component<
     this.onUpdatePairingTime = this.onUpdatePairingTime.bind(this);
     this.loadState = this.loadState.bind(this);
     this.onDeleteTournament = this.onDeleteTournament.bind(this);
+    this.downloadPgn = this.downloadPgn.bind(this);
 
     this.participantColumns = [
       { dataField: "seed", text: "seed", sort: true, headerFormatter },
@@ -445,6 +449,81 @@ class View extends Component<
         next_pairing_time: timeUtc,
       },
       this.loadState
+    );
+  }
+
+  reconstructGame(moves: Array<number>) {
+    const game = new Chess();
+    for (let i = 0; i < moves.length; i += 3) {
+      const from = numToSquare(moves[i]);
+      const to = numToSquare(moves[i + 1]);
+      let prom: string | null = "-nbrq"[moves[i + 2]];
+      if (prom === "-") {
+        prom = null;
+      }
+      game.move({ from: from, to: to, promotion: prom });
+      return game;
+    }
+
+    return game;
+  }
+
+  getPgn(name: string, start, round, white, black, outcome, moves) {
+    const game = this.reconstructGame(moves);
+    return `[Event "${name}"]\n[Site "spillsjakk.no"]\n[Date "${start}"]\n[round "${round}"]\n[White "${white}"]\n[Black "${black}"]\n[Result "${
+      outcome !== GameOutcome.Ongoing &&
+      (outcome === GameOutcome.WhiteWins
+        ? "1-0"
+        : outcome === GameOutcome.BlackWins
+        ? "0-1"
+        : "1/2-1/2")
+    }"]\n\n${game.pgn()}\n\n
+    `;
+  }
+
+  downloadPgn() {
+    fetchJson(
+      `/s/tournament/games/${this.state.info.tournament.id}`,
+      "GET",
+      undefined,
+      (result) => {
+        if (result && Array.isArray(result.games)) {
+          const element = document.createElement("a");
+          element.setAttribute(
+            "href",
+            "data:text/plain;charset=utf-8," +
+              encodeURIComponent(
+                result.games.reduce((acc, val) => {
+                  const pgn = `${this.getPgn(
+                    result.name,
+                    val.start,
+                    val.round,
+                    val.white_name,
+                    val.black_name,
+                    val.outcome,
+                    val.moves
+                  )}`;
+                  if (acc) {
+                    return `${acc}\n${pgn}`;
+                  } else {
+                    return pgn;
+                  }
+                }, false)
+              )
+          );
+          element.setAttribute(
+            "download",
+            `${this.state.info.tournament.id}.pgn`
+          );
+
+          element.style.display = "none";
+          document.body.appendChild(element);
+
+          element.click();
+
+          document.body.removeChild(element);
+        }
+      }
     );
   }
 
@@ -1062,9 +1141,18 @@ class View extends Component<
 
                 {info.pairings.length !== 0 && (
                   <>
-                    <h3 className="mt-4">
-                      <Translated str="pairings" />
-                    </h3>
+                    <div className="pairing-heading">
+                      <h3 className="mt-4">
+                        <Translated str="pairings" />
+                      </h3>
+                      <Button
+                        className="download"
+                        variant="primary"
+                        onClick={this.downloadPgn}
+                      >
+                        {Translated.byKey("downloadPgns")}
+                      </Button>
+                    </div>
                     <Tab.Container
                       defaultActiveKey={
                         "round-tab-" + pairingPanes.length.toString()
