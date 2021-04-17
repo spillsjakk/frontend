@@ -279,7 +279,7 @@ const SeasonList: FunctionComponent<unknown> = memo(() => {
   );
 
   return (
-    <List>
+    <List className={style.list}>
       {league &&
         Array.isArray(league.seasons) &&
         league.seasons.map((item, i) => (
@@ -291,7 +291,7 @@ const SeasonList: FunctionComponent<unknown> = memo(() => {
 
 const Season: FunctionComponent<unknown> = memo(() => {
   return (
-    <div className={style.season}>
+    <div className={style.box}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <WithSeasonForm>
           <WithPopup content={<SeasonForm />}>
@@ -305,4 +305,4 @@ const Season: FunctionComponent<unknown> = memo(() => {
   );
 });
 
-export { Season, SeasonForm };
+export { Season };

@@ -1,3 +1,4 @@
+import { League } from "../../../hocs/with-league/index";
 import React, {
   FunctionComponent,
   useCallback,
@@ -23,6 +24,7 @@ export interface FormContext {
   changeClub: (value: string) => void;
   visible: boolean;
   changeVisible: (value: boolean) => void;
+  fillValues: (value: League) => void;
 }
 
 const initalValues: FormContext = {
@@ -42,6 +44,7 @@ const initalValues: FormContext = {
   changeClub: (value: string) => {},
   visible: false,
   changeVisible: (value: boolean) => {},
+  fillValues: (value: League) => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);
@@ -92,6 +95,17 @@ const WithLeagueForm: FunctionComponent = ({ children }) => {
     setBannerPicture(value);
   }, []);
 
+  const fillValues = useCallback((value: League) => {
+    setId(value.id);
+    setName(value.name);
+    setDescription(value.description);
+    setVisible(value.visible);
+    setOrganization(value.organization);
+    setClub(value.club);
+    setProfilePicture(value.profile_picture);
+    setBannerPicture(value.banner_picture);
+  }, []);
+
   return (
     <FormProvider
       value={{
@@ -111,6 +125,7 @@ const WithLeagueForm: FunctionComponent = ({ children }) => {
         changeOrganization,
         club,
         changeClub,
+        fillValues,
       }}
     >
       {children}

@@ -18,16 +18,22 @@
   }
 }
 
-.season {
+.box {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   padding: 20px;
+  max-height: 400px;
 }
 
-.category {
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 20px;
+.list {
+  max-height: 300px;
+  overflow: scroll;
 }
 
+.absolute-right {
+  position: absolute !important;
+  right: 0;
+  top: 10px;
+}
 
 .wrapper {
   font-family: Montserrat;
@@ -110,45 +116,16 @@
       }
     }
   }
-  .description-container {
-    display: flex;
-    margin-top: calc(min(8vw, 80px));
-
-    .about {
-      .heading {
-        font-size: calc(min(3vw, 20px));
-        font-weight: 500;
-        text-align: center;
-      }
-
-      font-weight: 400;
-      font-size: calc(min(3vw, 20px));
-      white-space: pre-line;
-    }
-    .info {
-      .item {
-        .heading {
-          font-weight: 500;
-        }
-        margin-bottom: 10px;
-        height: 80px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-  }
-
-  .standings-container {
-    color: black;
+  .about {
+    margin-top: 20px;
+    font-weight: 400;
+    font-size: calc(min(3vw, 20px));
+    white-space: pre-line;
   }
 }
 
-.box {
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 35px;
-  background-color: #f4f4f4;
+.mt-2 {
+  margin-top: 20px !important;
 }
 
 .centered-container {

@@ -470,6 +470,7 @@ const en = {
   "seasons": "Seasons",
   "addCategory": "Add Category",
   "addSeason": "Add Season",
+  "editLeague": "Edit League",
 };
 
 export { en };

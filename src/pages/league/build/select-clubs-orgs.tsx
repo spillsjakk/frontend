@@ -5,7 +5,7 @@ import Translated from "../../../components/translated";
 import style from "./style.module.scss";
 import { useLeagueForm } from "./with-form";
 
-export function SelectClubOrg() {
+export function SelectClubOrg({ disabled = false }) {
   const [type, setType] = useState("organization");
   const form = useLeagueForm();
   const { orgs, clubs } = useOrgsClubs();
@@ -13,6 +13,7 @@ export function SelectClubOrg() {
     <div className={style.select}>
       <div className={style.inputs}>
         <Select
+          disabled={disabled}
           onChange={(e) => {
             const value = e.target.value;
             if (orgs.find((org) => org.id === value)) {

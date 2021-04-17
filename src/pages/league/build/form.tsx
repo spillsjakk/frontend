@@ -8,7 +8,7 @@ import { useLeagueForm } from "./with-form";
 
 type Props = {};
 
-const Container: FunctionComponent<Props> = () => {
+const Form: FunctionComponent<Props> = () => {
   const form = useLeagueForm();
 
   useEffect(() => {
@@ -120,4 +120,5 @@ const Container: FunctionComponent<Props> = () => {
     </form>
   );
 };
-export { Container };
+
+export { Form };

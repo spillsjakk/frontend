@@ -463,7 +463,7 @@ const CategoryList: FunctionComponent<unknown> = memo(() => {
   );
 
   return (
-    <List>
+    <List className={style.list}>
       {league &&
         Array.isArray(league.categories) &&
         league.categories.map((item, i) => (
@@ -475,7 +475,7 @@ const CategoryList: FunctionComponent<unknown> = memo(() => {
 
 const Category: FunctionComponent<unknown> = memo(() => {
   return (
-    <div className={style.category}>
+    <div className={style.box}>
       <WithCategoryForm>
         <WithPopup content={<CategoryForm />}>
           <Heading translateKey="categories" />
