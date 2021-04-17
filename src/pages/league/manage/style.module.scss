@@ -140,3 +140,46 @@
   position: absolute;
   right: 0;
 }
+
+#stepper {
+  .heading {
+    background-color: #469a88;
+    color: white;
+    border-radius: 0 0 50px 0;
+    font-size: calc(min(3vw, 20px));
+    padding: 5px;
+    padding-left: 15px;
+    text-transform: capitalize;
+  }
+
+  .content {
+    .description {
+      margin: 10px 0px;
+    }
+
+    .inputs {
+      margin: 10px 0px;
+    }
+
+    .actions {
+      margin: 20px 0px;
+    }
+  }
+
+  .ml-sm {
+    margin-left: 10px;
+  }
+
+  .ml-lg {
+    margin-left: 30px;
+  }
+
+  .mt-xl {
+    margin-top: 30px;
+  }
+
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@material-ui/core";
+import { Dialog, DialogContent, DialogProps } from "@material-ui/core";
 import React, {
   Context,
   FunctionComponent,
@@ -24,6 +24,7 @@ export const usePopup = () => useContext(PopupContext);
 
 interface Props {
   content: ReactElement;
+  dialogProps?: Partial<DialogProps>;
 }
 
 const WithPopup: FunctionComponent<Props> = (props) => {
@@ -54,6 +55,7 @@ const WithPopup: FunctionComponent<Props> = (props) => {
         onClose={() => {
           setIsOpen(false);
         }}
+        {...props.dialogProps}
       >
         <DialogContent>{content}</DialogContent>
       </Dialog>

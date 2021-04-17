@@ -11,11 +11,23 @@ import { Description } from "./description";
 import style from "./style.module.scss";
 import { Grid } from "@material-ui/core";
 import { WithUserOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
+import { Tournament } from "./tournament";
+import { fetchCall } from "../../../functions";
 
 const LeagueManage: FunctionComponent<{}> = () => {
   const { leagueId } = useParams<{ leagueId: string }>();
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "league-manage";
+    fetchCall(
+      `/s/leagues/${leagueId}/permissions`,
+      "GET",
+      undefined,
+      (result) => {
+        if (!result?.can_manage) {
+          window.location.replace("/");
+        }
+      }
+    );
   }, []);
   return (
     <WithLeague id={leagueId}>
@@ -37,6 +49,7 @@ const LeagueManage: FunctionComponent<{}> = () => {
             <Grid item xs={12}>
               <Category />
             </Grid>
+            <Tournament />
           </Grid>
         </div>
       </WithUserOrgsClubs>

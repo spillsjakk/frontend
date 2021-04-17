@@ -67,6 +67,10 @@ export interface FormContext {
   changeOrganiser: (value: string) => void;
   organiserType: string;
   changeOrganiserType: (value: string) => void;
+  season: string;
+  changeSeason: (value: string) => void;
+  category: string;
+  changeCategory: (value: string) => void;
 }
 
 const initalValues = {
@@ -132,6 +136,10 @@ const initalValues = {
   changeOrganiser: (value: string) => {},
   organiserType: "",
   changeOrganiserType: (value: string) => {},
+  season: "",
+  changeSeason: (value: string) => {},
+  category: "",
+  changeCategory: (value: string) => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);

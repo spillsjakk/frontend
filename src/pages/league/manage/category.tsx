@@ -487,4 +487,4 @@ const Category: FunctionComponent<unknown> = memo(() => {
   );
 });
 
-export { Category, CategoryForm };
+export { Category };
