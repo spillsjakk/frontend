@@ -3,6 +3,11 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
   Radio,
   TextField,
 } from "@material-ui/core";
@@ -10,20 +15,38 @@ import React, { FunctionComponent, memo, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { fetchJson, generateId } from "../../../functions";
-import { usePopup } from "../../../hocs/popup/index";
+import { usePopup, WithPopup } from "../../../hocs/popup/index";
+import { useLeague } from "../../../hocs/with-league";
 import style from "./style.module.scss";
-import { useCategoryForm } from "./with-category-form";
+import { useCategoryForm, WithCategoryForm } from "./with-category-form";
+import { Category as ICategory } from "../../../hocs/with-league/index";
+import EditIcon from "@material-ui/icons/Edit";
+import { FORM_TYPE } from "./with-season-form";
+
+const Heading: FunctionComponent<{ translateKey: string }> = ({
+  translateKey,
+}) => {
+  return (
+    <div id={style.heading}>
+      {Translated.byKey(translateKey)
+        ? Translated.byKey(translateKey).toUpperCase()
+        : ""}
+    </div>
+  );
+};
 
 const Id: FunctionComponent<{
   change: (value: string) => void;
   value: string;
-}> = memo(({ change, value }) => (
+  disabled: boolean;
+}> = memo(({ change, value, disabled }) => (
   <Grid item xs={6}>
     <TextField
       label={Translated.byKey("id")}
       fullWidth
       variant="outlined"
       value={value}
+      disabled={disabled}
       onChange={(e) => {
         const pattern = /^[A-Za-z0-9_-]*$/;
         if (pattern.test(e.target.value)) change(e.target.value);
@@ -219,6 +242,7 @@ const RatingRestricted: FunctionComponent<{
 ));
 
 const CategoryForm: FunctionComponent<unknown> = () => {
+  const league = useLeague();
   const form = useCategoryForm();
   const popup = usePopup();
   const { leagueId } = useParams<{ leagueId: string }>();
@@ -228,6 +252,12 @@ const CategoryForm: FunctionComponent<unknown> = () => {
       form.changeId(generateId(8));
     }
   }, []);
+
+  useEffect(() => {
+    if (!popup.isOpen) {
+      form.resetValues();
+    }
+  }, [popup.isOpen]);
 
   function create() {
     fetchJson(
@@ -248,7 +278,34 @@ const CategoryForm: FunctionComponent<unknown> = () => {
         maximum_rating: form.maximum_rating,
       },
       () => {
+        league.fetchCategories();
         popup.changeOpen(false);
+        form.resetValues();
+      }
+    );
+  }
+
+  function edit() {
+    fetchJson(
+      `/s/leagues/${leagueId}/categories/${form.id}`,
+      "PUT",
+      {
+        visible: form.visible,
+        name: form.name,
+        description: form.description,
+        gender_restricted: form.gender_restricted,
+        f_restricted: form.f_restricted,
+        age_restricted: form.age_restricted,
+        minimum_age: form.minimum_age,
+        maximum_age: form.maximum_age,
+        rating_restricted: form.rating_restricted,
+        minimum_rating: form.minimum_rating,
+        maximum_rating: form.maximum_rating,
+      },
+      () => {
+        league.fetchCategories();
+        popup.changeOpen(false);
+        form.resetValues();
       }
     );
   }
@@ -257,12 +314,14 @@ const CategoryForm: FunctionComponent<unknown> = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        create();
+        form.type === FORM_TYPE.CREATE ? create() : edit();
       }}
     >
-      <div id={style.heading}>
-        {Translated.byKey("createCategory").toUpperCase()}
-      </div>
+      <Heading
+        translateKey={
+          form.type === FORM_TYPE.CREATE ? "createCategory" : "editCategory"
+        }
+      />
       <div className={style.content}>
         <div className={style.inputs}>
           <Grid container spacing={3}>
@@ -273,6 +332,7 @@ const CategoryForm: FunctionComponent<unknown> = () => {
             <Id
               change={useCallback((value) => form.changeId(value), [])}
               value={form.id}
+              disabled={form.type === FORM_TYPE.EDIT}
             />
             <Description
               change={useCallback((value) => form.changeDescription(value), [])}
@@ -344,18 +404,86 @@ const CategoryForm: FunctionComponent<unknown> = () => {
         color="secondary"
         type="submit"
       >
-        {Translated.byKey("create")}
+        {Translated.byKey(form.type === FORM_TYPE.CREATE ? "create" : "edit")}
       </Button>
     </form>
   );
 };
 
-const Category: FunctionComponent<unknown> = memo(() => {
+const AddCategory: FunctionComponent<unknown> = memo(() => {
   const popup = usePopup();
+  const form = useCategoryForm();
+
   return (
-    <>
-      <Button onClick={() => popup.changeOpen(true)}>Add Category</Button>
-    </>
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={() => {
+        form.changeType(FORM_TYPE.CREATE);
+        popup.changeOpen(true);
+      }}
+    >
+      {Translated.byKey("addCategory")}
+    </Button>
+  );
+});
+
+const CategoryItem: FunctionComponent<{
+  item: ICategory;
+  edit: (item: ICategory) => void;
+}> = memo(({ item, edit }) => {
+  return (
+    <ListItem disableGutters>
+      <ListItemText primary={item.name} />
+      <ListItemSecondaryAction>
+        <IconButton
+          onClick={() => {
+            edit(item);
+          }}
+        >
+          <EditIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
+});
+
+const CategoryList: FunctionComponent<unknown> = memo(() => {
+  const league = useLeague();
+  const { changeOpen } = usePopup();
+  const { changeType, fillValues } = useCategoryForm();
+
+  const edit = useCallback(
+    (item: ICategory) => {
+      changeType(FORM_TYPE.EDIT);
+      fillValues(item);
+      changeOpen(true);
+    },
+    [changeOpen, changeType, fillValues]
+  );
+
+  return (
+    <List>
+      {league &&
+        Array.isArray(league.categories) &&
+        league.categories.map((item, i) => (
+          <CategoryItem item={item} key={i} edit={edit} />
+        ))}
+    </List>
+  );
+});
+
+const Category: FunctionComponent<unknown> = memo(() => {
+  return (
+    <div className={style.category}>
+      <WithCategoryForm>
+        <WithPopup content={<CategoryForm />}>
+          <Heading translateKey="categories" />
+          <CategoryList />
+          <AddCategory />
+        </WithPopup>
+      </WithCategoryForm>
+    </div>
   );
 });
 

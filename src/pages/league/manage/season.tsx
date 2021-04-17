@@ -1,23 +1,49 @@
-import { Button, Grid, TextField } from "@material-ui/core";
-import { DateTimePicker } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  Button,
+  Grid,
+  TextField,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+} from "@material-ui/core";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import EditIcon from "@material-ui/icons/Edit";
 import React, { FunctionComponent, memo, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { fetchJson, generateId } from "../../../functions";
-import { usePopup } from "../../../hocs/popup/index";
+import { usePopup, WithPopup } from "../../../hocs/popup/index";
 import style from "./style.module.scss";
-import { useSeasonForm } from "./with-season-form";
+import { FORM_TYPE, useSeasonForm, WithSeasonForm } from "./with-season-form";
+import { useLeague, Season as ISeason } from "../../../hocs/with-league/index";
+
+const Heading: FunctionComponent<{ translateKey: string }> = ({
+  translateKey,
+}) => {
+  return (
+    <div id={style.heading}>
+      {Translated.byKey(translateKey)
+        ? Translated.byKey(translateKey).toUpperCase()
+        : ""}
+    </div>
+  );
+};
 
 const Id: FunctionComponent<{
   change: (value: string) => void;
   value: string;
-}> = memo(({ change, value }) => (
+  disabled: boolean;
+}> = memo(({ change, value, disabled }) => (
   <Grid item xs={6}>
     <TextField
       label={Translated.byKey("id")}
       fullWidth
       variant="outlined"
       value={value}
+      disabled={disabled}
       onChange={(e) => {
         const pattern = /^[A-Za-z0-9_-]*$/;
         if (pattern.test(e.target.value)) change(e.target.value);
@@ -95,6 +121,7 @@ const EndDate: FunctionComponent<{
 ));
 
 const SeasonForm: FunctionComponent<unknown> = () => {
+  const league = useLeague();
   const form = useSeasonForm();
   const popup = usePopup();
   const { leagueId } = useParams<{ leagueId: string }>();
@@ -104,6 +131,12 @@ const SeasonForm: FunctionComponent<unknown> = () => {
       form.changeId(generateId(8));
     }
   }, []);
+
+  useEffect(() => {
+    if (!popup.isOpen) {
+      form.resetValues();
+    }
+  }, [popup.isOpen]);
 
   function create() {
     fetchJson(
@@ -118,6 +151,25 @@ const SeasonForm: FunctionComponent<unknown> = () => {
         end_date: form.endDate,
       },
       () => {
+        league.fetchSeasons();
+        popup.changeOpen(false);
+      }
+    );
+  }
+
+  function edit() {
+    fetchJson(
+      `/s/leagues/${leagueId}/seasons/${form.id}`,
+      "PUT",
+      {
+        visible: form.visible,
+        name: form.name,
+        description: form.description,
+        start_date: form.startDate,
+        end_date: form.endDate,
+      },
+      () => {
+        league.fetchSeasons();
         popup.changeOpen(false);
       }
     );
@@ -127,12 +179,14 @@ const SeasonForm: FunctionComponent<unknown> = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        create();
+        form.type === FORM_TYPE.CREATE ? create() : edit();
       }}
     >
-      <div id={style.heading}>
-        {Translated.byKey("createSeason").toUpperCase()}
-      </div>
+      <Heading
+        translateKey={
+          form.type === FORM_TYPE.CREATE ? "createSeason" : "editSeason"
+        }
+      />
       <div className={style.content}>
         <div className={style.inputs}>
           <Grid container spacing={3}>
@@ -143,6 +197,7 @@ const SeasonForm: FunctionComponent<unknown> = () => {
             <Id
               change={useCallback((value) => form.changeId(value), [])}
               value={form.id}
+              disabled={form.type === FORM_TYPE.EDIT}
             />
             <Description
               change={useCallback((value) => form.changeDescription(value), [])}
@@ -165,18 +220,88 @@ const SeasonForm: FunctionComponent<unknown> = () => {
         color="secondary"
         type="submit"
       >
-        {Translated.byKey("create")}
+        {Translated.byKey(form.type === FORM_TYPE.CREATE ? "create" : "edit")}
       </Button>
     </form>
   );
 };
 
-const Season: FunctionComponent<unknown> = memo(() => {
+const AddSeason: FunctionComponent<unknown> = memo(() => {
   const popup = usePopup();
+  const form = useSeasonForm();
+
   return (
-    <>
-      <Button onClick={() => popup.changeOpen(true)}>Add Season</Button>
-    </>
+    <Button
+      variant="outlined"
+      color="primary"
+      onClick={() => {
+        form.changeType(FORM_TYPE.CREATE);
+        popup.changeOpen(true);
+      }}
+    >
+      {Translated.byKey("addSeason")}
+    </Button>
+  );
+});
+
+const SeasonItem: FunctionComponent<{
+  item: ISeason;
+  edit: (item: ISeason) => void;
+}> = memo(({ item, edit }) => {
+  return (
+    <ListItem disableGutters>
+      <ListItemText primary={item.name} />
+      <ListItemSecondaryAction>
+        <IconButton
+          onClick={() => {
+            edit(item);
+          }}
+        >
+          <EditIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  );
+});
+
+const SeasonList: FunctionComponent<unknown> = memo(() => {
+  const league = useLeague();
+  const { changeOpen } = usePopup();
+  const { changeType, fillValues } = useSeasonForm();
+
+  const edit = useCallback(
+    (item: ISeason) => {
+      changeType(FORM_TYPE.EDIT);
+      fillValues(item);
+      changeOpen(true);
+    },
+    [changeOpen, changeType, fillValues]
+  );
+
+  return (
+    <List>
+      {league &&
+        Array.isArray(league.seasons) &&
+        league.seasons.map((item, i) => (
+          <SeasonItem item={item} key={i} edit={edit} />
+        ))}
+    </List>
+  );
+});
+
+const Season: FunctionComponent<unknown> = memo(() => {
+  return (
+    <div className={style.season}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <WithSeasonForm>
+          <WithPopup content={<SeasonForm />}>
+            <Heading translateKey="seasons" />
+            <SeasonList />
+            <AddSeason />
+          </WithPopup>
+        </WithSeasonForm>
+      </MuiPickersUtilsProvider>
+    </div>
   );
 });
 

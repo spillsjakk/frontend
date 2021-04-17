@@ -455,6 +455,8 @@ const en = {
   "leagueHomepage": "League Homepage",
   "createSeason": "Create Season",
   "createCategory": "Create Category",
+  "editSeason": "Edit Season",
+  "editCategory": "Edit Category",
   "genderRestricted": "Gender Restricted",
   "ageRestricted": "Age Restricted",
   "ratingRestricted": "Rating Restricted",
@@ -463,6 +465,11 @@ const en = {
   "minimumRating": "Minimum Rating",
   "maximumRating": "Maximum Rating",
   "downloadPgns": "Download Pgn File",
+  "leagueManagePage": "League Management",
+  "categories": "Categories",
+  "seasons": "Seasons",
+  "addCategory": "Add Category",
+  "addSeason": "Add Season",
 };
 
 export { en };

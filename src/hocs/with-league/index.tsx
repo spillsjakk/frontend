@@ -53,6 +53,9 @@ const LeagueContext: Context<
     league: League;
     seasons: Array<Season>;
     categories: Array<Category>;
+    fetchLeague: () => void;
+    fetchCategories: () => void;
+    fetchSeasons: () => void;
   }>
 > = React.createContext({});
 
@@ -94,7 +97,16 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
   }, []);
 
   return (
-    <LeagueProvider value={{ league, seasons, categories }}>
+    <LeagueProvider
+      value={{
+        league,
+        seasons,
+        categories,
+        fetchLeague,
+        fetchCategories,
+        fetchSeasons,
+      }}
+    >
       {children}
     </LeagueProvider>
   );

@@ -1,36 +1,24 @@
-import DateFnsUtils from "@date-io/date-fns";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import React, { FunctionComponent } from "react";
-import { WithPopup } from "../../../hocs/popup";
-import { Season, SeasonForm } from "./season";
-import { Category, CategoryForm } from "./category";
-import { WithSeasonForm } from "./with-season-form";
-import { WithCategoryForm } from "./with-category-form";
+import { Season } from "./season";
+import { Category } from "./category";
+import { Header } from "./header";
+import style from "./style.module.scss";
+import { Grid } from "@material-ui/core";
 
 const Container: FunctionComponent<unknown> = () => {
   return (
-    <>
-      <WithPopup
-        content={
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <WithSeasonForm>
-              <SeasonForm />
-            </WithSeasonForm>
-          </MuiPickersUtilsProvider>
-        }
-      >
-        <Season />
-      </WithPopup>
-      <WithPopup
-        content={
-          <WithCategoryForm>
-            <CategoryForm />
-          </WithCategoryForm>
-        }
-      >
-        <Category />
-      </WithPopup>
-    </>
+    <div className={style.wrapper}>
+      <Header />
+
+      <Grid container xs={12} md={8} spacing={5}>
+        <Grid item xs={12} md={6}>
+          <Season />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Category />
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 export { Container };

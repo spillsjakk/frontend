@@ -1,3 +1,4 @@
+import { Season } from "../../../hocs/with-league/index";
 import React, {
   FunctionComponent,
   useCallback,
@@ -6,6 +7,10 @@ import React, {
   useContext,
 } from "react";
 
+export enum FORM_TYPE {
+  CREATE,
+  EDIT,
+}
 export interface FormContext {
   id: string;
   changeId: (value: string) => void;
@@ -19,6 +24,10 @@ export interface FormContext {
   changeStartDate: (value: Date) => void;
   endDate: Date;
   changeEndDate: (value: Date) => void;
+  fillValues: (value: Season) => void;
+  type: FORM_TYPE;
+  changeType: (value: FORM_TYPE) => void;
+  resetValues: () => void;
 }
 
 const initalValues: FormContext = {
@@ -34,6 +43,10 @@ const initalValues: FormContext = {
   changeStartDate: (value: Date) => {},
   endDate: new Date(),
   changeEndDate: (value: Date) => {},
+  fillValues: (value: Season) => {},
+  type: FORM_TYPE.CREATE,
+  changeType: (value: FORM_TYPE) => {},
+  resetValues: () => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);
@@ -43,6 +56,7 @@ export default FormContext;
 export const useSeasonForm = () => useContext(FormContext);
 
 const WithSeasonForm: FunctionComponent = ({ children }) => {
+  const [type, setType] = useState(FORM_TYPE.CREATE);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -74,6 +88,28 @@ const WithSeasonForm: FunctionComponent = ({ children }) => {
     setEndDate(value);
   }, []);
 
+  const changeType = useCallback((value: FORM_TYPE) => {
+    setType(value);
+  }, []);
+
+  const fillValues = useCallback((value: Season) => {
+    setId(value.id);
+    setName(value.name);
+    setDescription(value.description);
+    setVisible(value.visible);
+    setStartDate(new Date(value.start_date));
+    setEndDate(new Date(value.end_date));
+  }, []);
+
+  const resetValues = useCallback(() => {
+    setId("");
+    setName("");
+    setDescription("");
+    setVisible(true);
+    setStartDate(new Date());
+    setEndDate(new Date());
+  }, []);
+
   return (
     <FormProvider
       value={{
@@ -89,6 +125,10 @@ const WithSeasonForm: FunctionComponent = ({ children }) => {
         changeStartDate,
         endDate,
         changeEndDate,
+        fillValues,
+        type,
+        changeType,
+        resetValues,
       }}
     >
       {children}

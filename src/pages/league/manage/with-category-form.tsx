@@ -1,3 +1,4 @@
+import { Category } from "../../../hocs/with-league/index";
 import React, {
   FunctionComponent,
   useCallback,
@@ -5,6 +6,7 @@ import React, {
   Context,
   useContext,
 } from "react";
+import { FORM_TYPE } from "./with-season-form";
 
 export interface FormContext {
   id: string;
@@ -31,6 +33,10 @@ export interface FormContext {
   changeMinimumRating: (value: number) => void;
   maximum_rating: number;
   changeMaximumRating: (value: number) => void;
+  fillValues: (value: Category) => void;
+  type: FORM_TYPE;
+  changeType: (value: FORM_TYPE) => void;
+  resetValues: () => void;
 }
 
 const initalValues: FormContext = {
@@ -58,6 +64,10 @@ const initalValues: FormContext = {
   changeMinimumRating: (value: number) => {},
   maximum_rating: 0,
   changeMaximumRating: (value: number) => {},
+  fillValues: (value: Category) => {},
+  type: FORM_TYPE.CREATE,
+  changeType: (value: FORM_TYPE) => {},
+  resetValues: () => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);
@@ -67,6 +77,7 @@ export default FormContext;
 export const useCategoryForm = () => useContext(FormContext);
 
 const WithCategoryForm: FunctionComponent = ({ children }) => {
+  const [type, setType] = useState(FORM_TYPE.CREATE);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -128,6 +139,40 @@ const WithCategoryForm: FunctionComponent = ({ children }) => {
     setMaximumAge(value);
   }, []);
 
+  const changeType = useCallback((value: FORM_TYPE) => {
+    setType(value);
+  }, []);
+
+  const fillValues = useCallback((value: Category) => {
+    setId(value.id);
+    setName(value.name);
+    setDescription(value.description);
+    setVisible(value.visible);
+    setGenderRestricted(value.gender_restricted);
+    setFRestricted(value.f_restricted);
+    setAgeRestricted(value.age_restricted);
+    setRatingRestricted(value.rating_restricted);
+    setMinimumRating(value.minimum_rating);
+    setMaximumRating(value.maximum_rating);
+    setMinimumAge(value.minimum_age);
+    setMaximumAge(value.maximum_age);
+  }, []);
+
+  const resetValues = useCallback(() => {
+    setId("");
+    setName("");
+    setDescription("");
+    setVisible(true);
+    setGenderRestricted(false);
+    setFRestricted(false);
+    setAgeRestricted(false);
+    setRatingRestricted(false);
+    setMinimumRating(0);
+    setMaximumRating(0);
+    setMinimumAge(0);
+    setMaximumAge(0);
+  }, []);
+
   return (
     <FormProvider
       value={{
@@ -155,6 +200,10 @@ const WithCategoryForm: FunctionComponent = ({ children }) => {
         changeMinimumAge,
         maximum_rating,
         changeMaximumRating,
+        fillValues,
+        type,
+        changeType,
+        resetValues,
       }}
     >
       {children}
