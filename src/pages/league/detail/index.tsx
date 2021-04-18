@@ -6,6 +6,7 @@ import { Banner } from "./banner";
 import { Description } from "./description";
 import { Header } from "./header";
 import { Name } from "./name";
+import { Tournaments } from "./tournament";
 import style from "./style.module.scss";
 import { WithUserOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 
@@ -22,6 +23,7 @@ const LeagueDetail: FunctionComponent<{}> = () => {
           <Banner />
           <Name />
           <Description />
+          <Tournaments />
         </div>
       </WithUserOrgsClubs>
     </WithLeague>

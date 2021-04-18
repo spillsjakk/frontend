@@ -1,4 +1,5 @@
 import { fetchCall } from "../../functions";
+import { Tournament } from "../../pages/Tournament/Types";
 import React, {
   Context,
   FunctionComponent,
@@ -53,9 +54,11 @@ const LeagueContext: Context<
     league: League;
     seasons: Array<Season>;
     categories: Array<Category>;
+    tournaments: Array<Record<string, Tournament>>;
     fetchLeague: () => void;
     fetchCategories: () => void;
     fetchSeasons: () => void;
+    fetchTournaments: () => void;
   }>
 > = React.createContext({});
 
@@ -71,6 +74,9 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
   const [league, setLeague] = useState<League>();
   const [categories, setCategories] = useState<Array<Category>>();
   const [seasons, setSeasons] = useState<Array<Season>>();
+  const [tournaments, setTournaments] = useState<
+    Array<Record<string, Tournament>>
+  >();
 
   function fetchLeague() {
     fetchCall(`/s/leagues/${id}`, "GET", undefined, (result) => {
@@ -90,21 +96,49 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
     });
   }
 
+  function fetchTournaments() {
+    fetchCall(`/s/leagues/${id}/tournaments`, "GET", undefined, (result) => {
+      if (Array.isArray(result)) {
+        const tournaments = {};
+        for (const tournament of result) {
+          const season = seasons.find(
+            (season) => season.id === tournament.season
+          );
+          if (season) {
+            if (Array.isArray(tournaments[season.name])) {
+              tournaments[season.name].push(tournament);
+            } else {
+              tournaments[season.name] = [tournament];
+            }
+          }
+        }
+        setTournaments(tournaments as any);
+      }
+    });
+  }
+
   useEffect(() => {
     fetchLeague();
     fetchCategories();
     fetchSeasons();
   }, []);
 
+  useEffect(() => {
+    if (Array.isArray(seasons) && seasons.length > 0) {
+      fetchTournaments();
+    }
+  }, [seasons]);
   return (
     <LeagueProvider
       value={{
         league,
         seasons,
         categories,
+        tournaments,
         fetchLeague,
         fetchCategories,
         fetchSeasons,
+        fetchTournaments,
       }}
     >
       {children}

@@ -183,3 +183,25 @@
     flex-direction: column;
   }
 }
+
+.tournament-row {
+  .heading {
+    background-color: #469a88;
+    color: white;
+    border-radius: 0 0 50px 0;
+    font-size: calc(min(3vw, 20px));
+    padding: 5px;
+  }
+
+  .content {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 30px;
+    overflow-x: scroll;
+    padding: 20px;
+  }
+}
+
+.m-tb-1 {
+  margin: 10px 0 !important;
+}

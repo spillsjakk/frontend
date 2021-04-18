@@ -13,7 +13,7 @@ const Banner: FunctionComponent<{}> = () => {
     return (
       <img
         className={style["banner-pic"]}
-        src={"/images/league/banner-placeholder.png"}
+        src={"/images/tournament/banner-placeholder.png"}
       />
     );
   }
@@ -23,7 +23,9 @@ const Banner: FunctionComponent<{}> = () => {
         <img className={style["pp-custom"]} src={league.profile_picture} />
       );
     }
-    return <img className={style.pp} src="/images/league/pp-placeholder.png" />;
+    return (
+      <img className={style.pp} src="/images/tournament/pp-placeholder.png" />
+    );
   }
   return (
     <div className={style.banner}>

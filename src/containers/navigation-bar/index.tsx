@@ -7,7 +7,6 @@ import { fetchJson } from "../../functions";
 import { Logo } from "./logo";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 import "./style.scss";
-import { readCookie } from "@mehmetsefabalik/cookie-helper";
 
 const NavigationBar: FunctionComponent<{}> = () => {
   const [hasMessage, setHasMessage] = useState(false);
@@ -87,12 +86,11 @@ const NavigationBar: FunctionComponent<{}> = () => {
 
   function showBuildLeague() {
     return (
-      (hasLevel() ||
-        user.info?.powers.organization_all ||
-        user.info?.powers.club_all ||
-        user.info?.powers.organization_arbiter ||
-        user.info?.powers.club_arbiter) &&
-      readCookie("show-build-league") === "true"
+      hasLevel() ||
+      user.info?.powers.organization_all ||
+      user.info?.powers.club_all ||
+      user.info?.powers.organization_arbiter ||
+      user.info?.powers.club_arbiter
     );
   }
 

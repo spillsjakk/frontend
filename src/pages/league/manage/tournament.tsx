@@ -32,6 +32,7 @@ import { WithTournamentForm } from "../../../hocs/tournament-form";
 import { WithBuildTournamentTemplate } from "../../../hocs/build-tournament-template";
 import { usePopup, WithPopup } from "../../../hocs/popup";
 import { useLeague } from "../../../hocs/with-league/index";
+import { Card } from "../../../containers/home/card";
 
 function TemplateSelection() {
   const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();
@@ -172,7 +173,11 @@ function SeasonAndCategory() {
               variant="outlined"
               value={form.season}
               native
+              required
             >
+              <option value="" disabled>
+                {Translated.byKey("pleaseSelect")}
+              </option>
               {Array.isArray(seasons) &&
                 seasons.map((season) => (
                   <option value={season.id} key={season.name}>
@@ -187,7 +192,11 @@ function SeasonAndCategory() {
               variant="outlined"
               value={form.category}
               native
+              required
             >
+              <option value="" disabled>
+                {Translated.byKey("pleaseSelect")}
+              </option>
               {Array.isArray(categories) &&
                 categories.map((category) => (
                   <option value={category.id} key={category.name}>
@@ -671,7 +680,7 @@ function buildTournament(form: FormContext) {
     category: form.category,
   };
 
-  fetchJson(`/s/tournament/build`, "POST", body, (result) => {
+  return fetchJson(`/s/tournament/build`, "POST", body, (result) => {
     window.location.assign(`/tournament/view/${result.id}`);
   });
 }
@@ -681,6 +690,7 @@ function TemplateForm(props: { onCustom: () => void }) {
 
   const { selectedTemplate } = useTemplate();
   const form = useForm();
+  const league = useLeague();
 
   function next() {
     setActiveStep(activeStep + 1);
@@ -766,7 +776,10 @@ function TemplateForm(props: { onCustom: () => void }) {
         <StepContent>
           <TournamentLocation />
           <ActionButtons
-            onRightClick={() => buildTournament(form)}
+            onRightClick={async () => {
+              await buildTournament(form);
+              league.fetchTournaments();
+            }}
             onLeftClick={props.onCustom}
             rightText={Translated.byKey("create")}
             leftText={Translated.byKey("buildTournament_reviewAll")}
@@ -932,12 +945,48 @@ const AddTournament: FunctionComponent<unknown> = memo(() => {
     <Button
       variant="contained"
       color="primary"
+      className={style["m-tb-1"]}
       onClick={() => {
         popup.changeOpen(true);
       }}
     >
       {Translated.byKey("buildTournament")}
     </Button>
+  );
+});
+
+const Tournaments: FunctionComponent<unknown> = memo(() => {
+  const league = useLeague();
+
+  return (
+    <>
+      <div className={style["tournament-row"]}>
+        {league &&
+          league.tournaments &&
+          Array.isArray(Object.keys(league.tournaments)) &&
+          Object.keys(league.tournaments).map((season, i) => (
+            <div key={i}>
+              <div className={style.heading}>{season}</div>
+              <div className={style.content} key={i}>
+                {league.tournaments[season].map((tournament, i) => (
+                  <div key={i}>
+                    <Card
+                      id={tournament.id}
+                      name={tournament.name}
+                      timeControl={tournament.online_pairing_interval_n}
+                      timeControlInterval={tournament.online_pairing_interval_t}
+                      format={tournament.kind}
+                      rounds={tournament.rounds}
+                      startDate={tournament.first_online_pairing}
+                      profile={tournament.profile_picture}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+      </div>
+    </>
   );
 });
 
@@ -950,7 +999,10 @@ const Tournament: FunctionComponent<unknown> = memo(() => {
             content={<FormStepper />}
             dialogProps={{ fullWidth: true, maxWidth: "lg" }}
           >
-            <AddTournament />
+            <div>
+              <AddTournament />
+              <Tournaments />
+            </div>
           </WithPopup>
         </WithUserOrgsClubs>
       </WithBuildTournamentTemplate>

@@ -49,7 +49,9 @@ const LeagueManage: FunctionComponent<{}> = () => {
             <Grid item xs={12}>
               <Category />
             </Grid>
-            <Tournament />
+            <Grid item xs={12}>
+              <Tournament />
+            </Grid>
           </Grid>
         </div>
       </WithUserOrgsClubs>
