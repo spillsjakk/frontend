@@ -471,7 +471,7 @@ const en = {
   "addCategory": "Add Category",
   "addSeason": "Add Season",
   "editLeague": "Edit League",
-  "seasonAndCategory": "Season and Category"
+  "seasonAndCategory": "Season and Category",
 };
 
 export { en };

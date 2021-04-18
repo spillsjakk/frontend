@@ -3,6 +3,7 @@ import style from "./style.module.scss";
 import { useLeague } from "../../../hocs/with-league/index";
 import { Link } from "react-router-dom";
 import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs/index";
+import { ActionButton } from "./action-button";
 
 const Name: FunctionComponent<{}> = () => {
   const [name, setName] = useState("");
@@ -31,6 +32,7 @@ const Name: FunctionComponent<{}> = () => {
           <Link to={`/club/view/${league?.club}`}>{name}</Link>
         )}
       </div>
+      <ActionButton />
     </div>
   );
 };

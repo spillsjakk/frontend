@@ -82,7 +82,7 @@
   }
   .description-container {
     display: flex;
-    margin-top: calc(min(8vw, 80px));
+    margin-top: calc(min(6vw, 60px));
 
     .about {
       .heading {
@@ -131,4 +131,17 @@
 .pairing-view-toggle {
   position: absolute;
   right: 0;
+}
+
+.action-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.absolute-right {
+  position: absolute !important;
+  right: 0;
+  top: 10px;
 }
