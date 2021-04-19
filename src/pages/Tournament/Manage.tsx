@@ -462,7 +462,6 @@ class View extends Component<
         prom = null;
       }
       game.move({ from: from, to: to, promotion: prom });
-      return game;
     }
 
     return game;
