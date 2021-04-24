@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import style from "./style.module.scss";
-import { CircularCountDown } from "../../components/circular-count-down";
-import { useTournamentDetail } from "../../context/tournament-detail";
-import Translated from "../../components/translated";
+import { CircularCountDown } from "../../../components/circular-count-down";
+import { useTournamentDetail } from "../../../context/tournament-detail";
+import Translated from "../../../components/translated";
 
 const TimeSection: FunctionComponent<{}> = () => {
   const { tournament, rounds } = useTournamentDetail();

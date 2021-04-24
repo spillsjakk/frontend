@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
-import UserLink from "../../components/UserLink";
-import { useTournamentDetail } from "../../context/tournament-detail";
+import UserLink from "../../../components/UserLink";
+import { useTournamentDetail } from "../../../context/tournament-detail";
 import style from "./style.module.scss";
 
 const Name: FunctionComponent<{}> = () => {

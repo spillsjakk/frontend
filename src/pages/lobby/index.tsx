@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { TournamentSchedule } from "../../containers/lobby/tournament-schedule";
+import { TournamentSchedule } from "./container";
 import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
 import { fetchJson, title } from "../../functions";

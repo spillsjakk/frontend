@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Nav, Tab } from "react-bootstrap";
-import { useTournamentDetail } from "../../context/tournament-detail";
-import Translated from "../../components/translated";
+import { useTournamentDetail } from "../../../context/tournament-detail";
+import Translated from "../../../components/translated";
 import { Link } from "react-router-dom";
 import style from "./style.module.scss";
-import { defaultDate } from "../../constants";
-import { Miniboards } from "../../components/miniboards";
+import { defaultDate } from "../../../constants";
+import { Miniboards } from "../../../components/miniboards";
 import Toggle from "react-bootstrap-toggle";
 
 function outcomeToStr(outcome: number | undefined) {

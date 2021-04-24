@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
-import { useTournamentDetail } from "../../context/tournament-detail";
-import Translated from "../../components/translated";
-import { useUser } from "../../components/UserContext";
+import { useTournamentDetail } from "../../../context/tournament-detail";
+import Translated from "../../../components/translated";
+import { useUser } from "../../../components/UserContext";
 import style from "./style.module.scss";
-import { fetchJson } from "../../functions";
+import { fetchJson } from "../../../functions";
 import { useParams, useHistory } from "react-router-dom";
-import { HelpBox, helpboxNames } from "../../components/help-box";
+import { HelpBox, helpboxNames } from "../../../components/help-box";
 
 const ActionButton: FunctionComponent<{}> = () => {
   const {

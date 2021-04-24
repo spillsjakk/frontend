@@ -6,12 +6,12 @@ import ToolkitProvider, {
   SearchMatchProps,
 } from "react-bootstrap-table2-toolkit";
 import style from "./style.module.scss";
-import Translated from "../../components/translated";
-import { useTournamentDetail } from "../../context/tournament-detail";
+import Translated from "../../../components/translated";
+import { useTournamentDetail } from "../../../context/tournament-detail";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { Participant, TeamParticipant } from "../../pages/Tournament/Types";
+import { Participant, TeamParticipant } from "../../../pages/Tournament/Types";
 import { Link } from "react-router-dom";
-import FederationDisplay from "../../components/FederationDisplay";
+import FederationDisplay from "../../../components/FederationDisplay";
 
 const { SearchBar } = Search;
 

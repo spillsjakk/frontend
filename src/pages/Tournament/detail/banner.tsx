@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { useTournamentDetail } from "../../context/tournament-detail";
+import { useTournamentDetail } from "../../../context/tournament-detail";
 import style from "./style.module.scss";
 
 const Banner: FunctionComponent<{}> = () => {

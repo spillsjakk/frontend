@@ -17,7 +17,7 @@ import {
   TournamentDetailProvider,
 } from "../../context/tournament-detail";
 import { Round } from "../../context/tournament-round";
-import { Pairings } from "../tournament-detail/pairings";
+import { Pairings } from "../Tournament/detail/pairings";
 
 type Tournament = {
   id: string;

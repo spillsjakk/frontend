@@ -7,8 +7,15 @@ import {
   TournamentDetail as ITournamentDetail,
 } from "../../../context/tournament-detail";
 import { fetchJson, title } from "../../../functions";
-import { TournamentDetail as Container } from "../../../containers/tournament-detail";
 import { Round } from "../../../context/tournament-round";
+import { Header } from "./header";
+import { Banner } from "./banner";
+import { Description } from "./description";
+import { TimeSection } from "./time-section";
+import { Name } from "./name";
+import { Standings } from "./standings";
+import { Pairings } from "./pairings";
+import style from "./style.module.scss";
 
 const TournamentDetail: FunctionComponent<{}> = () => {
   const [tournamentDetail, setTournamentDetail] = useState<
@@ -98,7 +105,15 @@ const TournamentDetail: FunctionComponent<{}> = () => {
             alignItems: "center",
           }}
         >
-          <Container />
+          <div className={style.wrapper}>
+            <Header />
+            <Banner />
+            <Name />
+            <Description />
+            <TimeSection />
+            <Standings />
+            <Pairings defaultMiniboards={true} />
+          </div>
         </div>
       </TournamentDetailProvider>
     </>
