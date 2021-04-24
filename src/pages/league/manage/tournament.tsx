@@ -704,6 +704,22 @@ function TemplateForm(props: { onCustom: () => void }) {
     <Stepper activeStep={activeStep} id={style.stepper} orientation="vertical">
       <Step>
         <StepLabel>
+          <Label text={Translated.byKey("seasonAndCategory")} />
+        </StepLabel>
+        <StepContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              next();
+            }}
+          >
+            <SeasonAndCategory />
+            <ActionButtons leftDisabled />
+          </form>
+        </StepContent>
+      </Step>
+      <Step>
+        <StepLabel>
           <Label text={Translated.byKey("buildTournament_templateSelection")} />
         </StepLabel>
         <StepContent>
@@ -726,22 +742,6 @@ function TemplateForm(props: { onCustom: () => void }) {
               {Translated.byKey("nextWithTemplate")}
             </Button>
           </div>
-        </StepContent>
-      </Step>
-      <Step>
-        <StepLabel>
-          <Label text={Translated.byKey("seasonAndCategory")} />
-        </StepLabel>
-        <StepContent>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              next();
-            }}
-          >
-            <SeasonAndCategory />
-            <ActionButtons onLeftClick={previous} />
-          </form>
         </StepContent>
       </Step>
       <Step>
@@ -807,6 +807,22 @@ function Form(props: { onTemplate: () => void }) {
     <Stepper activeStep={activeStep} id={style.stepper} orientation="vertical">
       <Step>
         <StepLabel>
+          <Label text={Translated.byKey("seasonAndCategory")} />
+        </StepLabel>
+        <StepContent>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              next();
+            }}
+          >
+            <SeasonAndCategory />
+            <ActionButtons onLeftClick={previous} />
+          </form>
+        </StepContent>
+      </Step>
+      <Step>
+        <StepLabel>
           <Label text={Translated.byKey("about")} />
         </StepLabel>
         <StepContent>
@@ -821,22 +837,6 @@ function Form(props: { onTemplate: () => void }) {
               onLeftClick={props.onTemplate}
               leftText={Translated.byKey("buildTournament_useTemplate")}
             />
-          </form>
-        </StepContent>
-      </Step>
-      <Step>
-        <StepLabel>
-          <Label text={Translated.byKey("seasonAndCategory")} />
-        </StepLabel>
-        <StepContent>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              next();
-            }}
-          >
-            <SeasonAndCategory />
-            <ActionButtons onLeftClick={previous} />
           </form>
         </StepContent>
       </Step>

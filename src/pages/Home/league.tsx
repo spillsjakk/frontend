@@ -19,23 +19,21 @@ const Tournaments: FunctionComponent<unknown> = memo(() => {
           <div className={style.content}>
             {league.tournaments &&
               Array.isArray(Object.keys(league.tournaments)) &&
-              Object.keys(league.tournaments).map((season, i) => (
-                <>
-                  {league.tournaments[season].map((tournament, i) => (
-                    <Card
-                      id={tournament.id}
-                      name={tournament.name}
-                      timeControl={tournament.online_pairing_interval_n}
-                      timeControlInterval={tournament.online_pairing_interval_t}
-                      format={tournament.kind}
-                      rounds={tournament.rounds}
-                      startDate={tournament.first_online_pairing}
-                      profile={tournament.profile_picture}
-                      key={tournament.id}
-                    />
-                  ))}
-                </>
-              ))}
+              Object.keys(league.tournaments).map((season) =>
+                league.tournaments[season].map((tournament) => (
+                  <Card
+                    id={tournament.id}
+                    name={tournament.name}
+                    timeControl={tournament.online_pairing_interval_n}
+                    timeControlInterval={tournament.online_pairing_interval_t}
+                    format={tournament.kind}
+                    rounds={tournament.rounds}
+                    startDate={tournament.first_online_pairing}
+                    profile={tournament.profile_picture}
+                    key={tournament.id}
+                  />
+                ))
+              )}
           </div>
         </div>
       )}
