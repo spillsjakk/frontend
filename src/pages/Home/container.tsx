@@ -202,15 +202,18 @@ const Home: FunctionComponent<{}> = () => {
           </div>
         </HelpBox>
       </div>
-      <div className={style.block}>
-        <div className={style.heading}>
-          {Translated.byKey("leagues").toUpperCase()}
+      {Array.isArray(leagues) && leagues.length > 0 && (
+        <div className={style.block}>
+          <div className={style.heading}>
+            {Translated.byKey("leagues").toUpperCase()}
+          </div>
+          <div className={style.wrapper}>
+            {leagues.map((league) => (
+              <League id={league.id} key={league.id} />
+            ))}
+          </div>
         </div>
-        <div className={style.wrapper}>
-          {Array.isArray(leagues) &&
-            leagues.map((league) => <League id={league.id} key={league.id} />)}
-        </div>
-      </div>
+      )}
     </div>
   );
 };
