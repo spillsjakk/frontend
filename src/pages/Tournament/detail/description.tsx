@@ -6,9 +6,10 @@ import Translated from "../../../components/translated";
 import { ActionButton } from "./action-button";
 
 import style from "./style.module.scss";
+import { Link } from "react-router-dom";
 
 const Description: FunctionComponent<{}> = () => {
-  const { tournament, rounds } = useTournamentDetail();
+  const { tournament, rounds, league } = useTournamentDetail();
 
   return (
     <div className={style["description-container"]}>
@@ -27,6 +28,18 @@ const Description: FunctionComponent<{}> = () => {
         </Col>
         <Col xs={12} md={4}>
           <div className={style.info}>
+            {league && (
+              <div className={`${style.box} ${style.item}`}>
+                <div className={style.heading}>
+                  {Translated.byKey("league")}
+                </div>
+                <p>
+                  <Link to={`/league/view/${league.league_id}`}>
+                    {league.league_name}
+                  </Link>
+                </p>
+              </div>
+            )}
             <div className={`${style.box} ${style.item}`}>
               <div className={style.heading}>
                 {Translated.byKey("timeControl")}

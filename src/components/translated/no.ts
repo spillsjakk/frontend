@@ -461,6 +461,14 @@ const no = {
   "minimumRating": "",
   "maximumRating": "",
   "downloadPgns": "",
+  "leagueManagePage": "",
+  "categories": "",
+  "seasons": "",
+  "addCategory": "",
+  "addSeason": "",
+  "editLeague": "",
+  "seasonAndCategory": "",
+  "league": ""
 };
 
 export { no };
