@@ -1,7 +1,7 @@
 import React, { FunctionComponent, memo } from "react";
 import style from "./style.module.scss";
 import { useLeague } from "../../../hocs/with-league/index";
-import { Card } from "../../../containers/home/card";
+import { Card } from "../../../components/tournament-card/card";
 
 const Tournaments: FunctionComponent<unknown> = memo(() => {
   const league = useLeague();

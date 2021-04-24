@@ -32,7 +32,7 @@ import { WithTournamentForm } from "../../../hocs/tournament-form";
 import { WithBuildTournamentTemplate } from "../../../hocs/build-tournament-template";
 import { usePopup, WithPopup } from "../../../hocs/popup";
 import { useLeague } from "../../../hocs/with-league/index";
-import { Card } from "../../../containers/home/card";
+import { Card } from "../../../components/tournament-card/card";
 
 function TemplateSelection() {
   const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();

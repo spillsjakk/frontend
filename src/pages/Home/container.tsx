@@ -3,8 +3,10 @@ import { HelpBox, helpboxNames } from "../../components/help-box";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
 import { fetchCall } from "../../functions";
+import { League as ILeague } from "../../hocs/with-league";
 import { Tournament } from "../../pages/Tournament/Types";
-import { Card } from "./card";
+import { League } from "./league";
+import { Card } from "../../components/tournament-card/card";
 import style from "./style.module.scss";
 
 function dateDiffInDays(dt1, dt2) {
@@ -20,6 +22,7 @@ const Home: FunctionComponent<{}> = () => {
   const [today, setToday] = useState<Array<Tournament>>([]);
   const [soon, setSoon] = useState<Array<Tournament>>([]);
   const [later, setLater] = useState<Array<Tournament>>([]);
+  const [leagues, setLeagues] = useState<Array<ILeague>>([]);
 
   const { user } = useUser();
 
@@ -48,6 +51,14 @@ const Home: FunctionComponent<{}> = () => {
     );
   }
 
+  function fetchLeagues() {
+    fetchCall("/s/leagues", "GET", undefined, (data) => {
+      if (Array.isArray(data)) {
+        setLeagues(data);
+      }
+    });
+  }
+
   useEffect(() => {
     if (Array.isArray(tournaments) && tournaments.length) {
       const localToday = [];
@@ -74,6 +85,7 @@ const Home: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     fetchTournaments();
+    fetchLeagues();
   }, []);
 
   return (
@@ -101,7 +113,7 @@ const Home: FunctionComponent<{}> = () => {
           </div>
         </div>
       </div>
-      <div className={style.calendar}>
+      <div className={style.block}>
         <div className={style.heading}>
           {Translated.byKey("tournamentCalendar").toUpperCase()}
         </div>
@@ -189,6 +201,15 @@ const Home: FunctionComponent<{}> = () => {
             )}
           </div>
         </HelpBox>
+      </div>
+      <div className={style.block}>
+        <div className={style.heading}>
+          {Translated.byKey("leagues").toUpperCase()}
+        </div>
+        <div className={style.wrapper}>
+          {Array.isArray(leagues) &&
+            leagues.map((league) => <League id={league.id} key={league.id} />)}
+        </div>
       </div>
     </div>
   );
