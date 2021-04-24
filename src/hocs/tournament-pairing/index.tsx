@@ -82,7 +82,7 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
         });
       }
     },
-    [tournament, pairings]
+    [tournament, addPairing]
   );
 
   const del = useCallback(
@@ -95,14 +95,14 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
         });
       }
     },
-    [tournament, pairings]
+    [tournament, deletePairing]
   );
 
   useEffect(() => {
     if (tournament && tournament.id) {
       fetchPairings();
     }
-  }, [tournament]);
+  }, [tournament, fetchPairings]);
 
   return (
     <TournamentPairingProvider

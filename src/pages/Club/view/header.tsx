@@ -7,7 +7,11 @@ const Header: FunctionComponent<{}> = () => {
     <div className={style["header-container"]}>
       <div className={style.header}>{Translated.byKey("clubProfile")}</div>
       <div className={style.icon}>
-        <img className={style.tick} src="/images/tournament/green-tick.png" />
+        <img
+          className={style.tick}
+          alt="verified"
+          src="/images/tournament/green-tick.png"
+        />
       </div>
     </div>
   );

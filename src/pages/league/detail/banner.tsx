@@ -7,12 +7,17 @@ const Banner: FunctionComponent<{}> = () => {
   function getBannerPicture() {
     if (league && league.banner_picture) {
       return (
-        <img className={style["banner-pic"]} src={league.banner_picture} />
+        <img
+          className={style["banner-pic"]}
+          alt="banner"
+          src={league.banner_picture}
+        />
       );
     }
     return (
       <img
         className={style["banner-pic"]}
+        alt="banner"
         src={"/images/tournament/banner-placeholder.png"}
       />
     );
@@ -20,11 +25,19 @@ const Banner: FunctionComponent<{}> = () => {
   function getProfilePicture() {
     if (league && league.profile_picture) {
       return (
-        <img className={style["pp-custom"]} src={league.profile_picture} />
+        <img
+          className={style["pp-custom"]}
+          alt="profile"
+          src={league.profile_picture}
+        />
       );
     }
     return (
-      <img className={style.pp} src="/images/tournament/pp-placeholder.png" />
+      <img
+        className={style.pp}
+        alt="profile placeholder"
+        src="/images/tournament/pp-placeholder.png"
+      />
     );
   }
   return (

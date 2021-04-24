@@ -85,13 +85,13 @@ const AccountsWithPowersModal: FunctionComponent<Props> = ({ forClub }) => {
     Array<Account> | undefined
   >();
 
-  const orgaanization = useOrganization();
+  const organization = useOrganization();
   const club = useClub();
 
   useEffect(() => {
     fetchCall(
       `/s/${forClub ? "club" : "organization"}/accounts-with-powers/${
-        forClub ? club.id : orgaanization.id
+        forClub ? club.id : organization.id
       }`,
       "GET",
       undefined,
