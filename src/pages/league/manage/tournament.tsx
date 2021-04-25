@@ -21,10 +21,7 @@ import { FormContext, useForm } from "../../../context/build-tournament-form";
 import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
-import {
-  useOrgsClubs,
-  WithUserOrgsClubs,
-} from "../../../hocs/user-orgs-and-clubs";
+import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 import { generateId, fetchJson } from "../../../functions";
 
 import DateFnsUtils from "@date-io/date-fns";
@@ -994,17 +991,15 @@ const Tournament: FunctionComponent<unknown> = memo(() => {
   return (
     <WithTournamentForm>
       <WithBuildTournamentTemplate>
-        <WithUserOrgsClubs>
-          <WithPopup
-            content={<FormStepper />}
-            dialogProps={{ fullWidth: true, maxWidth: "lg" }}
-          >
-            <div>
-              <AddTournament />
-              <Tournaments />
-            </div>
-          </WithPopup>
-        </WithUserOrgsClubs>
+        <WithPopup
+          content={<FormStepper />}
+          dialogProps={{ fullWidth: true, maxWidth: "lg" }}
+        >
+          <div>
+            <AddTournament />
+            <Tournaments />
+          </div>
+        </WithPopup>
       </WithBuildTournamentTemplate>
     </WithTournamentForm>
   );

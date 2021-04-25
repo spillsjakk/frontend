@@ -55,11 +55,21 @@ export function fetchJson(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   })
-    .then((response) => {
+    .then(async (response) => {
+      let data: any = {};
+      try {
+        data = await response.json();
+      } catch (e) {
+        console.error(e);
+      }
       if (response.status < 400) {
-        return response.json();
+        return data;
       } else {
-        return Promise.resolve({ error: response.status.toString() });
+        let error = response.status.toString();
+        if (data.message) {
+          error = data.message;
+        }
+        return Promise.resolve({ error });
       }
     })
     .then((json) => {
