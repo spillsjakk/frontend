@@ -113,102 +113,99 @@ const Home: FunctionComponent<{}> = () => {
           </div>
         </div>
       </div>
-      {Array.isArray(today) &&
-        today.length > 0 &&
-        Array.isArray(soon) &&
-        soon.length > 0 &&
-        Array.isArray(later) &&
-        later.length > 0 && (
-          <div className={style.block}>
-            <div className={style.heading}>
-              {Translated.byKey("tournamentCalendar").toUpperCase()}
-            </div>
-            <HelpBox
-              placement="top"
-              name={helpboxNames.homeTournaments}
-              text={Translated.byKey("homeTournamentsHelpbox")}
-              show={user && user.authenticated === true}
-            >
-              <div className={style.wrapper}>
-                {Array.isArray(today) && today.length > 0 && (
-                  <div className={style.row}>
-                    <div className={style.heading}>
-                      {Translated.byKey("today").toUpperCase()}
-                    </div>
-                    <div className={style.content}>
-                      {today.map((tournament, i) => (
-                        <div key={i}>
-                          <Card
-                            id={tournament.id}
-                            name={tournament.name}
-                            timeControl={tournament.online_pairing_interval_n}
-                            timeControlInterval={
-                              tournament.online_pairing_interval_t
-                            }
-                            format={tournament.kind}
-                            rounds={tournament.rounds}
-                            startDate={tournament.first_online_pairing}
-                            profile={tournament.profile_picture}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {Array.isArray(soon) && soon.length > 0 && (
-                  <div className={style.row}>
-                    <div className={style.heading}>
-                      {Translated.byKey("soon").toUpperCase()}
-                    </div>
-                    <div className={style.content}>
-                      {soon.map((tournament, i) => (
-                        <div key={i}>
-                          <Card
-                            id={tournament.id}
-                            name={tournament.name}
-                            timeControl={tournament.online_pairing_interval_n}
-                            timeControlInterval={
-                              tournament.online_pairing_interval_t
-                            }
-                            format={tournament.kind}
-                            rounds={tournament.rounds}
-                            startDate={tournament.first_online_pairing}
-                            profile={tournament.profile_picture}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {Array.isArray(later) && later.length > 0 && (
-                  <div className={style.row}>
-                    <div className={style.heading}>
-                      {Translated.byKey("later").toUpperCase()}
-                    </div>
-                    <div className={style.content}>
-                      {later.map((tournament, i) => (
-                        <div key={i}>
-                          <Card
-                            id={tournament.id}
-                            name={tournament.name}
-                            timeControl={tournament.online_pairing_interval_n}
-                            timeControlInterval={
-                              tournament.online_pairing_interval_t
-                            }
-                            format={tournament.kind}
-                            rounds={tournament.rounds}
-                            startDate={tournament.first_online_pairing}
-                            profile={tournament.profile_picture}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </HelpBox>
+      {((Array.isArray(today) && today.length > 0) ||
+        (Array.isArray(soon) && soon.length > 0) ||
+        (Array.isArray(later) && later.length > 0)) && (
+        <div className={style.block}>
+          <div className={style.heading}>
+            {Translated.byKey("tournamentCalendar").toUpperCase()}
           </div>
-        )}
+          <HelpBox
+            placement="top"
+            name={helpboxNames.homeTournaments}
+            text={Translated.byKey("homeTournamentsHelpbox")}
+            show={user && user.authenticated === true}
+          >
+            <div className={style.wrapper}>
+              {Array.isArray(today) && today.length > 0 && (
+                <div className={style.row}>
+                  <div className={style.heading}>
+                    {Translated.byKey("today").toUpperCase()}
+                  </div>
+                  <div className={style.content}>
+                    {today.map((tournament, i) => (
+                      <div key={i}>
+                        <Card
+                          id={tournament.id}
+                          name={tournament.name}
+                          timeControl={tournament.online_pairing_interval_n}
+                          timeControlInterval={
+                            tournament.online_pairing_interval_t
+                          }
+                          format={tournament.kind}
+                          rounds={tournament.rounds}
+                          startDate={tournament.first_online_pairing}
+                          profile={tournament.profile_picture}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {Array.isArray(soon) && soon.length > 0 && (
+                <div className={style.row}>
+                  <div className={style.heading}>
+                    {Translated.byKey("soon").toUpperCase()}
+                  </div>
+                  <div className={style.content}>
+                    {soon.map((tournament, i) => (
+                      <div key={i}>
+                        <Card
+                          id={tournament.id}
+                          name={tournament.name}
+                          timeControl={tournament.online_pairing_interval_n}
+                          timeControlInterval={
+                            tournament.online_pairing_interval_t
+                          }
+                          format={tournament.kind}
+                          rounds={tournament.rounds}
+                          startDate={tournament.first_online_pairing}
+                          profile={tournament.profile_picture}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {Array.isArray(later) && later.length > 0 && (
+                <div className={style.row}>
+                  <div className={style.heading}>
+                    {Translated.byKey("later").toUpperCase()}
+                  </div>
+                  <div className={style.content}>
+                    {later.map((tournament, i) => (
+                      <div key={i}>
+                        <Card
+                          id={tournament.id}
+                          name={tournament.name}
+                          timeControl={tournament.online_pairing_interval_n}
+                          timeControlInterval={
+                            tournament.online_pairing_interval_t
+                          }
+                          format={tournament.kind}
+                          rounds={tournament.rounds}
+                          startDate={tournament.first_online_pairing}
+                          profile={tournament.profile_picture}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </HelpBox>
+        </div>
+      )}
       {Array.isArray(leagues) && leagues.length > 0 && (
         <div className={style.block}>
           <div className={style.heading}>
