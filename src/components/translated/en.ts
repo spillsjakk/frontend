@@ -289,6 +289,7 @@ const en = {
 	"profilePicturePlaceholder": "Please fill in the url of the image",
 	"profile_picture": "Profile Picture",
 	"provisionalFideRating": "Provisional FIDE rating",
+	"pseudonym": "Pseudonym",
 	"publiclyViewable": "Publicly viewable",
 	"random": "Random",
 	"rating": "Rating",

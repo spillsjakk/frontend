@@ -27,6 +27,7 @@ type PlayersState = {
     is_team_tournament: boolean;
   };
   newAcc: {
+    username: string;
     first_name: string;
     last_name: string;
     fide_number: string;
@@ -59,6 +60,7 @@ class Players extends Component<
     this.state = {
       loaded: false,
       newAcc: {
+        username: "",
         first_name: "",
         last_name: "",
         fide_number: "",
@@ -199,6 +201,7 @@ class Players extends Component<
     e.preventDefault();
 
     const data = {
+      username: this.state.newAcc.username,
       first_name: this.state.newAcc.first_name,
       last_name: this.state.newAcc.last_name,
       fide_number: parseInt(this.state.newAcc.fide_number, 10) || undefined,
@@ -213,6 +216,7 @@ class Players extends Component<
     fetchJson(`/s/account/create`, "POST", data, (result) => {
       this.setState({
         newAcc: {
+          username: "",
           first_name: "",
           last_name: "",
           fide_number: "",
@@ -483,6 +487,9 @@ class Players extends Component<
                 <thead>
                   <tr>
                     <th scope="col">
+                      <Translated str="pseudonym" />
+                    </th>
+                    <th scope="col">
                       <Translated str="firstName" />
                     </th>
                     <th scope="col">
@@ -511,6 +518,16 @@ class Players extends Component<
                 </thead>
                 <tbody>
                   <tr>
+                    <td>
+                      <input
+                        type="text"
+                        id="usernameInput"
+                        name="username"
+                        value={this.state.newAcc.username}
+                        onChange={this.changeNewAccValue}
+                        required
+                      />
+                    </td>
                     <td>
                       <input
                         type="text"
