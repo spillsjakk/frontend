@@ -94,6 +94,7 @@ const StartDate: FunctionComponent<{
     <DateTimePicker
       variant="dialog"
       required
+      ampm={false}
       label={Translated.byKey("startDate")}
       value={value}
       onChange={(value: Date) => {
@@ -111,6 +112,7 @@ const EndDate: FunctionComponent<{
     <DateTimePicker
       variant="dialog"
       required
+      ampm={false}
       label={Translated.byKey("endDate")}
       value={value}
       onChange={(value: Date) => {

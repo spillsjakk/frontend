@@ -67,6 +67,7 @@ function StartDate() {
         <DateTimePicker
           variant="inline"
           required
+          ampm={false}
           label={Translated.byKey("startDate")}
           value={
             new Date(
@@ -293,6 +294,7 @@ function StartDateInterval() {
               }:00.000Z`
             )
           }
+          ampm={false}
           onChange={(value: Date) => {
             const dateString = value.toISOString().slice(0, 10);
             form.changeStartDate(dateString);
