@@ -474,7 +474,8 @@ const en = {
   "editLeague": "Edit League",
   "seasonAndCategory": "Season and Category",
   "league": "League",
-  "messageAllClubMembers": "Message all club members"
+  "messageAllClubMembers": "Message all club members",
+  "userId": "User Id"
 };
 
 export { en };

@@ -81,7 +81,7 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
         <form onSubmit={this.doLogin}>
           <div className="form-group">
             <label htmlFor="id">
-              <Translated str="username" />
+              <Translated str="userId" />
             </label>
             <input
               type="text"
