@@ -1060,7 +1060,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           <Modal.Footer>
             <Button
               variant="secondary"
-              onClick={() => this.setState({ showOutcomePopup: false })}
+              onClick={() =>
+                this.props.history.replace("/game/view/" + this.gameId)
+              }
             >
               {Translated.byKey("reviewGame")}
             </Button>
