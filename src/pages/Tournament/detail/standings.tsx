@@ -113,12 +113,7 @@ const Standings: FunctionComponent<{}> = () => {
         formatter: function (_: any, row: Participant, __: any, ___: any) {
           const participantLink = (
             <Link to={"/profile/" + row.account}>
-              <span
-                className="d-inline-block text-truncate"
-                style={{ maxWidth: "80px" }}
-              >
-                {(row as any).getUsername()}
-              </span>
+              {(row as any).getUsername()}
             </Link>
           );
           const titleSpan = row.title ? <span>{row.title}</span> : <></>;
