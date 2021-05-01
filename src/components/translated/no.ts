@@ -468,7 +468,8 @@ const no = {
   "addSeason": "",
   "editLeague": "",
   "seasonAndCategory": "",
-  "league": ""
+  "league": "",
+  "messageAllClubMembers": "Send melding til alle medlemmene i klubben"
 };
 
 export { no };

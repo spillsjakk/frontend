@@ -43,7 +43,9 @@ const MessageSummary: FunctionComponent<{}> = () => {
         text={Translated.byKey("clubManageMessageHelpbox")}
         show={true}
       >
-        <div className={style.label}>{Translated.byKey("messageMembers")}</div>
+        <div className={style.label}>
+          {Translated.byKey("messageAllClubMembers")}
+        </div>
       </HelpBox>
       <Form onSubmit={messageMembers}>
         <Form.Group>
