@@ -24,6 +24,14 @@ function headerFormatter(column: any, _: any, components: any) {
   );
 }
 
+function smallHeader() {
+  return { width: "80px", "padding-left": "2px" };
+}
+
+function mediumHeader() {
+  return { width: "120px", "padding-left": "2px" };
+}
+
 const tbColumns = [
   { dataField: "tb1", text: "TB1", sort: true },
   { dataField: "tb2", text: "TB2", sort: true },
@@ -83,8 +91,20 @@ const Standings: FunctionComponent<{}> = () => {
     });
 
     setParticipantColumns([
-      { dataField: "rank", text: "rank", sort: true, headerFormatter },
-      { dataField: "seed", text: "seed", sort: true, headerFormatter },
+      {
+        dataField: "rank",
+        text: "rank",
+        sort: true,
+        headerStyle: smallHeader,
+        headerFormatter,
+      },
+      {
+        dataField: "seed",
+        text: "seed",
+        headerStyle: smallHeader,
+        sort: true,
+        headerFormatter,
+      },
       {
         dataField: "account",
         sort: true,
@@ -137,10 +157,17 @@ const Standings: FunctionComponent<{}> = () => {
           );
         },
       },
-      { dataField: "fide_rating", text: "rating", sort: true, headerFormatter },
+      {
+        dataField: "fide_rating",
+        text: "rating",
+        headerStyle: smallHeader,
+        sort: true,
+        headerFormatter,
+      },
       {
         dataField: "federation",
         text: "federation",
+        headerStyle: mediumHeader,
         sort: true,
         headerFormatter,
         formatter: function f(_: any, row: Participant, __: any, ___: any) {
@@ -150,6 +177,7 @@ const Standings: FunctionComponent<{}> = () => {
       {
         dataField: "score",
         text: "score",
+        headerStyle: smallHeader,
         sort: true,
         style: {
           textAlign: "center",
