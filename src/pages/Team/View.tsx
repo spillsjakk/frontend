@@ -19,6 +19,7 @@ type ViewState = {
     team: Team;
     members: TeamMember[];
     club_manager: string;
+    can_manage: boolean;
   };
 };
 
@@ -61,7 +62,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
         {this.context.user.authenticated &&
           (this.context.user.info?.id === info.club_manager ||
-            this.context.user.info?.powers.team_captain) && (
+            info.can_manage) && (
             <Link
               className="mt-4 p-3 btn btn-primary"
               to={"/team/manage/" + info.team.id}
@@ -71,8 +72,8 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           )}
 
         <table className="table mt-4">
-          {info.members.map((member) => (
-            <tr>
+          {info.members.map((member, i) => (
+            <tr key={i}>
               <td>
                 <UserLink
                   id={member.account_id}
