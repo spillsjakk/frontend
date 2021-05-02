@@ -22,8 +22,7 @@ export interface TournamentDetail {
   tko_separation?: { [id: string]: TKOSeparation };
   self_join_teams?: Team[];
   is_participating: boolean;
-  organizer_first_name: string;
-  organizer_last_name: string;
+  organiser_name: string;
   ssw?: string[];
   rounds: Array<Round>;
   update: () => void;

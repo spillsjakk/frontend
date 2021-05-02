@@ -1,26 +1,25 @@
 import React, { FunctionComponent } from "react";
-import UserLink from "../../../components/UserLink";
+import { Link } from "react-router-dom";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import style from "./style.module.scss";
 
 const Name: FunctionComponent<{}> = () => {
-  const {
-    tournament,
-    organizer_first_name,
-    organizer_last_name,
-  } = useTournamentDetail();
+  const { tournament, organiser_name } = useTournamentDetail();
 
   return (
     <div className={style["name-container"]}>
       <div className={style.name}>{tournament?.name}</div>
 
       <div className={style.organiser}>
-        organiser:{" "}
-        <UserLink
-          id={tournament?.organizer || ""}
-          name={organizer_first_name + " " + organizer_last_name}
-          ghost={false}
-        />
+        <Link
+          to={
+            tournament?.organiser_type === "club"
+              ? `/club/view/${tournament?.organiser}`
+              : `/organization/view/${tournament?.organiser}`
+          }
+        >
+          {organiser_name}
+        </Link>
       </div>
     </div>
   );

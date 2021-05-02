@@ -32,6 +32,8 @@ export type Tournament = {
   tb3: string | null;
   tb4: string | null;
   started?: boolean;
+  organiser: string; // club/org id who creates the tournament
+  organiser_type: "club" | "organization";
 };
 
 export type Participant = {

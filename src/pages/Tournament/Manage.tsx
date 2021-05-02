@@ -78,8 +78,7 @@ type FullTournamentInfo = {
   tko_separation?: { [id: string]: TKOSeparation };
   self_join_teams?: Team[];
   is_participating: boolean;
-  organizer_first_name: string;
-  organizer_last_name: string;
+  organiser_name: string;
   ssw?: string[];
 };
 
@@ -1040,11 +1039,7 @@ class View extends Component<
                     &nbsp;
                     <UserLink
                       id={info.tournament.organizer}
-                      name={
-                        info.organizer_first_name +
-                        " " +
-                        info.organizer_last_name
-                      }
+                      name={info.tournament.organizer}
                       ghost={false}
                     />
                   </div>
