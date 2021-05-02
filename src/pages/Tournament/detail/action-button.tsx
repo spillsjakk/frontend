@@ -13,9 +13,10 @@ const ActionButton: FunctionComponent<{}> = () => {
     is_participating,
     update,
     self_join_teams,
+    can_manage,
   } = useTournamentDetail();
   const {
-    user: { authenticated, info },
+    user: { authenticated },
   } = useUser();
   const params = useParams<{ tid: string }>();
   const history = useHistory();
@@ -46,10 +47,6 @@ const ActionButton: FunctionComponent<{}> = () => {
     };
   }
 
-  function isOrganizer() {
-    return authenticated && info?.id === tournament?.organizer;
-  }
-
   function manageTournamentButton() {
     return (
       <div
@@ -64,7 +61,7 @@ const ActionButton: FunctionComponent<{}> = () => {
 
   return (
     <>
-      {authenticated && isOrganizer() && (
+      {authenticated && can_manage && (
         <HelpBox
           placement="bottom"
           name={helpboxNames.tournamentDetailManageTournament}

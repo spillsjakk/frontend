@@ -587,49 +587,48 @@ class View extends Component<
 
       const organizerCells = (
         <>
-          {this.context.user.authenticated &&
-            this.context.user.info?.id === info.tournament.organizer && (
-              <>
+          {this.context.user.authenticated && (
+            <>
+              <td>
+                <a
+                  href="#"
+                  data-result={1}
+                  data-white={pairing.white}
+                  data-black={pairing.black}
+                  data-round={pairing.round}
+                  onClick={this.onClickResult}
+                >
+                  1-0
+                </a>
+              </td>
+              {info.tournament.kind !== "Knockout" && (
                 <td>
                   <a
                     href="#"
-                    data-result={1}
+                    data-result={0}
                     data-white={pairing.white}
                     data-black={pairing.black}
                     data-round={pairing.round}
                     onClick={this.onClickResult}
                   >
-                    1-0
+                    &#189;-&#189;
                   </a>
                 </td>
-                {info.tournament.kind !== "Knockout" && (
-                  <td>
-                    <a
-                      href="#"
-                      data-result={0}
-                      data-white={pairing.white}
-                      data-black={pairing.black}
-                      data-round={pairing.round}
-                      onClick={this.onClickResult}
-                    >
-                      &#189;-&#189;
-                    </a>
-                  </td>
-                )}
-                <td>
-                  <a
-                    href="#"
-                    data-result={-1}
-                    data-white={pairing.white}
-                    data-black={pairing.black}
-                    data-round={pairing.round}
-                    onClick={this.onClickResult}
-                  >
-                    0-1
-                  </a>
-                </td>
-              </>
-            )}
+              )}
+              <td>
+                <a
+                  href="#"
+                  data-result={-1}
+                  data-white={pairing.white}
+                  data-black={pairing.black}
+                  data-round={pairing.round}
+                  onClick={this.onClickResult}
+                >
+                  0-1
+                </a>
+              </td>
+            </>
+          )}
         </>
       );
 
@@ -643,10 +642,7 @@ class View extends Component<
             className="chk-online"
             checked={pairing.online}
             onChange={this.onChangeOnline}
-            disabled={
-              !this.context.user.authenticated ||
-              info.tournament.organizer != this.context.user.info?.id
-            }
+            disabled={!this.context.user.authenticated}
           />
         </td>
       );
@@ -704,47 +700,46 @@ class View extends Component<
         );
         const organizerCells2 = (
           <>
-            {this.context.user.authenticated &&
-              this.context.user.info?.id === info.tournament.organizer && (
-                <>
-                  <td>
-                    <a
-                      href="#"
-                      data-result={1}
-                      data-white={pairing.black}
-                      data-black={pairing.white}
-                      data-round={pairing.round}
-                      onClick={this.onClickResult}
-                    >
-                      1-0
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      data-result={0}
-                      data-white={pairing.black}
-                      data-black={pairing.white}
-                      data-round={pairing.round}
-                      onClick={this.onClickResult}
-                    >
-                      &#189;-&#189;
-                    </a>
-                  </td>
-                  <td>
-                    <a
-                      href="#"
-                      data-result={-1}
-                      data-white={pairing.black}
-                      data-black={pairing.white}
-                      data-round={pairing.round}
-                      onClick={this.onClickResult}
-                    >
-                      0-1
-                    </a>
-                  </td>
-                </>
-              )}
+            {this.context.user.authenticated && (
+              <>
+                <td>
+                  <a
+                    href="#"
+                    data-result={1}
+                    data-white={pairing.black}
+                    data-black={pairing.white}
+                    data-round={pairing.round}
+                    onClick={this.onClickResult}
+                  >
+                    1-0
+                  </a>
+                </td>
+                <td>
+                  <a
+                    href="#"
+                    data-result={0}
+                    data-white={pairing.black}
+                    data-black={pairing.white}
+                    data-round={pairing.round}
+                    onClick={this.onClickResult}
+                  >
+                    &#189;-&#189;
+                  </a>
+                </td>
+                <td>
+                  <a
+                    href="#"
+                    data-result={-1}
+                    data-white={pairing.black}
+                    data-black={pairing.white}
+                    data-round={pairing.round}
+                    onClick={this.onClickResult}
+                  >
+                    0-1
+                  </a>
+                </td>
+              </>
+            )}
           </>
         );
 
@@ -766,27 +761,24 @@ class View extends Component<
     const pairingPanes = pairingRows.map((r, i) => {
       return (
         <Tab.Pane eventKey={"round-tab-" + (i + 1).toString()} key={i}>
-          {this.context.user.authenticated &&
-            (this.context.user.info?.id === info.tournament.organizer ||
-              (this.context.user.info?.level || 0) >=
-                Levels.OrganizationManager) && (
-              <div className="mt-4">
-                {(this.state.info?.tournament.kind === "RoundRobin" ||
-                  this.state.info?.tournament.kind === "TeamRoundRobin") && (
-                  <SetupRoundButton roundNumber={i + 1} />
-                )}
-                <a
-                  href={
-                    "/s/tournament/printout/boardcards/" +
-                    info.tournament.id +
-                    "/" +
-                    (i + 1).toString()
-                  }
-                >
-                  <Translated str="boardCards" />
-                </a>
-              </div>
-            )}
+          {this.context.user.authenticated && (
+            <div className="mt-4">
+              {(this.state.info?.tournament.kind === "RoundRobin" ||
+                this.state.info?.tournament.kind === "TeamRoundRobin") && (
+                <SetupRoundButton roundNumber={i + 1} />
+              )}
+              <a
+                href={
+                  "/s/tournament/printout/boardcards/" +
+                  info.tournament.id +
+                  "/" +
+                  (i + 1).toString()
+                }
+              >
+                <Translated str="boardCards" />
+              </a>
+            </div>
+          )}
           <table className="table table-striped mt-4 dense pairing-table">
             <thead>
               <tr>
@@ -799,14 +791,13 @@ class View extends Component<
                 <th>
                   <Translated str="player" />
                 </th>
-                {this.context.user.authenticated &&
-                  info.tournament.organizer === this.context.user.info?.id && (
-                    <>
-                      <th></th>
-                      {info.tournament.kind !== "Knockout" && <th></th>}
-                      <th></th>
-                    </>
-                  )}
+                {this.context.user.authenticated && (
+                  <>
+                    <th></th>
+                    {info.tournament.kind !== "Knockout" && <th></th>}
+                    <th></th>
+                  </>
+                )}
                 <th>
                   <Translated str="online" />?
                 </th>
@@ -844,95 +835,88 @@ class View extends Component<
                   }}
                 ></p>
 
-                {this.context.user.authenticated &&
-                  this.context.user.info?.id === info.tournament.organizer && (
-                    <form>
-                      {!info.tournament.started && (
-                        <>
-                          <Button
-                            variant="primary"
-                            className="p-3 mb-3"
-                            disabled={false}
-                            onClick={this.onPressStart}
-                          >
-                            <Translated str="start" />
-                          </Button>
-                          <HelpBox
-                            placement="bottom"
-                            name={
-                              helpboxNames.manageTournamentManageParticipants
-                            }
-                            text={Translated.byKey(
-                              "manageTournamentManageParticipantsHelpbox"
-                            )}
-                            show={true}
-                          >
-                            <Link
-                              className="p-3 btn btn-primary ml-5 mb-3"
-                              to={"/tournament/players/" + info.tournament.id}
-                            >
-                              <Translated str="manageParticipants" />
-                            </Link>
-                          </HelpBox>
-                          {!info.can_start && (
-                            <div
-                              className="p-3 btn btn-danger ml-5 mb-3"
-                              onClick={() => this.onDeleteTournament()}
-                            >
-                              <Translated str="deleteTournament" />
-                            </div>
+                {this.context.user.authenticated && (
+                  <form>
+                    {!info.tournament.started && (
+                      <>
+                        <Button
+                          variant="primary"
+                          className="p-3 mb-3"
+                          disabled={false}
+                          onClick={this.onPressStart}
+                        >
+                          <Translated str="start" />
+                        </Button>
+                        <HelpBox
+                          placement="bottom"
+                          name={helpboxNames.manageTournamentManageParticipants}
+                          text={Translated.byKey(
+                            "manageTournamentManageParticipantsHelpbox"
                           )}
-                        </>
-                      )}
-                      {info.managed_teams &&
-                        info.managed_teams?.map((t) => (
+                          show={true}
+                        >
                           <Link
-                            key={t.id}
                             className="p-3 btn btn-primary ml-5 mb-3"
-                            to={
-                              "/tournament/manage-team/" +
-                              info.tournament.id +
-                              "/" +
-                              t.id
-                            }
+                            to={"/tournament/players/" + info.tournament.id}
                           >
-                            <Translated str="manage" /> &quot;{t.name}&quot;
+                            <Translated str="manageParticipants" />
                           </Link>
-                        ))}
-                      <Link
-                        className={`p-3 ml-3 btn btn-primary ${
-                          info.pairings.length === 0 ? "ml-5" : ""
-                        } mb-3`}
-                        to={"/tournament/edit/" + info.tournament.id}
-                      >
-                        <Translated str="editTournament" />
-                      </Link>
-                    </form>
-                  )}
+                        </HelpBox>
+                        {!info.can_start && (
+                          <div
+                            className="p-3 btn btn-danger ml-5 mb-3"
+                            onClick={() => this.onDeleteTournament()}
+                          >
+                            <Translated str="deleteTournament" />
+                          </div>
+                        )}
+                      </>
+                    )}
+                    {info.managed_teams &&
+                      info.managed_teams?.map((t) => (
+                        <Link
+                          key={t.id}
+                          className="p-3 btn btn-primary ml-5 mb-3"
+                          to={
+                            "/tournament/manage-team/" +
+                            info.tournament.id +
+                            "/" +
+                            t.id
+                          }
+                        >
+                          <Translated str="manage" /> &quot;{t.name}&quot;
+                        </Link>
+                      ))}
+                    <Link
+                      className={`p-3 ml-3 btn btn-primary ${
+                        info.pairings.length === 0 ? "ml-5" : ""
+                      } mb-3`}
+                      to={"/tournament/edit/" + info.tournament.id}
+                    >
+                      <Translated str="editTournament" />
+                    </Link>
+                  </form>
+                )}
 
-                {this.context.user.authenticated &&
-                  (this.context.user.info?.id === info.tournament.organizer ||
-                    (this.context.user.info?.level || 0) >=
-                      Levels.OrganizationManager) && (
-                    <div className="mt-4">
-                      <a
-                        href={
-                          "/s/tournament/printout/results/" + info.tournament.id
-                        }
-                      >
-                        <Translated str="resultPrintouts" />
-                      </a>
-                      &nbsp;|&nbsp;
-                      <a
-                        href={
-                          "/s/tournament/printout/pairings/" +
-                          info.tournament.id
-                        }
-                      >
-                        <Translated str="pairingPrintouts" />
-                      </a>
-                    </div>
-                  )}
+                {this.context.user.authenticated && (
+                  <div className="mt-4">
+                    <a
+                      href={
+                        "/s/tournament/printout/results/" + info.tournament.id
+                      }
+                    >
+                      <Translated str="resultPrintouts" />
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a
+                      href={
+                        "/s/tournament/printout/pairings/" + info.tournament.id
+                      }
+                    >
+                      <Translated str="pairingPrintouts" />
+                    </a>
+                  </div>
+                )}
 
                 {info.tournament.kind !== "ManualPairing" &&
                   info.tournament.kind !== "RoundRobin" && (
@@ -944,52 +928,50 @@ class View extends Component<
                       <Timestamp
                         time={info.tournament.current_online_pairing_time}
                       />
-                      {this.context.user.authenticated &&
-                        this.context.user.info?.id ===
-                          info.tournament.organizer && (
-                          <form onSubmit={this.onUpdatePairingTime}>
-                            <HelpBox
-                              placement="bottom"
-                              name={helpboxNames.manageTournamentChangeTime}
-                              text={Translated.byKey(
-                                "manageTournamentChangeTimeHelpbox"
-                              )}
-                              show={true}
-                            >
-                              <label htmlFor="next_pairing_date">
-                                <Translated str="changeNextPairingDateTime" />{" "}
-                                (hh:mm, <Translated str="localTime" />
-                                !):
-                              </label>
-                            </HelpBox>
-                            <input
-                              ref={this.pairingDateRef}
-                              type="date"
-                              id="next_pairing_date"
-                              className="form-control"
-                              name="next_pairing_date"
-                              style={{ display: "inline", width: "13%" }}
-                              required
-                              min="2000-01-01"
-                              max="2099-12-31"
-                            />
-                            <input
-                              ref={this.pairingHourRef}
-                              type="input"
-                              className="form-control"
-                              name="next_pairing_time"
-                              style={{ display: "inline", width: "13%" }}
-                              required
-                              pattern="\d\d?:\d\d"
-                            />
-                            <button
-                              className="p-2 btn btn-primary mb-1"
-                              type="submit"
-                            >
-                              <Translated str="update" />
-                            </button>
-                          </form>
-                        )}
+                      {this.context.user.authenticated && (
+                        <form onSubmit={this.onUpdatePairingTime}>
+                          <HelpBox
+                            placement="bottom"
+                            name={helpboxNames.manageTournamentChangeTime}
+                            text={Translated.byKey(
+                              "manageTournamentChangeTimeHelpbox"
+                            )}
+                            show={true}
+                          >
+                            <label htmlFor="next_pairing_date">
+                              <Translated str="changeNextPairingDateTime" />{" "}
+                              (hh:mm, <Translated str="localTime" />
+                              !):
+                            </label>
+                          </HelpBox>
+                          <input
+                            ref={this.pairingDateRef}
+                            type="date"
+                            id="next_pairing_date"
+                            className="form-control"
+                            name="next_pairing_date"
+                            style={{ display: "inline", width: "13%" }}
+                            required
+                            min="2000-01-01"
+                            max="2099-12-31"
+                          />
+                          <input
+                            ref={this.pairingHourRef}
+                            type="input"
+                            className="form-control"
+                            name="next_pairing_time"
+                            style={{ display: "inline", width: "13%" }}
+                            required
+                            pattern="\d\d?:\d\d"
+                          />
+                          <button
+                            className="p-2 btn btn-primary mb-1"
+                            type="submit"
+                          >
+                            <Translated str="update" />
+                          </button>
+                        </form>
+                      )}
                     </div>
                   )}
 
@@ -1046,8 +1028,7 @@ class View extends Component<
                 </div>
 
                 {this.state.info?.tournament?.kind === "ManualPairing" &&
-                  this.context.user.authenticated &&
-                  this.context.user.info?.id === info.tournament.organizer && (
+                  this.context.user.authenticated && (
                     <ManageRoundsAndPairings />
                   )}
                 <HelpBox
