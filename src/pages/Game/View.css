@@ -6,7 +6,8 @@
 #Game-View #content-container {
   max-width: 1200px;
 }
-#Game-View div.cg-wrap, #Game-View cg-container {
+#Game-View div.cg-wrap,
+#Game-View cg-container {
   width: 90vh !important; /* Firefox mobile compat */
   width: min(525px, 90vh) !important;
   height: 90vw !important;
@@ -20,6 +21,9 @@
   overflow-y: auto;
   font-size: 13pt;
   padding-right: 15px;
+}
+#Game-View #move-table {
+  margin-top: 40px;
 }
 #Game-View #move-table td {
   padding-left: 3px;
@@ -78,6 +82,11 @@
 #Game-View .play-box .user-box .user-info {
   display: flex;
   margin: 10px 20px;
+}
+
+#Game-View .tournament-link {
+  position: absolute;
+  background-color: #fafafa;
 }
 
 #Game-View .play-box .user-box .user-info .name {
