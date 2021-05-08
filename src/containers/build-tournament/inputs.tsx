@@ -126,6 +126,7 @@ function TimeControl() {
               value={form.initialTime}
               valueLabelDisplay="on"
               onChange={(e, value) => form.changeInitialTime(value as number)}
+              min={1}
             />
           </Grid>
           <Grid item xs={6}>
