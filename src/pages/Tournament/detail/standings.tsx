@@ -293,7 +293,11 @@ const Standings: FunctionComponent<{}> = () => {
                 <Translated str="standings" />
               </h3>
             </div>
-            <Tab.Container defaultActiveKey="standings-i-tab">
+            <Tab.Container
+              defaultActiveKey={
+                is_team_tournament ? "standings-t-tab" : "standings-i-tab"
+              }
+            >
               <Nav className="nav-tabs">
                 <Nav.Item>
                   <Nav.Link eventKey="standings-i-tab">
