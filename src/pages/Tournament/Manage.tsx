@@ -15,7 +15,7 @@ import ToolkitProvider, {
 import UserLink from "../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
 import Chess from "chess.js";
-import { UserContext, Levels } from "../../components/UserContext";
+import { UserContext } from "../../components/UserContext";
 import {
   Tournament,
   Participant,

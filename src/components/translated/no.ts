@@ -470,7 +470,8 @@ const no = {
   "seasonAndCategory": "",
   "league": "",
   "messageAllClubMembers": "Send melding til alle medlemmene i klubben",
-  "userId": "User Id"
+  "userId": "User Id",
+  "addTeams": "",
 };
 
 export { no };

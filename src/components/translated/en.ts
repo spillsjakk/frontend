@@ -475,7 +475,8 @@ const en = {
   "seasonAndCategory": "Season and Category",
   "league": "League",
   "messageAllClubMembers": "Message all club members",
-  "userId": "User Id"
+  "userId": "User Id",
+  "addTeams": "Add Teams"
 };
 
 export { en };

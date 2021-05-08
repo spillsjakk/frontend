@@ -8,7 +8,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import TournamentManage from "./pages/Tournament/Manage";
-import TournamentPlayers from "./pages/Tournament/Players";
+import TournamentPlayers from "./pages/Tournament/players/index";
 import TournamentSearch from "./pages/Tournament/Search";
 import TournamentFind from "./pages/Tournament/Find";
 import TournamentTeamPlayers from "./pages/Tournament/TeamPlayers";

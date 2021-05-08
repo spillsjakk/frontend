@@ -1,19 +1,27 @@
-import React, { Component, FormEvent, ChangeEvent, RefObject } from "react";
+import React, {
+  Component,
+  FormEvent,
+  ChangeEvent,
+  RefObject,
+  FunctionComponent,
+} from "react";
 import { Helmet } from "react-helmet";
-import Translated from "../../components/translated";
+import Translated from "../../../components/translated";
 import {
   Tournament,
   Participant,
   Team,
   TeamParticipant,
   Account,
-} from "./Types";
-import { RouteComponentProps, Link } from "react-router-dom";
-import { fetchJson, title } from "../../functions";
-import "./Players.css";
-import FederationDropdown from "../../components/FederationDropdown";
-import TitleDropdown from "../../components/TitleDropdown";
-import SexDropdown from "../../components/SexDropdown";
+} from "../Types";
+import { Link, useParams } from "react-router-dom";
+import { fetchJson, title } from "../../../functions";
+import "./style.css";
+import FederationDropdown from "../../../components/FederationDropdown";
+import TitleDropdown from "../../../components/TitleDropdown";
+import SexDropdown from "../../../components/SexDropdown";
+import { WithPopup } from "../../../hocs/popup";
+import { AddTeams, AddTeamsButton } from "./add-teams";
 
 type PlayersState = {
   loaded: boolean;
@@ -42,19 +50,16 @@ type PlayersState = {
 };
 
 type PlayersProps = {
-  tid: string;
+  tournamentId: string;
 };
 
-class Players extends Component<
-  RouteComponentProps<PlayersProps>,
-  PlayersState
-> {
+class Players extends Component<PlayersProps, PlayersState> {
   tournamentId: string;
 
   accountRef: RefObject<HTMLInputElement>;
   teamRef: RefObject<HTMLSelectElement>;
 
-  constructor(props: RouteComponentProps<PlayersProps>) {
+  constructor(props: PlayersProps) {
     super(props);
 
     this.state = {
@@ -73,7 +78,6 @@ class Players extends Component<
       newTeamId: "",
       newClubId: "",
     };
-    this.tournamentId = this.props.match.params.tid;
 
     this.accountRef = React.createRef();
     this.teamRef = React.createRef();
@@ -99,7 +103,7 @@ class Players extends Component<
 
   loadState() {
     fetchJson(
-      `/s/tournament/players/${this.tournamentId}`,
+      `/s/tournament/players/${this.props.tournamentId}`,
       "GET",
       undefined,
       (result) => this.setState({ loaded: true, info: result })
@@ -108,7 +112,7 @@ class Players extends Component<
 
   removeParticipant(uid: string) {
     fetchJson(
-      `/s/tournament/remove-participant/${this.tournamentId}/${uid}`,
+      `/s/tournament/remove-participant/${this.props.tournamentId}/${uid}`,
       "POST",
       undefined,
       (_) => {
@@ -126,7 +130,7 @@ class Players extends Component<
 
   removeTeam(tid: string) {
     fetchJson(
-      `/s/tournament/remove-team/${this.tournamentId}/${tid}`,
+      `/s/tournament/remove-team/${this.props.tournamentId}/${tid}`,
       "POST",
       undefined,
       (_) => {
@@ -151,7 +155,7 @@ class Players extends Component<
 
   updateSeeding() {
     fetchJson(
-      `/s/tournament/change-seeding/${this.tournamentId}/${
+      `/s/tournament/change-seeding/${this.props.tournamentId}/${
         this.state.info?.tournament.random_seeding ? "random" : "rating"
       }`,
       "POST",
@@ -233,7 +237,7 @@ class Players extends Component<
 
   addExistingAcc(uid: string) {
     fetchJson(
-      `/s/tournament/add-participant/${this.tournamentId}/${uid}`,
+      `/s/tournament/add-participant/${this.props.tournamentId}/${uid}`,
       "POST",
       undefined,
       (result) => {
@@ -246,7 +250,7 @@ class Players extends Component<
 
   addTeam(team: string) {
     fetchJson(
-      `/s/tournament/add-team/${this.tournamentId}/${team}`,
+      `/s/tournament/add-team/${this.props.tournamentId}/${team}`,
       "POST",
       undefined,
       (result) => {
@@ -422,9 +426,21 @@ class Players extends Component<
           </tbody>
         </table>
 
-        <h3 className="mt-4">
-          <Translated str="addATeam" />
-        </h3>
+        <WithPopup
+          content={
+            <AddTeams
+              teams={this.state.info.managed_teams}
+              clubs={this.state.info.clubs}
+              teamsAdded={this.state.info.teams}
+              tournamentId={this.props.tournamentId}
+              onSuccess={() => {
+                this.loadState();
+              }}
+            />
+          }
+        >
+          <AddTeamsButton />
+        </WithPopup>
 
         <div className="mt-4">
           {info.clubs.length > 0 && (
@@ -621,4 +637,10 @@ class Players extends Component<
   }
 }
 
-export default Players;
+const PlayersComponent: FunctionComponent<{}> = () => {
+  const { tid } = useParams<{ tid: string }>();
+
+  return <Players tournamentId={tid} />;
+};
+
+export default PlayersComponent;
