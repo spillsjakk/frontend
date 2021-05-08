@@ -113,7 +113,10 @@ const Pairings: FunctionComponent<{
           <td>
             {pairing.white_title && (
               <>
-                <span className="title">{pairing.white_title}</span>&nbsp;
+                <span className={style["player-title"]}>
+                  {pairing.white_title}
+                </span>
+                &nbsp;
               </>
             )}
             {tournament.show_only_usernames
@@ -138,7 +141,10 @@ const Pairings: FunctionComponent<{
           <td>
             {pairing.black_title && (
               <>
-                <span className="title">{pairing.black_title}</span>&nbsp;
+                <span className={style["player-title"]}>
+                  {pairing.black_title}
+                </span>
+                &nbsp;
               </>
             )}
             {tournament.show_only_usernames

@@ -116,7 +116,11 @@ const Standings: FunctionComponent<{}> = () => {
               {(row as any).getUsername()}
             </Link>
           );
-          const titleSpan = row.title ? <span>{row.title}</span> : <></>;
+          const titleSpan = row.title ? (
+            <span className={style["player-title"]}>{row.title}</span>
+          ) : (
+            <></>
+          );
           if (row.eliminated) {
             return (
               <s>
