@@ -341,7 +341,7 @@ class View extends Component<
         "DELETE",
         undefined,
         () => {
-          window.location.replace("/tournament/find");
+          window.location.replace("/");
         }
       );
     }
@@ -862,14 +862,6 @@ class View extends Component<
                             <Translated str="manageParticipants" />
                           </Link>
                         </HelpBox>
-                        {!info.can_start && (
-                          <div
-                            className="p-3 btn btn-danger ml-5 mb-3"
-                            onClick={() => this.onDeleteTournament()}
-                          >
-                            <Translated str="deleteTournament" />
-                          </div>
-                        )}
                       </>
                     )}
                     {info.managed_teams &&
@@ -895,6 +887,12 @@ class View extends Component<
                     >
                       <Translated str="editTournament" />
                     </Link>
+                    <div
+                      className="p-3 btn btn-danger ml-5 mb-3"
+                      onClick={() => this.onDeleteTournament()}
+                    >
+                      <Translated str="deleteTournament" />
+                    </div>
                   </form>
                 )}
 
