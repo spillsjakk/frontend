@@ -442,56 +442,6 @@ class Players extends Component<PlayersProps, PlayersState> {
           <AddTeamsButton />
         </WithPopup>
 
-        <div className="mt-4">
-          {info.clubs.length > 0 && (
-            <>
-              <select
-                name="newClubId"
-                value={this.state.newClubId}
-                className="w-25"
-                onChange={this.handleChangeClubOrTeam}
-              >
-                <option value=""></option>
-                {info.clubs.map((club) => (
-                  <option key={club.id} value={club.id}>
-                    {club.name}
-                  </option>
-                ))}
-              </select>
-              &nbsp;&gt;&nbsp;
-            </>
-          )}
-          <select
-            id="teamId"
-            name="newTeamId"
-            value={this.state.newTeamId}
-            className="w-25"
-            onChange={this.handleChangeClubOrTeam}
-          >
-            <option value=""></option>
-            {info.managed_teams
-              .filter(
-                (t) =>
-                  info.clubs.length === 0 || t.club === this.state.newClubId
-              )
-              .map((managed_team) => (
-                <option key={managed_team.id} value={managed_team.id}>
-                  {managed_team.name}{" "}
-                  {managed_team.id === `_${this.state.newClubId}`
-                    ? `--${Translated.byKey("primary")}--`
-                    : ""}
-                </option>
-              ))}
-          </select>
-          &nbsp;
-          <a
-            className="btn btn-primary"
-            onClick={() => this.addTeam(this.state.newTeamId)}
-          >
-            +
-          </a>
-        </div>
-
         {!info.is_team_tournament && (
           <>
             <h3 className="mt-4">
