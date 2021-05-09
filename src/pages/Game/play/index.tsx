@@ -23,6 +23,7 @@ import { WithChatService } from "../../../hocs/with-chat-service";
 import { Message } from "../../../context/chat-service";
 import { Clock, numToSquare } from "./clock";
 import UserLink from "../../../components/UserLink";
+import { DRAW_OFFER_SIGN } from "../../../constants";
 
 type PlayProps = {
   id: string;
@@ -288,6 +289,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     const bstr = atob(b64moves);
     let lastMove;
     for (let i = 0; i < bstr.length; i += 3) {
+      if (bstr.charCodeAt(i) === 97) {
+        // draw offer
+        game.set_comment(DRAW_OFFER_SIGN);
+        continue;
+      }
       const from = numToSquare(bstr.charCodeAt(i));
       const to = numToSquare(bstr.charCodeAt(i + 1));
       let prom: string | null = "-nbrq"[bstr.charCodeAt(i + 2)];

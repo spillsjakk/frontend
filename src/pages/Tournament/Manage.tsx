@@ -40,6 +40,7 @@ import { WithRoundSetupPopup } from "../../hocs/with-round-setup-popup";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 import { GameOutcome } from "../Game/play";
 import { numToSquare } from "../Game/play/clock";
+import { DRAW_OFFER_SIGN } from "../../constants";
 
 const { SearchBar } = Search;
 
@@ -454,6 +455,11 @@ class View extends Component<
   reconstructGame(moves: Array<number>) {
     const game = new Chess();
     for (let i = 0; i < moves.length; i += 3) {
+      if (moves[i] === 97) {
+        // draw offer
+        game.set_comment(DRAW_OFFER_SIGN);
+        continue;
+      }
       const from = numToSquare(moves[i]);
       const to = numToSquare(moves[i + 1]);
       let prom: string | null = "-nbrq"[moves[i + 2]];

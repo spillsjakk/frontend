@@ -13,6 +13,7 @@ import Chess from "chess.js";
 import "./View.css";
 import { UserInfoBox } from "./play/user-info-box";
 import { Tournament } from "../Tournament/Types";
+import { DRAW_OFFER_SIGN } from "../../constants";
 
 type ViewProps = {
   id: string;
@@ -118,22 +119,37 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
               : GameOutcome.Draw,
         },
         () => {
-          this.updateBoard(this.allMoves.length / 3 - 1, true);
+          const currentMove = Math.max(
+            0,
+            Math.min(this.allMoves.length / 3 - 1, this.allMoves.length / 3 - 1)
+          );
+          const moves = this.allMoves.slice(0, currentMove * 3 + 3);
+          const [lastMove, game] = this.reconstructGame(moves);
+          const fen = game.fen();
+          const check = game.in_check();
+          const turn = game.turn() === "w" ? "white" : "black";
+          this.setState({
+            pgn: game.pgn(),
+            currentMove: this.allMoves.filter((m) => m !== 97).length / 3 - 1,
+            fen,
+            check,
+            turn,
+            lastMove,
+          });
         }
       );
     });
   }
 
-  updateBoard(moveNum: number, updatePgn: boolean) {
-    const currentMove = Math.max(
-      0,
-      Math.min(this.allMoves.length / 3 - 1, moveNum)
-    );
-    const moves = this.allMoves.slice(0, currentMove * 3 + 3);
-
+  reconstructGame(moves: Array<number>) {
     const game = new Chess();
     let lastMove;
     for (let i = 0; i < moves.length; i += 3) {
+      if (moves[i] === 97) {
+        // draw offer
+        game.set_comment(DRAW_OFFER_SIGN);
+        continue;
+      }
       const from = numToSquare(moves[i]);
       const to = numToSquare(moves[i + 1]);
       let prom: string | null = "-nbrq"[moves[i + 2]];
@@ -144,27 +160,28 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       lastMove = [from, to];
     }
 
+    return [lastMove, game];
+  }
+
+  updateBoard(moveNum: number) {
+    const allMovesWithoutDrawOffers = this.allMoves.filter((m) => m !== 97);
+    const currentMove = Math.max(
+      0,
+      Math.min(allMovesWithoutDrawOffers.length / 3 - 1, moveNum)
+    );
+    const moves = allMovesWithoutDrawOffers.slice(0, currentMove * 3 + 3);
+    const [lastMove, game] = this.reconstructGame(moves);
+
     const fen = game.fen();
     const check = game.in_check();
     const turn = game.turn() === "w" ? "white" : "black";
-    if (updatePgn) {
-      this.setState({
-        pgn: game.pgn(),
-        fen,
-        check,
-        currentMove,
-        turn,
-        lastMove,
-      });
-    } else {
-      this.setState({
-        fen,
-        check,
-        currentMove,
-        turn,
-        lastMove,
-      });
-    }
+    this.setState({
+      fen,
+      check,
+      currentMove,
+      turn,
+      lastMove,
+    });
 
     // eslint-disable-next-line no-unused-expressions
     document.querySelector(".highlight-blue")?.scrollIntoView(false);
@@ -259,6 +276,12 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       .split(" ");
     const rows = [];
     if (this.state.pgn !== "") {
+      // for loop removes the draw offers
+      for (let i = 0; i < splitMovePgn.length; i++) {
+        if (splitMovePgn[i] === `{${DRAW_OFFER_SIGN}}`) {
+          splitMovePgn.splice(i, 1);
+        }
+      }
       for (let i = 0; i < splitMovePgn.length; i += 3) {
         const j = i / 3;
         rows.push(
@@ -269,7 +292,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
                 "move" +
                 (this.state.currentMove === 2 * j ? " highlight-blue" : "")
               }
-              onClick={() => this.updateBoard(2 * j, false)}
+              onClick={() => this.updateBoard(2 * j)}
             >
               {splitMovePgn[i + 1]}
             </td>
@@ -278,7 +301,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
                 "move" +
                 (this.state.currentMove === 2 * j + 1 ? " highlight-blue" : "")
               }
-              onClick={() => this.updateBoard(2 * j + 1, false)}
+              onClick={() => this.updateBoard(2 * j + 1)}
             >
               {splitMovePgn[i + 2]}
             </td>
@@ -327,34 +350,28 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
               <div
                 id="controls-begin"
                 className="flex-fill p-3"
-                onClick={() => this.updateBoard(0, false)}
+                onClick={() => this.updateBoard(0)}
               >
                 |&lt;&lt;
               </div>
               <div
                 id="controls-prev"
                 className="flex-fill p-3"
-                onClick={() =>
-                  this.updateBoard(this.state.currentMove - 1, false)
-                }
+                onClick={() => this.updateBoard(this.state.currentMove - 1)}
               >
                 |&lt;
               </div>
               <div
                 id="controls-next"
                 className="flex-fill p-3"
-                onClick={() =>
-                  this.updateBoard(this.state.currentMove + 1, false)
-                }
+                onClick={() => this.updateBoard(this.state.currentMove + 1)}
               >
                 &gt;|
               </div>
               <div
                 id="controls-end"
                 className="flex-fill p-3"
-                onClick={() =>
-                  this.updateBoard(this.allMoves.length / 3 - 1, false)
-                }
+                onClick={() => this.updateBoard(this.allMoves.length / 3 - 1)}
               >
                 &gt;&gt;|
               </div>

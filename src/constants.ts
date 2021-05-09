@@ -21,3 +21,5 @@ export const TIEBREAKER = {
   BuchholzCut1: 4,
   BuchholzCut2: 5,
 };
+
+export const DRAW_OFFER_SIGN = "(=)";
