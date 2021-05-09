@@ -14,13 +14,17 @@ const Message: FunctionComponent<Props> = ({ message }) => {
         <div className="text">
           <div>
             <span className="bold">From: </span>
-            <span className="italic">
-              <UserLink
-                ghost={false}
-                id={message.sender}
-                name={message.sender_name}
-              />
-            </span>
+            {message.sender === "system" ? (
+              "System"
+            ) : (
+              <span className="italic">
+                <UserLink
+                  ghost={false}
+                  id={message.sender}
+                  name={message.sender_name}
+                />
+              </span>
+            )}
           </div>
           <div>
             <span className="bold">Date: </span>
