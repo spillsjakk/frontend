@@ -21,7 +21,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   );
   const [onlinePairingIntervalN, setOnlinePairingIntervalN] = useState(0);
   const [onlinePairingIntervalT, setOnlinePairingIntervalT] = useState(0);
-  const [initialTime, setInitialTime] = useState(0);
+  const [initialTime, setInitialTime] = useState(1);
   const [increment, setIncrement] = useState(0);
   const [selfJoinable, setSelfJoinable] = useState(false);
   const [showOnlyTop, setShowOnlyTop] = useState(false);
