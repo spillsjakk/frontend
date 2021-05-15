@@ -98,7 +98,7 @@ const no = {
 	"featuresWeOffer": "FUNKSJONER VI TILBYR",
 	"federation": "Forbund",
 	"fideFederation": "Verdens Sjakkforbund - FIDE",
-	"fideInfoText": "Har du FIDE-rating (FIDE = verdens sjakkforbund)? Hvis du har FIDE-rating har du også en FIDE-ID. Det går helt fint å opprette konto uten FIDE-ID, det tar bare litt lengre tid.",
+	"fideInfoText": "Legg til FIDE-ID-en din hvis du har en, hvis ikke, trykk neste ",
 	"fideNumber": "FIDE-nummer",
 	"fideRated": "Dette er en FIDE-ratet turnering.",
 	"fideRating": "FIDE-rating",

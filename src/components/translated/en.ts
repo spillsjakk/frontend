@@ -98,7 +98,7 @@ const en = {
 	"featuresWeOffer": "FEATURES WE OFFER",
 	"federation": "Federation",
 	"fideFederation": "FIDE federation",
-	"fideInfoText": "Do you have a FIDE (the International Chess Federation) rating? If you do, you will have a FIDE-ID number. Please enter your FIDE-ID number in the field below. If you don’t have one, don’t worry - you can still sign up, it’ll just take a little longer. ",
+	"fideInfoText": "Add your FIDE ID if you have one, if not press next",
 	"fideNumber": "FIDE number",
 	"fideRated": "This is a FIDE rated tournament.",
 	"fideRating": "FIDE rating",
