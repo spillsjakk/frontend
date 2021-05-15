@@ -126,7 +126,7 @@ const initalValues = {
   changeTb4: (value: string) => {},
   fideRated: false,
   changeFideRated: (value: boolean) => {},
-  showOnlyUsernames: true,
+  showOnlyUsernames: false,
   changeShowOnlyUsernames: (value: boolean) => {},
   profilePicture: "",
   changeProfilePicture: (value: string) => {},

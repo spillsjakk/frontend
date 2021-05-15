@@ -36,7 +36,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [fideRated, setFideRated] = useState(false);
   const [rounds, setRounds] = useState<number>();
   const [perTeam, setPerTeam] = useState<number>();
-  const [showOnlyUsernames, setShowOnlyUsernames] = useState<boolean>(true);
+  const [showOnlyUsernames, setShowOnlyUsernames] = useState<boolean>(false);
   const [profilePicture, setProfilePicture] = useState<string>("");
   const [bannerPicture, setBannerPicture] = useState<string>("");
   const [organiser, setOrganiser] = useState<string>("");
