@@ -75,6 +75,7 @@ const no = {
 	"create": "Opprett",
 	"createATeam": "Opprett et lag",
 	"createAccounts": "Opprett kontoer",
+	"createAccount": "Opprett konto",
 	"createYourAccount": "Opprett din konto på SpillSjakk",
 	"createYourClub": "Opprett klubben din på SpillSjakk",
 	"currentPassword": "Nåværende passord",
@@ -472,6 +473,7 @@ const no = {
   "messageAllClubMembers": "Send melding til alle medlemmene i klubben",
   "userId": "User Id",
   "addTeams": "",
+  "alreadyAMember": "Du er allerede medlem"
 };
 
 export { no };

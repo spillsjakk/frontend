@@ -21,3 +21,23 @@ form {
     max-width: 650px;
   }
 }
+
+.first-info {
+  display: flex;
+  grid-gap: 30px;
+  flex-direction: column;
+}
+
+.text {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.center {
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  grid-gap: 10px;
+}

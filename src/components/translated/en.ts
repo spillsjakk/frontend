@@ -75,6 +75,7 @@ const en = {
 	"create": "Create",
 	"createATeam": "Create a team",
 	"createAccounts": "Create accounts",
+	"createAccount": "Create account",
 	"createYourAccount": "Create Your Spillsjakk Account",
 	"createYourClub": "Create Your Spillsjakk Club",
 	"currentPassword": "Current password",
@@ -476,7 +477,8 @@ const en = {
   "league": "League",
   "messageAllClubMembers": "Message all club members",
   "userId": "User Id",
-  "addTeams": "Add Teams"
+  "addTeams": "Add Teams",
+  "alreadyAMember": "You are already a member"
 };
 
 export { en };

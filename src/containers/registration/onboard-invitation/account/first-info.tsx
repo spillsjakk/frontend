@@ -1,9 +1,12 @@
+import { Button } from "@material-ui/core";
 import React, { FunctionComponent, useState } from "react";
 import ReactDOM from "react-dom";
 import { useHistory } from "react-router-dom";
 import Translated from "../../../../components/translated";
 import { InviterType, useInvitation } from "../../../../context/invitation";
 import { ErrorComponent, fetchCall } from "../../../../functions";
+import style from "./style.module.scss";
+import { useUser } from "../../../../components/UserContext";
 
 function getLink(type: InviterType, id: string) {
   if (type === 0) {
@@ -28,6 +31,9 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
   const { invitation } = useInvitation();
 
   const history = useHistory();
+  const {
+    user: { authenticated },
+  } = useUser();
 
   function joinToClub() {
     if (joining) return;
@@ -52,16 +58,25 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
             document.getElementById("error")
           );
           history.push(`/login?path=/invitation/${invitation.id}`);
+        } else if (error === "400") {
+          ReactDOM.render(
+            <>
+              <ErrorComponent err={Translated.byKey("alreadyAMember")} />
+            </>,
+            document.getElementById("error")
+          );
         }
       }
     );
   }
 
   return (
-    <>
+    <div
+      className={`${style["first-info"]} ${authenticated ? style.center : ""}`}
+    >
       {invitation && (
         <div
-          className="bold"
+          className={style.text}
           dangerouslySetInnerHTML={{
             __html: getInvitationText(
               invitation.invitertype,
@@ -71,20 +86,28 @@ const FirstInfo: FunctionComponent<Props> = ({ onNext }) => {
           }}
         ></div>
       )}
-      <button className="action-button" onClick={onNext}>
-        {Translated.byKey("next").toUpperCase()}
-      </button>
-      <div className="text-align-end italic">
-        {Translated.byKey("alreadyHaveAccount")}
-        <span
-          className={`green pointer ${joining ? "disabled" : ""}`}
-          onClick={joinToClub}
-        >
-          {" "}
-          {Translated.byKey("oneClickJoin")}
-        </span>
-      </div>
-    </>
+      {!authenticated ? (
+        <div className={style.actions}>
+          <div>
+            <Button color="primary" variant="contained" onClick={onNext}>
+              {Translated.byKey("createAccount").toUpperCase()}
+            </Button>
+          </div>
+          <div>
+            <Button color="primary" variant="outlined" onClick={joinToClub}>
+              {Translated.byKey("alreadyHaveAccount")}{" "}
+              {Translated.byKey("oneClickJoin")}
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <Button color="primary" variant="contained" onClick={joinToClub}>
+            {Translated.byKey("join")}
+          </Button>
+        </div>
+      )}
+    </div>
   );
 };
 
