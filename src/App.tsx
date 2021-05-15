@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import { NavigationBar } from "./containers/navigation-bar/index";
 import LangContext from "./components/LangContext";
 import { UserContext, UserContextDataType } from "./components/UserContext";
+import { MobileUserWarning } from "./components/mobile-user-warning";
 
 import { fetchJson } from "./functions";
 import GameNotifier from "./components/GameNotifier";
@@ -58,6 +59,7 @@ class App extends Component<{}, AppState> {
                 <Main />
               </Container>
             </Container>
+            <MobileUserWarning />
           </UserContext.Provider>
         </LangContext.Provider>
       </WithTheme>

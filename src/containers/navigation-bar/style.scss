@@ -60,6 +60,9 @@
       justify-content: center;
       align-items: center;
       margin-left: 10px;
+      @media (max-width: 640px) {
+        display: none;
+      }
       .link {
         position: relative;
         cursor: default;
