@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import LangSwitcher from "../../components/LangSwitcher";
 import Translated from "../../components/translated";
 import { Levels, useUser } from "../../components/UserContext";
@@ -131,7 +131,9 @@ const NavigationBar: FunctionComponent<{}> = () => {
                 text={Translated.byKey("logoHelpbox")}
                 show={authenticated()}
               >
-                <Logo />
+                <Link to="/">
+                  <Logo />
+                </Link>
               </HelpBox>
               <nav className="links">
                 <div className="link">
