@@ -41,7 +41,7 @@ const templateData = [
   {
     id: 3,
     initialTime: 10,
-    increment: 2,
+    increment: 0,
     numberOfRounds: 4,
     kind: KIND.TeamMonrad,
     kindName: "teamMonrad",
