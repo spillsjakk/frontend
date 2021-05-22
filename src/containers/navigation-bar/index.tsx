@@ -173,10 +173,10 @@ const NavigationBar: FunctionComponent<{}> = () => {
                   </div>
                 </div>
 
-                <div className="link">
-                  {Translated.byKey("navbarAccountCreation")}
-                  {showAccountCreation() && (
+                {showAccountCreation() && (
+                  <div className="link">
                     <>
+                      {Translated.byKey("navbarAccountCreation")}
                       <div className="menu">
                         <a href="/account/create" className="item">
                           {Translated.byKey("createAccounts")}
@@ -194,8 +194,8 @@ const NavigationBar: FunctionComponent<{}> = () => {
                         )}
                       </div>
                     </>
-                  )}
-                </div>
+                  </div>
+                )}
 
                 <div className="link">
                   {Translated.byKey("navbarInfo")}
