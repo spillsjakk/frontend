@@ -137,27 +137,51 @@ const EditLeague: FunctionComponent<unknown> = memo(() => {
     <Button
       variant="outlined"
       color="primary"
-      className={style["absolute-right"]}
+      className={style["mr-sm"]}
       onClick={() => {
         form.fillValues(league);
         popup.changeOpen(true);
       }}
     >
-      {Translated.byKey("editLeague")}
+      {Translated.byKey("edit")}
     </Button>
   );
 });
 
-const League: FunctionComponent<{}> = () => {
+const DeleteLeague: FunctionComponent<unknown> = memo(() => {
+  const { league } = useLeague();
+  function deleteLeague() {
+    if (window.confirm("Are you sure to delete league?")) {
+      fetchJson(`/s/leagues/${league.id}`, "DELETE", undefined, () => {
+        window.location.replace("/");
+      });
+    }
+  }
   return (
-    <>
+    <Button
+      variant="outlined"
+      color="secondary"
+      className={style.error}
+      onClick={() => {
+        deleteLeague();
+      }}
+    >
+      {Translated.byKey("delete")}
+    </Button>
+  );
+});
+
+const LeagueActions: FunctionComponent<{}> = () => {
+  return (
+    <div className={style["absolute-right"]}>
       <WithLeagueForm>
         <WithPopup content={<LeagueEditForm />}>
           <EditLeague />
         </WithPopup>
       </WithLeagueForm>
-    </>
+      <DeleteLeague />
+    </div>
   );
 };
 
-export { League };
+export { LeagueActions };

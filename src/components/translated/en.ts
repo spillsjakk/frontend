@@ -478,7 +478,8 @@ const en = {
   "messageAllClubMembers": "Message all club members",
   "userId": "User Id",
   "addTeams": "Add Teams",
-  "alreadyAMember": "You are already a member"
+  "alreadyAMember": "You are already a member",
+  "delete": "Delete"
 };
 
 export { en };

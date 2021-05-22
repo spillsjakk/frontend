@@ -473,7 +473,8 @@ const no = {
   "messageAllClubMembers": "Send melding til alle medlemmene i klubben",
   "userId": "User Id",
   "addTeams": "",
-  "alreadyAMember": "Du er allerede medlem"
+  "alreadyAMember": "Du er allerede medlem",
+  "delete": "Slett"
 };
 
 export { no };
