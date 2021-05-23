@@ -479,7 +479,8 @@ const en = {
   "userId": "User Id",
   "addTeams": "Add Teams",
   "alreadyAMember": "You are already a member",
-  "delete": "Delete"
+  "delete": "Delete",
+  "pairingGenerationFailed": "This tournament could not be completed due to insufficient players. All possible pairings have been exhausted."
 };
 
 export { en };

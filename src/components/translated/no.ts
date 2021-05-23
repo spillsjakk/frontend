@@ -474,7 +474,8 @@ const no = {
   "userId": "User Id",
   "addTeams": "",
   "alreadyAMember": "Du er allerede medlem",
-  "delete": "Slett"
+  "delete": "Slett",
+  "pairingGenerationFailed": "Denne turneringen kunne ikke fullføres på grunn av utilstrekkelige spillere. Alle mulige sammenkoblinger er oppbrukt."
 };
 
 export { no };

@@ -7,7 +7,7 @@ import Translated from "../../../components/translated";
 function PairingFailed() {
   return (
     <div className={style["warning-box"]}>
-      All of the rounds could not be played due to lack of players
+      {Translated.byKey("pairingGenerationFailed")}
     </div>
   );
 }
