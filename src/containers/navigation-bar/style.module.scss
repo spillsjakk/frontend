@@ -1,0 +1,47 @@
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  .link {
+    position: relative;
+    cursor: default;
+    margin: 0px 10px;
+
+    .menu {
+      display: none;
+      position: absolute;
+      background-color: #cccccc;
+      border-radius: 10px;
+      padding: 5px;
+      font-size: 12px;
+      width: 200px;
+
+      .item {
+        display: block;
+        border-radius: 10px;
+        padding: 10px;
+      }
+
+      .item:hover {
+        background-color: #ababab;
+      }
+
+      a {
+        color: black;
+      }
+
+      a:hover {
+        background-color: #ababab;
+      }
+    }
+  }
+
+  .link:hover .menu {
+    display: block;
+  }
+  .link:active .menu {
+    display: block;
+  }
+}

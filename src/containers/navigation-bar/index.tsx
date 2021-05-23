@@ -2,17 +2,21 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import LangSwitcher from "../../components/LangSwitcher";
 import Translated from "../../components/translated";
-import { Levels, useUser } from "../../components/UserContext";
+import { useUser } from "../../components/UserContext";
 import { fetchJson } from "../../functions";
 import { Logo } from "./logo";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 import "./style.scss";
+import { useMediaQuery } from "@material-ui/core";
+import { MobileMenu } from "./mobile-menu";
+import { Links } from "./links";
 
 const NavigationBar: FunctionComponent<{}> = () => {
   const [hasMessage, setHasMessage] = useState(false);
 
   const { user, setUser } = useUser();
   const history = useHistory();
+  const isTablet = useMediaQuery("(max-width:900px)");
 
   // required for rendering when route is changed
   useParams();
@@ -54,66 +58,6 @@ const NavigationBar: FunctionComponent<{}> = () => {
     return user && user.authenticated === true;
   }
 
-  function hasLevel() {
-    return user.authenticated && !!user.info?.level && user.info?.level > 0;
-  }
-
-  function isOrganizationManager() {
-    return (
-      user.authenticated &&
-      !!user.info?.level &&
-      user.info?.level >= Levels.OrganizationManager
-    );
-  }
-
-  function isAdmin() {
-    return (
-      user.authenticated &&
-      !!user.info?.level &&
-      user.info?.level >= Levels.Admin
-    );
-  }
-
-  function showBuildTournament() {
-    return (
-      hasLevel() ||
-      user.info?.powers.organization_all ||
-      user.info?.powers.club_all ||
-      user.info?.powers.organization_arbiter ||
-      user.info?.powers.club_arbiter
-    );
-  }
-
-  function showBuildLeague() {
-    return (
-      hasLevel() ||
-      user.info?.powers.organization_all ||
-      user.info?.powers.club_all ||
-      user.info?.powers.organization_arbiter ||
-      user.info?.powers.club_arbiter
-    );
-  }
-
-  function showManageClub() {
-    return (
-      hasLevel() ||
-      user.info?.powers.organization_all ||
-      user.info?.powers.club_all
-    );
-  }
-
-  function showAccountCreation() {
-    return (
-      hasLevel() ||
-      user.info?.powers.organization_all ||
-      user.info?.powers.club_all
-    );
-  }
-
-  function showManageOrganization() {
-    return isOrganizationManager() || user.info?.powers.organization_all;
-  }
-
   function visible() {
     const gamePlayPage = new RegExp("/game/play/.*");
     return !gamePlayPage.test(history.location.pathname);
@@ -125,6 +69,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
         <nav id="navigation-bar">
           <div className="wrapper">
             <div className="left">
+              {isTablet && <MobileMenu />}
               <HelpBox
                 placement="right"
                 name={helpboxNames.logo}
@@ -135,83 +80,7 @@ const NavigationBar: FunctionComponent<{}> = () => {
                   <Logo />
                 </Link>
               </HelpBox>
-              <nav className="links">
-                <div className="link">
-                  {Translated.byKey("navbarTournaments")}
-                  <div className="menu">
-                    <a href="/calendar" className="item">
-                      {Translated.byKey("myTournamentCalendar")}
-                    </a>
-                    {showBuildTournament() && (
-                      <a href="/tournament/build" className="item">
-                        {Translated.byKey("buildTournament")}
-                      </a>
-                    )}
-                    {showBuildLeague() && (
-                      <a href="/league/build" className="item">
-                        {Translated.byKey("buildLeague")}
-                      </a>
-                    )}
-                  </div>
-                </div>
-                <div className="link">
-                  {Translated.byKey("navbarOrgs")}
-                  <div className="menu">
-                    <a href="/browse" className="item">
-                      {Translated.byKey("browse")}
-                    </a>
-                    {showManageClub() && (
-                      <a href="/club/manage" className="item">
-                        {Translated.byKey("manageClub")}
-                      </a>
-                    )}
-                    {showManageOrganization() && (
-                      <a href="/organization/manage" className="item">
-                        {Translated.byKey("manageOrganization")}
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                {showAccountCreation() && (
-                  <div className="link">
-                    <>
-                      {Translated.byKey("navbarAccountCreation")}
-                      <div className="menu">
-                        <a href="/account/create" className="item">
-                          {Translated.byKey("createAccounts")}
-                        </a>
-                        <a
-                          href="/registration/generate/invitation"
-                          className="item"
-                        >
-                          {Translated.byKey("invite")}
-                        </a>
-                        {isAdmin() && (
-                          <a href="/registration/organization" className="item">
-                            {Translated.byKey("createOrganization")}
-                          </a>
-                        )}
-                      </div>
-                    </>
-                  </div>
-                )}
-
-                <div className="link">
-                  {Translated.byKey("navbarInfo")}
-                  <div className="menu">
-                    <a href="/about" className="item">
-                      {Translated.byKey("about")}
-                    </a>
-                    <a href="/user-guide" className="item">
-                      {Translated.byKey("userGuide")}
-                    </a>
-                    <a href="/contact" className="item">
-                      {Translated.byKey("contact")}
-                    </a>
-                  </div>
-                </div>
-              </nav>
+              {!isTablet && <Links />}
             </div>
             <div className="right links">
               <LangSwitcher />
