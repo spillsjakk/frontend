@@ -1,6 +1,6 @@
 import { ListItemText, List, ListItem, ListSubheader } from "@material-ui/core";
 
-import React, { FunctionComponent } from "react";
+import React, { forwardRef, FunctionComponent } from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../components/translated/index";
 import { Levels, useUser } from "../../components/UserContext";
@@ -153,7 +153,7 @@ const Links: FunctionComponent<unknown> = () => {
   );
 };
 
-const MobileLinks: FunctionComponent<unknown> = () => {
+const MobileLinks: FunctionComponent<any> = forwardRef(() => {
   const { user } = useUser();
 
   // required for rendering when route is changed
@@ -324,6 +324,6 @@ const MobileLinks: FunctionComponent<unknown> = () => {
       </List>
     </>
   );
-};
+});
 
 export { Links, MobileLinks };
