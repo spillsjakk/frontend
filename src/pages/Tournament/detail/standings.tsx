@@ -25,11 +25,11 @@ function headerFormatter(column: any, _: any, components: any) {
 }
 
 function smallHeader() {
-  return { width: "80px", "padding-left": "2px" };
+  return { width: "80px", paddingLeft: "2px" };
 }
 
 function mediumHeader() {
-  return { width: "120px", "padding-left": "2px" };
+  return { width: "120px", paddingLeft: "2px" };
 }
 
 const tbColumns = [

@@ -8,7 +8,7 @@ import {
 import style from "./style.module.scss";
 
 const MobileUserWarning: FunctionComponent<unknown> = () => {
-  const matches = useMediaQuery("(max-width:640px)");
+  const matches = useMediaQuery("(max-width:420px)");
   return (
     <Dialog open={matches} className={style.dialog}>
       <DialogContent>
