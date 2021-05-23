@@ -71,6 +71,7 @@ export type Team = {
   id: string;
   name: string;
   description: string;
+  profile_picture: string;
   club: string;
 };
 

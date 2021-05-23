@@ -23,6 +23,7 @@ type ManageState = {
   newName: string;
   newDescription: string;
   message: string;
+  profilePicture: string;
 };
 
 class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
@@ -38,6 +39,7 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
       newName: "",
       newDescription: "",
       message: "",
+      profilePicture: "",
     };
     this.customAccRef = React.createRef();
 
@@ -95,6 +97,7 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
           info: result,
           newName: result.team.name,
           newDescription: result.team.description,
+          profilePicture: result.team.profile_picture,
         });
       }
     );
@@ -112,11 +115,16 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
     fetchJson(
       `/s/team/edit/${this.teamId}`,
       "POST",
-      { name: this.state.newName, description: this.state.newDescription },
+      {
+        name: this.state.newName,
+        description: this.state.newDescription,
+        profile_picture: this.state.profilePicture,
+      },
       (_) => {
         const info = { ...this.state.info! };
         info.team.name = this.state.newName;
         info.team.description = this.state.newDescription;
+        info.team.profile_picture = this.state.profilePicture;
         this.setState({ info });
       }
     );
@@ -156,6 +164,20 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
               required
               pattern="^[a-zA-Z0-9-_\sÅåÆæØø]+$"
               value={this.state.newName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="profilepicture">
+              <Translated str="profile_picture" />:
+            </label>
+            &nbsp;
+            <input
+              type="text"
+              className="form-control w-50"
+              name="profilePicture"
+              id="profilepicture"
+              value={this.state.profilePicture}
               onChange={this.handleChange}
             />
           </div>

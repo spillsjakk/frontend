@@ -44,6 +44,14 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     );
   }
 
+  getProfilePicture() {
+    if (this.state.info.team.profile_picture) {
+      return (
+        <img className="pp-custom" src={this.state.info.team.profile_picture} />
+      );
+    }
+  }
+
   render() {
     if (!this.state.loaded) {
       return <>Loading...</>;
@@ -55,8 +63,10 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
         <Helmet>
           <title>{title(info.team.name)}</title>
         </Helmet>
-
-        <h1 className="mt-4 p-3">{info.team.name}</h1>
+        <div className="header">
+          {this.getProfilePicture()}
+          <h1 className="mt-4 p-3">{info.team.name}</h1>
+        </div>
 
         <p>{info.team.description}</p>
 

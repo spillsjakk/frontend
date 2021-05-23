@@ -1,18 +1,28 @@
-
 body#Team-View {
-    background-color: #fafafa;
-    color: black !important;
-    font-family: Montserrat;
+  background-color: #fafafa;
+  color: black !important;
+  font-family: Montserrat;
 }
 
 body#Team-View .nav-item {
-    background-color: gray;
+  background-color: gray;
 }
 
 body#Team-View .table {
-    color: black !important;
+  color: black !important;
+}
+
+body#Team-View .header {
+  display: flex;
+}
+
+body#Team-View .pp-custom {
+  left: calc(min(40vw, 525px));
+  height: calc(min(15vw, 150px));
+  width: calc(min(15vw, 150px));
+  border-radius: 50%;
 }
 
 body#Team-View .table-striped tbody tr:nth-of-type(2n + 1) {
-    background-color: #fafafa !important;
+  background-color: #fafafa !important;
 }
