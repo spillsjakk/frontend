@@ -4,7 +4,15 @@ import { CircularCountDown } from "../../../components/circular-count-down";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
 
-const TimeSection: FunctionComponent<{}> = () => {
+function PairingFailed() {
+  return (
+    <div className={style["warning-box"]}>
+      All of the rounds could not be played due to lack of players
+    </div>
+  );
+}
+
+function Time() {
   const { tournament, rounds } = useTournamentDetail();
 
   function getDate(): Date {
@@ -39,7 +47,7 @@ const TimeSection: FunctionComponent<{}> = () => {
   }
 
   return (
-    <div className={style["time-section"]}>
+    <>
       {tournament &&
         (tournament.kind === "ManualPairing" ||
           tournament.kind === "RoundRobin" ||
@@ -72,6 +80,20 @@ const TimeSection: FunctionComponent<{}> = () => {
             </div>
           </>
         )}
+    </>
+  );
+}
+
+const TimeSection: FunctionComponent<{}> = () => {
+  const { tournament } = useTournamentDetail();
+
+  return (
+    <div className={style["time-section"]}>
+      {tournament && tournament.pairing_generation_failed ? (
+        <PairingFailed />
+      ) : (
+        <Time />
+      )}
     </div>
   );
 };

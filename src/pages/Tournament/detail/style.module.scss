@@ -178,6 +178,15 @@
   background-color: #f4f4f4;
 }
 
+.warning-box {
+  background-color: khaki;
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid orangered;
+}
+
 .centered-container {
   display: flex;
   justify-content: center;

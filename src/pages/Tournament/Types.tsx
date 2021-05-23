@@ -34,6 +34,7 @@ export type Tournament = {
   started?: boolean;
   organiser: string; // club/org id who creates the tournament
   organiser_type: "club" | "organization";
+  pairing_generation_failed: boolean | null;
 };
 
 export type Participant = {
