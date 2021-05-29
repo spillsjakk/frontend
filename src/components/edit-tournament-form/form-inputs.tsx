@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import MarkdownEditor from '@uiw/react-markdown-editor';
+import MarkdownEditor from "@uiw/react-markdown-editor";
 import { useForm } from "../../hocs/tournament-form";
 import Translated from "../translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";

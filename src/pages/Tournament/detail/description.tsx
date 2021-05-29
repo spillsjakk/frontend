@@ -7,6 +7,7 @@ import { ActionButton } from "./action-button";
 
 import style from "./style.module.scss";
 import { Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 const Description: FunctionComponent<{}> = () => {
   const { tournament, rounds, league } = useTournamentDetail();
@@ -19,11 +20,9 @@ const Description: FunctionComponent<{}> = () => {
             <div className={style.heading}>
               {Translated.byKey("about").toUpperCase()}:
             </div>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: xssFilters.inHTMLData(tournament?.description || ""),
-              }}
-            ></div>
+            <ReactMarkdown linkTarget="_blank">
+              {tournament?.description}
+            </ReactMarkdown>
           </div>
         </Col>
         <Col xs={12} md={4}>
