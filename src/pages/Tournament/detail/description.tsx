@@ -21,7 +21,7 @@ const Description: FunctionComponent<{}> = () => {
               {Translated.byKey("about").toUpperCase()}:
             </div>
             <ReactMarkdown linkTarget="_blank">
-              {tournament?.description}
+              {xssFilters.inHTMLData(tournament?.description || "")}
             </ReactMarkdown>
           </div>
         </Col>
