@@ -112,26 +112,30 @@ const Standings: FunctionComponent<{}> = () => {
         headerFormatter,
         formatter: function (_: any, row: Participant, __: any, ___: any) {
           const participantLink = (
-            <Link to={"/profile/" + row.account}>
-              {(row as any).getUsername()}
-            </Link>
+            <div className="d-inline-block text-truncate">
+              <Link to={"/profile/" + row.account}>
+                {(row as any).getUsername()}
+              </Link>
+            </div>
           );
           const titleSpan = row.title ? (
-            <span className={style["player-title"]}>{row.title}</span>
+            <div className={style["player-title"]}>{row.title}</div>
           ) : (
             <></>
           );
           if (row.eliminated) {
             return (
               <s>
-                {titleSpan} {participantLink}
+                <div className="d-flex">
+                  {titleSpan} {participantLink}
+                </div>
               </s>
             );
           } else {
             return (
-              <>
+              <div className="d-flex">
                 {titleSpan} {participantLink}
-              </>
+              </div>
             );
           }
         },
