@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { useForm } from "../../hocs/tournament-form";
+import { Editor } from "../markdown";
 import Translated from "../translated";
 
 const ShortFormInputs: FunctionComponent<{}> = () => {
@@ -24,14 +25,9 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
         <label htmlFor="description">
           <Translated str="description" />:
         </label>
-        <textarea
-          className="form-control"
-          id="description"
-          name="description"
-          required
+        <Editor
           value={form.description}
-          onChange={(e) => form.changeDescription(e.target.value)}
-          style={{ height: "250px" }}
+          onChange={(value) => form.changeDescription(value)}
         />
       </div>
       <div className="form-group mt-4">

@@ -8,6 +8,7 @@ import {
   Slider,
   Typography,
   Checkbox,
+  InputLabel,
 } from "@material-ui/core";
 import { useTemplate } from "../../context/build-tournament-template";
 import style from "./style.module.scss";
@@ -18,6 +19,7 @@ import Translated from "../../components/translated";
 import { TiebreakerDropdownV2 } from "../../components/tie-breaker-dropdown";
 import { useOrgsClubs } from "../../hocs/user-orgs-and-clubs";
 import { generateId } from "../../functions";
+import { Editor } from "../../components/markdown";
 
 function TemplateSelection() {
   const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();
@@ -199,14 +201,10 @@ function About() {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label={Translated.byKey("description")}
-              fullWidth
-              variant="outlined"
-              multiline
+            <InputLabel>{Translated.byKey("description")}</InputLabel>
+            <Editor
               value={form.description}
-              onChange={(e) => form.changeDescription(e.target.value)}
-              required
+              onChange={(value) => form.changeDescription(value)}
             />
           </Grid>
         </Grid>

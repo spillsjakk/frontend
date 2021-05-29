@@ -13,11 +13,16 @@ import {
   StepContent,
   StepLabel,
   Stepper,
+  InputLabel,
 } from "@material-ui/core";
 import { useTemplate } from "../../../context/build-tournament-template";
 import style from "./style.module.scss";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { FormContext, useForm, WithTournamentForm } from "../../../hocs/tournament-form";
+import {
+  FormContext,
+  useForm,
+  WithTournamentForm,
+} from "../../../hocs/tournament-form";
 import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
@@ -29,6 +34,7 @@ import { WithBuildTournamentTemplate } from "../../../hocs/build-tournament-temp
 import { usePopup, WithPopup } from "../../../hocs/popup";
 import { useLeague } from "../../../hocs/with-league/index";
 import { Card } from "../../../components/tournament-card/card";
+import { Editor } from "../../../components/markdown";
 
 function TemplateSelection() {
   const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();
@@ -262,14 +268,10 @@ function About() {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label={Translated.byKey("description")}
-              fullWidth
-              variant="outlined"
-              multiline
+            <InputLabel>{Translated.byKey("description")}</InputLabel>
+            <Editor
               value={form.description}
-              onChange={(e) => form.changeDescription(e.target.value)}
-              required
+              onChange={(value) => form.changeDescription(value)}
             />
           </Grid>
         </Grid>
@@ -693,7 +695,7 @@ function buildTournament(form: FormContext) {
     organiser_type: form.organiserType,
     season: form.season,
     category: form.category,
-    chat_enabled: form.chatEnabled
+    chat_enabled: form.chatEnabled,
   };
 
   return fetchJson(`/s/tournament/build`, "POST", body, (result) => {

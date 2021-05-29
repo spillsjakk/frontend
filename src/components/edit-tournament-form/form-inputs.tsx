@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import MarkdownEditor from '@uiw/react-markdown-editor';
 import { useForm } from "../../hocs/tournament-form";
 import Translated from "../translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
@@ -35,6 +36,10 @@ const FormInputs: FunctionComponent<{}> = () => {
           value={form.description}
           onChange={(e) => form.changeDescription(e.target.value)}
           style={{ height: "250px" }}
+        />
+        <MarkdownEditor
+          value={form.description}
+          onChange={(e) => form.changeDescription(e.target.value)}
         />
       </div>
 
