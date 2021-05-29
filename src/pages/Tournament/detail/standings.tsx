@@ -146,7 +146,7 @@ const Standings: FunctionComponent<{}> = () => {
             <Link to={"/team/view/" + row.team}>
               <span
                 className="d-inline-block text-truncate"
-                style={{ maxWidth: "80px" }}
+                style={{ maxWidth: "100%" }}
               >
                 {row.team_name}
               </span>
