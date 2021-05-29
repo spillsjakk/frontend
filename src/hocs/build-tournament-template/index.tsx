@@ -2,7 +2,7 @@ import React, { FunctionComponent, useCallback, useState } from "react";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
 import { KIND } from "../../constants";
-import { useForm } from "../../context/build-tournament-form";
+import { useForm } from "../../hocs/tournament-form";
 import { TemplateProvider } from "../../context/build-tournament-template";
 import { generateId } from "../../functions";
 

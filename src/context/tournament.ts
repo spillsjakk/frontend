@@ -5,9 +5,9 @@ export interface TournamentContext {
   tournament: Tournament;
 }
 
-const TournamentContext: Context<Partial<
-  TournamentContext
->> = React.createContext({});
+const TournamentContext: Context<
+  Partial<TournamentContext>
+> = React.createContext({});
 
 export const TournamentProvider = TournamentContext.Provider;
 export default TournamentContext;

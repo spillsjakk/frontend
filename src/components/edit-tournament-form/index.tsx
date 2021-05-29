@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useForm } from "../../context/build-tournament-form";
+import { useForm } from "../../hocs/tournament-form";
 import Translated from "../translated";
 import { fetchJson } from "../../functions";
 import { FormInputs } from "./form-inputs";
@@ -78,6 +78,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       show_only_usernames: form.showOnlyUsernames,
       profile_picture: form.profilePicture,
       banner_picture: form.bannerPicture,
+      chat_enabled: form.chatEnabled,
     };
 
     fetchJson(`/s/tournament/${getId()}`, "PUT", body, (result) => {
@@ -115,6 +116,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       form.changeDrawPoints(tournament.draw_points);
       form.changeLossPoints(tournament.loss_points);
       form.changeShowOnlyUsernames(tournament.show_only_usernames);
+      form.changeChatEnabled(tournament.chat_enabled);
       form.changeBannerPicture(tournament.banner_picture || "");
       form.changeProfilePicture(tournament.profile_picture || "");
       if (tournament.per_team_limit) {

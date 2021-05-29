@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { useForm } from "../../context/build-tournament-form";
+import { useForm } from "../../hocs/tournament-form";
 import Translated from "../translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 import { Countdown } from "../../components/count-down/index";
@@ -556,6 +556,16 @@ const FormInputs: FunctionComponent<{}> = () => {
           />
           &nbsp;
           <Translated str="showOnlyUsernames" />
+        </div>
+        <div className="mt-4">
+          <input
+            type="checkbox"
+            name="show_only_top"
+            checked={form.chatEnabled}
+            onChange={(e) => form.changeChatEnabled(e.target.checked)}
+          />
+          &nbsp;
+          <Translated str="chatEnabled" />
         </div>
       </div>
     </>

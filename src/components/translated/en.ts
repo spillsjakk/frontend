@@ -480,7 +480,8 @@ const en = {
   "addTeams": "Add Teams",
   "alreadyAMember": "You are already a member",
   "delete": "Delete",
-  "pairingGenerationFailed": "This tournament could not be completed due to insufficient players. All possible pairings have been exhausted."
+  "pairingGenerationFailed": "This tournament could not be completed due to insufficient players. All possible pairings have been exhausted.",
+  "chatEnabled": "Chat Feature Enabled"
 };
 
 export { en };

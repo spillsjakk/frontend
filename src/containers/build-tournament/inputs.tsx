@@ -12,7 +12,7 @@ import {
 import { useTemplate } from "../../context/build-tournament-template";
 import style from "./style.module.scss";
 import { DateTimePicker } from "@material-ui/pickers";
-import { useForm } from "../../context/build-tournament-form";
+import { useForm } from "../../hocs/tournament-form";
 import { KIND } from "../../constants";
 import Translated from "../../components/translated";
 import { TiebreakerDropdownV2 } from "../../components/tie-breaker-dropdown";
@@ -353,6 +353,22 @@ function Advanced() {
                   />
                 }
                 label={<Translated str="onlyShowScoresOfTop3" />}
+                labelPlacement="end"
+              />
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                value="end"
+                control={
+                  <Checkbox
+                    color="secondary"
+                    checked={form.chatEnabled}
+                    onChange={(e) => {
+                      form.changeChatEnabled(e.target.checked);
+                    }}
+                  />
+                }
+                label={<Translated str="chatEnabled" />}
                 labelPlacement="end"
               />
             </Grid>

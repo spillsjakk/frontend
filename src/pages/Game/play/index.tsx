@@ -24,6 +24,7 @@ import { Message } from "../../../context/chat-service";
 import { Clock, numToSquare } from "./clock";
 import UserLink from "../../../components/UserLink";
 import { DRAW_OFFER_SIGN } from "../../../constants";
+import { Tournament } from "../../Tournament/Types";
 
 type PlayProps = {
   id: string;
@@ -72,7 +73,7 @@ type PlayState = {
     source: string;
     dest: string;
   };
-  tournament: string;
+  tournament?: Tournament;
   showWhiteInitialCountdown: boolean;
   showBlackInitialCountdown: boolean;
   whiteInitialCountdown: number;
@@ -137,7 +138,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         source: "",
         dest: "",
       },
-      tournament: "",
       showWhiteInitialCountdown: false,
       showBlackInitialCountdown: false,
       whiteInitialCountdown: 0,
@@ -1031,19 +1031,22 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       )}
                     </div>
 
-                    <WithChatService
-                      messages={this.state.messages}
-                      gameId={this.gameId}
-                      side={this.state.myColor === "white" ? 0 : 1}
-                    >
-                      <GameChat color={this.state.myColor} />
-                    </WithChatService>
+                    {this.state.tournament &&
+                      this.state.tournament.chat_enabled && (
+                        <WithChatService
+                          messages={this.state.messages}
+                          gameId={this.gameId}
+                          side={this.state.myColor === "white" ? 0 : 1}
+                        >
+                          <GameChat color={this.state.myColor} />
+                        </WithChatService>
+                      )}
                   </>
                 )}
 
               {this.getSelfCountdown()}
               <div className="tournament-link">
-                <a href={`/tournament/view/${this.state.tournament}`}>
+                <a href={`/tournament/view/${this.state.tournament?.id}`}>
                   {Translated.byKey("backToTournament")}
                 </a>
               </div>

@@ -475,7 +475,8 @@ const no = {
   "addTeams": "",
   "alreadyAMember": "Du er allerede medlem",
   "delete": "Slett",
-  "pairingGenerationFailed": "Denne turneringen kunne ikke fullføres på grunn av utilstrekkelige spillere. Alle mulige sammenkoblinger er oppbrukt."
+  "pairingGenerationFailed": "Denne turneringen kunne ikke fullføres på grunn av utilstrekkelige spillere. Alle mulige sammenkoblinger er oppbrukt.",
+  "chatEnabled": "Chatfunksjonen i spillet er aktivert"
 };
 
 export { no };

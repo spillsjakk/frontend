@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { useForm } from "../../context/build-tournament-form";
+import { useForm } from "../../hocs/tournament-form";
 import Translated from "../translated";
 
 const ShortFormInputs: FunctionComponent<{}> = () => {
@@ -120,10 +120,21 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
         />
       </div>
       <div className="mt-4">
+        <input
+          type="checkbox"
+          name="show_only_top"
+          checked={form.chatEnabled}
+          onChange={(e) => form.changeChatEnabled(e.target.checked)}
+        />
+        &nbsp;
+        <Translated str="chatEnabled" />
+      </div>
+      <div className="mt-4">
         <label>
           <Translated str="defaultGameLocation" />:
         </label>
       </div>
+
       <div className="d-flex flex-row">
         <div className="form-check">
           <input

@@ -17,7 +17,7 @@ import {
 import { useTemplate } from "../../../context/build-tournament-template";
 import style from "./style.module.scss";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { FormContext, useForm } from "../../../context/build-tournament-form";
+import { FormContext, useForm, WithTournamentForm } from "../../../hocs/tournament-form";
 import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
@@ -25,7 +25,6 @@ import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 import { generateId, fetchJson } from "../../../functions";
 
 import DateFnsUtils from "@date-io/date-fns";
-import { WithTournamentForm } from "../../../hocs/tournament-form";
 import { WithBuildTournamentTemplate } from "../../../hocs/build-tournament-template";
 import { usePopup, WithPopup } from "../../../hocs/popup";
 import { useLeague } from "../../../hocs/with-league/index";
@@ -420,6 +419,22 @@ function Advanced() {
                 labelPlacement="end"
               />
             </Grid>
+            <Grid item>
+              <FormControlLabel
+                value="end"
+                control={
+                  <Checkbox
+                    color="secondary"
+                    checked={form.chatEnabled}
+                    onChange={(e) => {
+                      form.changeChatEnabled(e.target.checked);
+                    }}
+                  />
+                }
+                label={<Translated str="chatEnabled" />}
+                labelPlacement="end"
+              />
+            </Grid>
           </Grid>
 
           <Grid item container md={6} spacing={2}>
@@ -678,6 +693,7 @@ function buildTournament(form: FormContext) {
     organiser_type: form.organiserType,
     season: form.season,
     category: form.category,
+    chat_enabled: form.chatEnabled
   };
 
   return fetchJson(`/s/tournament/build`, "POST", body, (result) => {

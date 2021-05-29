@@ -21,7 +21,7 @@ import {
 } from "./inputs";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { useTemplate } from "../../context/build-tournament-template";
-import { FormContext, useForm } from "../../context/build-tournament-form";
+import { FormContext, useForm } from "../../hocs/tournament-form";
 import { fetchJson } from "../../functions";
 import Translated from "../../components/translated";
 
@@ -93,6 +93,7 @@ function buildTournament(form: FormContext) {
     banner_picture: form.bannerPicture,
     organiser: form.organiser,
     organiser_type: form.organiserType,
+    chat_enabled: form.chatEnabled,
   };
 
   fetchJson(`/s/tournament/build`, "POST", body, (result) => {
