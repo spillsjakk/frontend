@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
-import MarkdownEditor from "@uiw/react-markdown-editor";
 import { useForm } from "../../hocs/tournament-form";
 import Translated from "../translated";
 import { TiebreakerDropdown } from "../tie-breaker-dropdown";
 import { Countdown } from "../../components/count-down/index";
 import { KIND } from "../../constants";
+import { Editor } from "../markdown";
 
 const FormInputs: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -28,18 +28,9 @@ const FormInputs: FunctionComponent<{}> = () => {
         <label htmlFor="description">
           <Translated str="description" />:
         </label>
-        <textarea
-          className="form-control"
-          id="description"
-          name="description"
-          required
+        <Editor
           value={form.description}
-          onChange={(e) => form.changeDescription(e.target.value)}
-          style={{ height: "250px" }}
-        />
-        <MarkdownEditor
-          value={form.description}
-          onChange={(e) => form.changeDescription(e.target.value)}
+          onChange={(value) => form.changeDescription(value)}
         />
       </div>
 

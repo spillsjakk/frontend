@@ -16,14 +16,9 @@ const Description: FunctionComponent<{}> = () => {
     <div className={style["description-container"]}>
       <Row style={{ width: "100%", margin: "0px" }}>
         <Col xs={12} md={8}>
-          <div className={style.about}>
-            <div className={style.heading}>
-              {Translated.byKey("about").toUpperCase()}:
-            </div>
-            <ReactMarkdown linkTarget="_blank">
-              {xssFilters.inHTMLData(tournament?.description || "")}
-            </ReactMarkdown>
-          </div>
+          <ReactMarkdown linkTarget="_blank">
+            {xssFilters.inHTMLData(tournament?.description || "")}
+          </ReactMarkdown>
         </Col>
         <Col xs={12} md={4}>
           <div className={style.info}>

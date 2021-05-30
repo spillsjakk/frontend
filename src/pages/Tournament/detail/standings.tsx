@@ -315,6 +315,11 @@ const Standings: FunctionComponent<{}> = () => {
                     </Nav.Link>
                   </Nav.Item>
                 )}
+                <Nav.Item>
+                  <Nav.Link eventKey="standings-t-tab">
+                    <Translated str="stats" />
+                  </Nav.Link>
+                </Nav.Item>
               </Nav>
               <Tab.Content>
                 <Tab.Pane eventKey="standings-i-tab">
@@ -384,6 +389,7 @@ const Standings: FunctionComponent<{}> = () => {
                     </ToolkitProvider>
                   </Tab.Pane>
                 )}
+                <Tab.Pane eventKey="standings-t-tab">sefa</Tab.Pane>
               </Tab.Content>
             </Tab.Container>
           </div>
