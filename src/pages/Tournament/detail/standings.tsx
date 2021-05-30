@@ -12,6 +12,16 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Participant, TeamParticipant } from "../../../pages/Tournament/Types";
 import { Link } from "react-router-dom";
 import FederationDisplay from "../../../components/FederationDisplay";
+import { fetchJson } from "../../../functions";
+
+type Stats = {
+  average_rating: number;
+  countries: Array<string>;
+  titles: Array<string>;
+  longest_game: string | null;
+  shortest_game: string | null;
+  number_of_players: number;
+};
 
 const { SearchBar } = Search;
 
@@ -39,6 +49,40 @@ const tbColumns = [
   { dataField: "tb4", text: "TB4", sort: true },
 ];
 
+function TitlesForStats(titles: Array<string>) {
+  const counts = {};
+  for (let i = 0; i < titles.length; i++) {
+    const num = titles[i];
+    counts[num] = counts[num] ? counts[num] + 1 : 1;
+  }
+  return (
+    <>
+      {Object.keys(counts).map((key) => (
+        <span key={key}>
+          {counts[key]} <span className={style["player-title"]}>{key}</span>
+        </span>
+      ))}
+    </>
+  );
+}
+
+function CountriesForStats(countries: Array<string>) {
+  const counts = {};
+  for (let i = 0; i < countries.length; i++) {
+    const num = countries[i];
+    counts[num] = counts[num] ? counts[num] + 1 : 1;
+  }
+  return (
+    <>
+      {Object.keys(counts).map((key) => (
+        <span key={key}>
+          {counts[key]} <FederationDisplay value={key} />
+        </span>
+      ))}
+    </>
+  );
+}
+
 const Standings: FunctionComponent<{}> = () => {
   const {
     tournament,
@@ -52,6 +96,7 @@ const Standings: FunctionComponent<{}> = () => {
     []
   );
   const [participantColumns, setParticipantColumns] = useState<any[]>([]);
+  const [stats, setStats] = useState<Stats>();
 
   function getUsername(
     username: string | undefined,
@@ -287,6 +332,18 @@ const Standings: FunctionComponent<{}> = () => {
     setup();
   }, [tournament, ssw, participants]);
 
+  function fetchStats(id) {
+    fetchJson(`/s/tournament/stats/${id}`, "GET", undefined, (data) => {
+      if (data) setStats(data as any);
+    });
+  }
+
+  useEffect(() => {
+    if (tournament && tournament.id && !stats) {
+      fetchStats(tournament.id);
+    }
+  }, [tournament]);
+
   return (
     <>
       {tournament && Array.isArray(participants) && participants.length > 0 && (
@@ -389,7 +446,41 @@ const Standings: FunctionComponent<{}> = () => {
                     </ToolkitProvider>
                   </Tab.Pane>
                 )}
-                <Tab.Pane eventKey="standings-t-tab">sefa</Tab.Pane>
+                <Tab.Pane eventKey="standings-t-tab">
+                  {stats && (
+                    <>
+                      <div>
+                        {Translated.byKey("statsNumberOfPlayers")}:{" "}
+                        {stats.number_of_players}
+                      </div>
+                      <div>
+                        {Translated.byKey("statsTitledPlayers")}:{" "}
+                        {TitlesForStats(stats.titles)}
+                      </div>
+                      <div>
+                        {Translated.byKey("statsCountries")}:{" "}
+                        {CountriesForStats(stats.countries)}
+                      </div>
+                      <div>
+                        {Translated.byKey("statsAverageRating")}:{" "}
+                        {stats.average_rating}
+                      </div>
+                      {stats.longest_game && (
+                        <div>
+                          <Link to={`/game/play/${stats.longest_game}`}>
+                            {Translated.byKey("statsLongestGame")}
+                          </Link>
+                        </div>
+                      )}
+                      {stats.shortest_game && (
+                        <div>
+                          {Translated.byKey("statsShortestGame")}:{" "}
+                          {stats.shortest_game}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </Tab.Pane>
               </Tab.Content>
             </Tab.Container>
           </div>
@@ -398,4 +489,5 @@ const Standings: FunctionComponent<{}> = () => {
     </>
   );
 };
+
 export { Standings };

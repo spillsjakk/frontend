@@ -477,7 +477,13 @@ const no = {
   "delete": "Slett",
   "pairingGenerationFailed": "Denne turneringen kunne ikke fullføres på grunn av utilstrekkelige spillere. Alle mulige sammenkoblinger er oppbrukt.",
   "chatEnabled": "Chatfunksjonen i spillet er aktivert",
-  "stats": "Statistikk"
+  "stats": "Statistikk",
+  "statsNumberOfPlayers": "",
+  "statsTitledPlayers": "",
+  "statsCountries": "",
+  "statsAverageRating": "",
+  "statsLongestGame": "",
+  "statsShortestGame": ""
 };
 
 export { no };

@@ -482,7 +482,13 @@ const en = {
   "delete": "Delete",
   "pairingGenerationFailed": "This tournament could not be completed due to insufficient players. All possible pairings have been exhausted.",
   "chatEnabled": "Chat Feature Enabled",
-  "stats": "Statistics"
+  "stats": "Statistics",
+  "statsNumberOfPlayers": "Number of Players",
+  "statsTitledPlayers": "Number of Titled Players",
+  "statsCountries": "Number of Countries Taking Part",
+  "statsAverageRating": "Average Rating",
+  "statsLongestGame": "Longest Game",
+  "statsShortestGame": "Shortest Game"
 };
 
 export { en };
