@@ -76,7 +76,7 @@ function CountriesForStats(countries: Array<string>) {
     <>
       {Object.keys(counts).map((key) => (
         <span key={key}>
-          {counts[key]} <FederationDisplay value={key} />
+          {counts[key]} <FederationDisplay value={key} /> &nbsp;
         </span>
       ))}
     </>
@@ -373,7 +373,7 @@ const Standings: FunctionComponent<{}> = () => {
                   </Nav.Item>
                 )}
                 <Nav.Item>
-                  <Nav.Link eventKey="standings-t-tab">
+                  <Nav.Link eventKey="standings-s-tab">
                     <Translated str="stats" />
                   </Nav.Link>
                 </Nav.Item>
@@ -446,7 +446,7 @@ const Standings: FunctionComponent<{}> = () => {
                     </ToolkitProvider>
                   </Tab.Pane>
                 )}
-                <Tab.Pane eventKey="standings-t-tab">
+                <Tab.Pane eventKey="standings-s-tab">
                   {stats && (
                     <>
                       <div>
