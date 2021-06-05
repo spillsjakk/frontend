@@ -76,7 +76,7 @@ function CountriesForStats(countries: Array<string>) {
     <>
       {Object.keys(counts).map((key) => (
         <span key={key}>
-          {counts[key]} <FederationDisplay value={key} /> &nbsp;
+          - <FederationDisplay value={key} /> ({counts[key]}) &nbsp;
         </span>
       ))}
     </>
@@ -84,13 +84,8 @@ function CountriesForStats(countries: Array<string>) {
 }
 
 const Standings: FunctionComponent<{}> = () => {
-  const {
-    tournament,
-    ssw,
-    is_team_tournament,
-    participants,
-    teams,
-  } = useTournamentDetail();
+  const { tournament, ssw, is_team_tournament, participants, teams } =
+    useTournamentDetail();
   const [sswColumn, setSswColumn] = useState({});
   const [teamParticipantColumns, setTeamParticipantColumns] = useState<any[]>(
     []
@@ -458,7 +453,9 @@ const Standings: FunctionComponent<{}> = () => {
                         {TitlesForStats(stats.titles)}
                       </div>
                       <div>
-                        {Translated.byKey("statsCountries")}:{" "}
+                        {Translated.byKey("statsCountries")}: Total Countries:
+                        &nbsp;
+                        {[...new Set(stats.countries)].length} &nbsp;
                         {CountriesForStats(stats.countries)}
                       </div>
                       <div>

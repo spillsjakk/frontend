@@ -485,7 +485,7 @@ const en = {
   "stats": "Statistics",
   "statsNumberOfPlayers": "Number of Players",
   "statsTitledPlayers": "Number of Titled Players",
-  "statsCountries": "Number of Countries Taking Part",
+  "statsCountries": "Number of Countries and Players participating",
   "statsAverageRating": "Average Rating",
   "statsLongestGame": "Longest Game",
   "statsShortestGame": "Shortest Game"
