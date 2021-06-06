@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import style from "../style.module.scss";
-import Translated from "../../../components/translated";
-import { useManageClubPopup } from "../../../context/manage-club-popup";
-import { useClub } from "../../../context/club";
-import { fetchJson } from "../../../functions";
+import Translated from "../../../../components/translated";
+import { useManageClubPopup } from "../../../../context/manage-club-popup";
+import { useClub } from "../../../../context/club";
+import { fetchJson } from "../../../../functions";
 
 const InputGroup: FunctionComponent<{
   label: string;

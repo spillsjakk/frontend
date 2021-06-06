@@ -17,6 +17,7 @@ const ManageClub: FunctionComponent<{}> = () => {
     openClubList,
     openPlayerList,
     openAccountsWithPowers,
+    openStats,
   } = useManageClubPopup();
   return (
     <Row className={style.row}>
@@ -30,7 +31,13 @@ const ManageClub: FunctionComponent<{}> = () => {
         />
       </Col>
       <Col className={style.col} xs="auto">
-        <SummaryCard content={<StatsSummary />} />
+        <SummaryCard
+          onAction={() => {
+            openStats();
+          }}
+          actionName={Translated.byKey("expandAll").toUpperCase()}
+          content={<StatsSummary />}
+        />
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard

@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState } from "react";
 import { ManageClubPopupProvider } from "../../context/manage-club-popup";
 import { Modal } from "react-bootstrap";
-import { EditForm } from "../../containers/manage-club/detail/edit-form";
+import { EditForm } from "../../pages/Club/manage/detail/edit-form";
+import { Stats as ClubStats } from "../../pages/Club/manage/detail/stats";
 import { useClub } from "../../context/club";
-import { TeamsSummary } from "../../containers/manage-club/summary/teams";
+import { TeamsSummary } from "../../pages/Club/manage/summary/teams";
 import AllAccounts from "../../pages/Organization/AllAccounts";
 import { AccountsWithPowersModal } from "../../components/accounts-with-powers-modal";
 
@@ -86,6 +87,7 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
           {isAccountsWithPowersOpen && (
             <AccountsWithPowersModal forClub={true} />
           )}
+          {isStatsOpen && <ClubStats />}
         </Modal.Body>
       </Modal>
     </ManageClubPopupProvider>

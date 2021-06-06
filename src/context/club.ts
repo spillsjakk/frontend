@@ -6,6 +6,7 @@ export interface Club {
   description: string;
   manager: string;
   country: string;
+  region: string;
   profile_picture: string;
   banner_picture: string;
   address: string;
