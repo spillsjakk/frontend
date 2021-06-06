@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { HelpBox, helpboxNames } from "../../../components/help-box";
-import { InputAdd } from "../../../components/input-add";
-import Translated from "../../../components/translated";
-import { useClub } from "../../../context/club";
-import { fetchJson } from "../../../functions";
+import { HelpBox, helpboxNames } from "../../../../components/help-box";
+import { InputAdd } from "../../../../components/input-add";
+import Translated from "../../../../components/translated";
+import { useClub } from "../../../../context/club";
+import { fetchJson } from "../../../../functions";
 import style from "../style.module.scss";
 
 const TeamsSummary: FunctionComponent<{}> = () => {

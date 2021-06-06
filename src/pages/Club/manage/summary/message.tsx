@@ -1,10 +1,10 @@
 import React, { FormEvent, FunctionComponent, useState } from "react";
 import style from "../style.module.scss";
-import Translated from "../../../components/translated";
-import { fetchJson } from "../../../functions";
-import { useClub } from "../../../context/club";
+import Translated from "../../../../components/translated";
+import { fetchJson } from "../../../../functions";
+import { useClub } from "../../../../context/club";
 import { Form } from "react-bootstrap";
-import { HelpBox, helpboxNames } from "../../../components/help-box";
+import { HelpBox, helpboxNames } from "../../../../components/help-box";
 
 const MessageSummary: FunctionComponent<{}> = () => {
   const [clubMessage, setClubMessage] = useState("");

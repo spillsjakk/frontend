@@ -1,23 +1,24 @@
 import React, { FunctionComponent } from "react";
-import { SummaryCard } from "../../components/summary-card";
-import Translated from "../../components/translated";
+import { SummaryCard } from "../../../components/summary-card";
+import Translated from "../../../components/translated";
 import style from "./style.module.scss";
 import { DetailSummaryContent } from "./summary/detail-content";
 import { StatsSummary } from "./summary/stats";
-import { TeamsSummary } from "./summary/teams";
+import { ClubsSummary } from "./summary/clubs";
 import { AccountsSummary } from "./summary/accounts";
 import { SharePowerSummary } from "./summary/share-power";
 import { MessageSummary } from "./summary/message";
 import { Col, Row } from "react-bootstrap";
-import { useManageClubPopup } from "../../context/manage-club-popup";
+import { useManageOrganizationPopup } from "../../../context/manage-organization-popup";
 
-const ManageClub: FunctionComponent<{}> = () => {
+const ManageOrganization: FunctionComponent<{}> = () => {
   const {
     openDetailEdit,
+    openStats,
     openClubList,
     openPlayerList,
     openAccountsWithPowers,
-  } = useManageClubPopup();
+  } = useManageOrganizationPopup();
   return (
     <Row className={style.row}>
       <Col className={style.col} xs="auto">
@@ -30,7 +31,13 @@ const ManageClub: FunctionComponent<{}> = () => {
         />
       </Col>
       <Col className={style.col} xs="auto">
-        <SummaryCard content={<StatsSummary />} />
+        <SummaryCard
+          onAction={() => {
+            openStats();
+          }}
+          actionName={Translated.byKey("expandAll").toUpperCase()}
+          content={<StatsSummary />}
+        />
       </Col>
       <Col className={style.col} xs="auto">
         <SummaryCard
@@ -38,7 +45,7 @@ const ManageClub: FunctionComponent<{}> = () => {
             openClubList();
           }}
           actionName={Translated.byKey("expandAll").toUpperCase()}
-          content={<TeamsSummary />}
+          content={<ClubsSummary />}
         />
       </Col>
       <Col className={style.col} xs="auto">
@@ -66,4 +73,4 @@ const ManageClub: FunctionComponent<{}> = () => {
   );
 };
 
-export { ManageClub };
+export { ManageOrganization };

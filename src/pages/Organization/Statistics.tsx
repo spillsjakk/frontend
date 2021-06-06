@@ -16,6 +16,14 @@ import {
   YAxis,
 } from "recharts";
 
+const COLORS: string[] = [
+  "#fff1c9",
+  "#f7b7a3",
+  "#ea5f89",
+  "#9b3192",
+  "#57167e",
+];
+
 type StatisticsProps = {
   oid: string;
 };
@@ -317,13 +325,5 @@ class Statistics extends Component<Props, StatisticsState> {
     );
   }
 }
-
-const COLORS: string[] = [
-  "#fff1c9",
-  "#f7b7a3",
-  "#ea5f89",
-  "#9b3192",
-  "#57167e",
-];
 
 export default Statistics;

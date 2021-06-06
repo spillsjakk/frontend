@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 import style from "../style.module.scss";
-import { InputAdd } from "../../../components/input-add";
-import Translated from "../../../components/translated";
-import UserLink from "../../../components/UserLink";
-import { useClub } from "../../../context/club";
-import { fetchJson } from "../../../functions";
-import { HelpBox, helpboxNames } from "../../../components/help-box";
+import { InputAdd } from "../../../../components/input-add";
+import Translated from "../../../../components/translated";
+import UserLink from "../../../../components/UserLink";
+import { useClub } from "../../../../context/club";
+import { fetchJson } from "../../../../functions";
+import { HelpBox, helpboxNames } from "../../../../components/help-box";
 
 const AccountsSummary: FunctionComponent<{}> = () => {
   const club = useClub();

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import Translated from "../../../components/translated";
 import "./style.scss";
-import { ManageOrganization } from "../../../containers/manage-organization";
+import { ManageOrganization } from "./container";
 import { WithManageOrganization } from "../../../hocs/with-manage-organization";
 import { WithManageOrganizationPopup } from "../../../hocs/with-manage-organization/popup";
 import { fetchCall } from "../../../functions";

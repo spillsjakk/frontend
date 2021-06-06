@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import Translated from "../../../components/translated";
 import "./style.scss";
-import { ManageClub } from "../../../containers/manage-club";
+import { ManageClub } from "./container";
 import { WithManageClub } from "../../../hocs/with-manage-club";
 import { WithManageClubPopup } from "../../../hocs/with-manage-club/popup";
 import { fetchCall } from "../../../functions";

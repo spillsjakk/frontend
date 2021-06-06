@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
-import { HelpBox, helpboxNames } from "../../../components/help-box";
-import Translated from "../../../components/translated";
-import { useClub } from "../../../context/club";
+import { HelpBox, helpboxNames } from "../../../../components/help-box";
+import Translated from "../../../../components/translated";
+import { useClub } from "../../../../context/club";
 import style from "../style.module.scss";
 
 const StatsSummary: FunctionComponent<{}> = () => {
