@@ -80,14 +80,19 @@ const Stats: FunctionComponent<unknown> = () => {
         </strong>
         &nbsp;{region}
         <br />
-        <strong>
-          <Translated str="age" />:
-        </strong>
-        <BarChart width={750} height={350} data={ageHistogram}>
-          <XAxis dataKey="age" />
-          <YAxis />
-          <Bar dataKey="count" fill={"darkblue"} />
-        </BarChart>
+        {ageHistogram.length > 0 && (
+          <>
+            <strong>
+              <Translated str="age" />:
+            </strong>
+            <BarChart width={400} height={350} data={ageHistogram}>
+              <XAxis dataKey="age" />
+              <YAxis />
+              <Bar dataKey="count" fill={"darkblue"} />
+              <Tooltip />
+            </BarChart>
+          </>
+        )}
         <strong>
           <Translated str="mfRatio" />:
         </strong>
