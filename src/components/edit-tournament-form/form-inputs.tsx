@@ -134,7 +134,7 @@ const FormInputs: FunctionComponent<{}> = () => {
         </label>
       </div>
       <div className="d-flex flex-row">
-        <div className="form-check">
+        {/* <div className="form-check">
           <input
             className="form-check-input"
             type="radio"
@@ -148,7 +148,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           <label className="form-check-label" htmlFor="kind0">
             <Translated str="knockout" />
           </label>
-        </div>
+        </div> */}
         <div className="form-check">
           <input
             className="form-check-input"
@@ -163,7 +163,7 @@ const FormInputs: FunctionComponent<{}> = () => {
             <Translated str="swissDutch" />
           </label>
         </div>
-        <div className="form-check">
+        {/* <div className="form-check">
           <input
             className="form-check-input"
             type="radio"
@@ -176,7 +176,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           <label className="form-check-label" htmlFor="kind2">
             <Translated str="teamKnockout" />
           </label>
-        </div>
+        </div> */}
         <div className="form-check">
           <input
             className="form-check-input"
@@ -191,7 +191,7 @@ const FormInputs: FunctionComponent<{}> = () => {
             <Translated str="teamSwissDutch" />
           </label>
         </div>
-        <div className="form-check">
+        {/* <div className="form-check">
           <input
             className="form-check-input"
             type="radio"
@@ -204,7 +204,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           <label className="form-check-label" htmlFor="kind4">
             <Translated str="teamMonrad" />
           </label>
-        </div>
+        </div> */}
         <div className="form-check">
           <input
             className="form-check-input"

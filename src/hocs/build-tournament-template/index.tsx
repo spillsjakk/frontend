@@ -15,10 +15,10 @@ const templates = [
     name: "6 rounds rapid Swiss 15 minutes + 10 seconds",
     value: 2,
   },
-  {
-    name: "4 rounds rapid SkoleSjakken 10 minutes + 0 seconds",
-    value: 3,
-  },
+  // {
+  //   name: "4 rounds rapid SkoleSjakken 10 minutes + 0 seconds",
+  //   value: 3,
+  // },
 ];
 
 const templateData = [
@@ -38,14 +38,14 @@ const templateData = [
     kind: KIND.SwissDutch,
     kindName: "swissDutch",
   },
-  {
-    id: 3,
-    initialTime: 10,
-    increment: 0,
-    numberOfRounds: 4,
-    kind: KIND.TeamMonrad,
-    kindName: "teamMonrad",
-  },
+  // {
+  //   id: 3,
+  //   initialTime: 10,
+  //   increment: 0,
+  //   numberOfRounds: 4,
+  //   kind: KIND.TeamMonrad,
+  //   kindName: "teamMonrad",
+  // },
 ];
 
 export const placeholder = {
