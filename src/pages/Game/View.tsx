@@ -35,7 +35,6 @@ type ViewState = {
   white_fide_federation: string;
   black_fide_federation: string;
   orientation: string;
-  tournament: string;
   round?: number;
   startDate?: string;
   tournamentData?: Tournament;
@@ -95,7 +94,6 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             this.setState({
               white_fide_federation: json.white_fide_federation,
               black_fide_federation: json.black_fide_federation,
-              tournament: json.tournament,
             });
           }
         }
@@ -319,7 +317,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
         <div className="d-flex flex-row justify-content-between mt-4">
           <div id="move-div">
             <div className="tournament-link">
-              <a href={`/tournament/view/${this.state.tournament}`}>
+              <a href={`/tournament/view/${this.state.tournamentData?.id}`}>
                 {Translated.byKey("backToTournament")}
               </a>
             </div>

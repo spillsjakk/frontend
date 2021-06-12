@@ -475,12 +475,7 @@ class View extends Component<
   getPgn(name: string, start, round, white, black, outcome, moves) {
     const game = this.reconstructGame(moves);
     return `[Event "${name}"]\n[Site "spillsjakk.no"]\n[Date "${start}"]\n[round "${round}"]\n[White "${white}"]\n[Black "${black}"]\n[Result "${
-      outcome !== GameOutcome.Ongoing &&
-      (outcome === GameOutcome.WhiteWins
-        ? "1-0"
-        : outcome === GameOutcome.BlackWins
-        ? "0-1"
-        : "1/2-1/2")
+      outcome === 1 ? "1-0" : outcome === -1 ? "0-1" : "1/2-1/2"
     }"]\n\n${game.pgn()}\n\n
     `;
   }
