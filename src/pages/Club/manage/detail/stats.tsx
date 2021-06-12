@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { fetchCall } from "../../../../functions";
-import { useClub } from "../../../../context/club";
 import Translated from "../../../../components/translated";
 import {
   Bar,
@@ -15,14 +14,16 @@ import {
 
 const COLORS: string[] = ["#f7b7a3", "#ea5f89", "#9b3192", "#57167e"];
 
-const Stats: FunctionComponent<unknown> = () => {
+const Stats: FunctionComponent<{ id: string; region: string }> = ({
+  id,
+  region,
+}) => {
   const [accounts, setAccounts] = useState([]);
   const [mfRatio, setMfRatio] = useState([
-    { name: "M", value: 2 },
-    { name: "F", value: 4 },
+    { name: "M", value: 0 },
+    { name: "F", value: 0 },
   ]);
   const [ageHistogram, setAgeHistogram] = useState([]);
-  const { id, region } = useClub();
   function fetchAccounts() {
     fetchCall(`/s/club/all-accounts/${id}`, "GET", undefined, (response) => {
       setAccounts(response);
@@ -71,7 +72,7 @@ const Stats: FunctionComponent<unknown> = () => {
     if (id) {
       fetchAccounts();
     }
-  }, []);
+  }, [id, region]);
   return (
     <>
       <div className="m-5">
