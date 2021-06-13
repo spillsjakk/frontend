@@ -62,7 +62,6 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       white_fide_federation: "",
       black_fide_federation: "",
       orientation: "",
-      tournament: "",
       pgnCopied: false,
     };
 
