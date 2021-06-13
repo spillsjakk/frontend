@@ -1,22 +1,26 @@
 import React, { FunctionComponent, useState } from "react";
-import { Select } from "@material-ui/core";
+import { Select, Typography } from "@material-ui/core";
 import Translated from "../../../../components/translated/index";
-import { Club } from "../../../../context/club";
+import { Club } from "../../Statistics";
+import { Stats as ClubStats } from "../../../Club/manage/detail/stats";
 
 interface Props {
   clubs: Array<Club>;
-  regions: Array<string>;
 }
 
-const Stats: FunctionComponent<Props> = ({ clubs, regions }) => {
-  const [club, setClub] = useState<{ id: string; region: string }>(
-    clubs.length > 0 && regions.length > 0
-      ? { id: clubs[0].id, region: regions[0] }
-      : { id: "0", region: "" }
-  );
+const Stats: FunctionComponent<Props> = ({ clubs }) => {
+  const [club, setClub] = useState<Club>();
   return (
-    <>
-      <Select onChange={(e) => {}} variant="outlined" value={club.id} native>
+    <div className="d-flex flex-column">
+      <Typography variant="h5">{Translated.byKey("filterByClub")}</Typography>
+      <Select
+        onChange={(e) => {
+          setClub(clubs.find((c) => c.id === e.target.value));
+        }}
+        variant="outlined"
+        value={club ? club.id : "0"}
+        native
+      >
         <option value="0">{Translated.byKey("pleaseSelect")}</option>
         {Array.isArray(clubs) &&
           clubs.map((club) => (
@@ -25,7 +29,8 @@ const Stats: FunctionComponent<Props> = ({ clubs, regions }) => {
             </option>
           ))}
       </Select>
-    </>
+      {club && <ClubStats id={club.id} region={club.region} />}
+    </div>
   );
 };
 

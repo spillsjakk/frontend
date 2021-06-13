@@ -483,7 +483,8 @@ const no = {
   "statsCountries": "",
   "statsAverageRating": "",
   "statsLongestGame": "",
-  "statsShortestGame": ""
+  "statsShortestGame": "",
+  "filterByClub": ""
 };
 
 export { no };

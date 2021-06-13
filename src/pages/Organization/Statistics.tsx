@@ -15,6 +15,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { Stats as ClubStats } from "./manage/detail/stats";
 
 const COLORS: string[] = [
   "#fff1c9",
@@ -33,6 +34,7 @@ type StatisticsState = {
   playerCount: number;
   regionInfo: RegionInfo[];
   ageHistogram: { age: number; count: number }[];
+  clubs: Club[];
 };
 
 type RegionInfo = {
@@ -49,7 +51,7 @@ type RegionInfo = {
   };
 };
 
-type Club = {
+export type Club = {
   id: string;
   name: string;
   description: string;
@@ -76,6 +78,7 @@ class Statistics extends Component<Props, StatisticsState> {
       playerCount: 0,
       regionInfo: [],
       ageHistogram: [],
+      clubs: [],
     };
   }
 
@@ -161,6 +164,9 @@ class Statistics extends Component<Props, StatisticsState> {
                         24 /
                         365
                     ).toString();
+                    if (!Number(age)) {
+                      continue;
+                    }
                     if (Object.keys(ageHistogram).includes(age)) {
                       ageHistogram[age]++;
                     } else {
@@ -190,6 +196,7 @@ class Statistics extends Component<Props, StatisticsState> {
                     })
                     .sort((a, b) => (a.name < b.name ? -1 : 1)),
                   ageHistogram: ageHistogramRecharts,
+                  clubs,
                 });
               }
             );
@@ -269,7 +276,7 @@ class Statistics extends Component<Props, StatisticsState> {
           </tbody>
         </table>
 
-        <div className="d-inline-flex flex-row flex-wrap mt-4">
+        <div className="d-inline-flex flex-row flex-wrap mt-4 justify-content-center">
           <div className="m-5">
             <strong>
               <Translated str="clubCount" />:
@@ -320,6 +327,7 @@ class Statistics extends Component<Props, StatisticsState> {
               <Bar dataKey="count" fill={COLORS[0]} />
             </BarChart>
           </div>
+          <ClubStats clubs={this.state.clubs} />
         </div>
       </>
     );

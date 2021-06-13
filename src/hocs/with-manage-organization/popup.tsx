@@ -20,6 +20,9 @@ const WithManageOrganizationPopup: FunctionComponent<{}> = ({ children }) => {
     if (isPlayerListOpen || isAccountsWithPowersOpen) {
       return "xl";
     }
+    if (isStatsOpen) {
+      return "lg";
+    }
     return "md";
   }
 

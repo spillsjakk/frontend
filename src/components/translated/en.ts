@@ -488,7 +488,8 @@ const en = {
   "statsCountries": "Number of Countries and Players participating",
   "statsAverageRating": "Average Rating",
   "statsLongestGame": "Longest Game",
-  "statsShortestGame": "Shortest Game"
+  "statsShortestGame": "Shortest Game",
+  "filterByClub": "Filter By Club"
 };
 
 export { en };
