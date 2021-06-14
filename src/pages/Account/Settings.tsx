@@ -27,6 +27,7 @@ class Settings extends PureComponent<{}, SettingsState> {
     this.handleChange = this.handleChange.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    this.onLinkLichessAccount = this.onLinkLichessAccount.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,22 @@ class Settings extends PureComponent<{}, SettingsState> {
     const newState: any = {};
     newState[e.target.name] = e.target.value;
     this.setState(newState);
+  }
+
+  async onLinkLichessAccount() {
+    const lichessResponse = await fetch(
+      `https://lichess.org/api/users/status?ids=${this.state.lichessUsername}`
+    );
+    const lichessData = await lichessResponse.json();
+    if (!lichessData || !lichessData.length) {
+      return;
+    }
+    fetchJson(
+      `/s/account/link/lichess`,
+      "POST",
+      { lichess_username: this.state.lichessUsername },
+      () => {}
+    );
   }
 
   changeEmail(e: FormEvent) {
@@ -156,12 +173,7 @@ class Settings extends PureComponent<{}, SettingsState> {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            fetchJson(
-              `/s/account/link/lichess`,
-              "POST",
-              { lichess_username: this.state.lichessUsername },
-              () => {}
-            );
+            this.onLinkLichessAccount();
           }}
         >
           <div className="form-group mt-5">
