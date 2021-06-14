@@ -484,7 +484,9 @@ const no = {
   "statsAverageRating": "",
   "statsLongestGame": "",
   "statsShortestGame": "",
-  "filterByClub": ""
+  "filterByClub": "",
+  "lichessUsername": "",
+  "linkLichessAccount": ""
 };
 
 export { no };

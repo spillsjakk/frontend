@@ -489,7 +489,9 @@ const en = {
   "statsAverageRating": "Average Rating",
   "statsLongestGame": "Longest Game",
   "statsShortestGame": "Shortest Game",
-  "filterByClub": "Filter By Club"
+  "filterByClub": "Filter By Club",
+  "lichessUsername": "Lichess Username",
+  "linkLichessAccount": "Link Lichess Account"
 };
 
 export { en };
