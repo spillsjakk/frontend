@@ -14,10 +14,7 @@ import {
 
 const COLORS: string[] = ["#f7b7a3", "#ea5f89", "#9b3192", "#57167e"];
 
-const Stats: FunctionComponent<{ id: string; region: string }> = ({
-  id,
-  region,
-}) => {
+const Stats: FunctionComponent<{ clubs: Array<{ id: string; region: string; }>; }> = ({ clubs }) => {
   const [accounts, setAccounts] = useState([]);
   const [mfRatio, setMfRatio] = useState([
     { name: "M", value: 0 },
@@ -25,7 +22,7 @@ const Stats: FunctionComponent<{ id: string; region: string }> = ({
   ]);
   const [ageHistogram, setAgeHistogram] = useState([]);
   function fetchAccounts() {
-    fetchCall(`/s/club/all-accounts/${id}`, "GET", undefined, (response) => {
+    fetchCall(`/s/club/all-accounts`, "POST", {clubs: clubs.map((c) => c.id)}, (response) => {
       setAccounts(response);
       const ageHistogram: { [age: string]: number } = {};
       const mData = { name: "M", value: 0 };
@@ -68,18 +65,21 @@ const Stats: FunctionComponent<{ id: string; region: string }> = ({
       setAgeHistogram(ageHistogramRecharts.filter((hist) => hist.age !== 0));
     });
   }
+  function getRegions() {
+    return Array.isArray(clubs) && clubs.length ? clubs[0].region : "";
+  }
   useEffect(() => {
-    if (id) {
+    if (Array.isArray(clubs) && clubs.length) {
       fetchAccounts();
     }
-  }, [id, region]);
+  }, [clubs]);
   return (
     <>
       <div className="m-5">
         <strong>
           <Translated str="region" />:
         </strong>
-        &nbsp;{region}
+        &nbsp;{getRegions()}
         <br />
         {ageHistogram.length > 0 && (
           <>

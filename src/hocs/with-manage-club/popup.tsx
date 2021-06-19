@@ -87,7 +87,7 @@ const WithManageClubPopup: FunctionComponent<{}> = ({ children }) => {
           {isAccountsWithPowersOpen && (
             <AccountsWithPowersModal forClub={true} />
           )}
-          {isStatsOpen && <ClubStats id={club.id} region={club.region} />}
+          {isStatsOpen && <ClubStats clubs={[club as any]} />}
         </Modal.Body>
       </Modal>
     </ManageClubPopupProvider>
