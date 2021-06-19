@@ -4,14 +4,16 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useForm } from "../../hocs/tournament-form";
-import Translated from "../translated";
-import { fetchJson } from "../../functions";
+import { useForm } from "../../../hocs/tournament-form";
+import Translated from "../../../components/translated";
+import { fetchJson } from "../../../functions";
 import { FormInputs } from "./form-inputs";
 import { ShortFormInputs } from "./short-form-inputs";
-import { useTournamentRound } from "../../context/tournament-round";
-import { useTournament } from "../../context/tournament";
-import { KIND, TIEBREAKER } from "../../constants";
+import { useTournamentRound } from "../../../context/tournament-round";
+import { useTournament } from "../../../context/tournament";
+import { KIND, TIEBREAKER } from "../../../constants";
+import { Helmet } from "react-helmet";
+import { title } from "../../../functions";
 
 const EditTournamentForm: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -31,7 +33,9 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
   }, [rounds]);
 
   useEffect(() => {
-    if (tournament) {
+    if (tournament && tournament.id) {
+      form.changeShow(true);
+      setFormStates();
       const startDate = new Date(tournament.first_online_pairing);
       if (new Date().getTime() - startDate.getTime() > 0) {
         setTournamentStarted(true);
@@ -140,15 +144,14 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
     }
   }
 
-  useEffect(() => {
-    if (tournament && tournament.id) {
-      form.changeShow(true);
-      setFormStates();
-    }
-  }, [tournament]);
-
   return (
     <>
+      <Helmet>
+        <title>{title("editTournament")}</title>
+      </Helmet>
+      <h1 className="mt-5 p-3">
+        <Translated str="editTournament" />
+      </h1>
       {form.show && (
         <form className="mt-5" onSubmit={submit}>
           {tournamentStarted ? <ShortFormInputs /> : <FormInputs />}

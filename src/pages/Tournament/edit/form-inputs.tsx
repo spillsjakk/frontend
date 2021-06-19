@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
-import { useForm } from "../../hocs/tournament-form";
-import Translated from "../translated";
-import { TiebreakerDropdown } from "../tie-breaker-dropdown";
-import { Countdown } from "../../components/count-down/index";
-import { KIND } from "../../constants";
-import { Editor } from "../markdown";
+import { useForm } from "../../../hocs/tournament-form";
+import Translated from "../../../components/translated";
+import { TiebreakerDropdown } from "../../../components/tie-breaker-dropdown";
+import { Countdown } from "../../../components/count-down/index";
+import { KIND } from "../../../constants";
+import { Editor } from "../../../components/markdown";
 
 const FormInputs: FunctionComponent<{}> = () => {
   const form = useForm();

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
-import { useForm } from "../../hocs/tournament-form";
-import { Editor } from "../markdown";
-import Translated from "../translated";
+import { useForm } from "../../../hocs/tournament-form";
+import { Editor } from "../../../components/markdown";
+import Translated from "../../../components/translated";
 
 const ShortFormInputs: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -84,6 +84,36 @@ const ShortFormInputs: FunctionComponent<{}> = () => {
           value={form.endDate}
           onChange={(e) => form.changeEndDate(e.target.value)}
         />
+      </div>
+      <div className="form-group mt-4">
+        <label htmlFor="online_pairing_interval_n">
+          <Translated str="onlinePairingInterval" />:
+        </label>
+        <input
+          type="number"
+          id="online_pairing_interval_n"
+          className="form-control"
+          style={{ width: "10%", display: "inline" }}
+          name="online_pairing_interval_n"
+          min="1"
+          required
+          value={form.onlinePairingIntervalN}
+          onChange={(e) =>
+            form.changeOnlinePairingIntervalN(Number(e.target.value))
+          }
+        />
+        <select
+          name="online_pairing_interval_t"
+          value={form.onlinePairingIntervalT}
+          onChange={(e) =>
+            form.changeOnlinePairingIntervalT(Number(e.target.value))
+          }
+        >
+          <option value={0}>minutes</option>
+          <option value={1}>hours</option>
+          <option value={2}>days</option>
+          <option value={3}>weeks</option>
+        </select>
       </div>
       <div className="form-check mt-4">
         <input
