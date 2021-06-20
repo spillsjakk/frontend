@@ -14,7 +14,9 @@ import {
 
 const COLORS: string[] = ["#f7b7a3", "#ea5f89", "#9b3192", "#57167e"];
 
-const Stats: FunctionComponent<{ clubs: Array<{ id: string; region: string; }>; }> = ({ clubs }) => {
+const Stats: FunctionComponent<{
+  clubs: Array<{ id: string; region: string }>;
+}> = ({ clubs }) => {
   const [accounts, setAccounts] = useState([]);
   const [mfRatio, setMfRatio] = useState([
     { name: "M", value: 0 },
@@ -22,48 +24,53 @@ const Stats: FunctionComponent<{ clubs: Array<{ id: string; region: string; }>; 
   ]);
   const [ageHistogram, setAgeHistogram] = useState([]);
   function fetchAccounts() {
-    fetchCall(`/s/club/all-accounts`, "POST", {clubs: clubs.map((c) => c.id)}, (response) => {
-      setAccounts(response);
-      const ageHistogram: { [age: string]: number } = {};
-      const mData = { name: "M", value: 0 };
-      const fData = { name: "F", value: 0 };
-      for (const account of response) {
-        if (account.sex === "M") {
-          mData.value += 1;
-        } else if (account.sex === "F") {
-          fData.value += 1;
-        }
-        if (account.birth_date) {
-          const age = Math.floor(
-            (new Date().getTime() - new Date(account.birth_date!).getTime()) /
-              1000 /
-              60 /
-              60 /
-              24 /
-              365
-          ).toString();
-          if (Object.keys(ageHistogram).includes(age)) {
-            ageHistogram[age]++;
-          } else {
-            ageHistogram[age] = 1;
+    fetchCall(
+      `/s/club/all-accounts`,
+      "POST",
+      { clubs: clubs.map((c) => c.id) },
+      (response) => {
+        setAccounts(response);
+        const ageHistogram: { [age: string]: number } = {};
+        const mData = { name: "M", value: 0 };
+        const fData = { name: "F", value: 0 };
+        for (const account of response) {
+          if (account.sex === "M") {
+            mData.value += 1;
+          } else if (account.sex === "F") {
+            fData.value += 1;
+          }
+          if (account.birth_date) {
+            const age = Math.floor(
+              (new Date().getTime() - new Date(account.birth_date!).getTime()) /
+                1000 /
+                60 /
+                60 /
+                24 /
+                365
+            ).toString();
+            if (Object.keys(ageHistogram).includes(age)) {
+              ageHistogram[age]++;
+            } else {
+              ageHistogram[age] = 1;
+            }
           }
         }
+        setMfRatio([mData, fData]);
+        const sortedAges = Object.keys(ageHistogram)
+          .map(Number)
+          .sort((a, b) => a - b);
+        const minAge = sortedAges[0];
+        const maxAge = sortedAges[sortedAges.length - 1];
+        const ageHistogramRecharts = [];
+        for (let a = minAge; a <= maxAge; a++) {
+          ageHistogramRecharts.push({
+            age: a,
+            count: ageHistogram[a] || 0,
+          });
+        }
+        setAgeHistogram(ageHistogramRecharts.filter((hist) => hist.age !== 0));
       }
-      setMfRatio([mData, fData]);
-      const sortedAges = Object.keys(ageHistogram)
-        .map(Number)
-        .sort((a, b) => a - b);
-      const minAge = sortedAges[0];
-      const maxAge = sortedAges[sortedAges.length - 1];
-      const ageHistogramRecharts = [];
-      for (let a = minAge; a <= maxAge; a++) {
-        ageHistogramRecharts.push({
-          age: a,
-          count: ageHistogram[a] || 0,
-        });
-      }
-      setAgeHistogram(ageHistogramRecharts.filter((hist) => hist.age !== 0));
-    });
+    );
   }
   function getRegions() {
     return Array.isArray(clubs) && clubs.length ? clubs[0].region : "";

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
-import { Select, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import Translated from "../../../../components/translated/index";
 import { Club } from "../../Statistics";
 import { Stats as ClubStats } from "../../../Club/manage/detail/stats";
@@ -19,7 +19,9 @@ const Stats: FunctionComponent<Props> = ({ clubs }) => {
         options={clubs}
         getOptionLabel={(option) => option.name}
         filterSelectedOptions
-        onChange={(e, value) => { setSelectedClubs(value as any); }}
+        onChange={(e, value) => {
+          setSelectedClubs(value as any);
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
