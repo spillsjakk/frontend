@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import EditIcon from "@material-ui/icons/Edit";
+import TimerOff from "@material-ui/icons/TimerOff";
 import React, { FunctionComponent, memo, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
@@ -254,6 +255,13 @@ const SeasonItem: FunctionComponent<{
     <ListItem disableGutters>
       <ListItemText primary={item.name} />
       <ListItemSecondaryAction>
+        <IconButton
+          onClick={() => {
+            edit(item);
+          }}
+        >
+          <TimerOff />
+        </IconButton>
         <IconButton
           onClick={() => {
             edit(item);
