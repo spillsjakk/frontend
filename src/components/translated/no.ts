@@ -486,7 +486,8 @@ const no = {
   "statsShortestGame": "",
   "filterByClub": "",
   "lichessUsername": "",
-  "linkLichessAccount": ""
+  "linkLichessAccount": "",
+  "end": ""
 };
 
 export { no };

@@ -20,6 +20,7 @@ import { usePopup, WithPopup } from "../../../hocs/popup/index";
 import style from "./style.module.scss";
 import { FORM_TYPE, useSeasonForm, WithSeasonForm } from "./with-season-form";
 import { useLeague, Season as ISeason } from "../../../hocs/with-league/index";
+import MouseOverPopover from "../../../components/popover";
 
 const Heading: FunctionComponent<{ translateKey: string }> = ({
   translateKey,
@@ -260,14 +261,18 @@ const SeasonItem: FunctionComponent<{
             edit(item);
           }}
         >
-          <TimerOff />
+          <MouseOverPopover popoverText={<Translated str="end" />}>
+            <TimerOff />
+          </MouseOverPopover>
         </IconButton>
         <IconButton
           onClick={() => {
             edit(item);
           }}
         >
-          <EditIcon />
+          <MouseOverPopover popoverText={<Translated str="edit" />}>
+            <EditIcon />
+          </MouseOverPopover>
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>

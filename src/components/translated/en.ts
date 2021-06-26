@@ -491,7 +491,8 @@ const en = {
   "statsShortestGame": "Shortest Game",
   "filterByClub": "Filter By Club",
   "lichessUsername": "Lichess Username",
-  "linkLichessAccount": "Link Lichess Account"
+  "linkLichessAccount": "Link Lichess Account",
+  "end": "End"
 };
 
 export { en };
