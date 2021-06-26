@@ -12,7 +12,13 @@ import {
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import EditIcon from "@material-ui/icons/Edit";
 import TimerOff from "@material-ui/icons/TimerOff";
-import React, { FunctionComponent, memo, useCallback, useEffect } from "react";
+import React, {
+  FunctionComponent,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { fetchJson, generateId } from "../../../functions";
@@ -21,6 +27,7 @@ import style from "./style.module.scss";
 import { FORM_TYPE, useSeasonForm, WithSeasonForm } from "./with-season-form";
 import { useLeague, Season as ISeason } from "../../../hocs/with-league/index";
 import MouseOverPopover from "../../../components/popover";
+import { PromotionRelegationForm } from "./promotion-relegation";
 
 const Heading: FunctionComponent<{ translateKey: string }> = ({
   translateKey,
@@ -251,14 +258,15 @@ const AddSeason: FunctionComponent<unknown> = memo(() => {
 const SeasonItem: FunctionComponent<{
   item: ISeason;
   edit: (item: ISeason) => void;
-}> = memo(({ item, edit }) => {
+  end: (item: ISeason) => void;
+}> = memo(({ item, edit, end }) => {
   return (
     <ListItem disableGutters>
       <ListItemText primary={item.name} />
       <ListItemSecondaryAction>
         <IconButton
           onClick={() => {
-            edit(item);
+            end(item);
           }}
         >
           <MouseOverPopover popoverText={<Translated str="end" />}>
@@ -279,39 +287,59 @@ const SeasonItem: FunctionComponent<{
   );
 });
 
-const SeasonList: FunctionComponent<unknown> = memo(() => {
+enum FORM_KIND {
+  PROMOTION_RELEGATION,
+  SEASON,
+}
+
+const SeasonList: FunctionComponent<{
+  changeForm: (value: FORM_KIND) => void;
+}> = memo(({ changeForm }) => {
   const league = useLeague();
   const { changeOpen } = usePopup();
   const { changeType, fillValues } = useSeasonForm();
 
   const edit = useCallback(
     (item: ISeason) => {
+      changeForm(FORM_KIND.SEASON);
       changeType(FORM_TYPE.EDIT);
       fillValues(item);
       changeOpen(true);
     },
     [changeOpen, changeType, fillValues]
   );
+  const end = useCallback((item: ISeason) => {
+    changeForm(FORM_KIND.PROMOTION_RELEGATION);
+    changeOpen(true);
+  }, []);
 
   return (
     <List className={style.list}>
       {league &&
         Array.isArray(league.seasons) &&
         league.seasons.map((item, i) => (
-          <SeasonItem item={item} key={i} edit={edit} />
+          <SeasonItem item={item} key={i} edit={edit} end={end} />
         ))}
     </List>
   );
 });
 
 const Season: FunctionComponent<unknown> = memo(() => {
+  const [form, setForm] = useState(<SeasonForm />);
+  const changeForm = useCallback((value: FORM_KIND) => {
+    if (value === FORM_KIND.PROMOTION_RELEGATION) {
+      setForm(<PromotionRelegationForm />);
+    } else if (value === FORM_KIND.SEASON) {
+      setForm(<SeasonForm />);
+    }
+  }, []);
   return (
     <div className={style.box}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <WithSeasonForm>
-          <WithPopup content={<SeasonForm />}>
+          <WithPopup content={form}>
             <Heading translateKey="seasons" />
-            <SeasonList />
+            <SeasonList changeForm={changeForm} />
             <AddSeason />
           </WithPopup>
         </WithSeasonForm>
