@@ -492,7 +492,9 @@ const en = {
   "filterByClub": "Filter By Club",
   "lichessUsername": "Lichess Username",
   "linkLichessAccount": "Link Lichess Account",
-  "end": "End"
+  "end": "End",
+  "promotion": "Promotion",
+  "relegation": "Relegation"
 };
 
 export { en };
