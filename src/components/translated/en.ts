@@ -495,8 +495,10 @@ const en = {
   "end": "End",
   "promotion": "Promotion",
   "relegation": "Relegation",
+  "promote": "Promote",
+  "relegate": "Relegate",
   "pleaseSelectPlayer": "Please Select Player",
-  "pleaseSelectCategoryToPromote": "Please Select Category To Promote",
+  "pleaseSelectCategory": "Please Select Category",
   "successfull": "Successfull",
   "error": "Error"
 };

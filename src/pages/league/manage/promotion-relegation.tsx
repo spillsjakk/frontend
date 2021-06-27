@@ -1,5 +1,6 @@
 import {
   Button,
+  Divider,
   IconButton,
   List,
   ListItem,
@@ -29,6 +30,40 @@ function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
 }
 
+function ActionButtons({
+  onLeftClick = () => {},
+  onRightClick = () => {},
+  leftText = Translated.byKey("back"),
+  rightText = Translated.byKey("next"),
+  rightDisabled = false,
+  leftDisabled = false,
+}: {
+  onLeftClick?: () => void;
+  onRightClick?: () => void;
+  leftText?: string;
+  rightText?: string;
+  rightDisabled?: boolean;
+  leftDisabled?: boolean;
+}) {
+  return (
+    <div className={style.actions}>
+      <Button onClick={onLeftClick} disabled={leftDisabled}>
+        {leftText}
+      </Button>
+      <Button
+        className={style["ml-lg"]}
+        disabled={rightDisabled}
+        variant="contained"
+        color="secondary"
+        onClick={onRightClick}
+        type="submit"
+      >
+        {rightText}
+      </Button>
+    </div>
+  );
+}
+
 const CategoryStep: FunctionComponent<{
   category: Category;
   categories: Array<Category>;
@@ -36,6 +71,7 @@ const CategoryStep: FunctionComponent<{
   seasonId: string;
   promotionRelegationList: Array<PromotionRelegation>;
   refreshPromotionRelegation: () => void;
+  actionButtonText: string;
 }> = memo((props) => {
   const [participants, setParticipants] = useState<Array<Participant>>([]);
   const [selectedUserId, setSelectedUserId] = useState("");
@@ -63,7 +99,7 @@ const CategoryStep: FunctionComponent<{
       `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/promotion-relegation/${userId}`,
       "DELETE",
       undefined,
-      (response) => {
+      () => {
         props.refreshPromotionRelegation();
       }
     );
@@ -120,7 +156,7 @@ const CategoryStep: FunctionComponent<{
             name: category.name,
             value: category.id,
           }))}
-        label={Translated.byKey("pleaseSelectCategoryToPromote")}
+        label={Translated.byKey("pleaseSelectCategory")}
         onSelect={(value: Option) => {
           setSelectedCategoryId(value.value);
         }}
@@ -130,58 +166,70 @@ const CategoryStep: FunctionComponent<{
         value={selectedCategoryId}
         inputValue={categoryText}
       />
-      <Button variant="contained" color="secondary" type="submit">
-        {Translated.byKey("promote")}
+      <Button variant="outlined" color="primary" type="submit">
+        {props.actionButtonText}
       </Button>
       <List>
         {Array.isArray(props.promotionRelegationList) &&
-          props.promotionRelegationList.map((p, i) => (
-            <ListItem key={i}>
-              <ListItemText>
-                {p.firstName} {p.lastName} <ChevronRight /> {p.newCategoryName}
-              </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  onClick={() => deletePromotionRelegation(p.userId)}
-                >
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
+          props.promotionRelegationList
+            .filter((p) => p.oldCategory === props.category.id)
+            .map((p, i) => (
+              <ListItem key={i}>
+                <ListItemText>
+                  {p.firstName} {p.lastName} <ChevronRight />{" "}
+                  {p.newCategoryName}
+                </ListItemText>
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    onClick={() => deletePromotionRelegation(p.userId)}
+                  >
+                    <Delete />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
       </List>
     </form>
   );
 });
 
-const PromotionRelegationForm: FunctionComponent<{ season: Season }> = ({
-  season,
-}) => {
-  const [activeStep, setActiveStep] = useState(0);
+const PromotionRelegationForm: FunctionComponent<{
+  season: Season;
+}> = ({ season }) => {
+  const [promotionActiveStep, setPromotionActiveStep] = useState(0);
+  const [relegationActiveStep, setRelegationActiveStep] = useState(0);
 
   const league = useLeague();
   const promotionRelegation = usePromotionRelegation();
 
-  function next() {
-    setActiveStep(activeStep + 1);
+  function nextPromotion() {
+    setPromotionActiveStep(promotionActiveStep + 1);
   }
 
-  function previous() {
-    setActiveStep(activeStep - 1);
+  function previousPromotion() {
+    setPromotionActiveStep(promotionActiveStep - 1);
+  }
+
+  function nextRelegation() {
+    setRelegationActiveStep(relegationActiveStep + 1);
+  }
+
+  function previousRelegation() {
+    setRelegationActiveStep(relegationActiveStep - 1);
   }
 
   return (
     <div>
       <Typography variant="h5">{Translated.byKey("promotion")}</Typography>
       <Stepper
-        activeStep={activeStep}
+        activeStep={promotionActiveStep}
         id={style.stepper}
         orientation="vertical"
       >
         {league &&
           Array.isArray(league.categories) &&
-          league.categories.map((category) => (
+          league.categories.map((category, i) => (
             <Step key={category.id}>
               <StepLabel>
                 <Label text={category.name} />
@@ -196,25 +244,50 @@ const PromotionRelegationForm: FunctionComponent<{ season: Season }> = ({
                     (p) => p.season === season.id
                   )}
                   refreshPromotionRelegation={promotionRelegation.refresh}
+                  actionButtonText={Translated.byKey("promote")}
+                />
+                <ActionButtons
+                  onRightClick={nextPromotion}
+                  onLeftClick={previousPromotion}
+                  leftDisabled={i === 0}
                 />
               </StepContent>
             </Step>
           ))}
       </Stepper>
+      <Divider style={{ marginBottom: "15px" }} />
       <Typography variant="h5">{Translated.byKey("relegation")}</Typography>
       <Stepper
-        activeStep={activeStep}
+        activeStep={relegationActiveStep}
         id={style.stepper}
         orientation="vertical"
       >
         {league &&
           Array.isArray(league.categories) &&
-          league.categories.map((category) => (
+          league.categories.map((category, i) => (
             <Step key={category.id}>
               <StepLabel>
                 <Label text={category.name} />
               </StepLabel>
-              <StepContent></StepContent>
+              <StepContent>
+                <CategoryStep
+                  category={category}
+                  categories={league.categories}
+                  leagueId={league.league.id}
+                  seasonId={season.id}
+                  promotionRelegationList={promotionRelegation.promotionRelegationList.filter(
+                    (p) => p.season === season.id
+                  )}
+                  refreshPromotionRelegation={promotionRelegation.refresh}
+                  actionButtonText={Translated.byKey("relegate")}
+                />
+
+                <ActionButtons
+                  onRightClick={nextRelegation}
+                  onLeftClick={previousRelegation}
+                  leftDisabled={i === 0}
+                />
+              </StepContent>
             </Step>
           ))}
       </Stepper>

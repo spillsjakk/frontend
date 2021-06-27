@@ -487,7 +487,15 @@ const no = {
   "filterByClub": "",
   "lichessUsername": "",
   "linkLichessAccount": "",
-  "end": ""
+  "end": "",
+  "promotion": "",
+  "relegation": "",
+  "promote": "",
+  "relegate": "",
+  "pleaseSelectPlayer": "",
+  "pleaseSelectCategory": "",
+  "successfull": "",
+  "error": ""
 };
 
 export { no };
