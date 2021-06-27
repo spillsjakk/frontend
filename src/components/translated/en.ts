@@ -500,7 +500,8 @@ const en = {
   "pleaseSelectPlayer": "Please Select Player",
   "pleaseSelectCategory": "Please Select Category",
   "successfull": "Successfull",
-  "error": "Error"
+  "error": "Error",
+  "endSeasonAndStartNewOne": "End Season and Start New One"
 };
 
 export { en };

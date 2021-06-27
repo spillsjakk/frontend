@@ -238,23 +238,26 @@ const SeasonForm: FunctionComponent<unknown> = () => {
   );
 };
 
-const AddSeason: FunctionComponent<unknown> = memo(() => {
-  const popup = usePopup();
-  const form = useSeasonForm();
+const AddSeason: FunctionComponent<{ onAction: () => void }> = memo(
+  ({ onAction }) => {
+    const popup = usePopup();
+    const form = useSeasonForm();
 
-  return (
-    <Button
-      variant="outlined"
-      color="primary"
-      onClick={() => {
-        form.changeType(FORM_TYPE.CREATE);
-        popup.changeOpen(true);
-      }}
-    >
-      {Translated.byKey("addSeason")}
-    </Button>
-  );
-});
+    return (
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => {
+          form.changeType(FORM_TYPE.CREATE);
+          popup.changeOpen(true);
+          onAction();
+        }}
+      >
+        {Translated.byKey("addSeason")}
+      </Button>
+    );
+  }
+);
 
 const SeasonItem: FunctionComponent<{
   item: ISeason;
@@ -348,7 +351,7 @@ const Season: FunctionComponent<unknown> = memo(() => {
             <WithPopup content={form}>
               <Heading translateKey="seasons" />
               <SeasonList changeForm={changeForm} />
-              <AddSeason />
+              <AddSeason onAction={() => setForm(<SeasonForm />)} />
             </WithPopup>
           </WithPromotionRelegation>
         </WithSeasonForm>

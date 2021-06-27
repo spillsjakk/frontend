@@ -1,6 +1,5 @@
 import {
   Button,
-  Divider,
   IconButton,
   List,
   ListItem,
@@ -53,8 +52,8 @@ function ActionButtons({
       <Button
         className={style["ml-lg"]}
         disabled={rightDisabled}
-        variant="contained"
-        color="secondary"
+        variant="outlined"
+        color="primary"
         onClick={onRightClick}
         type="submit"
       >
@@ -105,70 +104,78 @@ const CategoryStep: FunctionComponent<{
     );
   }
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
+    <>
+      <form
+        className={style["promotion-relegation-form"]}
+        onSubmit={(e) => {
+          e.preventDefault();
 
-        if (!selectedCategoryId || !selectedUserId) return;
+          if (!selectedCategoryId || !selectedUserId) return;
 
-        fetchCall(
-          `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/promotion-relegation`,
-          "POST",
-          {
-            user_id: selectedUserId,
-            old_category: props.category.id,
-            new_category: selectedCategoryId,
-          },
-          () => {
-            setSelectedCategoryId("");
-            setSelectedUserId("");
-            setUserText("");
-            setCategoryText("");
-            notification.notify("success", Translated.byKey("successfull"));
-            props.refreshPromotionRelegation();
-          },
-          () => {
-            notification.notify("error", Translated.byKey("error"));
-          }
-        );
-      }}
-    >
-      <Autocomplete
-        data={participants.map((participant) => ({
-          name: `${participant.first_name} ${participant.last_name}`,
-          value: participant.account,
-        }))}
-        label={Translated.byKey("pleaseSelectPlayer")}
-        onSelect={(value: Option) => {
-          setSelectedUserId(value.value);
-          setUserText(value.name);
+          fetchCall(
+            `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/promotion-relegation`,
+            "POST",
+            {
+              user_id: selectedUserId,
+              old_category: props.category.id,
+              new_category: selectedCategoryId,
+            },
+            () => {
+              setSelectedCategoryId("");
+              setSelectedUserId("");
+              setUserText("");
+              setCategoryText("");
+              notification.notify("success", Translated.byKey("successfull"));
+              props.refreshPromotionRelegation();
+            },
+            () => {
+              notification.notify("error", Translated.byKey("error"));
+            }
+          );
         }}
-        onChange={(value: string) => {
-          setUserText(value);
-        }}
-        value={selectedUserId}
-        inputValue={userText}
-      />
-      <Autocomplete
-        data={props.categories
-          .filter((category) => category.id !== props.category.id)
-          .map((category) => ({
-            name: category.name,
-            value: category.id,
+      >
+        <Autocomplete
+          data={participants.map((participant) => ({
+            name: `${participant.first_name} ${participant.last_name}`,
+            value: participant.account,
           }))}
-        label={Translated.byKey("pleaseSelectCategory")}
-        onSelect={(value: Option) => {
-          setSelectedCategoryId(value.value);
-        }}
-        onChange={(value: string) => {
-          setCategoryText(value);
-        }}
-        value={selectedCategoryId}
-        inputValue={categoryText}
-      />
-      <Button variant="outlined" color="primary" type="submit">
-        {props.actionButtonText}
-      </Button>
+          label={Translated.byKey("pleaseSelectPlayer")}
+          onSelect={(value: Option) => {
+            setSelectedUserId(value.value);
+            setUserText(value.name);
+          }}
+          onChange={(value: string) => {
+            setUserText(value);
+          }}
+          value={selectedUserId}
+          inputValue={userText}
+        />
+        <Autocomplete
+          data={props.categories
+            .filter((category) => category.id !== props.category.id)
+            .map((category) => ({
+              name: category.name,
+              value: category.id,
+            }))}
+          label={Translated.byKey("pleaseSelectCategory")}
+          onSelect={(value: Option) => {
+            setSelectedCategoryId(value.value);
+          }}
+          onChange={(value: string) => {
+            setCategoryText(value);
+          }}
+          value={selectedCategoryId}
+          inputValue={categoryText}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          className={style["m-tb-1"]}
+        >
+          {Translated.byKey("promote")}/{Translated.byKey("relegate")}
+        </Button>
+      </form>
       <List>
         {Array.isArray(props.promotionRelegationList) &&
           props.promotionRelegationList
@@ -190,40 +197,35 @@ const CategoryStep: FunctionComponent<{
               </ListItem>
             ))}
       </List>
-    </form>
+    </>
   );
 });
 
 const PromotionRelegationForm: FunctionComponent<{
   season: Season;
 }> = ({ season }) => {
-  const [promotionActiveStep, setPromotionActiveStep] = useState(0);
-  const [relegationActiveStep, setRelegationActiveStep] = useState(0);
+  const [activeStep, setactiveStep] = useState(0);
 
   const league = useLeague();
   const promotionRelegation = usePromotionRelegation();
 
-  function nextPromotion() {
-    setPromotionActiveStep(promotionActiveStep + 1);
+  function endSeason() {}
+
+  function next() {
+    setactiveStep(activeStep + 1);
   }
 
-  function previousPromotion() {
-    setPromotionActiveStep(promotionActiveStep - 1);
-  }
-
-  function nextRelegation() {
-    setRelegationActiveStep(relegationActiveStep + 1);
-  }
-
-  function previousRelegation() {
-    setRelegationActiveStep(relegationActiveStep - 1);
+  function previous() {
+    setactiveStep(activeStep - 1);
   }
 
   return (
-    <div>
-      <Typography variant="h5">{Translated.byKey("promotion")}</Typography>
+    <>
+      <Typography variant="h5">
+        {Translated.byKey("promotion")}/{Translated.byKey("relegation")}
+      </Typography>
       <Stepper
-        activeStep={promotionActiveStep}
+        activeStep={activeStep}
         id={style.stepper}
         orientation="vertical"
       >
@@ -247,51 +249,22 @@ const PromotionRelegationForm: FunctionComponent<{
                   actionButtonText={Translated.byKey("promote")}
                 />
                 <ActionButtons
-                  onRightClick={nextPromotion}
-                  onLeftClick={previousPromotion}
+                  onRightClick={
+                    i === league.categories.length - 1 ? endSeason : next
+                  }
+                  rightText={
+                    i === league.categories.length - 1
+                      ? Translated.byKey("endSeasonAndStartNewOne")
+                      : undefined
+                  }
+                  onLeftClick={previous}
                   leftDisabled={i === 0}
                 />
               </StepContent>
             </Step>
           ))}
       </Stepper>
-      <Divider style={{ marginBottom: "15px" }} />
-      <Typography variant="h5">{Translated.byKey("relegation")}</Typography>
-      <Stepper
-        activeStep={relegationActiveStep}
-        id={style.stepper}
-        orientation="vertical"
-      >
-        {league &&
-          Array.isArray(league.categories) &&
-          league.categories.map((category, i) => (
-            <Step key={category.id}>
-              <StepLabel>
-                <Label text={category.name} />
-              </StepLabel>
-              <StepContent>
-                <CategoryStep
-                  category={category}
-                  categories={league.categories}
-                  leagueId={league.league.id}
-                  seasonId={season.id}
-                  promotionRelegationList={promotionRelegation.promotionRelegationList.filter(
-                    (p) => p.season === season.id
-                  )}
-                  refreshPromotionRelegation={promotionRelegation.refresh}
-                  actionButtonText={Translated.byKey("relegate")}
-                />
-
-                <ActionButtons
-                  onRightClick={nextRelegation}
-                  onLeftClick={previousRelegation}
-                  leftDisabled={i === 0}
-                />
-              </StepContent>
-            </Step>
-          ))}
-      </Stepper>
-    </div>
+    </>
   );
 };
 
