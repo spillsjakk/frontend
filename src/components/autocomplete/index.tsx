@@ -8,6 +8,7 @@ interface Props {
   data: Array<Option>;
   label: string;
   onSelect: (value: Option) => void;
+  onChange: (value: string) => void;
   value: string;
   inputValue: string;
 }
@@ -16,6 +17,7 @@ const Autocomplete: FunctionComponent<Props> = ({
   data,
   label,
   onSelect,
+  onChange,
   value,
   inputValue,
 }) => {
@@ -38,6 +40,9 @@ const Autocomplete: FunctionComponent<Props> = ({
           />
         )}
         onChange={(_, newValue) => onSelect(newValue as Option)}
+        onInputChange={(event, newValue) => {
+          if (event) onChange(newValue);
+        }}
       />
     </>
   );

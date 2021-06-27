@@ -40,12 +40,14 @@ const CategoryStep: FunctionComponent<{
   const [participants, setParticipants] = useState<Array<Participant>>([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [userText, setUserText] = useState("");
+  const [categoryText, setCategoryText] = useState("");
 
   const notification = useNotification();
 
   useEffect(() => {
     fetchCall(
-      `/s/leagues/${props.category.league}/categories/${props.category.id}/participants`,
+      `/s/leagues/${props.leagueId}/categories/${props.category.id}/participants`,
       "GET",
       undefined,
       (response) => {
@@ -56,24 +58,16 @@ const CategoryStep: FunctionComponent<{
     );
   }, []);
 
-  function getPlayerInputValue() {
-    const participant = participants.find((p) => p.account === selectedUserId);
-    if (participant) {
-      return `${participant.first_name} ${participant.last_name}`;
-    } else {
-      return "";
-    }
+  function deletePromotionRelegation(userId) {
+    fetchCall(
+      `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/promotion-relegation/${userId}`,
+      "DELETE",
+      undefined,
+      (response) => {
+        props.refreshPromotionRelegation();
+      }
+    );
   }
-
-  function getCategoryInputValue() {
-    const category = props.categories.find((p) => p.id === selectedCategoryId);
-    if (category) {
-      return category.name;
-    } else {
-      return "";
-    }
-  }
-
   return (
     <form
       onSubmit={(e) => {
@@ -90,8 +84,10 @@ const CategoryStep: FunctionComponent<{
             new_category: selectedCategoryId,
           },
           () => {
-            setSelectedCategoryId(null);
-            setSelectedUserId(null);
+            setSelectedCategoryId("");
+            setSelectedUserId("");
+            setUserText("");
+            setCategoryText("");
             notification.notify("success", Translated.byKey("successfull"));
             props.refreshPromotionRelegation();
           },
@@ -109,9 +105,13 @@ const CategoryStep: FunctionComponent<{
         label={Translated.byKey("pleaseSelectPlayer")}
         onSelect={(value: Option) => {
           setSelectedUserId(value.value);
+          setUserText(value.name);
+        }}
+        onChange={(value: string) => {
+          setUserText(value);
         }}
         value={selectedUserId}
-        inputValue={getPlayerInputValue()}
+        inputValue={userText}
       />
       <Autocomplete
         data={props.categories
@@ -124,8 +124,11 @@ const CategoryStep: FunctionComponent<{
         onSelect={(value: Option) => {
           setSelectedCategoryId(value.value);
         }}
+        onChange={(value: string) => {
+          setCategoryText(value);
+        }}
         value={selectedCategoryId}
-        inputValue={getCategoryInputValue()}
+        inputValue={categoryText}
       />
       <Button variant="contained" color="secondary" type="submit">
         {Translated.byKey("promote")}
@@ -138,7 +141,10 @@ const CategoryStep: FunctionComponent<{
                 {p.firstName} {p.lastName} <ChevronRight /> {p.newCategoryName}
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton edge="end">
+                <IconButton
+                  edge="end"
+                  onClick={() => deletePromotionRelegation(p.userId)}
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
