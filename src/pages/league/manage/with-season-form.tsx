@@ -10,6 +10,7 @@ import React, {
 export enum FORM_TYPE {
   CREATE,
   EDIT,
+  START,
 }
 export interface FormContext {
   id: string;

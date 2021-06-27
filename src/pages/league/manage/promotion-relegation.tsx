@@ -24,6 +24,8 @@ import {
   usePromotionRelegation,
 } from "./with-promotion-relegation";
 import { ChevronRight, Delete } from "@material-ui/icons";
+import { FORM_TYPE, useSeasonForm } from "./with-season-form";
+import { usePopup } from "../../../hocs/popup";
 
 function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
@@ -203,13 +205,20 @@ const CategoryStep: FunctionComponent<{
 
 const PromotionRelegationForm: FunctionComponent<{
   season: Season;
-}> = ({ season }) => {
+  onEnd: () => void;
+}> = ({ season, onEnd }) => {
   const [activeStep, setactiveStep] = useState(0);
 
+  const popup = usePopup();
+  const form = useSeasonForm();
   const league = useLeague();
   const promotionRelegation = usePromotionRelegation();
 
-  function endSeason() {}
+  function endSeason() {
+    form.changeType(FORM_TYPE.START);
+    popup.changeOpen(true);
+    onEnd();
+  }
 
   function next() {
     setactiveStep(activeStep + 1);

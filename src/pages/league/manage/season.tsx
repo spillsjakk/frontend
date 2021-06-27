@@ -132,7 +132,7 @@ const EndDate: FunctionComponent<{
   </Grid>
 ));
 
-const SeasonForm: FunctionComponent<unknown> = () => {
+const SeasonForm: FunctionComponent<{ oldSeasonId?: string }> = (props) => {
   const league = useLeague();
   const form = useSeasonForm();
   const popup = usePopup();
@@ -187,18 +187,75 @@ const SeasonForm: FunctionComponent<unknown> = () => {
     );
   }
 
+  function start() {
+    fetchJson(
+      `/s/leagues/${leagueId}/seasons/${props.oldSeasonId}/end`, // ending last season to start new one
+      "PUT",
+      {
+        new_season_id: form.id,
+        visible: form.visible,
+        name: form.name,
+        description: form.description,
+        start_date: form.startDate,
+        end_date: form.endDate,
+      },
+      () => {
+        league.fetchSeasons();
+        popup.changeOpen(false);
+      }
+    );
+  }
+
+  function getHeading() {
+    let result;
+    switch (form.type) {
+      case FORM_TYPE.CREATE:
+        result = "createSeason";
+        break;
+      case FORM_TYPE.EDIT:
+        result = "editSeason";
+        break;
+      case FORM_TYPE.START:
+        result = "startSeason";
+        break;
+    }
+    return result;
+  }
+
+  function getButtonText() {
+    let result;
+    switch (form.type) {
+      case FORM_TYPE.CREATE:
+        result = "create";
+        break;
+      case FORM_TYPE.EDIT:
+        result = "edit";
+        break;
+      case FORM_TYPE.START:
+        result = "start";
+        break;
+    }
+    return result;
+  }
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        form.type === FORM_TYPE.CREATE ? create() : edit();
+        switch (form.type) {
+          case FORM_TYPE.CREATE:
+            create();
+            break;
+          case FORM_TYPE.EDIT:
+            edit();
+            break;
+          case FORM_TYPE.START:
+            start();
+            break;
+        }
       }}
     >
-      <Heading
-        translateKey={
-          form.type === FORM_TYPE.CREATE ? "createSeason" : "editSeason"
-        }
-      />
+      <Heading translateKey={getHeading()} />
       <div className={style.content}>
         <div className={style.inputs}>
           <Grid container spacing={3}>
@@ -232,7 +289,7 @@ const SeasonForm: FunctionComponent<unknown> = () => {
         color="secondary"
         type="submit"
       >
-        {Translated.byKey(form.type === FORM_TYPE.CREATE ? "create" : "edit")}
+        {getButtonText()}
       </Button>
     </form>
   );
@@ -335,7 +392,12 @@ const Season: FunctionComponent<unknown> = memo(() => {
   const changeForm = useCallback((value: FORM_KIND, item: ISeason) => {
     setSelectedSeasonId(item.id);
     if (value === FORM_KIND.PROMOTION_RELEGATION) {
-      setForm(<PromotionRelegationForm season={item} />);
+      setForm(
+        <PromotionRelegationForm
+          season={item}
+          onEnd={() => setForm(<SeasonForm oldSeasonId={item.id} />)}
+        />
+      );
     } else if (value === FORM_KIND.SEASON) {
       setForm(<SeasonForm />);
     }

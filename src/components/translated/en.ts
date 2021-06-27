@@ -501,7 +501,8 @@ const en = {
   "pleaseSelectCategory": "Please Select Category",
   "successfull": "Successfull",
   "error": "Error",
-  "endSeasonAndStartNewOne": "End Season and Start New One"
+  "endSeasonAndStartNewOne": "End Season and Start New One",
+  "startSeason": "Start Season"
 };
 
 export { en };

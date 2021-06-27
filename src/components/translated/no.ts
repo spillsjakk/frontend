@@ -495,7 +495,9 @@ const no = {
   "pleaseSelectPlayer": "",
   "pleaseSelectCategory": "",
   "successfull": "",
-  "error": ""
+  "error": "",
+  "endSeasonAndStartNewOne": "",
+  "startSeason": ""
 };
 
 export { no };
