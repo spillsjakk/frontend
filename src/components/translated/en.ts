@@ -494,7 +494,11 @@ const en = {
   "linkLichessAccount": "Link Lichess Account",
   "end": "End",
   "promotion": "Promotion",
-  "relegation": "Relegation"
+  "relegation": "Relegation",
+  "pleaseSelectPlayer": "Please Select Player",
+  "pleaseSelectCategoryToPromote": "Please Select Category To Promote",
+  "successfull": "Successfull",
+  "error": "Error"
 };
 
 export { en };

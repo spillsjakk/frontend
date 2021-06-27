@@ -1,5 +1,10 @@
+import { Select } from "@material-ui/core";
 import React, { FunctionComponent, useState } from "react";
-import { Option } from "./interface";
+
+export interface Option {
+  name: string;
+  value: string;
+}
 
 interface Props {
   options: Array<Option>;
@@ -13,15 +18,21 @@ const Dropdown: FunctionComponent<Props> = ({
   placeholder,
 }) => {
   const [selectedValue, setSelectedValue] = useState(
-    placeholder ? placeholder.value : options[0].value
+    placeholder
+      ? placeholder.value
+      : Array.isArray(options) && options.length
+      ? options[0].value
+      : ""
   );
   return (
-    <select
+    <Select
       value={selectedValue}
+      variant="outlined"
       onChange={(e) => {
-        onSelect(e.target.value);
-        setSelectedValue(e.target.value);
+        onSelect(e.target.value as string);
+        setSelectedValue(e.target.value as string);
       }}
+      native
     >
       {placeholder && (
         <option value={placeholder.value} disabled>
@@ -34,7 +45,7 @@ const Dropdown: FunctionComponent<Props> = ({
             {option.name}
           </option>
         ))}
-    </select>
+    </Select>
   );
 };
 export { Dropdown };

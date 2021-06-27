@@ -28,6 +28,7 @@ import { FORM_TYPE, useSeasonForm, WithSeasonForm } from "./with-season-form";
 import { useLeague, Season as ISeason } from "../../../hocs/with-league/index";
 import MouseOverPopover from "../../../components/popover";
 import { PromotionRelegationForm } from "./promotion-relegation";
+import { WithPromotionRelegation } from "./with-promotion-relegation";
 
 const Heading: FunctionComponent<{ translateKey: string }> = ({
   translateKey,
@@ -293,7 +294,7 @@ enum FORM_KIND {
 }
 
 const SeasonList: FunctionComponent<{
-  changeForm: (value: FORM_KIND) => void;
+  changeForm: (value: FORM_KIND, item: ISeason) => void;
 }> = memo(({ changeForm }) => {
   const league = useLeague();
   const { changeOpen } = usePopup();
@@ -301,7 +302,7 @@ const SeasonList: FunctionComponent<{
 
   const edit = useCallback(
     (item: ISeason) => {
-      changeForm(FORM_KIND.SEASON);
+      changeForm(FORM_KIND.SEASON, item);
       changeType(FORM_TYPE.EDIT);
       fillValues(item);
       changeOpen(true);
@@ -309,7 +310,7 @@ const SeasonList: FunctionComponent<{
     [changeOpen, changeType, fillValues]
   );
   const end = useCallback((item: ISeason) => {
-    changeForm(FORM_KIND.PROMOTION_RELEGATION);
+    changeForm(FORM_KIND.PROMOTION_RELEGATION, item);
     changeOpen(true);
   }, []);
 
@@ -326,9 +327,12 @@ const SeasonList: FunctionComponent<{
 
 const Season: FunctionComponent<unknown> = memo(() => {
   const [form, setForm] = useState(<SeasonForm />);
-  const changeForm = useCallback((value: FORM_KIND) => {
+  const [selectedSeasonId, setSelectedSeasonId] = useState("");
+  const league = useLeague();
+  const changeForm = useCallback((value: FORM_KIND, item: ISeason) => {
+    setSelectedSeasonId(item.id);
     if (value === FORM_KIND.PROMOTION_RELEGATION) {
-      setForm(<PromotionRelegationForm />);
+      setForm(<PromotionRelegationForm season={item} />);
     } else if (value === FORM_KIND.SEASON) {
       setForm(<SeasonForm />);
     }
@@ -337,11 +341,16 @@ const Season: FunctionComponent<unknown> = memo(() => {
     <div className={style.box}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <WithSeasonForm>
-          <WithPopup content={form}>
-            <Heading translateKey="seasons" />
-            <SeasonList changeForm={changeForm} />
-            <AddSeason />
-          </WithPopup>
+          <WithPromotionRelegation
+            seasonId={selectedSeasonId}
+            leagueId={league.league?.id}
+          >
+            <WithPopup content={form}>
+              <Heading translateKey="seasons" />
+              <SeasonList changeForm={changeForm} />
+              <AddSeason />
+            </WithPopup>
+          </WithPromotionRelegation>
         </WithSeasonForm>
       </MuiPickersUtilsProvider>
     </div>

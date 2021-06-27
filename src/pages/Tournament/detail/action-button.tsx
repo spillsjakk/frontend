@@ -8,20 +8,15 @@ import { useParams, useHistory } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../../components/help-box";
 
 const ActionButton: FunctionComponent<{}> = () => {
-  const {
-    tournament,
-    is_participating,
-    update,
-    self_join_teams,
-    can_manage,
-  } = useTournamentDetail();
+  const { tournament, is_participating, update, self_join_teams, can_manage } =
+    useTournamentDetail();
   const {
     user: { authenticated },
   } = useUser();
   const params = useParams<{ tid: string }>();
   const history = useHistory();
 
-  function onClickSelfLeave(e: React.FormEvent<HTMLFormElement>) {
+  function onClickSelfLeave(e: any) {
     e.preventDefault();
     fetchJson(
       `/s/tournament/self-leave/${params.tid}`,
@@ -36,7 +31,7 @@ const ActionButton: FunctionComponent<{}> = () => {
   }
 
   function onClickSelfJoin(team: string) {
-    return (e: React.FormEvent<HTMLFormElement>) => {
+    return (e: any) => {
       e.preventDefault();
       fetchJson(
         `/s/tournament/self-join/${params.tid}?team=${team}`,
