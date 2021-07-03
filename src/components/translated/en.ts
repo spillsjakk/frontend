@@ -502,7 +502,8 @@ const en = {
   "successfull": "Successfull",
   "error": "Error",
   "endSeasonAndStartNewOne": "End Season and Start New One",
-  "startSeason": "Start Season"
+  "startSeason": "Start Season",
+  "saveAndCreate": "Save And Create"
 };
 
 export { en };

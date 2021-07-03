@@ -497,7 +497,8 @@ const no = {
   "successfull": "",
   "error": "",
   "endSeasonAndStartNewOne": "",
-  "startSeason": ""
+  "startSeason": "",
+  "saveAndCreate": "Lagre og lag"
 };
 
 export { no };
