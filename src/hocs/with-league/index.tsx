@@ -47,6 +47,7 @@ export interface Season {
   league: string;
   start_date: string;
   end_date: string;
+  ended: boolean;
 }
 
 const LeagueContext: Context<

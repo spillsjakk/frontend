@@ -326,15 +326,17 @@ const SeasonItem: FunctionComponent<{
     <ListItem disableGutters>
       <ListItemText primary={item.name} />
       <ListItemSecondaryAction>
-        <IconButton
-          onClick={() => {
-            end(item);
-          }}
-        >
-          <MouseOverPopover popoverText={<Translated str="end" />}>
-            <TimerOff />
-          </MouseOverPopover>
-        </IconButton>
+        {!item.ended && (
+          <IconButton
+            onClick={() => {
+              end(item);
+            }}
+          >
+            <MouseOverPopover popoverText={<Translated str="end" />}>
+              <TimerOff />
+            </MouseOverPopover>
+          </IconButton>
+        )}
         <IconButton
           onClick={() => {
             edit(item);
