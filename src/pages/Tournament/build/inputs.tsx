@@ -22,7 +22,13 @@ import { generateId } from "../../../functions";
 import { Editor } from "../../../components/markdown";
 
 function TemplateSelection() {
-  const { templates, onSelect, placeholder, selectedTemplate } = useTemplate();
+  const {
+    templates,
+    savedTournaments,
+    onSelect,
+    placeholder,
+    selectedTemplate,
+  } = useTemplate();
   return (
     <div className={style.content}>
       <div className={style.description}>
@@ -30,15 +36,15 @@ function TemplateSelection() {
       </div>
       <div className={style.inputs}>
         <Select
-          onChange={(e) => onSelect(Number(e.target.value))}
+          onChange={(e) => onSelect(e.target.value)}
           variant="outlined"
           value={selectedTemplate}
           native
         >
-          <option value={placeholder.value}>{placeholder.name}</option>
+          <option value={placeholder.id}>{placeholder.name}</option>
           {Array.isArray(templates) &&
-            templates.map((template) => (
-              <option value={template.value} key={template.value}>
+            [...templates, ...savedTournaments].map((template) => (
+              <option value={template.id} key={template.id}>
                 {template.name}
               </option>
             ))}

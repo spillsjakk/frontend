@@ -2,72 +2,94 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
-  useState,
+  useState
 } from "react";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
-import { KIND } from "../../constants";
-import { useForm } from "../../hocs/tournament-form";
+import { KIND, TIEBREAKER } from "../../constants";
 import { TemplateProvider } from "../../context/build-tournament-template";
-import { generateId, fetchJson } from "../../functions";
-
-const templateData = [
-  {
-    id: 1,
-    initialTime: 3,
-    increment: 2,
-    numberOfRounds: 9,
-    kind: KIND.SwissDutch,
-    kindName: "swissDutch",
-  },
-  {
-    id: 2,
-    initialTime: 15,
-    increment: 10,
-    numberOfRounds: 6,
-    kind: KIND.SwissDutch,
-    kindName: "swissDutch",
-  },
-  // {
-  //   id: 3,
-  //   initialTime: 10,
-  //   increment: 0,
-  //   numberOfRounds: 4,
-  //   kind: KIND.TeamMonrad,
-  //   kindName: "teamMonrad",
-  // },
-];
+import { fetchJson, generateId } from "../../functions";
+import { useForm } from "../../hocs/tournament-form";
+import { Tournament } from "../../pages/Tournament/Types";
 
 export const placeholder = {
   name: "Please Select a Template",
-  value: 0,
+  id: "0",
 };
 
 const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
   const { user } = useUser();
   const form = useForm();
-  const [selectedTemplate, setSelectedTemplate] = useState(placeholder.value);
-  const [templates, setTemplates] = useState([
+  const [selectedTemplate, setSelectedTemplate] = useState(placeholder.id);
+  const [templates] = useState([
     {
       name: "9 rounds Swiss 3 minutes + 2 seconds",
-      value: 1,
+      id: "1",
+      initialTime: 3,
+      increment: 2,
+      numberOfRounds: 9,
+      kind: KIND.SwissDutch,
+      kindName: "swissDutch",
     },
     {
       name: "6 rounds rapid Swiss 15 minutes + 10 seconds",
-      value: 2,
+      id: "2",
+      initialTime: 15,
+      increment: 10,
+      numberOfRounds: 6,
+      kind: KIND.SwissDutch,
+      kindName: "swissDutch",
     },
   ]);
+  const [savedTournaments, setSavedTournaments] = useState<Array<Tournament>>(
+    []
+  );
 
   useEffect(() => {
     fetchJson(`/s/tournament/template/list`, "GET", undefined, (response) => {
-      setTemplates([...templates, ...response]);
+      if (Array.isArray(response)) {
+        setSavedTournaments(response);
+      }
     });
   }, []);
 
   const onSelect = useCallback(
-    (value: number) => {
-      const template = templateData.find((data) => value === data.id);
+    (value: any) => {
+      const template = templates.find((data) => value === data.id);
       if (!template) {
+        const savedTournament = savedTournaments.find(
+          (data) => value === data.id
+        );
+        if (!savedTournament) {
+          return;
+        }
+
+        form.changeName(savedTournament.name);
+        form.changeDescription(savedTournament.description);
+        form.changeId(generateId(7));
+        form.changePubliclyViewable(savedTournament.publicly_viewable);
+        form.changeSelfJoinable(savedTournament.self_joinable);
+        form.changeFideRated(true);
+        form.changeKind((KIND as any)[savedTournament.kind]);
+        form.changeRounds!(savedTournament.rounds);
+        form.changeOnlinePairingIntervalN(5);
+        form.changeInitialTime(savedTournament.initial_time);
+        form.changeIncrement(savedTournament.increment);
+        form.changeOrganiser(savedTournament.organiser);
+        form.changeOrganiserType(savedTournament.organiser_type);
+        if (savedTournament.tb1) {
+          form.changeTb1((TIEBREAKER as any)[savedTournament.tb1]);
+        }
+        if (savedTournament.tb2) {
+          form.changeTb2((TIEBREAKER as any)[savedTournament.tb2]);
+        }
+        if (savedTournament.tb3) {
+          form.changeTb3((TIEBREAKER as any)[savedTournament.tb3]);
+        }
+        if (savedTournament.tb4) {
+          form.changeTb4((TIEBREAKER as any)[savedTournament.tb4]);
+        }
+        setSelectedTemplate(value);
         return;
       }
 
@@ -96,13 +118,14 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
 
       setSelectedTemplate(value);
     },
-    [user]
+    [user, templates, savedTournaments]
   );
 
   return (
     <TemplateProvider
       value={{
         selectedTemplate,
+        savedTournaments,
         templates,
         onSelect,
         placeholder,

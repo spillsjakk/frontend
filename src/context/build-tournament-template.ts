@@ -2,21 +2,23 @@ import React, { Context, useContext } from "react";
 
 export interface Option {
   name: string;
-  value: number;
+  id: string;
 }
 
 export interface TemplateContext {
-  selectedTemplate: number;
+  selectedTemplate: string;
   templates: Array<Option>;
-  onSelect: (value: number) => void;
+  savedTournaments: Array<any>;
+  onSelect: (value: any) => void;
   placeholder: Option;
 }
 
 const initalValues = {
-  selectedTemplate: 0,
-  templates: [{ name: "", value: 0 }],
-  onSelect: (value: number) => {},
-  placeholder: { name: "", value: 0 },
+  selectedTemplate: "0",
+  templates: [{ name: "", id: "0" }],
+  savedTournaments: [],
+  onSelect: (value: any) => {},
+  placeholder: { name: "", id: "0" },
 };
 
 const TemplateContext: Context<TemplateContext> =

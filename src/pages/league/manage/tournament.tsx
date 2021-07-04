@@ -50,10 +50,10 @@ function TemplateSelection() {
           value={selectedTemplate}
           native
         >
-          <option value={placeholder.value}>{placeholder.name}</option>
+          <option value={placeholder.id}>{placeholder.name}</option>
           {Array.isArray(templates) &&
             templates.map((template) => (
-              <option value={template.value} key={template.value}>
+              <option value={template.id} key={template.id}>
                 {template.name}
               </option>
             ))}
