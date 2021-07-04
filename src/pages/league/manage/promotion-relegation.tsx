@@ -15,7 +15,7 @@ import React, { FunctionComponent, memo, useEffect, useState } from "react";
 import Translated from "../../../components/translated";
 import { Category, useLeague, Season } from "../../../hocs/with-league/index";
 import style from "./style.module.scss";
-import { fetchCall } from "../../../functions";
+import { fetchCall, fetchJson } from "../../../functions";
 import { Participant } from "../../Tournament/Types";
 import { Autocomplete, Option } from "../../../components/autocomplete";
 import { useNotification } from "../../../hocs/with-notification";
@@ -215,9 +215,16 @@ const PromotionRelegationForm: FunctionComponent<{
   const promotionRelegation = usePromotionRelegation();
 
   function endSeason() {
-    form.changeType(FORM_TYPE.START);
-    popup.changeOpen(true);
-    onEnd();
+    fetchJson(
+      `/s/leagues/${league.league.id}/seasons/${season.id}/end`,
+      "PUT",
+      {},
+      () => {
+        form.changeType(FORM_TYPE.START);
+        popup.changeOpen(true);
+        onEnd();
+      }
+    );
   }
 
   function next() {

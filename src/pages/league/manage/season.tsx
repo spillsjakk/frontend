@@ -189,10 +189,11 @@ const SeasonForm: FunctionComponent<{ oldSeasonId?: string }> = (props) => {
 
   function start() {
     fetchJson(
-      `/s/leagues/${leagueId}/seasons/${props.oldSeasonId}/end`, // ending last season to start new one
-      "PUT",
+      `/s/leagues/${leagueId}/seasons/start`,
+      "POST",
       {
-        new_season_id: form.id,
+        id: form.id,
+        old_season_id: props.oldSeasonId,
         visible: form.visible,
         name: form.name,
         description: form.description,
