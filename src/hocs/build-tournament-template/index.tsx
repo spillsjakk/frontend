@@ -1,25 +1,15 @@
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
 import { KIND } from "../../constants";
 import { useForm } from "../../hocs/tournament-form";
 import { TemplateProvider } from "../../context/build-tournament-template";
-import { generateId } from "../../functions";
-
-const templates = [
-  {
-    name: "9 rounds Swiss 3 minutes + 2 seconds",
-    value: 1,
-  },
-  {
-    name: "6 rounds rapid Swiss 15 minutes + 10 seconds",
-    value: 2,
-  },
-  // {
-  //   name: "4 rounds rapid SkoleSjakken 10 minutes + 0 seconds",
-  //   value: 3,
-  // },
-];
+import { generateId, fetchJson } from "../../functions";
 
 const templateData = [
   {
@@ -57,6 +47,22 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
   const { user } = useUser();
   const form = useForm();
   const [selectedTemplate, setSelectedTemplate] = useState(placeholder.value);
+  const [templates, setTemplates] = useState([
+    {
+      name: "9 rounds Swiss 3 minutes + 2 seconds",
+      value: 1,
+    },
+    {
+      name: "6 rounds rapid Swiss 15 minutes + 10 seconds",
+      value: 2,
+    },
+  ]);
+
+  useEffect(() => {
+    fetchJson(`/s/tournament/template/list`, "GET", undefined, (response) => {
+      setTemplates([...templates, ...response]);
+    });
+  }, []);
 
   const onSelect = useCallback(
     (value: number) => {

@@ -27,7 +27,7 @@ import Translated from "../../../components/translated";
 
 function ActionButtons({
   onLeftClick,
-  onRightClick = () => { },
+  onRightClick = () => {},
   leftText = Translated.byKey("back"),
   rightText = Translated.byKey("next"),
   rightDisabled = false,
@@ -94,20 +94,22 @@ function SaveButton(props: { form: FormContext }) {
       chat_enabled: form.chatEnabled,
     };
 
-    fetchJson(`/s/tournament/template/save`, "POST", body, () => {
-
-    });
+    fetchJson(`/s/tournament/template/save`, "POST", body, () => {});
 
     fetchJson(`/s/tournament/build`, "POST", body, (result) => {
       window.location.assign(`/tournament/view/${result.id}`);
     });
   }
-  return <Button className={style.save} onClick={() => save()}
-    variant="contained"
-    color="primary"
-  >
-    {Translated.byKey("saveAndCreate")}
-  </Button>
+  return (
+    <Button
+      className={style.save}
+      onClick={() => save()}
+      variant="contained"
+      color="primary"
+    >
+      {Translated.byKey("saveAndCreate")}
+    </Button>
+  );
 }
 
 function Label({ text }: { text: string }) {

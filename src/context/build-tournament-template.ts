@@ -19,9 +19,8 @@ const initalValues = {
   placeholder: { name: "", value: 0 },
 };
 
-const TemplateContext: Context<TemplateContext> = React.createContext(
-  initalValues
-);
+const TemplateContext: Context<TemplateContext> =
+  React.createContext(initalValues);
 
 export const TemplateProvider = TemplateContext.Provider;
 export default TemplateContext;
