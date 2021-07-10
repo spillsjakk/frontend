@@ -27,15 +27,14 @@ export interface TournamentDetail {
   rounds: Array<Round>;
   update: () => void;
   sorted?: boolean;
-  league?: { league_name: string; league_id: string; };
+  league?: { league_name: string; league_id: string };
   can_manage: boolean;
 }
 
 export type TournamentDetailContext = TournamentDetail;
 
-const TournamentDetailContext: Context<
-  Partial<TournamentDetailContext>
-> = React.createContext({});
+const TournamentDetailContext: Context<Partial<TournamentDetailContext>> =
+  React.createContext({});
 
 export const TournamentDetailProvider = TournamentDetailContext.Provider;
 export default TournamentDetailContext;

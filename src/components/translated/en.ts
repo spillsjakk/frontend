@@ -503,7 +503,8 @@ const en = {
   "error": "Error",
   "endSeasonAndStartNewOne": "End Season and Start New One",
   "startSeason": "Start Season",
-  "saveAndCreate": "Create and Save as Template"
+  "saveAndCreate": "Create and Save as Template",
+  "manageTeam" : "Manage Team"
 };
 
 export { en };

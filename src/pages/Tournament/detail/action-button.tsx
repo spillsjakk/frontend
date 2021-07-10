@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
 import { useUser } from "../../../components/UserContext";
@@ -7,9 +7,23 @@ import { fetchJson } from "../../../functions";
 import { useParams, useHistory } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../../components/help-box";
 
+function intersect(a, b) {
+  const setB = new Set(b);
+  return [...new Set(a)].filter((x) => setB.has(x));
+}
+
 const ActionButton: FunctionComponent<{}> = () => {
-  const { tournament, is_participating, update, self_join_teams, can_manage } =
-    useTournamentDetail();
+  const [managedTeams, setManagedTeams] = useState([]);
+  const [managedAndParticipatingTeams, setManagedAndParticipatingTeams] =
+    useState([]);
+  const {
+    tournament,
+    teams,
+    is_participating,
+    update,
+    self_join_teams,
+    can_manage,
+  } = useTournamentDetail();
   const {
     user: { authenticated },
   } = useUser();
@@ -54,6 +68,34 @@ const ActionButton: FunctionComponent<{}> = () => {
     );
   }
 
+  function getManagedTeams() {
+    fetchJson(`/s/account/managed-teams`, "GET", undefined, (response) => {
+      if (Array.isArray(response)) {
+        setManagedTeams(response);
+      }
+    });
+  }
+
+  useEffect(() => {
+    getManagedTeams();
+  }, []);
+
+  useEffect(() => {
+    if (
+      Array.isArray(teams) &&
+      teams.length > 0 &&
+      Array.isArray(managedTeams) &&
+      managedTeams.length > 0
+    ) {
+      setManagedAndParticipatingTeams(
+        intersect(
+          teams.map((t) => t.team_id),
+          managedTeams
+        )
+      );
+    }
+  }, [teams, managedTeams]);
+
   return (
     <>
       {authenticated && can_manage && (
@@ -97,6 +139,20 @@ const ActionButton: FunctionComponent<{}> = () => {
           )}
         </>
       )}
+      {authenticated &&
+        Array.isArray(managedAndParticipatingTeams) &&
+        managedAndParticipatingTeams.map((team, i) => (
+          <a
+            key={i}
+            className={`${style["action-button"]} ${style["manage-tournament"]}`}
+            href={`/tournament/manage-team/${tournament.id}/${team}`}
+          >
+            <button>
+              {Translated.byKey("manageTeam")}&nbsp;
+              {(teams.find((t) => t.team_id === team) as any).name}
+            </button>
+          </a>
+        ))}
     </>
   );
 };

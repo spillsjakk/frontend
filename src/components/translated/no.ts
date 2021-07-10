@@ -498,7 +498,8 @@ const no = {
   "error": "",
   "endSeasonAndStartNewOne": "",
   "startSeason": "",
-  "saveAndCreate": "Lagre og lag"
+  "saveAndCreate": "Lagre og lag",
+  "manageTeam": "Administrere Teamet"
 };
 
 export { no };
