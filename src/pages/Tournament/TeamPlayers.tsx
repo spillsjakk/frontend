@@ -7,6 +7,14 @@ import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 import "./TeamPlayers.css";
 
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from "react-sortable-hoc";
+import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Dehaze, RemoveShoppingCart } from "@material-ui/icons";
+
 type TeamPlayersProps = {
   tournamentId: string;
   teamId: string;
@@ -21,6 +29,24 @@ type TeamPlayersState = {
     team_id: string;
   };
 };
+
+const DragHandle = SortableHandle(() => <Dehaze />);
+
+const SortableItem = SortableElement(({ value, id }) => (
+  <ListItem>
+    <ListItemIcon>
+      <DragHandle />
+    </ListItemIcon>
+    <ListItemText>
+      <UserLink id={id} name={value} ghost={false} />
+    </ListItemText>
+    <a className="btn btn-danger">X</a>
+  </ListItem>
+));
+
+const SortableList = SortableContainer(({ children }) => {
+  return <List>{children}</List>;
+});
 
 class TeamPlayers extends Component<
   RouteComponentProps<TeamPlayersProps>,
@@ -94,6 +120,10 @@ class TeamPlayers extends Component<
     );
   }
 
+  onSortEnd(event) {
+    console.log("event", event);
+  }
+
   render() {
     if (!this.state.loaded) {
       return <>Loading...</>;
@@ -128,6 +158,17 @@ class TeamPlayers extends Component<
         <h3 className="mt-4">
           <Translated str="participating" />
         </h3>
+
+        <SortableList onSortEnd={this.onSortEnd} useDragHandle>
+          {info.participating.map((player, index) => (
+            <SortableItem
+              key={`item-${player}`}
+              index={index}
+              id={player[0]}
+              value={player[1] + " " + player[2]}
+            />
+          ))}
+        </SortableList>
 
         <table className="table">
           <thead>
