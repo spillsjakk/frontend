@@ -113,18 +113,12 @@ class TeamPlayers extends Component<
     ) {
       return;
     }
-
     fetchJson(
       `/s/tournament/add-participant/${this.tournamentId}/${uid}?team=${this.teamId}`,
       "POST",
       undefined,
       (_) => {
-        const participantIndex = info.not_participating.findIndex(
-          (p) => p[0] === uid
-        );
-        info.participating.push(info.not_participating[participantIndex]);
-        info.not_participating.splice(participantIndex, 1);
-        this.setState({ info });
+        this.fetchInfo();
       }
     );
   }
@@ -135,13 +129,7 @@ class TeamPlayers extends Component<
       "POST",
       undefined,
       (_) => {
-        const info = this.state.info!;
-        const participantIndex = info.participating.findIndex(
-          (p) => p[0] === uid
-        );
-        info.not_participating.push(info.participating[participantIndex]);
-        info.participating.splice(participantIndex, 1);
-        this.setState({ info });
+        this.fetchInfo();
       }
     );
   }
