@@ -6,6 +6,7 @@ import { Link, RouteComponentProps } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import UserLink from "../../components/UserLink";
 import "./TeamPlayers.css";
+import AddIcon from "@material-ui/icons/Add";
 
 import {
   SortableContainer,
@@ -17,7 +18,6 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemSecondaryAction,
   ListItemText,
 } from "@material-ui/core";
 import { Dehaze, Delete } from "@material-ui/icons";
@@ -37,7 +37,7 @@ type TeamPlayersState = {
   };
 };
 
-const DragHandle = SortableHandle(() => <Dehaze className="dehaze"/>);
+const DragHandle = SortableHandle(() => <Dehaze className="dehaze" />);
 
 const SortableItem = SortableElement(({ value, id, remove }) => (
   <ListItem>
@@ -47,12 +47,22 @@ const SortableItem = SortableElement(({ value, id, remove }) => (
     <ListItemText>
       <UserLink id={id} name={value} ghost={false} />
     </ListItemText>
-
     <IconButton edge="end" aria-label="delete" onClick={() => remove(id)}>
       <Delete />
     </IconButton>
   </ListItem>
 ));
+
+const AddListItem = ({ value, id, add }) => (
+  <ListItem>
+    <ListItemText>
+      <UserLink id={id} name={value} ghost={false} />
+    </ListItemText>
+    <IconButton edge="end" onClick={() => add(id)}>
+      <AddIcon color="action" />
+    </IconButton>
+  </ListItem>
+);
 
 const SortableList = SortableContainer(({ children }) => {
   return <List>{children}</List>;
@@ -185,39 +195,16 @@ class TeamPlayers extends Component<
           <Translated str="notParticipating" />
         </h3>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">
-                <Translated str="name" />
-              </th>
-              <th scope="col">
-                <Translated str="add" />
-              </th>
-            </tr>
-          </thead>
-          <tbody id="notParticipating">
-            {info.not_participating.map((player, i) => (
-              <tr key={i}>
-                <td>
-                  <UserLink
-                    id={player[0]}
-                    name={player[1] + " " + player[2]}
-                    ghost={false}
-                  />
-                </td>
-                <td>
-                  <a
-                    className="btn btn-primary"
-                    onClick={() => this.addParticipant(player[0])}
-                  >
-                    +
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <SortableList onSortEnd={this.onSortEnd} useDragHandle>
+          {info.not_participating.map((player) => (
+            <AddListItem
+              key={`item-${player}`}
+              id={player[0]}
+              value={player[1] + " " + player[2]}
+              add={this.addParticipant}
+            />
+          ))}
+        </SortableList>
       </>
     );
   }
