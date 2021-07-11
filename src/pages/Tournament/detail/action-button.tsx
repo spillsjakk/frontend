@@ -3,7 +3,7 @@ import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
 import { useUser } from "../../../components/UserContext";
 import style from "./style.module.scss";
-import { fetchJson } from "../../../functions";
+import { fetchJson, fetchCall } from "../../../functions";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../../components/help-box";
 
@@ -69,7 +69,7 @@ const ActionButton: FunctionComponent<{}> = () => {
   }
 
   function getManagedTeams() {
-    fetchJson(`/s/account/managed-teams`, "GET", undefined, (response) => {
+    fetchCall(`/s/account/managed-teams`, "GET", undefined, (response) => {
       if (Array.isArray(response)) {
         setManagedTeams(response);
       }
