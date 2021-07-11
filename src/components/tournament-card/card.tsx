@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import Translated from "../translated";
 import style from "./style.module.scss";
 import Countdown from "react-countdown";
+import { Link } from "react-router-dom";
 
 interface Props {
   id: string;
@@ -64,9 +65,9 @@ const Card: FunctionComponent<Props> = (props) => {
             />
           }
         </div>
-        <a href={`/tournament/view/${props.id}`} className={style.button}>
+        <Link to={`/tournament/view/${props.id}`} className={style.button}>
           {Translated.byKey("moreInfo").toUpperCase()}
-        </a>
+        </Link>
       </div>
     </>
   );

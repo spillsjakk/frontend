@@ -12,8 +12,15 @@ import {
   SortableElement,
   SortableHandle,
 } from "react-sortable-hoc";
-import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Dehaze, RemoveShoppingCart } from "@material-ui/icons";
+import {
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+} from "@material-ui/core";
+import { Dehaze, Delete } from "@material-ui/icons";
 
 type TeamPlayersProps = {
   tournamentId: string;
@@ -30,9 +37,9 @@ type TeamPlayersState = {
   };
 };
 
-const DragHandle = SortableHandle(() => <Dehaze />);
+const DragHandle = SortableHandle(() => <Dehaze className="dehaze"/>);
 
-const SortableItem = SortableElement(({ value, id }) => (
+const SortableItem = SortableElement(({ value, id, remove }) => (
   <ListItem>
     <ListItemIcon>
       <DragHandle />
@@ -40,7 +47,10 @@ const SortableItem = SortableElement(({ value, id }) => (
     <ListItemText>
       <UserLink id={id} name={value} ghost={false} />
     </ListItemText>
-    <a className="btn btn-danger">X</a>
+
+    <IconButton edge="end" aria-label="delete" onClick={() => remove(id)}>
+      <Delete />
+    </IconButton>
   </ListItem>
 ));
 
@@ -166,43 +176,10 @@ class TeamPlayers extends Component<
               index={index}
               id={player[0]}
               value={player[1] + " " + player[2]}
+              remove={this.removeParticipant}
             />
           ))}
         </SortableList>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">
-                <Translated str="name" />
-              </th>
-              <th scope="col">
-                <Translated str="remove" />
-              </th>
-            </tr>
-          </thead>
-          <tbody id="participating">
-            {info.participating.map((player, i) => (
-              <tr key={i}>
-                <td>
-                  <UserLink
-                    id={player[0]}
-                    name={player[1] + " " + player[2]}
-                    ghost={false}
-                  />
-                </td>
-                <td>
-                  <a
-                    className="btn btn-danger"
-                    onClick={() => this.removeParticipant(player[0])}
-                  >
-                    X
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
 
         <h3 className="mt-4">
           <Translated str="notParticipating" />
