@@ -1,5 +1,6 @@
 import { MenuItem, Menu } from "@material-ui/core";
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 
 import LangContext from "./LangContext";
 
@@ -10,9 +11,9 @@ const LangSwitcher = () => {
     <div className="link">
       {lang}
       <div className="menu">
-        <a href="#" onClick={() => setLang(otherLang)} className="item">
+        <Link to="#" onClick={() => setLang(otherLang)} className="item">
           {otherLang}
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import React, { Component, RefObject } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../../components/translated";
 import { CircularSecondsCountDown } from "../../../components/circular-seconds-count-down";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { fetchJson, title, fetchCall } from "../../../functions";
 import "react-chessground/dist/styles/chessground.css";
 import "./style.scss";
@@ -1046,9 +1046,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
               {this.getSelfCountdown()}
               <div className="tournament-link">
-                <a href={`/tournament/view/${this.state.tournament?.id}`}>
+                <Link to={`/tournament/view/${this.state.tournament?.id}`}>
                   {Translated.byKey("backToTournament")}
-                </a>
+                </Link>
               </div>
             </div>
           </div>

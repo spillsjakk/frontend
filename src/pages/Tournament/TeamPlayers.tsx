@@ -195,16 +195,14 @@ class TeamPlayers extends Component<
           <Translated str="notParticipating" />
         </h3>
 
-        <SortableList onSortEnd={this.onSortEnd} useDragHandle>
-          {info.not_participating.map((player) => (
-            <AddListItem
-              key={`item-${player}`}
-              id={player[0]}
-              value={player[1] + " " + player[2]}
-              add={this.addParticipant}
-            />
-          ))}
-        </SortableList>
+        {info.not_participating.map((player) => (
+          <AddListItem
+            key={`item-${player}`}
+            id={player[0]}
+            value={player[1] + " " + player[2]}
+            add={this.addParticipant}
+          />
+        ))}
       </>
     );
   }

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
 import { fetchJson } from "../../functions";
@@ -60,12 +60,12 @@ const Actions: FunctionComponent<unknown> = () => {
           <img src="/images/user.svg" width="35px" />
         </HelpBox>
         <div className="menu">
-          <a href={"/profile/" + user.info?.id} className="item">
+          <Link to={"/profile/" + user.info?.id} className="item">
             {user?.info?.name}
-          </a>
-          <a href="/inbox" className="item">
+          </Link>
+          <Link to="/inbox" className="item">
             {Translated.byKey("inbox")}
-          </a>
+          </Link>
           <a onClick={onLogout} className="item">
             {Translated.byKey("logout")}
           </a>
@@ -135,12 +135,12 @@ const MobileActions: FunctionComponent<unknown> = () => {
           />
         </HelpBox>
         <div className="menu">
-          <a href={"/profile/" + user.info?.id} className="item">
+          <Link to={"/profile/" + user.info?.id} className="item">
             {user?.info?.name}
-          </a>
-          <a href="/inbox" className="item">
+          </Link>
+          <Link to="/inbox" className="item">
             {Translated.byKey("inbox")}
-          </a>
+          </Link>
           <a onClick={onLogout} className="item">
             {Translated.byKey("logout")}
           </a>
@@ -155,21 +155,21 @@ const MobileActions: FunctionComponent<unknown> = () => {
             setOpen(false);
           }}
         >
-          <a href={"/profile/" + user.info?.id} className="item">
+          <Link to={"/profile/" + user.info?.id} className="item">
             <ListItem button>
               <ListItemText>{user?.info?.name}</ListItemText>
             </ListItem>
-          </a>
-          <a href="/inbox" className="item">
+          </Link>
+          <Link to="/inbox" className="item">
             <ListItem button>
               <ListItemText>{Translated.byKey("inbox")}</ListItemText>
             </ListItem>
-          </a>
-          <a href="#" onClick={onLogout} className="item">
+          </Link>
+          <Link to="#" onClick={onLogout} className="item">
             <ListItem button>
               <ListItemText>{Translated.byKey("logout")}</ListItemText>
             </ListItem>
-          </a>
+          </Link>
         </Menu>
       </div>
     </>

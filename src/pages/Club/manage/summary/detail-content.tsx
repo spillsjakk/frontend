@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { Link } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../../../components/help-box";
 import Translated from "../../../../components/translated";
 import { useClub } from "../../../../context/club";
@@ -24,9 +25,9 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
               {Translated.byKey("manageClub_clubsId")}
             </div>
             <div>
-              <a href={`/club/view/${club.id}`}>
+              <Link to={`/club/view/${club.id}`}>
                 spillsjakk.no/club/view/{club.id}
-              </a>
+              </Link>
             </div>
             <div className={style.label}>
               {Translated.byKey("manageClub_aboutClub")}

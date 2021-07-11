@@ -4,7 +4,7 @@ import Translated from "../../components/translated";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { GameOutcome } from "./play";
 import { numToSquare } from "./play/clock";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import "./chessground-theme.css";
@@ -316,9 +316,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
         <div className="d-flex flex-row justify-content-between mt-4">
           <div id="move-div">
             <div className="tournament-link">
-              <a href={`/tournament/view/${this.state.tournamentData?.id}`}>
+              <Link to={`/tournament/view/${this.state.tournamentData?.id}`}>
                 {Translated.byKey("backToTournament")}
-              </a>
+              </Link>
             </div>
             <table id="move-table">
               <tbody>{rows}</tbody>

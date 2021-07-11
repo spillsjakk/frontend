@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
-import { RouteComponentProps } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import Translated from "../../components/translated";
 import UserLink from "../../components/UserLink";
@@ -253,9 +253,9 @@ class Lobby extends Component<RouteComponentProps, LobbyState> {
             </div>
 
             <p>
-              <a href={"/tournament/view/" + this.state.info!.tournament}>
+              <Link to={"/tournament/view/" + this.state.info!.tournament}>
                 <Translated str="backToTournament" />
-              </a>
+              </Link>
             </p>
           </>
         )}

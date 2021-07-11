@@ -1,7 +1,6 @@
 import { ListItemText, List, ListItem, ListSubheader } from "@material-ui/core";
-
 import React, { forwardRef, FunctionComponent } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Translated from "../../components/translated/index";
 import { Levels, useUser } from "../../components/UserContext";
 import style from "./style.module.scss";
@@ -76,36 +75,36 @@ const Links: FunctionComponent<unknown> = () => {
         <div className={style.link}>
           {Translated.byKey("navbarTournaments")}
           <div className={style.menu}>
-            <a href="/calendar" className={style.item}>
+            <Link to="/calendar" className={style.item}>
               {Translated.byKey("myTournamentCalendar")}
-            </a>
+            </Link>
             {showBuildTournament() && (
-              <a href="/tournament/build" className={style.item}>
+              <Link to="/tournament/build" className={style.item}>
                 {Translated.byKey("buildTournament")}
-              </a>
+              </Link>
             )}
             {showBuildLeague() && (
-              <a href="/league/build" className={style.item}>
+              <Link to="/league/build" className={style.item}>
                 {Translated.byKey("buildLeague")}
-              </a>
+              </Link>
             )}
           </div>
         </div>
         <div className={style.link}>
           {Translated.byKey("navbarOrgs")}
           <div className={style.menu}>
-            <a href="/browse" className={style.item}>
+            <Link to="/browse" className={style.item}>
               {Translated.byKey("browse")}
-            </a>
+            </Link>
             {showManageClub() && (
-              <a href="/club/manage" className={style.item}>
+              <Link to="/club/manage" className={style.item}>
                 {Translated.byKey("manageClub")}
-              </a>
+              </Link>
             )}
             {showManageOrganization() && (
-              <a href="/organization/manage" className={style.item}>
+              <Link to="/organization/manage" className={style.item}>
                 {Translated.byKey("manageOrganization")}
-              </a>
+              </Link>
             )}
           </div>
         </div>
@@ -115,19 +114,19 @@ const Links: FunctionComponent<unknown> = () => {
             <>
               {Translated.byKey("navbarAccountCreation")}
               <div className={style.menu}>
-                <a href="/account/create" className={style.item}>
+                <Link to="/account/create" className={style.item}>
                   {Translated.byKey("createAccounts")}
-                </a>
-                <a
-                  href="/registration/generate/invitation"
+                </Link>
+                <Link
+                  to="/registration/generate/invitation"
                   className={style.item}
                 >
                   {Translated.byKey("invite")}
-                </a>
+                </Link>
                 {isAdmin() && (
-                  <a href="/registration/organization" className={style.item}>
+                  <Link to="/registration/organization" className={style.item}>
                     {Translated.byKey("createOrganization")}
-                  </a>
+                  </Link>
                 )}
               </div>
             </>
@@ -137,15 +136,15 @@ const Links: FunctionComponent<unknown> = () => {
         <div className={style.link}>
           {Translated.byKey("navbarInfo")}
           <div className={style.menu}>
-            <a href="/about" className={style.item}>
+            <Link to="/about" className={style.item}>
               {Translated.byKey("about")}
-            </a>
-            <a href="/user-guide" className={style.item}>
+            </Link>
+            <Link to="/user-guide" className={style.item}>
               {Translated.byKey("userGuide")}
-            </a>
-            <a href="/contact" className={style.item}>
+            </Link>
+            <Link to="/contact" className={style.item}>
               {Translated.byKey("contact")}
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
@@ -223,52 +222,52 @@ const MobileLinks: FunctionComponent<any> = forwardRef(() => {
         <div>
           <ListSubheader>{Translated.byKey("navbarTournaments")}</ListSubheader>
 
-          <a href="/calendar">
+          <Link to="/calendar">
             <ListItem button>
               <ListItemText>
                 {Translated.byKey("myTournamentCalendar")}
               </ListItemText>
             </ListItem>
-          </a>
+          </Link>
           {showBuildTournament() && (
-            <a href="/tournament/build">
+            <Link to="/tournament/build">
               <ListItem button>
                 <ListItemText>
                   {Translated.byKey("buildTournament")}
                 </ListItemText>
               </ListItem>
-            </a>
+            </Link>
           )}
           {showBuildLeague() && (
-            <a href="/league/build">
+            <Link to="/league/build">
               <ListItem button>
                 <ListItemText>{Translated.byKey("buildLeague")}</ListItemText>
               </ListItem>
-            </a>
+            </Link>
           )}
         </div>
         <div>
           <ListSubheader>{Translated.byKey("navbarOrgs")}</ListSubheader>
-          <a href="/browse">
+          <Link to="/browse">
             <ListItem button>
               <ListItemText>{Translated.byKey("browse")}</ListItemText>
             </ListItem>
-          </a>
+          </Link>
           {showManageClub() && (
-            <a href="/club/manage">
+            <Link to="/club/manage">
               <ListItem button>
                 <ListItemText>{Translated.byKey("manageClub")}</ListItemText>
               </ListItem>
-            </a>
+            </Link>
           )}
           {showManageOrganization() && (
-            <a href="/organization/manage">
+            <Link to="/organization/manage">
               <ListItem button>
                 <ListItemText>
                   {Translated.byKey("manageOrganization")}
                 </ListItemText>
               </ListItem>
-            </a>
+            </Link>
           )}
         </div>
 
@@ -278,26 +277,26 @@ const MobileLinks: FunctionComponent<any> = forwardRef(() => {
               <ListSubheader>
                 {Translated.byKey("navbarAccountCreation")}
               </ListSubheader>
-              <a href="/account/create">
+              <Link to="/account/create">
                 <ListItem button>
                   <ListItemText>
                     {Translated.byKey("createAccounts")}
                   </ListItemText>
                 </ListItem>
-              </a>
-              <a href="/registration/generate/invitation">
+              </Link>
+              <Link to="/registration/generate/invitation">
                 <ListItem button>
                   <ListItemText>{Translated.byKey("invite")}</ListItemText>
                 </ListItem>
-              </a>
+              </Link>
               {isAdmin() && (
-                <a href="/registration/organization">
+                <Link to="/registration/organization">
                   <ListItem button>
                     <ListItemText>
                       {Translated.byKey("createOrganization")}
                     </ListItemText>
                   </ListItem>
-                </a>
+                </Link>
               )}
             </>
           </div>
@@ -305,21 +304,21 @@ const MobileLinks: FunctionComponent<any> = forwardRef(() => {
 
         <div>
           <ListSubheader>{Translated.byKey("navbarInfo")}</ListSubheader>
-          <a href="/about">
+          <Link to="/about">
             <ListItem button>
               <ListItemText>{Translated.byKey("about")}</ListItemText>
             </ListItem>
-          </a>
-          <a href="/user-guide">
+          </Link>
+          <Link to="/user-guide">
             <ListItem button>
               <ListItemText>{Translated.byKey("userGuide")}</ListItemText>
             </ListItem>
-          </a>
-          <a href="/contact">
+          </Link>
+          <Link to="/contact">
             <ListItem button>
               <ListItemText>{Translated.byKey("contact")}</ListItemText>
             </ListItem>
-          </a>
+          </Link>
         </div>
       </List>
     </>

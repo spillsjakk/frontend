@@ -9,6 +9,7 @@ import FederationDropdown from "../../components/FederationDropdown";
 import TitleDropdown from "../../components/TitleDropdown";
 import SexDropdown from "../../components/SexDropdown";
 import { HelpBox, helpboxNames } from "../../components/help-box";
+import { Link } from "react-router-dom";
 
 type CreateState = {
   username: string;
@@ -365,13 +366,13 @@ class Create extends Component<{}, CreateState> {
           <Translated str="thisIsTheOnlyTimeYouSeeThesePasswords" />
         </p>
         <p>
-          <a
-            href={this.state.passwordCsv}
+          <Link
+            to={this.state.passwordCsv}
             download="accounts.csv"
             id="csvDownloadLink"
           >
             <Translated str="downloadAsCsv" />
-          </a>
+          </Link>
         </p>
         <div>
           {this.state.passwords.map((up, i) => (

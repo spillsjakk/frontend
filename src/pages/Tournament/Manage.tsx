@@ -38,7 +38,6 @@ import { WithTournamentRound } from "../../hocs/tournament-round";
 import { WithTournamentPairing } from "../../hocs/tournament-pairing";
 import { WithRoundSetupPopup } from "../../hocs/with-round-setup-popup";
 import { HelpBox, helpboxNames } from "../../components/help-box";
-import { GameOutcome } from "../Game/play";
 import { numToSquare } from "../Game/play/clock";
 import { DRAW_OFFER_SIGN } from "../../constants";
 
@@ -487,9 +486,9 @@ class View extends Component<
       undefined,
       (result) => {
         if (result && Array.isArray(result.games)) {
-          const element = document.createElement("a");
+          const element = document.createElement("Link");
           element.setAttribute(
-            "href",
+            "to",
             "data:text/plain;charset=utf-8," +
               encodeURIComponent(
                 result.games.reduce((acc, val) => {
@@ -591,8 +590,8 @@ class View extends Component<
           {this.context.user.authenticated && (
             <>
               <td>
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   data-result={1}
                   data-white={pairing.white}
                   data-black={pairing.black}
@@ -600,12 +599,12 @@ class View extends Component<
                   onClick={this.onClickResult}
                 >
                   1-0
-                </a>
+                </Link>
               </td>
               {info.tournament.kind !== "Knockout" && (
                 <td>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     data-result={0}
                     data-white={pairing.white}
                     data-black={pairing.black}
@@ -613,12 +612,12 @@ class View extends Component<
                     onClick={this.onClickResult}
                   >
                     &#189;-&#189;
-                  </a>
+                  </Link>
                 </td>
               )}
               <td>
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   data-result={-1}
                   data-white={pairing.white}
                   data-black={pairing.black}
@@ -626,7 +625,7 @@ class View extends Component<
                   onClick={this.onClickResult}
                 >
                   0-1
-                </a>
+                </Link>
               </td>
             </>
           )}
@@ -704,8 +703,8 @@ class View extends Component<
             {this.context.user.authenticated && (
               <>
                 <td>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     data-result={1}
                     data-white={pairing.black}
                     data-black={pairing.white}
@@ -713,11 +712,11 @@ class View extends Component<
                     onClick={this.onClickResult}
                   >
                     1-0
-                  </a>
+                  </Link>
                 </td>
                 <td>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     data-result={0}
                     data-white={pairing.black}
                     data-black={pairing.white}
@@ -725,11 +724,11 @@ class View extends Component<
                     onClick={this.onClickResult}
                   >
                     &#189;-&#189;
-                  </a>
+                  </Link>
                 </td>
                 <td>
-                  <a
-                    href="#"
+                  <Link
+                    to="#"
                     data-result={-1}
                     data-white={pairing.black}
                     data-black={pairing.white}
@@ -737,7 +736,7 @@ class View extends Component<
                     onClick={this.onClickResult}
                   >
                     0-1
-                  </a>
+                  </Link>
                 </td>
               </>
             )}
@@ -768,8 +767,8 @@ class View extends Component<
                 this.state.info?.tournament.kind === "TeamRoundRobin") && (
                 <SetupRoundButton roundNumber={i + 1} />
               )}
-              <a
-                href={
+              <Link
+                to={
                   "/s/tournament/printout/boardcards/" +
                   info.tournament.id +
                   "/" +
@@ -777,7 +776,7 @@ class View extends Component<
                 }
               >
                 <Translated str="boardCards" />
-              </a>
+              </Link>
             </div>
           )}
           <table className="table table-striped mt-4 dense pairing-table">
@@ -899,21 +898,21 @@ class View extends Component<
 
                 {this.context.user.authenticated && (
                   <div className="mt-4">
-                    <a
-                      href={
+                    <Link
+                      to={
                         "/s/tournament/printout/results/" + info.tournament.id
                       }
                     >
                       <Translated str="resultPrintouts" />
-                    </a>
+                    </Link>
                     &nbsp;|&nbsp;
-                    <a
-                      href={
+                    <Link
+                      to={
                         "/s/tournament/printout/pairings/" + info.tournament.id
                       }
                     >
                       <Translated str="pairingPrintouts" />
-                    </a>
+                    </Link>
                   </div>
                 )}
 

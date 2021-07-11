@@ -15,6 +15,7 @@ import { Clock } from "./clock";
 import style from "./style.module.scss";
 import Translated from "../translated";
 import UserLink from "../UserLink";
+import { Link } from "react-router-dom";
 
 export function numToSquare(num: number) {
   const file = "abcdefgh"[num % 8];
@@ -46,15 +47,8 @@ interface Props {
 }
 
 const Board: FunctionComponent<Props> = (props) => {
-  const {
-    id,
-    whiteName,
-    blackName,
-    finished,
-    start,
-    white,
-    black,
-  } = props.game;
+  const { id, whiteName, blackName, finished, start, white, black } =
+    props.game;
 
   const [ws, setWs] = useState<WebSocket>();
   const [fen, setFen] = useState(
@@ -289,7 +283,7 @@ const Board: FunctionComponent<Props> = (props) => {
           )}
         </div>
       </div>
-      <a href={`/game/play/${id}`} target="_blank" className={style.board}>
+      <Link to={`/game/play/${id}`} target="_blank" className={style.board}>
         <Chessground
           fen={fen}
           orientation={"white"}
@@ -303,7 +297,7 @@ const Board: FunctionComponent<Props> = (props) => {
             opacity: typeof outcome !== "undefined" ? 0.4 : 1,
           }}
         />
-      </a>
+      </Link>
       <div className={`${style.info} mt-2`}>
         <div className={style.name}>
           <UserLink id={white} name={whiteName} ghost={false} />

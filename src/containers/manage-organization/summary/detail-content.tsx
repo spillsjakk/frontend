@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { Link } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { useOrganization } from "../../../context/organization";
 import style from "../style.module.scss";
@@ -17,9 +18,9 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
             {Translated.byKey("manageOrg_orgsId")}
           </div>
           <div>
-            <a href={`/organization/view/${organization.id}`}>
+            <Link to={`/organization/view/${organization.id}`}>
               spillsjakk.no/organization/view/{organization.id}
-            </a>
+            </Link>
           </div>
           <div className={style.label}>
             {Translated.byKey("manageOrg_aboutOrg")}

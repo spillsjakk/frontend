@@ -18,7 +18,7 @@ function getLink(type: InviterType, id: string) {
 
 function getInvitationText(type: InviterType, id: string, name: string) {
   const parts = Translated.byKey("youHaveBeenInvited").split("$name");
-  return `${parts[0]}<a href="${getLink(type, id)}">${name}</a>${parts[1]}`;
+  return `${parts[0]}<Link to="${getLink(type, id)}">${name}</a>${parts[1]}`;
 }
 
 interface Props {

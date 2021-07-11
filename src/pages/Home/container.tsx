@@ -8,6 +8,7 @@ import { Tournament } from "../../pages/Tournament/Types";
 import { League } from "./league";
 import { Card } from "../../components/tournament-card/card";
 import style from "./style.module.scss";
+import { Link } from "react-router-dom";
 
 function dateDiffInDays(dt1, dt2) {
   return Math.floor(
@@ -104,12 +105,12 @@ const Home: FunctionComponent<{}> = () => {
             </div>
           </div>
           <div className={style["action-buttons"]}>
-            <a href="/about" className={style.button}>
+            <Link to="/about" className={style.button}>
               {Translated.byKey("readMore").toUpperCase()}
-            </a>
-            <a href="/login#account-modal=true" className={style.button}>
+            </Link>
+            <Link to="/login#account-modal=true" className={style.button}>
               {Translated.byKey("signup").toUpperCase()}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

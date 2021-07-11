@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import { title } from "../functions";
 
 class Contact extends PureComponent {
@@ -17,9 +18,12 @@ class Contact extends PureComponent {
           <strong>Kontakt SkoleSjakken</strong>
         </p>
         <p>
-          Jorunn Brekke<br />
-          Prosjektleder<br />
-          Epost: <a href="mailto:jorunn%40sjakk.no">jorunn@sjakk.no</a><br />
+          Jorunn Brekke
+          <br />
+          Prosjektleder
+          <br />
+          Epost: <Link to="mailto:jorunn%40sjakk.no">jorunn@sjakk.no</Link>
+          <br />
           Telefon: 948 222 86
         </p>
       </>

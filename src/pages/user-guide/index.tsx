@@ -2,6 +2,7 @@ import React, { FunctionComponent, useContext, useEffect } from "react";
 import LangContext from "../../components/LangContext";
 import { getDictionary } from "./translations";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 const UserGuide: FunctionComponent<{}> = () => {
   const { lang } = useContext(LangContext);
@@ -19,45 +20,45 @@ const UserGuide: FunctionComponent<{}> = () => {
       <h3>{getString("index")}</h3>
       <ol>
         <li>
-          <a href="#1">{getString("c1")}</a>
+          <Link to="#1">{getString("c1")}</Link>
         </li>
         <li>
-          <a href="#2">{getString("c2")}</a>
+          <Link to="#2">{getString("c2")}</Link>
         </li>
         <li>
-          <a href="#3">{getString("c3")}</a>
+          <Link to="#3">{getString("c3")}</Link>
         </li>
         <li>
-          <a href="#4">{getString("c4")}</a>
+          <Link to="#4">{getString("c4")}</Link>
         </li>
         <li>
-          <a href="#5">{getString("c5")}</a>
+          <Link to="#5">{getString("c5")}</Link>
         </li>
         <li>
-          <a href="#6">{getString("c6")}</a>
+          <Link to="#6">{getString("c6")}</Link>
         </li>
         <ul>
           <li>
-            <a href="#6a">{getString("c6a")}</a>
+            <Link to="#6a">{getString("c6a")}</Link>
           </li>
         </ul>
         <li>
-          <a href="#7">{getString("c7")}</a>
+          <Link to="#7">{getString("c7")}</Link>
         </li>
         <li>
-          <a href="#8">{getString("c8")}</a>
+          <Link to="#8">{getString("c8")}</Link>
         </li>
         <li>
-          <a href="#9">{getString("c9")}</a>
+          <Link to="#9">{getString("c9")}</Link>
         </li>
         <li>
-          <a href="#10">{getString("c10")}</a>
+          <Link to="#10">{getString("c10")}</Link>
         </li>
         <li>
-          <a href="#11">{getString("c11")}</a>
+          <Link to="#11">{getString("c11")}</Link>
         </li>
         <li>
-          <a href="#12">{getString("c12")}</a>
+          <Link to="#12">{getString("c12")}</Link>
         </li>
       </ol>
       <br />

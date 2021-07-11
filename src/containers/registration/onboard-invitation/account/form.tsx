@@ -6,6 +6,7 @@ import SexDropdown from "../../../../components/SexDropdown";
 import Translated from "../../../../components/translated";
 import style from "./style.module.scss";
 import { useInvitation } from "../../../../context/invitation";
+import { Link } from "react-router-dom";
 
 const Form: FunctionComponent<{}> = () => {
   const userRegistration = useUserRegistration();
@@ -87,7 +88,7 @@ const Form: FunctionComponent<{}> = () => {
         dangerouslySetInnerHTML={{
           __html: `${Translated.byKey("namePrivacyInfo").replace(
             "$privacypolicy",
-            `<a href="/privacy-notice" target="__blank">${Translated.byKey(
+            `<Link to="/privacy-notice" target="__blank">${Translated.byKey(
               "privacyPolicy"
             )}</a>`
           )}`,
@@ -156,8 +157,8 @@ const Form: FunctionComponent<{}> = () => {
       <p>{Translated.byKey("notDisplayedPublicly")}</p>
       <input required id="contract" type="checkbox" />
       <label style={{ marginLeft: "10px" }} htmlFor="contract">
-        I agree with <a href="/user-agreement">User Agreement</a> and{" "}
-        <a href="/privacy-notice">Privacy Notice</a>
+        I agree with <Link to="/user-agreement">User Agreement</Link> and{" "}
+        <Link to="/privacy-notice">Privacy Notice</Link>
       </label>
       <button
         className="action-button"

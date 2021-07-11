@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { TournamentSchedule } from "./container";
 import { Helmet } from "react-helmet";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import "./style.scss";
 import { useUser } from "../../components/UserContext";
@@ -106,9 +106,9 @@ const Lobby: FunctionComponent<{}> = () => {
 
             <div className="d-flex justify-content-between">
               <div>
-                <a href={`/tournament/view/${info?.tournament}`}>
+                <Link to={`/tournament/view/${info?.tournament}`}>
                   <Translated str="goToTournamentDetail" />
-                </a>
+                </Link>
               </div>
               <div>
                 {getOrientation("white")}

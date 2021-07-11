@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import Translated from "../../components/translated";
 import { title } from "../../functions";
 import "./style.scss";
@@ -21,22 +22,23 @@ const Contact: FunctionComponent<{}> = () => {
           </p>
           <p>
             Before reaching out, you might want to check our{" "}
-            <a href="/user-guide">user guide</a> and <a href="/faqs">FAQs</a>,
-            or find out more <a href="/about">about us</a> to see if that helps.
-            For password resets, if your email is linked to the account, click{" "}
-            <a href="/account/recover">here</a>.
+            <Link to="/user-guide">user guide</Link> and{" "}
+            <Link to="/faqs">FAQs</Link>, or find out more{" "}
+            <Link to="/about">about us</Link> to see if that helps. For password
+            resets, if your email is linked to the account, click{" "}
+            <Link to="/account/recover">here</Link>.
           </p>
           <h5>General Enquiries: </h5>
           <p>
             We can be reached by email in Norwegian or English at:{" "}
-            <a href="mailto:hei@spillsjakk.no">hei@spillsjakk.no</a>
+            <Link to="mailto:hei@spillsjakk.no">hei@spillsjakk.no</Link>
           </p>
           <p>
             Someone’s also usually around on discord - you can join our discord
             here:{" "}
-            <a target="blank" href="https://discord.gg/rJduXXCpc4">
+            <Link target="blank" to="https://discord.gg/rJduXXCpc4">
               https://discord.gg/rJduXXCpc4
-            </a>
+            </Link>
           </p>
         </article>
       </div>

@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { Link } from "react-router-dom";
 import Translated from "../../../../components/translated";
 import { useUserRegistration } from "../../../../context/registration";
 import { fetchCall } from "../../../../functions";
@@ -41,25 +42,25 @@ const FideInfo: FunctionComponent<{ onNext: () => void }> = ({ onNext }) => {
         />
       </div>
       <div className={style.link}>
-        <a
-          href="https://en.wikipedia.org/wiki/Chess_rating_system"
+        <Link
+          to="https://en.wikipedia.org/wiki/Chess_rating_system"
           rel="noreferrer"
           target="_blank"
         >
           {Translated.byKey("whatIsFide")}
-        </a>
+        </Link>
       </div>
       <div className={style.link}>
-        <a
-          href="https://ratings.fide.com/advseek.phtml"
+        <Link
+          to="https://ratings.fide.com/advseek.phtml"
           rel="noreferrer"
           target="_blank"
         >
           {Translated.byKey("findoutFide")}
-        </a>
+        </Link>
       </div>
       <div className={style.link}>
-        <a href="">{Translated.byKey("whyFide")}</a>
+        <Link to="">{Translated.byKey("whyFide")}</Link>
       </div>
       <button
         className="action-button"

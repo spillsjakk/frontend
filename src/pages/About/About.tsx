@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { title } from "../../functions";
 import LangContext from "../../components/LangContext";
-import LogoFooter from "../../components/LogoFooter";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 class About extends PureComponent {
   static contextType = LangContext;
@@ -99,7 +99,7 @@ class About extends PureComponent {
               SpillSjakk is currently undergoing an invitational round of
               testing and enhancement. For more information about SpillSjakk,
               and using it for your tournament, club or organisation, contact{" "}
-              <a href="mailto:hei@spillsjakk.no">hei@spillsjakk.no</a>
+              <Link to="mailto:hei@spillsjakk.no">hei@spillsjakk.no</Link>
             </p>
           </>
         ) : (
@@ -169,9 +169,9 @@ class About extends PureComponent {
             <p>
               SpillSjakk gjennomgår for tiden en lukket invitasjonsrunde for
               testing og forbedring. Kontakt{" "}
-              <a href="mailto:hei@spillsjakk.no">hei@spillsjakk.no</a> for mer
-              informasjon om SpillSjakk og bruk av den til din turnering, klubb
-              eller organisasjon.
+              <Link to="mailto:hei@spillsjakk.no">hei@spillsjakk.no</Link> for
+              mer informasjon om SpillSjakk og bruk av den til din turnering,
+              klubb eller organisasjon.
             </p>
           </>
         )}

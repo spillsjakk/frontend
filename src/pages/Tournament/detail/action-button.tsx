@@ -4,7 +4,7 @@ import Translated from "../../../components/translated";
 import { useUser } from "../../../components/UserContext";
 import style from "./style.module.scss";
 import { fetchJson } from "../../../functions";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../../components/help-box";
 
 function intersect(a, b) {
@@ -142,16 +142,16 @@ const ActionButton: FunctionComponent<{}> = () => {
       {authenticated &&
         Array.isArray(managedAndParticipatingTeams) &&
         managedAndParticipatingTeams.map((team, i) => (
-          <a
+          <Link
             key={i}
             className={`${style["action-button"]} ${style["manage-tournament"]}`}
-            href={`/tournament/manage-team/${tournament.id}/${team}`}
+            to={`/tournament/manage-team/${tournament.id}/${team}`}
           >
             <button>
               {Translated.byKey("manageTeam")}&nbsp;
               {(teams.find((t) => t.team_id === team) as any).name}
             </button>
-          </a>
+          </Link>
         ))}
     </>
   );
