@@ -84,11 +84,12 @@ class TeamPlayers extends Component<
 
     this.addParticipant = this.addParticipant.bind(this);
     this.removeParticipant = this.removeParticipant.bind(this);
+    this.changeSeed = this.changeSeed.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
+    this.fetchInfo = this.fetchInfo.bind(this);
   }
 
-  componentDidMount() {
-    document.getElementsByTagName("body")[0].id = "Tournament-TeamPlayers";
-
+  fetchInfo() {
     fetchJson(
       `/s/tournament/manage-team/${this.tournamentId}/${this.teamId}`,
       "GET",
@@ -97,6 +98,11 @@ class TeamPlayers extends Component<
         this.setState({ loaded: true, info: result });
       }
     );
+  }
+
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].id = "Tournament-TeamPlayers";
+    this.fetchInfo();
   }
 
   addParticipant(uid: string) {
@@ -140,8 +146,26 @@ class TeamPlayers extends Component<
     );
   }
 
+  changeSeed(participantId, seed) {
+    fetchJson(
+      `/s/tournament/${this.tournamentId}/team/${this.teamId}/participant/${participantId}/seed/${seed}`,
+      "PUT",
+      undefined,
+      () => {
+        this.fetchInfo();
+      }
+    );
+  }
+
   onSortEnd(event) {
-    console.log("event", event);
+    const participantSeed = event.oldIndex + 1;
+    const seed = event.newIndex + 1;
+    const participant = this.state.info!.participating.find(
+      (p) => p[3] === participantSeed
+    );
+    if (participant) {
+      this.changeSeed(participant[0], seed);
+    }
   }
 
   render() {
