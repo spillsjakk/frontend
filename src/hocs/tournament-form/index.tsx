@@ -5,6 +5,7 @@ import React, {
   useContext,
   useState,
 } from "react";
+import { KIND } from "../../constants";
 
 export interface FormContext {
   show: boolean;
@@ -79,6 +80,8 @@ export interface FormContext {
   changeCategory: (value: string) => void;
   chatEnabled: boolean;
   changeChatEnabled: (value: boolean) => void;
+  removeInactive: boolean;
+  changeRemoveInactive: (value: boolean) => void;
 }
 
 const initalValues = {
@@ -90,7 +93,7 @@ const initalValues = {
   changeName: (value: string) => {},
   description: "",
   changeDescription: (value: string) => {},
-  kind: 0,
+  kind: Object.values(KIND)[0],
   changeKind: (value: number) => {},
   defaultGameLocation: 0,
   changeDefaultGameLocation: (value: number) => {},
@@ -106,7 +109,7 @@ const initalValues = {
   changeFirstPairingTime: (value: string) => {},
   onlinePairingIntervalN: 0,
   changeOnlinePairingIntervalN: (value: number) => {},
-  onlinePairingIntervalT: 0,
+  onlinePairingIntervalT: 1,
   changeOnlinePairingIntervalT: (value: number) => {},
   initialTime: 0,
   changeInitialTime: (value: number) => {},
@@ -150,6 +153,8 @@ const initalValues = {
   changeCategory: (value: string) => {},
   chatEnabled: true,
   changeChatEnabled: (value: boolean) => {},
+  removeInactive: true,
+  changeRemoveInactive: (value: boolean) => {},
 };
 
 const FormContext: Context<FormContext> = React.createContext(initalValues);
@@ -163,7 +168,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [kind, setKind] = useState(0);
+  const [kind, setKind] = useState(Object.values(KIND)[0]);
   const [defaultGameLocation, setDefaultGameLocation] = useState(1);
   const [startDate, setStartDate] = useState(
     new Date().toISOString().slice(0, 10)
@@ -176,7 +181,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [firstPairingDate, setFirstPairingDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
-  const [onlinePairingIntervalN, setOnlinePairingIntervalN] = useState(0);
+  const [onlinePairingIntervalN, setOnlinePairingIntervalN] = useState(1);
   const [onlinePairingIntervalT, setOnlinePairingIntervalT] = useState(0);
   const [initialTime, setInitialTime] = useState(1);
   const [increment, setIncrement] = useState(0);
@@ -201,6 +206,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [season, setSeason] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [chatEnabled, setChatEnabled] = useState<boolean>(true);
+  const [removeInactive, setRemoveInactive] = useState<boolean>(true);
 
   const changeShow = useCallback((value: boolean) => {
     setShow(value);
@@ -346,6 +352,10 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
     setChatEnabled(value);
   }, []);
 
+  const changeRemoveInactive = useCallback((value: boolean) => {
+    setRemoveInactive(value);
+  }, []);
+
   return (
     <FormProvider
       value={{
@@ -421,6 +431,8 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
         changeCategory,
         chatEnabled,
         changeChatEnabled,
+        removeInactive,
+        changeRemoveInactive,
       }}
     >
       {children}
