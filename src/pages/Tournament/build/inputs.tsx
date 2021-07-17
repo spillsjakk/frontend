@@ -21,7 +21,7 @@ import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 import { generateId } from "../../../functions";
 import { Editor } from "../../../components/markdown";
 
-function TemplateSelection() {
+export function TemplateSelection() {
   const {
     templates,
     savedTournaments,
@@ -54,7 +54,7 @@ function TemplateSelection() {
   );
 }
 
-function StartDate() {
+export function StartDate() {
   const form = useForm();
 
   return (
@@ -85,7 +85,7 @@ function StartDate() {
   );
 }
 
-function TournamentLocation() {
+export function TournamentLocation() {
   const form = useForm();
   return (
     <div className={style.content}>
@@ -119,7 +119,7 @@ function TournamentLocation() {
   );
 }
 
-function TimeControl() {
+export function TimeControl() {
   const form = useForm();
   return (
     <div className={style.content}>
@@ -154,7 +154,7 @@ function TimeControl() {
   );
 }
 
-function About() {
+export function About() {
   const form = useForm();
   useEffect(() => {
     if (form && !form.id) {
@@ -219,7 +219,7 @@ function About() {
   );
 }
 
-function StartDateInterval() {
+export function StartDateInterval() {
   const form = useForm();
 
   return (
@@ -273,7 +273,7 @@ function StartDateInterval() {
   );
 }
 
-function Advanced() {
+export function Advanced() {
   const pointsSettingEnabled = true;
 
   const form = useForm();
@@ -376,6 +376,22 @@ function Advanced() {
                 labelPlacement="end"
               />
             </Grid>
+            <Grid item>
+              <FormControlLabel
+                value="end"
+                control={
+                  <Checkbox
+                    color="secondary"
+                    checked={form.removeInactive}
+                    onChange={(e) => {
+                      form.changeRemoveInactive(e.target.checked);
+                    }}
+                  />
+                }
+                label={<Translated str="removeInactive" />}
+                labelPlacement="end"
+              />
+            </Grid>
           </Grid>
 
           <Grid item container md={6} spacing={2}>
@@ -419,7 +435,7 @@ function Advanced() {
   );
 }
 
-function Format() {
+export function Format() {
   const form = useForm();
 
   return (
@@ -518,7 +534,7 @@ function Format() {
   );
 }
 
-function SelectClubOrg() {
+export function SelectClubOrg() {
   const form = useForm();
   const { orgs, clubs } = useOrgsClubs();
   return (
@@ -559,15 +575,3 @@ function SelectClubOrg() {
     </div>
   );
 }
-
-export {
-  TemplateSelection,
-  StartDate,
-  TournamentLocation,
-  About,
-  TimeControl,
-  StartDateInterval,
-  Format,
-  Advanced,
-  SelectClubOrg,
-};

@@ -47,8 +47,53 @@
     display: flex;
     flex-direction: column;
   }
-  .save{
+  .save {
     margin-top: 20px;
     margin-left: 10px;
   }
+}
+
+.heading {
+  background-color: #469a88;
+  color: white;
+  border-radius: 0 0 50px 0;
+  font-size: calc(min(3vw, 20px));
+  padding: 5px;
+  padding-left: 15px;
+  text-transform: capitalize;
+}
+
+.content {
+  .description {
+    margin: 10px 0px;
+  }
+
+  .inputs {
+    margin: 10px 0px;
+  }
+
+  .actions {
+    margin: 20px 0px;
+  }
+}
+
+.ml-sm {
+  margin-left: 10px !important;
+}
+
+.ml-lg {
+  margin-left: 30px !important;
+}
+
+.mt-xl {
+  margin-top: 30px !important;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.save {
+  margin-top: 20px;
+  margin-left: 10px;
 }

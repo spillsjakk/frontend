@@ -151,6 +151,7 @@ function buildTournament(form: FormContext) {
     organiser: form.organiser,
     organiser_type: form.organiserType,
     chat_enabled: form.chatEnabled,
+    remove_inactive_participants: form.removeInactive,
   };
 
   fetchJson(`/s/tournament/build`, "POST", body, (result) => {
