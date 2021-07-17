@@ -45,7 +45,6 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       }
     });
   }
-
   useEffect(() => {
     if (tournamentDetail.tournament && tournamentDetail.tournament.id) {
       fetchRounds();
@@ -86,7 +85,6 @@ const TournamentDetail: FunctionComponent<{}> = () => {
     document.getElementsByTagName("body")[0].id = "tournament-detail";
     fetchTournament();
   }, []);
-
   return (
     <>
       <Helmet>

@@ -30,13 +30,8 @@ const Pairings: FunctionComponent<{
   const [showMiniboards, setShowMiniboards] = useState(defaultMiniboards);
   const [pairingDefaultActiveKey, setPairingDefaultActiveKey] = useState(1);
 
-  const {
-    pairings,
-    tournament,
-    tko_separation,
-    games,
-    rounds,
-  } = useTournamentDetail();
+  const { pairings, tournament, tko_separation, games, rounds } =
+    useTournamentDetail();
 
   function getGameData() {
     const result: any = {};
@@ -175,10 +170,10 @@ const Pairings: FunctionComponent<{
             pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
           ] ||
           [];
+
         const sortedGames = localGames.sort((a, b) =>
           a.start > b.start ? 1 : a.start === b.start ? 0 : -1
         );
-
         const gameLinkCell = (
           <td rowSpan={tournament.kind === "TeamKnockout" ? 2 : 1}>
             {sortedGames.map((g) => (
@@ -226,7 +221,6 @@ const Pairings: FunctionComponent<{
       }
 
       const pairingNav = <Nav className="nav-tabs">{pairingTabLinks}</Nav>;
-
       const pairingPanes = pairingRows.map((r, i) => {
         const round = rounds?.find((round) => round.number === i + 1);
         return (
@@ -240,6 +234,7 @@ const Pairings: FunctionComponent<{
             )}
             {!showMiniboards && (
               <table className="table table-striped mt-4 dense pairing-table">
+  
                 <thead>
                   <tr>
                     <th>

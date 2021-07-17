@@ -15,23 +15,28 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
   useEffect(() => {
     if (Array.isArray(data)) {
       setBoardsToShow(
-        data.filter((game, index) => {
-          if ((page - 1) * 12 <= index && index < page * 12) {
-            return game;
-          }
-        })
+        data
+          .filter((game, index) => {
+            if ((page - 1) * 12 <= index && index < page * 12) {
+              return true;
+            }
+          })
+          .map((game, index) => ({ ...game, boardNumber: index + 1 }))
       );
     }
-  }, [page]);
+  }, [page, data]);
   return (
     <>
       <Container id={style.miniboards}>
         <Row>
           {Array.isArray(boardsToShow) &&
             boardsToShow.map((game) => (
-              <Col key={game.id} md="3">
-                <Board game={game} />
-              </Col>
+              <div key={game.id}>
+                <p id={style.pairingnumber}>{game.boardNumber}</p>
+                <Col md="3">
+                  <Board game={game} />
+                </Col>
+              </div>
             ))}
         </Row>
         <Pagination
