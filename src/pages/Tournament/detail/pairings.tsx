@@ -103,7 +103,14 @@ const Pairings: FunctionComponent<{
         if (pairing.white === "bye" || pairing.black === "bye") {
           continue;
         }
-
+        const boardnocell = (
+          <td>
+            <div key={`${pairing.round}-${pairing.white}`}>
+              <span>{(pairing as any).boardNumber}</span>
+              &nbsp;
+            </div>
+          </td>
+        );
         const whiteCell = (
           <td>
             {pairing.white_title && (
@@ -189,6 +196,7 @@ const Pairings: FunctionComponent<{
         if (pairingRows[pairing.round - 1]) {
           pairingRows[pairing.round - 1].push(
             <tr key={pairing.white + "_" + pairing.black}>
+              {boardnocell}
               {whiteCell}
               {outcomeCell}
               {blackCell}
@@ -221,6 +229,7 @@ const Pairings: FunctionComponent<{
       }
 
       const pairingNav = <Nav className="nav-tabs">{pairingTabLinks}</Nav>;
+
       const pairingPanes = pairingRows.map((r, i) => {
         const round = rounds?.find((round) => round.number === i + 1);
         return (
@@ -234,9 +243,11 @@ const Pairings: FunctionComponent<{
             )}
             {!showMiniboards && (
               <table className="table table-striped mt-4 dense pairing-table">
-  
                 <thead>
                   <tr>
+                    <th>
+                      <Translated str="board number" />
+                    </th>
                     <th>
                       <Translated str="player" />
                     </th>

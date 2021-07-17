@@ -70,6 +70,18 @@ const TournamentDetail: FunctionComponent<{}> = () => {
         }
         return a.score > b.score ? -1 : 1;
       });
+      let tempRound = null;
+      let boardNumber = 1;
+      tournamentDetail.pairings = tournamentDetail.pairings.map((pairing) => {
+        if (pairing.white_ghost || pairing.black_ghost) {
+          return pairing;
+        }
+        if (tempRound !== null && tempRound !== pairing.round) {
+          boardNumber = 1;
+        }
+        tempRound = pairing.round;
+        return { ...pairing, boardNumber: boardNumber++ };
+      });
       setTournamentDetail({
         ...tournamentDetail,
         participants: tournamentDetail.participants.map((detail, i) => ({
