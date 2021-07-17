@@ -499,7 +499,8 @@ const no = {
   "endSeasonAndStartNewOne": "",
   "startSeason": "",
   "saveAndCreate": "Lagre og lag",
-  "manageTeam": "Administrere Teamet"
+  "manageTeam": "Administrere Teamet",
+  "removeInactive": "Fjern inaktive spillere"
 };
 
 export { no };
