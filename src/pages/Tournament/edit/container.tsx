@@ -83,6 +83,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       profile_picture: form.profilePicture,
       banner_picture: form.bannerPicture,
       chat_enabled: form.chatEnabled,
+      remove_inactive_participants: form.removeInactive
     };
 
     fetchJson(`/s/tournament/${getId()}`, "PUT", body, (result) => {

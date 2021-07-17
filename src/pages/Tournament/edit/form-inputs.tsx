@@ -563,6 +563,16 @@ const FormInputs: FunctionComponent<{}> = () => {
           &nbsp;
           <Translated str="chatEnabled" />
         </div>
+        <div className="mt-4">
+          <input
+            type="checkbox"
+            name="remove_inactive"
+            checked={form.removeInactive}
+            onChange={(e) => form.changeRemoveInactive(e.target.checked)}
+          />
+          &nbsp;
+          <Translated str="removeInactive" />
+        </div>
       </div>
     </>
   );
