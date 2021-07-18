@@ -180,7 +180,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
 
     const pngArea = document.getElementsByClassName("png-area")[0];
-    pngArea.scrollLeft += pngArea.scrollWidth;
+    if (pngArea) pngArea.scrollLeft += pngArea.scrollWidth;
 
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, (json) => {
       if (
@@ -429,7 +429,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
       this.setState(newState);
       const pngArea = document.getElementsByClassName("png-area")[0];
-      pngArea.scrollLeft += pngArea.scrollWidth;
+      if (pngArea) pngArea.scrollLeft += pngArea.scrollWidth;
 
       if (this.state.premove) {
         this.onMove(this.state.premoveData.source, this.state.premoveData.dest);
