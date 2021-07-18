@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import FederationDisplay from "../../../components/FederationDisplay";
 import { fetchJson } from "../../../functions";
 import { useOnlineStatus } from "../../../hocs/with-online-statuses";
+import { Online } from "./online";
+import { Offline } from "./offline";
 
 type Stats = {
   average_rating: number;
@@ -88,7 +90,6 @@ const Standings: FunctionComponent<{}> = () => {
   const { tournament, ssw, is_team_tournament, participants, teams } =
     useTournamentDetail();
   const { onlineStatus } = useOnlineStatus();
-  console.log("onlineStatus", onlineStatus);
   const [sswColumn, setSswColumn] = useState({});
   const [teamParticipantColumns, setTeamParticipantColumns] = useState<any[]>(
     []
@@ -165,41 +166,9 @@ const Standings: FunctionComponent<{}> = () => {
             <>
               {onlineStatus.find((obj) => obj.account === row.account)
                 ?.online === true ? (
-                <div className="image">
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={
-                      <Tooltip id="online">
-                        <strong>{Translated.byKey("online")}</strong>
-                      </Tooltip>
-                    }
-                  >
-                    <img
-                      className={style.online}
-                      src="/images/online-circle.svg"
-                      height="15"
-                      width="15"
-                    />
-                  </OverlayTrigger>
-                </div>
+                <Online />
               ) : (
-                <div className="image">
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={
-                      <Tooltip id="offline">
-                        <strong>{Translated.byKey("Offline")}</strong>
-                      </Tooltip>
-                    }
-                  >
-                    <img
-                      className={style.offline}
-                      src="/images/offline-circle.svg"
-                      height="15"
-                      width="15"
-                    />
-                  </OverlayTrigger>
-                </div>
+                <Offline />
               )}
             </>
           );
