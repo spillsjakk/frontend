@@ -155,17 +155,13 @@ const Standings: FunctionComponent<{}> = () => {
         headerFormatter,
         formatter: function (_: any, row: Participant, __: any, ___: any) {
           const participantLink = (
-            <div className="d-inline-block text-truncate">
-              <Link to={"/profile/" + row.account}>
-                {(row as any).getUsername()}
-              </Link>
-
+            <>
               {onlineStatus.find((obj) => obj.account === row.account)
                 ?.online === true ? (
                 <div className="image">
                   <img
-                    className="online"
-                    src="/images/offline-circle.svg"
+                    className={style.online}
+                    src="/images/online-circle.svg"
                     height="15"
                     width="15"
                   />
@@ -173,14 +169,19 @@ const Standings: FunctionComponent<{}> = () => {
               ) : (
                 <div className="image">
                   <img
-                    className="offline"
+                    className={style.offline}
                     src="/images/offline-circle.svg"
                     height="15"
                     width="15"
                   />
                 </div>
               )}
-            </div>
+              <div className="d-inline-block text-truncate">
+                <Link to={"/profile/" + row.account}>
+                  {(row as any).getUsername()}
+                </Link>
+              </div>
+            </>
           );
           const titleSpan = row.title ? (
             <div className={style["player-title"]}>{row.title}</div>
@@ -348,7 +349,7 @@ const Standings: FunctionComponent<{}> = () => {
   }
   useEffect(() => {
     setup();
-  }, [tournament, ssw, participants]);
+  }, [tournament, ssw, participants, onlineStatus]);
 
   function fetchStats(id) {
     fetchJson(`/s/tournament/stats/${id}`, "GET", undefined, (data) => {
