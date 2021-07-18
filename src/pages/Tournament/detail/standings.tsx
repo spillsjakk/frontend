@@ -159,6 +159,27 @@ const Standings: FunctionComponent<{}> = () => {
               <Link to={"/profile/" + row.account}>
                 {(row as any).getUsername()}
               </Link>
+
+              {onlineStatus.find((obj) => obj.account === row.account)
+                ?.online === true ? (
+                <div className="image">
+                  <img
+                    className="online"
+                    src="/images/offline-circle.svg"
+                    height="15"
+                    width="15"
+                  />
+                </div>
+              ) : (
+                <div className="image">
+                  <img
+                    className="offline"
+                    src="/images/offline-circle.svg"
+                    height="15"
+                    width="15"
+                  />
+                </div>
+              )}
             </div>
           );
           const titleSpan = row.title ? (
