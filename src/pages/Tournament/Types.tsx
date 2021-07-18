@@ -36,6 +36,7 @@ export type Tournament = {
   organiser_type: "club" | "organization";
   pairing_generation_failed: boolean | null;
   chat_enabled: boolean;
+  remove_inactive_participants: boolean;
 };
 
 export type Participant = {

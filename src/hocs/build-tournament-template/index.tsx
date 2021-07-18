@@ -77,6 +77,7 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
         form.changeIncrement(savedTournament.increment);
         form.changeOrganiser(savedTournament.organiser);
         form.changeOrganiserType(savedTournament.organiser_type);
+        form.changePerTeam(savedTournament.per_team_limit);
         if (savedTournament.tb1) {
           form.changeTb1((TIEBREAKER as any)[savedTournament.tb1]);
         }
@@ -89,6 +90,7 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
         if (savedTournament.tb4) {
           form.changeTb4((TIEBREAKER as any)[savedTournament.tb4]);
         }
+        form.changeRemoveInactive(savedTournament.remove_inactive_participants);
         setSelectedTemplate(value);
         return;
       }
@@ -115,7 +117,6 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
         form.changeTb3("2");
         form.changeTb4("3");
       }
-
       setSelectedTemplate(value);
     },
     [user, templates, savedTournaments]
