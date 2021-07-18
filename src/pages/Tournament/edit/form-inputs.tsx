@@ -5,6 +5,7 @@ import { TiebreakerDropdown } from "../../../components/tie-breaker-dropdown";
 import { Countdown } from "../../../components/count-down/index";
 import { KIND } from "../../../constants";
 import { Editor } from "../../../components/markdown";
+import { isTeam } from "../../../functions";
 
 const FormInputs: FunctionComponent<{}> = () => {
   const form = useForm();
@@ -563,16 +564,18 @@ const FormInputs: FunctionComponent<{}> = () => {
           &nbsp;
           <Translated str="chatEnabled" />
         </div>
-        <div className="mt-4">
-          <input
-            type="checkbox"
-            name="remove_inactive"
-            checked={form.removeInactive}
-            onChange={(e) => form.changeRemoveInactive(e.target.checked)}
-          />
-          &nbsp;
-          <Translated str="removeInactive" />
-        </div>
+        {!isTeam(form.kind) && (
+          <div className="mt-4">
+            <input
+              type="checkbox"
+              name="remove_inactive"
+              checked={form.removeInactive}
+              onChange={(e) => form.changeRemoveInactive(e.target.checked)}
+            />
+            &nbsp;
+            <Translated str="removeInactive" />
+          </div>
+        )}
       </div>
     </>
   );
