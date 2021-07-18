@@ -16,13 +16,13 @@ import { Name } from "./name";
 import { Standings } from "./standings";
 import { Pairings } from "./pairings";
 import style from "./style.module.scss";
+import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
 
 const TournamentDetail: FunctionComponent<{}> = () => {
   const [tournamentDetail, setTournamentDetail] = useState<
     Partial<ITournamentDetail>
   >({});
   const [rounds, setRounds] = useState<Array<Round>>([]);
-
   const params = useParams<{ tid: string }>();
 
   function fetchTournament() {
@@ -97,6 +97,7 @@ const TournamentDetail: FunctionComponent<{}> = () => {
     document.getElementsByTagName("body")[0].id = "tournament-detail";
     fetchTournament();
   }, []);
+
   return (
     <>
       <Helmet>
@@ -121,7 +122,11 @@ const TournamentDetail: FunctionComponent<{}> = () => {
             <Name />
             <Description />
             <TimeSection />
-            <Standings />
+            <WithOnlineStatus
+              accounts={tournamentDetail?.participants?.map((p) => p.account)}
+            >
+              <Standings />
+            </WithOnlineStatus>
             <Pairings defaultMiniboards={true} />
           </div>
         </div>

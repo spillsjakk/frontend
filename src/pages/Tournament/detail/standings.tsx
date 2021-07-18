@@ -13,6 +13,7 @@ import { Participant, TeamParticipant } from "../../../pages/Tournament/Types";
 import { Link } from "react-router-dom";
 import FederationDisplay from "../../../components/FederationDisplay";
 import { fetchJson } from "../../../functions";
+import { useOnlineStatus } from "../../../hocs/with-online-statuses";
 
 type Stats = {
   average_rating: number;
@@ -86,6 +87,8 @@ function CountriesForStats(countries: Array<string>) {
 const Standings: FunctionComponent<{}> = () => {
   const { tournament, ssw, is_team_tournament, participants, teams } =
     useTournamentDetail();
+  const { onlineStatus } = useOnlineStatus();
+  console.log("onlineStatus", onlineStatus);
   const [sswColumn, setSswColumn] = useState({});
   const [teamParticipantColumns, setTeamParticipantColumns] = useState<any[]>(
     []
@@ -322,7 +325,6 @@ const Standings: FunctionComponent<{}> = () => {
       },
     ]);
   }
-
   useEffect(() => {
     setup();
   }, [tournament, ssw, participants]);

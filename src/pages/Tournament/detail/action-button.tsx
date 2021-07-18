@@ -25,7 +25,7 @@ const ActionButton: FunctionComponent<{}> = () => {
     can_manage,
   } = useTournamentDetail();
   const {
-    user: { authenticated },
+    user: { authenticated, info },
   } = useUser();
   const params = useParams<{ tid: string }>();
   const history = useHistory();
@@ -69,16 +69,20 @@ const ActionButton: FunctionComponent<{}> = () => {
   }
 
   function getManagedTeams() {
-    fetchCall(`/s/account/managed-teams`, "GET", undefined, (response) => {
-      if (Array.isArray(response)) {
-        setManagedTeams(response);
-      }
-    });
+    if (authenticated && info && info.powers && info.powers.team_captain) {
+      fetchCall(`/s/account/managed-teams`, "GET", undefined, (response) => {
+        if (Array.isArray(response)) {
+          setManagedTeams(response);
+        }
+      });
+    }
   }
 
   useEffect(() => {
-    getManagedTeams();
-  }, []);
+    if (info) {
+      getManagedTeams();
+    }
+  }, [info]);
 
   useEffect(() => {
     if (
