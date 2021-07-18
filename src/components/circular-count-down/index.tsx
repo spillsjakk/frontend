@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo, useEffect, useState } from "react";
+import React, { FunctionComponent, memo, useEffect, useRef, useState } from "react";
 import { CircularProgressbarWithChildren as CircularProgressbar } from "react-circular-progressbar";
 import Translated from "../translated";
 import style from "./style.module.scss";
@@ -26,65 +26,79 @@ const Circle: FunctionComponent<{
   );
 });
 
+function useInterval(callback, delay) {
+  const savedCallback: { current: () => void; } = useRef()
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback
+  }, [callback])
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current()
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay)
+      return () => clearInterval(id)
+    }
+  }, [delay])
+}
+
 interface Props {
   startDate: Date;
 }
 
+const STATUS = {
+  STARTED: 'Started',
+  STOPPED: 'Stopped',
+}
+
 const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
-  const [progress, setProgress] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  function tick() {
-    const left_now = Math.max(0, startDate.getTime() - new Date().getTime());
-    const total_seconds = Math.ceil(left_now / 1000);
-    const days_f = total_seconds / 86400;
-    const days = Math.floor(days_f);
-    const total_seconds_today = total_seconds % 86400;
-    const hours_f = total_seconds_today / 3600;
-    const hours = Math.floor(hours_f);
-    const seconds_left = total_seconds_today % 3600;
-    const minutes_f = seconds_left / 60;
-    const minutes = Math.floor(minutes_f);
-    const seconds = seconds_left % 60;
-    if (
-      progress.days === 0 &&
-      progress.hours === 0 &&
-      progress.minutes === 0 &&
-      progress.seconds === 0 &&
-      days === 0 &&
-      hours === 0 &&
-      minutes === 0 &&
-      seconds === 0
-    ) {
-      return;
-    }
-    setProgress({
-      days,
-      hours,
-      minutes,
-      seconds,
-    });
-  }
+  const [secondsRemaining, setSecondsRemaining] = useState(Math.ceil((Math.max(0, startDate.getTime() - new Date().getTime()) / 1000)));
+  const [status, setStatus] = useState(STATUS.STOPPED);
+
+  const secondsToDisplay = secondsRemaining % 60;
+  const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
+  const minutesToDisplay = minutesRemaining % 60;
+  const hoursRemaining = (minutesRemaining - minutesToDisplay) / 60;
+  const hoursToDisplay = hoursRemaining % 24;
+  const daysRemaining = (hoursRemaining - hoursToDisplay) / 24;
+  const daysToDisplay = daysRemaining % 30;
+
+
+  useInterval(
+    () => {
+      if (secondsRemaining > 0) {
+        setSecondsRemaining(secondsRemaining - 1)
+      } else {
+        setStatus(STATUS.STOPPED)
+      }
+    },
+    status === STATUS.STARTED ? 1000 : null,
+    // passing null stops the interval
+  )
+
   useEffect(() => {
-    const interval = setInterval(tick, 250);
-    return () => clearInterval(interval);
-  }, []);
+    if (secondsRemaining > 0 && status === STATUS.STOPPED) {
+      setStatus(STATUS.STARTED);
+    }
+  }, [secondsRemaining]);
+
   return (
     <div className={style["countdown-container"]}>
       <div className={style.item}>
-        <Circle min={0} max={365} value={progress.days} textKey={"days"} />
+        <Circle min={0} max={365} value={daysToDisplay} textKey={"days"} />
       </div>
       <div className={style.item}>
-        <Circle min={0} max={24} value={progress.hours} textKey={"hours"} />
+        <Circle min={0} max={24} value={hoursToDisplay} textKey={"hours"} />
       </div>
       <div className={style.item}>
-        <Circle min={0} max={60} value={progress.minutes} textKey={"minutes"} />
+        <Circle min={0} max={60} value={minutesToDisplay} textKey={"minutes"} />
       </div>
       <div className={style.item}>
-        <Circle min={0} max={60} value={progress.seconds} textKey={"seconds"} />
+        <Circle min={0} max={60} value={secondsToDisplay} textKey={"seconds"} />
       </div>
     </div>
   );

@@ -92,6 +92,7 @@ function SaveButton(props: { form: FormContext }) {
       organiser: form.organiser,
       organiser_type: form.organiserType,
       chat_enabled: form.chatEnabled,
+      remove_inactive_participants: form.removeInactive
     };
 
     fetchJson(`/s/tournament/template/save`, "POST", body, () => {});
