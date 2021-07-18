@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Translated from "./components/translated";
+import { KIND } from "./constants";
 
 type ErrorProps = {
   err: string;
@@ -136,4 +137,8 @@ export function generateId(length: number) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+export function isTeam(kind: number) {
+  return kind === KIND.TeamKonrad || kind === KIND.TeamRoundRobin || kind === KIND.TeamSwissDutch;
 }

@@ -18,7 +18,7 @@ import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
 import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
-import { generateId } from "../../../functions";
+import { generateId, isTeam } from "../../../functions";
 import { Editor } from "../../../components/markdown";
 
 export function TemplateSelection() {
@@ -376,6 +376,8 @@ export function Advanced() {
                 labelPlacement="end"
               />
             </Grid>
+
+          {!isTeam(form.kind) && (
             <Grid item>
               <FormControlLabel
                 value="end"
@@ -391,7 +393,8 @@ export function Advanced() {
                 label={<Translated str="removeInactive" />}
                 labelPlacement="end"
               />
-            </Grid>
+              </Grid>
+            )}
           </Grid>
 
           <Grid item container md={6} spacing={2}>
