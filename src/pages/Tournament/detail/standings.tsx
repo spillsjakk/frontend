@@ -44,10 +44,10 @@ function mediumHeader() {
 }
 
 const tbColumns = [
-  { dataField: "tb1", text: "TB1", sort: true },
-  { dataField: "tb2", text: "TB2", sort: true },
-  { dataField: "tb3", text: "TB3", sort: true },
-  { dataField: "tb4", text: "TB4", sort: true },
+  { dataField: "tb1", text: "TB1", sort: true, headerStyle: smallHeader },
+  { dataField: "tb2", text: "TB2", sort: true, headerStyle: smallHeader },
+  { dataField: "tb3", text: "TB3", sort: true, headerStyle: smallHeader },
+  { dataField: "tb4", text: "TB4", sort: true, headerStyle: smallHeader },
 ];
 
 function TitlesForStats(titles: Array<string>) {
