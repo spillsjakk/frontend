@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Nav, Tab } from "react-bootstrap";
+import { Nav, Tab, OverlayTrigger, Tooltip } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
   Search,
@@ -155,32 +155,52 @@ const Standings: FunctionComponent<{}> = () => {
         headerFormatter,
         formatter: function (_: any, row: Participant, __: any, ___: any) {
           const participantLink = (
+            <div className="d-inline-block text-truncate">
+              <Link to={"/profile/" + row.account}>
+                {(row as any).getUsername()}
+              </Link>
+            </div>
+          );
+          const statusCircle = (
             <>
               {onlineStatus.find((obj) => obj.account === row.account)
                 ?.online === true ? (
                 <div className="image">
-                  <img
-                    className={style.online}
-                    src="/images/online-circle.svg"
-                    height="15"
-                    width="15"
-                  />
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip id="online">
+                        <strong>{Translated.byKey("online")}</strong>
+                      </Tooltip>
+                    }
+                  >
+                    <img
+                      className={style.online}
+                      src="/images/online-circle.svg"
+                      height="15"
+                      width="15"
+                    />
+                  </OverlayTrigger>
                 </div>
               ) : (
                 <div className="image">
-                  <img
-                    className={style.offline}
-                    src="/images/offline-circle.svg"
-                    height="15"
-                    width="15"
-                  />
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip id="offline">
+                        <strong>{Translated.byKey("Offline")}</strong>
+                      </Tooltip>
+                    }
+                  >
+                    <img
+                      className={style.offline}
+                      src="/images/offline-circle.svg"
+                      height="15"
+                      width="15"
+                    />
+                  </OverlayTrigger>
                 </div>
               )}
-              <div className="d-inline-block text-truncate">
-                <Link to={"/profile/" + row.account}>
-                  {(row as any).getUsername()}
-                </Link>
-              </div>
             </>
           );
           const titleSpan = row.title ? (
@@ -192,6 +212,7 @@ const Standings: FunctionComponent<{}> = () => {
             return (
               <s>
                 <div className="d-flex">
+                  {statusCircle}
                   {titleSpan} {participantLink}
                 </div>
               </s>
@@ -199,7 +220,7 @@ const Standings: FunctionComponent<{}> = () => {
           } else {
             return (
               <div className="d-flex">
-                {titleSpan} {participantLink}
+                {statusCircle} {titleSpan} {participantLink}
               </div>
             );
           }

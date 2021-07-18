@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import Main from "./Main";
-
 import { Container } from "react-bootstrap";
-
 import { NavigationBar } from "./containers/navigation-bar/index";
 import LangContext from "./components/LangContext";
 import { UserContext, UserContextDataType } from "./components/UserContext";
-import { MobileUserWarning } from "./components/mobile-user-warning";
-
 import { fetchJson } from "./functions";
 import GameNotifier from "./components/GameNotifier";
 import { WithTheme } from "./hocs/with-theme";
 import { WithNotification } from "./hocs/with-notification";
+import "./index.css";
 
 type AppState = {
   lang: string;
@@ -54,14 +51,12 @@ class App extends Component<{}, AppState> {
           <LangContext.Provider value={langProviderValue}>
             <UserContext.Provider value={userProviderValue}>
               <NavigationBar />
-
               <Container id="main-container">
                 <GameNotifier />
                 <Container id="content-container">
                   <Main />
                 </Container>
               </Container>
-              <MobileUserWarning />
             </UserContext.Provider>
           </LangContext.Provider>
         </WithNotification>
