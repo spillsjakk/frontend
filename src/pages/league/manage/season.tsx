@@ -1,4 +1,3 @@
-import DateFnsUtils from "@date-io/date-fns";
 import {
   Button,
   Grid,
@@ -9,7 +8,9 @@ import {
   ListItemSecondaryAction,
   IconButton,
 } from "@material-ui/core";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { DateTimePicker } from "@material-ui/lab";
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import EditIcon from "@material-ui/icons/Edit";
 import TimerOff from "@material-ui/icons/TimerOff";
 import React, {
@@ -102,9 +103,8 @@ const StartDate: FunctionComponent<{
 }> = memo(({ change, value }) => (
   <Grid item xs={6}>
     <DateTimePicker
-      variant="dialog"
-      required
       ampm={false}
+      renderInput={(params) => <TextField required {...params} />}
       label={Translated.byKey("startDate")}
       value={value}
       onChange={(value: Date) => {
@@ -120,9 +120,8 @@ const EndDate: FunctionComponent<{
 }> = memo(({ change, value }) => (
   <Grid item xs={6}>
     <DateTimePicker
-      variant="dialog"
-      required
       ampm={false}
+      renderInput={(params) => <TextField required {...params} />}
       label={Translated.byKey("endDate")}
       value={value}
       onChange={(value: Date) => {
@@ -407,7 +406,7 @@ const Season: FunctionComponent<unknown> = memo(() => {
   }, []);
   return (
     <div className={style.box}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <WithSeasonForm>
           <WithPromotionRelegation
             seasonId={selectedSeasonId}
@@ -420,7 +419,7 @@ const Season: FunctionComponent<unknown> = memo(() => {
             </WithPopup>
           </WithPromotionRelegation>
         </WithSeasonForm>
-      </MuiPickersUtilsProvider>
+      </LocalizationProvider>
     </div>
   );
 });

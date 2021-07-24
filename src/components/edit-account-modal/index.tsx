@@ -4,6 +4,7 @@ import Translated from "../../components/translated";
 import { fetchJson } from "../../functions";
 import { Account } from "../../pages/Tournament/Types";
 import FederationDropdown from "../FederationDropdown";
+import SexDropdown from "../SexDropdown";
 import TitleDropdown from "../TitleDropdown";
 import style from "./style.module.scss";
 
@@ -29,6 +30,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
   const [birthDate, setBirthDate] = useState("");
   const [email, setEmail] = useState("");
   const [fideFederation, setFideFederation] = useState("");
+  const [gender, setGender] = useState("");
 
   function resetInputs() {
     setFirstName("");
@@ -40,6 +42,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
     setBirthDate("");
     setEmail("");
     setFideFederation("");
+    setGender("");
   }
 
   function close() {
@@ -58,6 +61,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
       setBirthDate(account.birth_date);
       setEmail(account.email);
       setFideFederation(account.fide_federation);
+      setGender(account.sex);
     }
   }, [account]);
 
@@ -75,6 +79,7 @@ const EditAccountModal: FunctionComponent<Props> = ({
         fide_federation: fideFederation,
         birth_date: birthDate,
         email,
+        gender,
       },
       () => {
         close();
@@ -169,6 +174,14 @@ const EditAccountModal: FunctionComponent<Props> = ({
               <TitleDropdown
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className={style.row}>
+              <label htmlFor="gender">{Translated.byKey("gender")}</label>
+              <SexDropdown
+                value={gender}
+                id="gender"
+                onChange={(e) => setGender(e.target.value)}
               />
             </div>
             <div className={style.row}>

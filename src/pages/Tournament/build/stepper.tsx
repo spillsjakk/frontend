@@ -6,7 +6,6 @@ import {
   StepLabel,
   Stepper,
 } from "@material-ui/core";
-import DateFnsUtils from "@date-io/date-fns";
 import style from "./style.module.scss";
 import {
   TemplateSelection,
@@ -19,7 +18,8 @@ import {
   Advanced,
   SelectClubOrg,
 } from "./inputs";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 import { useTemplate } from "../../../context/build-tournament-template";
 import { FormContext, useForm } from "../../../hocs/tournament-form";
 import { fetchJson } from "../../../functions";
@@ -92,7 +92,7 @@ function SaveButton(props: { form: FormContext }) {
       organiser: form.organiser,
       organiser_type: form.organiserType,
       chat_enabled: form.chatEnabled,
-      remove_inactive_participants: form.removeInactive
+      remove_inactive_participants: form.removeInactive,
     };
 
     fetchJson(`/s/tournament/template/save`, "POST", body, () => {});
@@ -366,7 +366,7 @@ const FormStepper: FunctionComponent<{}> = () => {
   const [formType, setFormType] = useState(FormType.TEMPLATE);
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <>
         {formType === FormType.TEMPLATE && (
           <TemplateForm onCustom={() => setFormType(FormType.ALL)} />
@@ -375,7 +375,7 @@ const FormStepper: FunctionComponent<{}> = () => {
           <Form onTemplate={() => setFormType(FormType.TEMPLATE)} />
         )}
       </>
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };
 
