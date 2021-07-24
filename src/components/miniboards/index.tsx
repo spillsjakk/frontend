@@ -28,7 +28,7 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
   return (
     <>
       <Container id={style.miniboards}>
-        <Row>
+        <Row id={style.row}>
           {Array.isArray(boardsToShow) &&
             boardsToShow.map((game) => (
               <div key={game.id}>

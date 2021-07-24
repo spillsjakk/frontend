@@ -39,3 +39,13 @@
   padding: px;
  
 }
+@media only screen and (max-width: 500px) {
+  #miniboards{
+    #row {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }   
+  }
+}
