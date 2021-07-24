@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, memo } from "react";
 import {
-  Select,
+  NativeSelect,
   Grid,
   Button,
   Step,
@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import { useTemplate } from "../../../context/build-tournament-template";
 import style from "./style.module.scss";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import {
   FormContext,
   useForm,
@@ -18,13 +17,24 @@ import {
 } from "../../../hocs/tournament-form";
 import Translated from "../../../components/translated";
 import { fetchJson } from "../../../functions";
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
 
-import DateFnsUtils from "@date-io/date-fns";
 import { WithBuildTournamentTemplate } from "../../../hocs/build-tournament-template";
 import { usePopup, WithPopup } from "../../../hocs/popup";
 import { useLeague } from "../../../hocs/with-league/index";
 import { Card } from "../../../components/tournament-card/card";
-import { TemplateSelection, About, SelectClubOrg, StartDate, TournamentLocation, StartDateInterval, Format, TimeControl, Advanced } from '../../Tournament/build/inputs';
+import {
+  TemplateSelection,
+  About,
+  SelectClubOrg,
+  StartDate,
+  TournamentLocation,
+  StartDateInterval,
+  Format,
+  TimeControl,
+  Advanced,
+} from "../../Tournament/build/inputs";
 
 function SeasonAndCategory() {
   const form = useForm();
@@ -35,11 +45,10 @@ function SeasonAndCategory() {
       <div className={style.inputs}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <Select
+            <NativeSelect
               onChange={(e) => form.changeSeason(e.target.value as string)}
               variant="outlined"
               value={form.season}
-              native
               required
             >
               <option value="" disabled>
@@ -51,14 +60,13 @@ function SeasonAndCategory() {
                     {season.name}
                   </option>
                 ))}
-            </Select>
+            </NativeSelect>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Select
+            <NativeSelect
               onChange={(e) => form.changeCategory(e.target.value as string)}
               variant="outlined"
               value={form.category}
-              native
               required
             >
               <option value="" disabled>
@@ -70,14 +78,13 @@ function SeasonAndCategory() {
                     {category.name}
                   </option>
                 ))}
-            </Select>
+            </NativeSelect>
           </Grid>
         </Grid>
       </div>
     </div>
   );
 }
-
 
 function ActionButtons({
   onLeftClick = () => {},
@@ -402,7 +409,7 @@ const FormStepper: FunctionComponent<{}> = () => {
   const [formType, setFormType] = useState(FormType.TEMPLATE);
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <>
         {formType === FormType.TEMPLATE && (
           <TemplateForm onCustom={() => setFormType(FormType.ALL)} />
@@ -411,7 +418,7 @@ const FormStepper: FunctionComponent<{}> = () => {
           <Form onTemplate={() => setFormType(FormType.TEMPLATE)} />
         )}
       </>
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };
 

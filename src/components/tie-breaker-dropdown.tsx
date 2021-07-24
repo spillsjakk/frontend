@@ -1,12 +1,12 @@
-import { Select } from "@material-ui/core";
-import React, { ChangeEvent } from "react";
+import { NativeSelect } from "@material-ui/core";
+import React from "react";
 import Translated from "./translated";
 
 export function TiebreakerDropdown(props: {
   value?: string;
   name?: string;
   id?: string;
-  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (event: any) => void;
 }) {
   return (
     <select
@@ -31,16 +31,15 @@ export function TiebreakerDropdownV2(props: {
   value?: string;
   name?: string;
   id?: string;
-  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (event: any) => void;
 }) {
   return (
-    <Select
+    <NativeSelect
       value={props.value}
       onChange={props.onChange}
       name={props.name}
       id={props.id}
       variant="outlined"
-      native
       fullWidth
     >
       <option value="">
@@ -54,6 +53,6 @@ export function TiebreakerDropdownV2(props: {
       <option value="3">{Translated.byKey("medianBuchholz2")}</option>
       <option value="4">{Translated.byKey("buchholzCut1")}</option>
       <option value="5">{Translated.byKey("buchholzCut2")}</option>
-    </Select>
+    </NativeSelect>
   );
 }

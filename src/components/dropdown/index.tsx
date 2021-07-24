@@ -1,4 +1,4 @@
-import { Select } from "@material-ui/core";
+import { NativeSelect } from "@material-ui/core";
 import React, { FunctionComponent, useState } from "react";
 
 export interface Option {
@@ -25,14 +25,13 @@ const Dropdown: FunctionComponent<Props> = ({
       : ""
   );
   return (
-    <Select
+    <NativeSelect
       value={selectedValue}
       variant="outlined"
       onChange={(e) => {
         onSelect(e.target.value as string);
         setSelectedValue(e.target.value as string);
       }}
-      native
     >
       {placeholder && (
         <option value={placeholder.value} disabled>
@@ -45,7 +44,7 @@ const Dropdown: FunctionComponent<Props> = ({
             {option.name}
           </option>
         ))}
-    </Select>
+    </NativeSelect>
   );
 };
 export { Dropdown };

@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import {
   FormControlLabel,
   Radio,
-  Select,
   TextField,
   Grid,
   Slider,
   Typography,
   Checkbox,
   InputLabel,
+  NativeSelect,
 } from "@material-ui/core";
 import { useTemplate } from "../../../context/build-tournament-template";
 import style from "./style.module.scss";
-import { DateTimePicker } from "@material-ui/pickers";
+import { DateTimePicker } from "@material-ui/lab";
 import { useForm } from "../../../hocs/tournament-form";
 import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
@@ -35,11 +35,14 @@ export function TemplateSelection() {
         <Translated str="buildTournament_chooseTemplateDesc" />
       </div>
       <div className={style.inputs}>
-        <Select
+        <NativeSelect
           onChange={(e) => onSelect(e.target.value)}
-          variant="outlined"
           value={selectedTemplate}
-          native
+          variant="outlined"
+          inputProps={{
+            name: "age",
+            id: "template-selection",
+          }}
         >
           <option value={placeholder.id}>{placeholder.name}</option>
           {Array.isArray(templates) &&
@@ -48,7 +51,7 @@ export function TemplateSelection() {
                 {template.name}
               </option>
             ))}
-        </Select>
+        </NativeSelect>
       </div>
     </div>
   );
@@ -61,9 +64,8 @@ export function StartDate() {
     <div className={style.content}>
       <div className={style.inputs}>
         <DateTimePicker
-          variant="inline"
-          required
           ampm={false}
+          renderInput={(params) => <TextField required {...params} />}
           label={Translated.byKey("startDate")}
           value={
             new Date(
@@ -226,7 +228,7 @@ export function StartDateInterval() {
     <div className={style.content}>
       <div className={style.inputs}>
         <DateTimePicker
-          variant="inline"
+          renderInput={(params) => <TextField required {...params} />}
           label={Translated.byKey("startDate")}
           value={
             new Date(
@@ -254,20 +256,19 @@ export function StartDateInterval() {
             form.changeOnlinePairingIntervalN(Number(e.target.value))
           }
         />
-        <Select
+        <NativeSelect
           onChange={(e) =>
             form.changeOnlinePairingIntervalT(Number(e.target.value))
           }
           variant="outlined"
           className={style["ml-sm"]}
           value={form.onlinePairingIntervalT}
-          native
         >
           <option value={0}>minutes</option>
           <option value={1}>hours</option>
           <option value={2}>days</option>
           <option value={3}>weeks</option>
-        </Select>
+        </NativeSelect>
       </div>
     </div>
   );
@@ -377,22 +378,22 @@ export function Advanced() {
               />
             </Grid>
 
-          {!isTeam(form.kind) && (
-            <Grid item>
-              <FormControlLabel
-                value="end"
-                control={
-                  <Checkbox
-                    color="secondary"
-                    checked={form.removeInactive}
-                    onChange={(e) => {
-                      form.changeRemoveInactive(e.target.checked);
-                    }}
-                  />
-                }
-                label={<Translated str="removeInactive" />}
-                labelPlacement="end"
-              />
+            {!isTeam(form.kind) && (
+              <Grid item>
+                <FormControlLabel
+                  value="end"
+                  control={
+                    <Checkbox
+                      color="secondary"
+                      checked={form.removeInactive}
+                      onChange={(e) => {
+                        form.changeRemoveInactive(e.target.checked);
+                      }}
+                    />
+                  }
+                  label={<Translated str="removeInactive" />}
+                  labelPlacement="end"
+                />
               </Grid>
             )}
           </Grid>
@@ -447,11 +448,10 @@ export function Format() {
         <Grid container spacing={3}>
           <Grid item container xs={6} spacing={3}>
             <Grid item>
-              <Select
+              <NativeSelect
                 onChange={(e) => form.changeKind(Number(e.target.value))}
                 variant="outlined"
                 value={form.kind}
-                native
                 fullWidth
               >
                 {Object.keys(KIND).map((kind) => (
@@ -461,7 +461,7 @@ export function Format() {
                     )}
                   </option>
                 ))}
-              </Select>
+              </NativeSelect>
             </Grid>
             {![0, 2, 7, 8, 9].includes(form.kind) && (
               <Grid item>
@@ -543,7 +543,7 @@ export function SelectClubOrg() {
   return (
     <div className={style.content}>
       <div className={style.inputs}>
-        <Select
+        <NativeSelect
           onChange={(e) => {
             const value = e.target.value;
             if (orgs.find((org) => org.id === value)) {
@@ -555,7 +555,6 @@ export function SelectClubOrg() {
           }}
           variant="outlined"
           value={form.organiser}
-          native
           required
         >
           <option value="" disabled>
@@ -573,7 +572,7 @@ export function SelectClubOrg() {
                 {club.name}
               </option>
             ))}
-        </Select>
+        </NativeSelect>
       </div>
     </div>
   );
