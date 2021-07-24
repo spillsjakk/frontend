@@ -125,7 +125,7 @@
     background-image: url("/images/homepage1.jpg");
     background-position: center center;
     background-size: cover;
-    height: 450px;
+    height: 500px;
     width: 100vw;
     display: flex;
     justify-content: flex-end;
@@ -165,7 +165,7 @@
 
       .action-buttons {
         display: flex;
-        width: 60%;
+        width: 80%;
         margin: 20px 0;
         justify-content: space-between;
 
@@ -173,14 +173,13 @@
           cursor: pointer;
           background-color: #469a88;
           border: none;
-          width: 80px;
           height: 40px;
           color: white;
           border-radius: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 12px;
+          font-size: 14px;
           margin-right: 10px;
         }
       }
@@ -200,11 +199,11 @@
       font-weight: bold;
       a {
         color: white;
-        font-size: 17px;
+        font-size: 19px;
       }
       a:hover {
         color: white;
-        font-size: 17px;
+        font-size: 19px;
       }
     }
 
