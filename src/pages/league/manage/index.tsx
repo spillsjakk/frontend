@@ -39,10 +39,9 @@ const LeagueManage: FunctionComponent<{}> = () => {
           <Description />
           <Grid
             className={style["mt-2"]}
-            justifyContent="space-around"
+            justify="space-around"
             container
             spacing={3}
-            component="div"
           >
             <Grid item xs={12}>
               <Season />

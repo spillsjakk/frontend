@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs/index";
-import { NativeSelect } from "@material-ui/core";
+import { Select } from "@material-ui/core";
 import Translated from "../../../components/translated";
 import style from "./style.module.scss";
 import { useLeagueForm } from "./with-form";
@@ -12,7 +12,7 @@ export function SelectClubOrg({ disabled = false }) {
   return (
     <div className={style.select}>
       <div className={style.inputs}>
-        <NativeSelect
+        <Select
           disabled={disabled}
           onChange={(e) => {
             const value = e.target.value;
@@ -24,7 +24,9 @@ export function SelectClubOrg({ disabled = false }) {
               form.changeClub(value as string);
             }
           }}
+          variant="outlined"
           value={type === "organization" ? form.organization : form.club}
+          native
           required
         >
           <option value="" disabled>
@@ -42,7 +44,7 @@ export function SelectClubOrg({ disabled = false }) {
                 {club.name}
               </option>
             ))}
-        </NativeSelect>
+        </Select>
       </div>
     </div>
   );

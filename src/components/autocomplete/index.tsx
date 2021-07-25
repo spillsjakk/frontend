@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { TextField, Autocomplete as MAutocomplete } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
+import { Autocomplete as MAutocomplete } from "@material-ui/lab";
 
 export type Option = { name: string; value: string };
 

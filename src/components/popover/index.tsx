@@ -1,9 +1,21 @@
 import React from "react";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
-import style from "./style.module.scss";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    popover: {
+      pointerEvents: "none",
+    },
+    paper: {
+      padding: theme.spacing(1),
+    },
+  })
+);
 
 export default function MouseOverPopover({ children, popoverText }) {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
   const handlePopoverOpen = (
@@ -30,9 +42,9 @@ export default function MouseOverPopover({ children, popoverText }) {
       </Typography>
       <Popover
         id="mouse-over-popover"
-        className={style.popover}
+        className={classes.popover}
         classes={{
-          paper: style.paper,
+          paper: classes.paper,
         }}
         open={open}
         anchorEl={anchorEl}
