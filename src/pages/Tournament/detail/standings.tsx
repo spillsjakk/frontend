@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Nav, Tab, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Nav, Tab } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider, {
   Search,
