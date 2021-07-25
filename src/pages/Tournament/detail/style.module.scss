@@ -374,6 +374,14 @@
     position: relative;
     margin-top: 50px;
   }
+
+  .nav-tabs.nav{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+    justify-content: center;
+  }
+
   .pairing-view-toggle {
     position: absolute;
     right: 0;
@@ -383,6 +391,661 @@
       width: 100%!important;
     }
   }
+
+  .player-title {
+    background-color: #bf811d;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  .online{
+    margin-right: 10px;
+  }
+  .offline{
+    margin-right: 10px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .wrapper {
+    font-family: Montserrat;
+    color: black;
+    width: calc(min(90vw, 1200px));
+    .round-starting-time {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 0px 10px 0px;
+
+      .header {
+        color: #469a88;
+        font-weight: bold;
+        font-size: calc(min(6vw, 30px));
+      }
+      .icon {
+        .tick {
+          width: 20px;
+        }
+      }
+    }
+
+    .banner {
+      position: relative;
+      .pp {
+        width: 15%;
+        position: absolute;
+        top: 65%;
+        left: 42.5%
+      }
+      .pp-custom {
+        position: absolute;
+        top: 65%;
+        left: calc(min(40vw, 525px));
+        height: calc(min(15vw, 150px));
+        width: calc(min(15vw, 150px));
+        border-radius: 50%;
+      }
+
+      .banner-pic {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+      }
+    }
+
+    .name-container {
+      position: relative;
+      margin-top: calc(min(8vw, 80px));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      .name {
+        font-size: calc(min(5vw, 48px));
+        font-weight: bold;
+        line-height: calc(min(6vw, 50px));
+      }
+      .organiser {
+        font-size: calc(min(5vw, 20px));
+        margin-top: 10px;
+        span {
+          color: #469a88;
+        }
+      }
+      .icon {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        img {
+          width: calc(min(5vw, 30px));
+          cursor: pointer;
+        }
+      }
+    }
+    .description-container {
+      display: flex;
+      margin-top: calc(min(8vw, 80px));
+      .info {
+        text-align: center;
+        .item {
+          .heading {
+            font-weight: 500;
+          }
+          margin-bottom: 10px;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .action-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        button {
+          background-color: #469a88;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          color: white;
+          border: none;
+          width: 80%;
+          height: 40px;
+          font-weight: 500;
+          border-radius: 35px;
+        }
+        .join-tournament {
+          button {
+            background-color: #469a88;
+          }
+        }
+        .leave-tournament {
+          button {
+            background-color: red;
+          }
+        }
+        .manage-tournament {
+          button {
+            background-color: #469a88;
+          }
+        }
+      }
+    }
+
+    .time-section {
+      display: flex;
+      flex-direction: column;
+      margin-top: calc(min(8vw, 80px));
+
+      .round-time-starts {
+        font-size: calc(min(4vw, 18px));
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+
+        .text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .round-time-countdown {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        stroke: #469a88 !important;
+        fill: #469a88 !important;
+      }
+    }
+
+    .standings-container {
+      color: black;
+    }
+  }
+
+  .box {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 35px;
+    background-color: #f4f4f4;
+  }
+
+  .warning-box {
+    background-color: khaki;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid orangered;
+  }
+
+  .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .nav-tabs.nav{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pairing-view-toggle {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    margin-bottom: 90px;
+    div[role="button"]{
+      width: 100%!important;
+    }
+  }
+
+  .player-title {
+    background-color: #bf811d;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  .online{
+    margin-right: 10px;
+  }
+  .offline{
+    margin-right: 10px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .wrapper {
+    font-family: Montserrat;
+    color: black;
+    width: calc(min(90vw, 1200px));
+    .round-starting-time {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 0px 10px 0px;
+
+      .header {
+        color: #469a88;
+        font-weight: bold;
+        font-size: calc(min(6vw, 30px));
+      }
+      .icon {
+        .tick {
+          width: 20px;
+        }
+      }
+    }
+
+    .banner {
+      position: relative;
+      .pp {
+        width: 15%;
+        position: absolute;
+        top: 65%;
+        left: 42.5%
+      }
+      .pp-custom {
+        position: absolute;
+        top: 65%;
+        left: calc(min(40vw, 525px));
+        height: calc(min(15vw, 150px));
+        width: calc(min(15vw, 150px));
+        border-radius: 50%;
+      }
+
+      .banner-pic {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+      }
+    }
+
+    .name-container {
+      position: relative;
+      margin-top: calc(min(8vw, 80px));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      .name {
+        font-size: calc(min(5vw, 48px));
+        font-weight: bold;
+        line-height: calc(min(6vw, 50px));
+      }
+      .organiser {
+        font-size: calc(min(5vw, 20px));
+        margin-top: 10px;
+        span {
+          color: #469a88;
+        }
+      }
+      .icon {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        img {
+          width: calc(min(5vw, 30px));
+          cursor: pointer;
+        }
+      }
+    }
+    .description-container {
+      display: flex;
+      margin-top: calc(min(8vw, 80px));
+      .info {
+        text-align: center;
+        .item {
+          .heading {
+            font-weight: 500;
+          }
+          margin-bottom: 10px;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .action-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        button {
+          background-color: #469a88;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          color: white;
+          border: none;
+          width: 80%;
+          height: 40px;
+          font-weight: 500;
+          border-radius: 35px;
+        }
+        .join-tournament {
+          button {
+            background-color: #469a88;
+          }
+        }
+        .leave-tournament {
+          button {
+            background-color: red;
+          }
+        }
+        .manage-tournament {
+          button {
+            background-color: #469a88;
+          }
+        }
+      }
+    }
+
+    .time-section {
+      display: flex;
+      flex-direction: column;
+      margin-top: calc(min(8vw, 80px));
+
+      .round-time-starts {
+        font-size: calc(min(4vw, 18px));
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+
+        .text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .round-time-countdown {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        stroke: #469a88 !important;
+        fill: #469a88 !important;
+      }
+    }
+
+    .standings-container {
+      color: black;
+    }
+  }
+
+  .box {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 35px;
+    background-color: #f4f4f4;
+  }
+
+  .warning-box {
+    background-color: khaki;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid orangered;
+  }
+
+  .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .nav-tabs.nav{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pairing-view-toggle {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    margin-bottom: 90px;
+    div[role="button"]{
+      width: 100%!important;
+    }
+  }
+  .player-title {
+    background-color: #bf811d;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  .online{
+    margin-right: 10px;
+  }
+  .offline{
+    margin-right: 10px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .wrapper {
+    font-family: Montserrat;
+    color: black;
+    width: calc(min(90vw, 1200px));
+    .round-starting-time {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 0px 10px 0px;
+
+      .header {
+        color: #469a88;
+        font-weight: bold;
+        font-size: calc(min(6vw, 30px));
+      }
+      .icon {
+        .tick {
+          width: 20px;
+        }
+      }
+    }
+
+    .banner {
+      position: relative;
+      .pp {
+        width: 15%;
+        position: absolute;
+        top: 65%;
+        left: 42.5%
+      }
+      .pp-custom {
+        position: absolute;
+        top: 65%;
+        left: calc(min(40vw, 525px));
+        height: calc(min(15vw, 150px));
+        width: calc(min(15vw, 150px));
+        border-radius: 50%;
+      }
+
+      .banner-pic {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+      }
+    }
+
+    .name-container {
+      position: relative;
+      margin-top: calc(min(8vw, 80px));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      .name {
+        font-size: calc(min(5vw, 48px));
+        font-weight: bold;
+        line-height: calc(min(6vw, 50px));
+      }
+      .organiser {
+        font-size: calc(min(5vw, 20px));
+        margin-top: 10px;
+        span {
+          color: #469a88;
+        }
+      }
+      .icon {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        img {
+          width: calc(min(5vw, 30px));
+          cursor: pointer;
+        }
+      }
+    }
+    .description-container {
+      display: flex;
+      margin-top: calc(min(8vw, 80px));
+      .info {
+        text-align: center;
+        .item {
+          .heading {
+            font-weight: 500;
+          }
+          margin-bottom: 10px;
+          height: 80px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .action-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5px;
+        button {
+          background-color: #469a88;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          color: white;
+          border: none;
+          width: 80%;
+          height: 40px;
+          font-weight: 500;
+          border-radius: 35px;
+        }
+        .join-tournament {
+          button {
+            background-color: #469a88;
+          }
+        }
+        .leave-tournament {
+          button {
+            background-color: red;
+          }
+        }
+        .manage-tournament {
+          button {
+            background-color: #469a88;
+          }
+        }
+      }
+    }
+
+    .time-section {
+      display: flex;
+      flex-direction: column;
+      margin-top: calc(min(8vw, 80px));
+
+      .round-time-starts {
+        font-size: calc(min(4vw, 18px));
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+
+        .text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+
+      .round-time-countdown {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        stroke: #469a88 !important;
+        fill: #469a88 !important;
+      }
+    }
+
+    .standings-container {
+      color: black;
+    }
+  }
+
+  .box {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 35px;
+    background-color: #f4f4f4;
+  }
+
+  .warning-box {
+    background-color: khaki;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid orangered;
+  }
+
+  .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .nav-tabs.nav{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pairing-view-toggle {
+    position: absolute;
+    right: 0;
+    width: 100%;
+    margin-bottom: 90px;
+    div[role="button"]{
+      width: 100%!important;
+    }
+  }
+
   .player-title {
     background-color: #bf811d;
     color: white;
