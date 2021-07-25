@@ -369,19 +369,19 @@ const Standings: FunctionComponent<{}> = () => {
               }
             >
               <Nav className="nav-tabs">
-                <Nav.Item>
+                <Nav.Item className="nav-item">
                   <Nav.Link eventKey="standings-i-tab">
                     <Translated str="individual" />
                   </Nav.Link>
                 </Nav.Item>
                 {is_team_tournament && (
-                  <Nav.Item>
+                  <Nav.Item className="nav-item">
                     <Nav.Link eventKey="standings-t-tab">
                       <Translated str="team" />
                     </Nav.Link>
                   </Nav.Item>
                 )}
-                <Nav.Item>
+                <Nav.Item className="nav-item">
                   <Nav.Link eventKey="standings-s-tab">
                     <Translated str="stats" />
                   </Nav.Link>

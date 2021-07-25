@@ -201,7 +201,6 @@
 .offline{
   margin-right: 10px;
 }
-
 @media only screen and (max-width: 500px) {
   .wrapper {
     font-family: Montserrat;
@@ -211,13 +210,11 @@
       margin-top: 15px;
       font-weight: bold;
     }
-  
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 25px 0px 10px 0px;
-  
       .header {
         color: #469a88;
         font-weight: bold;
@@ -229,7 +226,6 @@
         }
       }
     }
-  
     .banner {
       position: relative;
       .pp {
@@ -246,14 +242,12 @@
         width: calc(min(15vw, 150px));
         border-radius: 50%;
       }
-  
       .banner-pic {
         width: 100%;
         max-height: 300px;
         object-fit: cover;
       }
     }
-  
     .name-container {
       position: relative;
       margin-top: calc(min(8vw, 80px));
@@ -332,25 +326,21 @@
         }
       }
     }
-  
     .time-section {
       display: flex;
       flex-direction: column;
       margin-top: calc(min(8vw, 80px));
-  
       .round-time-starts {
         font-size: calc(min(4vw, 18px));
         font-weight: 500;
         display: flex;
         justify-content: space-between;
-  
         .text {
           display: flex;
           justify-content: center;
           align-items: center;
         }
       }
-  
       .round-time-countdown {
         display: flex;
         flex-direction: column;
@@ -360,18 +350,15 @@
         fill: #469a88 !important;
       }
     }
-  
     .standings-container {
       color: black;
     }
   }
-  
   .box {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 35px;
     background-color: #f4f4f4;
   }
-  
   .warning-box {
     background-color: khaki;
     border-radius: 5px;
@@ -380,7 +367,6 @@
     text-align: center;
     border: 2px solid orangered;
   }
-  
   .centered-container {
     display: flex;
     justify-content: center;
@@ -388,14 +374,6 @@
     position: relative;
     margin-top: 50px;
   }
-
-  .nav-tabs.nav{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    width: 100%;
-    justify-content: center;
-  }
-  
   .pairing-view-toggle {
     position: absolute;
     right: 0;
@@ -405,7 +383,6 @@
       width: 100%!important;
     }
   }
-  
   .player-title {
     background-color: #bf811d;
     color: white;
