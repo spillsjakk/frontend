@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Grid } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { Board } from "./board";
 import style from "./style.module.scss";
@@ -27,24 +27,26 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
   }, [page, data]);
   return (
     <>
-      <Container id={style.miniboards}>
-        <Row id={style.row}>
-          {Array.isArray(boardsToShow) &&
-            boardsToShow.map((game) => (
-              <div key={game.id}>
-                <p id={style.pairingnumber}>{game.boardNumber}</p>
-                <Col md="3">
-                  <Board game={game} />
-                </Col>
-              </div>
-            ))}
-        </Row>
-        <Pagination
-          count={Array.isArray(data) ? Math.ceil(data.length / 12) : 0}
-          page={page}
-          onChange={(e, value) => setPage(value)}
-        />
-      </Container>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        id={style.miniboards}
+      >
+        {Array.isArray(boardsToShow) &&
+          boardsToShow.map((game) => (
+            <Grid item key={game.id} className={style.board}>
+              <p id={style.pairingnumber}>{game.boardNumber}</p>
+              <Board game={game} />
+            </Grid>
+          ))}
+      </Grid>
+      <Pagination
+        count={Array.isArray(data) ? Math.ceil(data.length / 12) : 0}
+        page={page}
+        onChange={(e, value) => setPage(value)}
+        className={style.pagination}
+      />
     </>
   );
 };

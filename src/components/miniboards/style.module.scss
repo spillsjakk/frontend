@@ -26,26 +26,31 @@
     max-width: 100px;
   }
 }
-#pairingnumber{
+.board {
+  position: relative;
+}
+.pagination {
+  margin-top: 20px;
+}
+#pairingnumber {
   height: 26px;
   text-align: center;
-  position: relative;
-  top: 65px;
-  left: -10px;
+  position: absolute;
+  top: -20px;
+  right: 10px;
   font-weight: 600;
   width: 25px;
-  z-index: 9999;
+  z-index: 10;
   background-color: white;
   padding: px;
- 
 }
 @media only screen and (max-width: 500px) {
-  #miniboards{
+  #miniboards {
     #row {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-    }   
+    }
   }
 }

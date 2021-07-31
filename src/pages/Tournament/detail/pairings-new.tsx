@@ -157,6 +157,7 @@ const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
       renderCell: (params: any) => renderPlayerCell(params, "white"),
       hideSortIcons: true,
       ...commonFields,
+      minWidth: 200,
       flex: 1,
     },
     {
@@ -165,6 +166,7 @@ const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
       renderCell: renderResultCell,
       hideSortIcons: true,
       ...commonFields,
+      minWidth: 100,
     },
     {
       field: "black",
@@ -172,6 +174,7 @@ const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
       renderCell: (params: any) => renderPlayerCell(params, "black"),
       hideSortIcons: true,
       ...commonFields,
+      minWidth: 200,
       flex: 1,
     },
     {
