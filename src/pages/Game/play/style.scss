@@ -194,3 +194,35 @@
     background-color: #fafafa;
   }
 }
+
+@media screen and (max-width: 500px) {
+  #Game-Play {
+    overflow-x: hidden;
+    .wrapper {
+      justify-content: center;
+      align-items: center;
+      .name {
+        a {
+          font-size: 17px;
+        }
+      }
+      .tournament-info {
+        margin-top: 25px;
+        .action-button {
+          margin-top: 8px;
+          font-size: 17px;
+        }
+      }
+      .game-chat {
+        margin-top: 10px;
+        width: 260px;
+        input {
+          font-style: italic;
+        }
+      }
+      .tournament-link {
+        font-size: 18px;
+      }
+    }
+  }
+}
