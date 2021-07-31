@@ -5,7 +5,7 @@ import {
   GridPageChangeParams,
 } from "@material-ui/data-grid";
 import { List, ViewModule } from "@material-ui/icons";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { useTournamentDetail } from "../../../context/tournament-detail";
@@ -13,6 +13,7 @@ import style from "./style.module.scss";
 import { useOnlineStatus } from "../../../hocs/with-online-statuses/index";
 import { Online } from "./online";
 import { Offline } from "./offline";
+import { Miniboards } from "../../../components/miniboards";
 
 interface Props {
   showHeader?: boolean;
@@ -38,26 +39,12 @@ function outcomeToStr(outcome: number | undefined) {
   }
 }
 
-const Pairings: FunctionComponent<Props> = ({
-  showHeader = true,
-  defaultMiniboards = false,
-}) => {
-  const [type, setType] = useState(defaultMiniboards ? "miniboards" : "list");
-  const [tab, setTab] = useState(0);
+const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
   const [pageSize, setPageSize] = useState(15);
-  const [uniqueTabs, setUniqueTabs] = useState([]);
 
   const { pairings, tournament, tko_separation, games } = useTournamentDetail();
 
   const { onlineStatus } = useOnlineStatus();
-
-  useEffect(() => {
-    if (Array.isArray(pairings) && pairings.length > 0) {
-      const result = Array.from(new Set(pairings.map((p) => p.round)));
-      setUniqueTabs(result);
-      setTab(result.length);
-    }
-  }, [pairings]);
 
   function getUsername(params, color) {
     return tournament?.show_only_usernames
@@ -197,6 +184,108 @@ const Pairings: FunctionComponent<Props> = ({
   ];
 
   return (
+    <div style={{ display: "flex", height: "100%" }}>
+      <div style={{ flexGrow: 1 }}>
+        <DataGrid
+          className={`${style.table}`}
+          autoHeight
+          pageSize={pageSize}
+          onPageSizeChange={(params: GridPageChangeParams) => {
+            setPageSize(params.pageSize);
+          }}
+          rowsPerPageOptions={[15, 30, 50]}
+          pagination
+          rows={pairings.filter(
+            (p) => p.round === round && p.white !== "bye" && p.black !== "bye"
+          )}
+          columns={columns}
+        />
+      </div>
+    </div>
+  );
+});
+
+const MiniBoardsView: FunctionComponent<{ round: number }> = memo(
+  ({ round }) => {
+    const { pairings, tournament, games } = useTournamentDetail();
+
+    function getGameData() {
+      const result = [];
+      if (
+        !(Array.isArray(pairings) && pairings.length && tournament && games)
+      ) {
+        return [];
+      }
+      pairings
+        .filter((p) => p.round === round)
+        .forEach((pairing) => {
+          if (!pairing) {
+            return [];
+          }
+          if (pairing.white === "bye" || pairing.black === "bye") {
+            return;
+          }
+          const localGames =
+            games[
+              pairing.round.toString() +
+                "_" +
+                pairing.white +
+                "_" +
+                pairing.black
+            ] ||
+            games[
+              pairing.round.toString() +
+                "_" +
+                pairing.black +
+                "_" +
+                pairing.white
+            ] ||
+            [];
+          result.push(
+            ...localGames.map((game) => ({
+              ...game,
+              outcome: pairing.outcome,
+              round: pairing.round,
+              whiteName: tournament.show_only_usernames
+                ? pairing.white_username
+                : pairing.white_name,
+              blackName: tournament.show_only_usernames
+                ? pairing.black_username
+                : pairing.black_name,
+              white: pairing.white,
+              black: pairing.black,
+            }))
+          );
+        });
+      return result;
+    }
+    return (
+      <>
+        <Miniboards data={getGameData()} />
+      </>
+    );
+  }
+);
+
+const Pairings: FunctionComponent<Props> = ({
+  showHeader = true,
+  defaultMiniboards = false,
+}) => {
+  const [type, setType] = useState(defaultMiniboards ? "miniboards" : "list");
+  const [tab, setTab] = useState(0);
+  const [uniqueTabs, setUniqueTabs] = useState([]);
+
+  const { pairings } = useTournamentDetail();
+
+  useEffect(() => {
+    if (Array.isArray(pairings) && pairings.length > 0) {
+      const result = Array.from(new Set(pairings.map((p) => p.round)));
+      setUniqueTabs(result);
+      setTab(result.length);
+    }
+  }, [pairings]);
+
+  return (
     <>
       {Array.isArray(pairings) && pairings.length > 0 && (
         <div className="mt-4">
@@ -238,25 +327,8 @@ const Pairings: FunctionComponent<Props> = ({
               ))}
             </Tabs>
           </div>
-          {type === "miniboards" && <></>}
-          {type === "list" && (
-            <div style={{ display: "flex", height: "100%" }}>
-              <div style={{ flexGrow: 1 }}>
-                <DataGrid
-                  className={`${style.table}`}
-                  autoHeight
-                  pageSize={pageSize}
-                  onPageSizeChange={(params: GridPageChangeParams) => {
-                    setPageSize(params.pageSize);
-                  }}
-                  rowsPerPageOptions={[15, 30, 50]}
-                  pagination
-                  rows={pairings.filter((p) => p.round === tab)}
-                  columns={columns}
-                />
-              </div>
-            </div>
-          )}
+          {type === "miniboards" && <MiniBoardsView round={tab} />}
+          {type === "list" && <ListView round={tab} />}
         </div>
       )}
     </>
