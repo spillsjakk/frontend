@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, memo, useEffect, useState } from "react";
 import { DataGrid, GridCellParams, GridColDef } from "@material-ui/data-grid";
-import { Tabs, Tab } from "@material-ui/core";
+import { Tabs, Tab, Paper } from "@material-ui/core";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
 import { useOnlineStatus } from "../../../hocs/with-online-statuses";
@@ -9,6 +9,7 @@ import { Online } from "./online";
 import { Offline } from "./offline";
 import style from "./style.module.scss";
 import FederationDisplay from "../../../components/FederationDisplay";
+import { fetchJson } from "../../../functions";
 
 const commonFields = {
   headerClassName: style["table-header"],
@@ -16,11 +17,8 @@ const commonFields = {
   width: 120,
 };
 
-const Standings: FunctionComponent<unknown> = () => {
-  const [tab, setTab] = React.useState(0);
-
-  const { tournament, ssw, is_team_tournament, participants, teams } =
-    useTournamentDetail();
+const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+  const { tournament, participants } = useTournamentDetail();
   const { onlineStatus } = useOnlineStatus();
 
   function getUsername(params) {
@@ -200,6 +198,118 @@ const Standings: FunctionComponent<unknown> = () => {
       ...commonFields,
     },
   ];
+
+  return (
+    <DataGrid
+      className={`${style.table} ${seen ? "" : style.hide}`}
+      autoHeight
+      autoPageSize
+      rows={participants}
+      columns={columns}
+    />
+  );
+};
+
+const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+  const { tournament, teams } = useTournamentDetail();
+  return <></>;
+};
+
+type Stats = {
+  average_rating: number;
+  countries: Array<string>;
+  titles: Array<string>;
+  longest_game: string | null;
+  shortest_game: string | null;
+  number_of_players: number;
+};
+
+const Stats: FunctionComponent<{ tournamentId: string }> = memo(
+  ({ tournamentId }) => {
+    const [stats, setStats] = useState<Stats>();
+    const [titleCounts, setTitleCounts] = useState({});
+    const [countryCounts, setCountryCounts] = useState({});
+
+    function fetchStats(id) {
+      fetchJson(`/s/tournament/stats/${id}`, "GET", undefined, (data) => {
+        if (data) {
+          setStats(data as any);
+          const tCounts = {};
+          for (let i = 0; i < data.titles.length; i++) {
+            const num = data.titles[i];
+            tCounts[num] = tCounts[num] ? tCounts[num] + 1 : 1;
+          }
+          setTitleCounts(tCounts);
+          const cCounts = {};
+          for (let i = 0; i < data.countries.length; i++) {
+            const num = data.countries[i];
+            cCounts[num] = cCounts[num] ? cCounts[num] + 1 : 1;
+          }
+          setCountryCounts(cCounts);
+        }
+      });
+    }
+
+    useEffect(() => {
+      if (tournamentId && !stats) {
+        fetchStats(tournamentId);
+      }
+    }, [tournamentId]);
+
+    return (
+      <>
+        {stats && (
+          <Paper style={{ padding: 20 }}>
+            <div>
+              {Translated.byKey("statsNumberOfPlayers")}:{" "}
+              {stats.number_of_players}
+            </div>
+            <div>
+              {Translated.byKey("statsTitledPlayers")}:{" "}
+              {Object.keys(titleCounts).map((key) => (
+                <span key={key}>
+                  {titleCounts[key]}{" "}
+                  <span className={style["player-title"]}>{key}</span>
+                </span>
+              ))}
+            </div>
+            <div>
+              {Translated.byKey("statsCountries")}: Total Countries: &nbsp;
+              {[...new Set(stats.countries)].length} &nbsp;
+              {Object.keys(countryCounts).map((key) => (
+                <span key={key}>
+                  - <FederationDisplay value={key} /> ({countryCounts[key]})
+                  &nbsp;
+                </span>
+              ))}
+            </div>
+            <div>
+              {Translated.byKey("statsAverageRating")}: {stats.average_rating}
+            </div>
+            {stats.longest_game && (
+              <div>
+                <Link to={`/game/play/${stats.longest_game}`}>
+                  {Translated.byKey("statsLongestGame")}
+                </Link>
+              </div>
+            )}
+            {stats.shortest_game && (
+              <div>
+                {Translated.byKey("statsShortestGame")}: {stats.shortest_game}
+              </div>
+            )}
+          </Paper>
+        )}
+      </>
+    );
+  }
+);
+const Standings: FunctionComponent<unknown> = () => {
+  const [tab, setTab] = React.useState(0);
+
+  const { tournament, participants, is_team_tournament } =
+    useTournamentDetail();
+
   return (
     <>
       {tournament &&
@@ -214,20 +324,18 @@ const Standings: FunctionComponent<unknown> = () => {
             </div>
             <div>
               <Tabs value={tab} onChange={(e, newValue) => setTab(newValue)}>
-                <Tab label={<Translated str="individual" />} />
-                <Tab label={<Translated str="team" />} />
-                <Tab label={<Translated str="stats" />} />
+                <Tab value={0} label={<Translated str="individual" />} />
+                {is_team_tournament && (
+                  <Tab value={1} label={<Translated str="team" />} />
+                )}
+                <Tab value={2} label={<Translated str="stats" />} />
               </Tabs>
             </div>
             <div style={{ display: "flex", height: "100%" }}>
               <div style={{ flexGrow: 1 }}>
-                <DataGrid
-                  className={`${style.table} ${tab === 0 ? "" : style.hide}`}
-                  autoHeight
-                  autoPageSize
-                  rows={participants}
-                  columns={columns}
-                />
+                <ParticipantsTable seen={tab === 0} />
+                <TeamsTable seen={tab === 1} />
+                {tab === 2 && <Stats tournamentId={tournament.id} />}
               </div>
             </div>
           </div>
