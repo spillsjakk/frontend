@@ -31,7 +31,7 @@
       width: 15%;
       position: absolute;
       top: 65%;
-      left: 42.5%
+      left: 42.5%;
     }
     .pp-custom {
       position: absolute;
@@ -195,10 +195,10 @@
   border-radius: 5px;
   margin-right: 5px;
 }
-.online{
+.online {
   margin-right: 10px;
 }
-.offline{
+.offline {
   margin-right: 10px;
 }
 @media only screen and (max-width: 500px) {
@@ -209,7 +209,6 @@
         margin-top: 10px;
       }
     }
-  }
   .centered-container {
     margin-top: 40px;
   }
@@ -218,9 +217,16 @@
     right: 0;
     width: 100%;
     margin-bottom: 90px;
-    div[role="button"]{
-      width: 40%!important;
+    div[role="button"] {
+      width: 40% !important;
       float: right;
     }
   }
+}
+.nav-tabs {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 100%;
+  justify-content: center;
+}
 }

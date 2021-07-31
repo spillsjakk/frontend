@@ -228,7 +228,9 @@ const Pairings: FunctionComponent<{
         }
       }
 
-      const pairingNav = <Nav className="nav-tabs">{pairingTabLinks}</Nav>;
+      const pairingNav = (
+        <Nav className={style["nav-tabs"]}>{pairingTabLinks}</Nav>
+      );
 
       const pairingPanes = pairingRows.map((r, i) => {
         const round = rounds?.find((round) => round.number === i + 1);

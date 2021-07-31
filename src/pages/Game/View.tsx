@@ -313,7 +313,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           <title>{title("viewGame")}</title>
         </Helmet>
 
-        <div className="d-flex flex-row justify-content-between mt-4">
+        <div className="d-flex flex-row mt-4 box">
           <div id="move-div">
             <div className="tournament-link">
               <Link to={`/tournament/view/${this.state.tournamentData?.id}`}>
