@@ -1,5 +1,10 @@
 import React, { FunctionComponent, memo, useEffect, useState } from "react";
-import { DataGrid, GridCellParams, GridColDef } from "@material-ui/data-grid";
+import {
+  DataGrid,
+  GridCellParams,
+  GridColDef,
+  GridPageChangeParams,
+} from "@material-ui/data-grid";
 import { Tabs, Tab, Paper } from "@material-ui/core";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
@@ -18,6 +23,8 @@ const commonFields = {
 };
 
 const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+  const [pageSize, setPageSize] = React.useState<number>(15);
+
   const { tournament, participants } = useTournamentDetail();
   const { onlineStatus } = useOnlineStatus();
 
@@ -203,7 +210,12 @@ const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
     <DataGrid
       className={`${style.table} ${seen ? "" : style.hide}`}
       autoHeight
-      autoPageSize
+      pageSize={pageSize}
+      onPageSizeChange={(params: GridPageChangeParams) => {
+        setPageSize(params.pageSize);
+      }}
+      rowsPerPageOptions={[15, 30, 50]}
+      pagination
       rows={participants}
       columns={columns}
     />
@@ -304,6 +316,7 @@ const Stats: FunctionComponent<{ tournamentId: string }> = memo(
     );
   }
 );
+
 const Standings: FunctionComponent<unknown> = () => {
   const [tab, setTab] = React.useState(0);
 
