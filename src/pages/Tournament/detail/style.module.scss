@@ -226,24 +226,8 @@
         margin-top: 10px;
       }
     }
-  .centered-container {
-    margin-top: 40px;
-  }
-  .pairing-view-toggle {
-    position: absolute;
-    right: 0;
-    width: 100%;
-    margin-bottom: 90px;
-    div[role="button"] {
-      width: 40% !important;
-      float: right;
+    .centered-container {
+      margin-top: 40px;
     }
   }
-}
-.nav-tabs {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  width: 100%;
-  justify-content: center;
-}
 }
