@@ -7,6 +7,23 @@
     font-weight: bold;
   }
 
+  .hide {
+    display: none;
+  }
+
+  .table {
+    font-family: Montserrat;
+  }
+
+  .table-header {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .table-cell {
+    font-size: 16px;
+  }
+
   .header-container {
     display: flex;
     justify-content: space-between;
