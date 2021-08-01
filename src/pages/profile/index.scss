@@ -87,4 +87,14 @@
     }
   }
 }
+@media screen and (max-width: 800px) {
+  #Profile {
+    .username {
+      font-size: calc(min(8vw, 45px));
+    }
+    .header {
+      font-size: calc(min(5vw, 30px));
+    }
+  }
+}
 
