@@ -226,15 +226,13 @@ const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
   const [pageSize, setPageSize] = React.useState<number>(15);
   const { teams, ssw } = useTournamentDetail();
   function renderTeamNameCell(params) {
-    const link = <Link to={"/team/view/" + params.row.team_id}>{params.row.name}</Link>;
+    const link = (
+      <Link to={"/team/view/" + params.row.team_id}>{params.row.name}</Link>
+    );
     if (!params.row.eliminated) {
       return link;
     } else {
-      return (
-        <s>
-          {link}
-        </s>
-      );
+      return <s>{link}</s>;
     }
   }
   const columns: GridColDef[] = [
@@ -282,7 +280,7 @@ const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
       hideSortIcons: true,
       align: "center",
       headerAlign: "center",
-      renderCell: (params) => (Math.round(params.row.ssw)),
+      renderCell: (params) => Math.round(params.row.ssw),
       ...commonFields,
       width: 200,
     });
@@ -298,7 +296,11 @@ const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
       }}
       rowsPerPageOptions={[15, 30, 50]}
       pagination
-      rows={ssw ? teams.map((team, index) => ({ ...team, ssw: ssw[index], })) : teams || []}
+      rows={
+        ssw
+          ? teams.map((team, index) => ({ ...team, ssw: ssw[index] }))
+          : teams || []
+      }
       columns={columns}
     />
   );
