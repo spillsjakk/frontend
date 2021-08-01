@@ -3,6 +3,7 @@ import { useUser } from "../../components/UserContext";
 import Translated from "../../components/translated/index";
 import { fetchJson } from "../../functions";
 import UserLink from "../../components/UserLink";
+import { Search } from "@material-ui/icons";
 
 const SearchByFideId: FunctionComponent<{}> = () => {
   const [fideId, setFideId] = useState("");
@@ -40,7 +41,7 @@ const SearchByFideId: FunctionComponent<{}> = () => {
                 onChange={(e) => setFideId(e.target.value)}
               />
               <button type="submit" className="btn">
-                <img className="icon" src="/icons/search.svg" alt="?" />
+                <Search />
               </button>
             </div>
           </form>

@@ -1,3 +1,4 @@
+import { NotificationsActive } from "@material-ui/icons";
 import React, { PureComponent } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -45,13 +46,7 @@ class InboxLink extends PureComponent<{}, InboxLinkState> {
   render() {
     return (
       <Nav.Link as={Link} to="/inbox" onClick={this.markReadForNow}>
-        <img
-          src="/icons/bell.svg"
-          alt=""
-          width="32"
-          height="32"
-          className="icon"
-        />
+        <NotificationsActive />
         &nbsp;
         <span
           style={

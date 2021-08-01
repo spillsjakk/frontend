@@ -40,6 +40,7 @@ import { WithRoundSetupPopup } from "../../hocs/with-round-setup-popup";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 import { numToSquare } from "../Game/play/clock";
 import { DRAW_OFFER_SIGN } from "../../constants";
+import { Event, Person, TrackChanges } from "@material-ui/icons";
 
 const { SearchBar } = Search;
 
@@ -975,13 +976,7 @@ class View extends Component<
 
                 <div className="d-flex flex-row mt-5 justify-content-around">
                   <div>
-                    <img
-                      src="/icons/bullseye.svg"
-                      alt=""
-                      width="28"
-                      height="28"
-                      className="icon"
-                    />
+                    <TrackChanges />
                     &nbsp;
                     <Translated
                       str={
@@ -998,24 +993,12 @@ class View extends Component<
                       )}
                   </div>
                   <div>
-                    <img
-                      src="/icons/calendar.svg"
-                      alt=""
-                      width="28"
-                      height="28"
-                      className="icon"
-                    />
+                    <Event />
                     &nbsp;
                     {info.tournament.start_date} - {info.tournament.end_date}
                   </div>
                   <div>
-                    <img
-                      src="/icons/person.svg"
-                      alt=""
-                      width="28"
-                      height="28"
-                      className="icon"
-                    />
+                    <Person />
                     &nbsp;
                     <UserLink
                       id={info.tournament.organizer}

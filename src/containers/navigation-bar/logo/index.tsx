@@ -7,7 +7,10 @@ const Logo: FunctionComponent<{}> = () => {
   return (
     <div id="logo-container" onClick={() => history.push("/")}>
       <div>
-        <img src="/dark-horse-icon.svg" alt="logo" />
+        <img
+          src="https://drulpact.sirv.com/sp/dark-horse-icon.svg"
+          alt="logo"
+        />
       </div>
     </div>
   );

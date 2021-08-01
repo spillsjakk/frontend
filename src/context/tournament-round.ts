@@ -14,14 +14,13 @@ export interface TournamentRoundContext {
   fetch: () => Promise<void>;
 }
 
-const TournamentRoundContext: Context<TournamentRoundContext> = React.createContext(
-  {
+const TournamentRoundContext: Context<TournamentRoundContext> =
+  React.createContext({
     rounds: [] as Array<Round>,
     add: () => {},
     delete: () => {},
     fetch: () => ({} as any),
-  }
-);
+  });
 
 export const TournamentRoundProvider = TournamentRoundContext.Provider;
 export default TournamentRoundContext;

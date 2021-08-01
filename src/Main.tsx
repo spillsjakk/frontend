@@ -17,7 +17,6 @@ import TeamManage from "./pages/Team/Manage";
 import AccountCreate from "./pages/Account/Create";
 import AccountRecover from "./pages/Account/Recover";
 import AccountSettings from "./pages/Account/Settings";
-import GameLobby from "./pages/Game/Lobby";
 import GamePlay from "./pages/Game/play";
 import GameView from "./pages/Game/View";
 import { OnboardInvitation } from "./pages/registration/onboard-invitation";
@@ -109,7 +108,6 @@ const Main = () => {
       <Route exact path="/account/settings" component={AccountSettings}></Route>
 
       <Route exact path="/calendar" component={Lobby}></Route>
-      <Route exact path="/game/lobby" component={GameLobby}></Route>
       <Route exact path="/game/play/:id" component={GamePlay}></Route>
       <Route exact path="/game/view/:id" component={GameView}></Route>
 

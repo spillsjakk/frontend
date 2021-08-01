@@ -18,7 +18,7 @@ const Banner: FunctionComponent<{}> = () => {
       <img
         className={style["banner-pic"]}
         alt="banner placeholder"
-        src={"/images/tournament/banner-placeholder.png"}
+        src={"https://drulpact.sirv.com/Images/sp/banner-placeholder-min.png"}
       />
     );
   }
@@ -36,7 +36,7 @@ const Banner: FunctionComponent<{}> = () => {
       <img
         className={style.pp}
         alt="profile"
-        src="/images/tournament/pp-placeholder.png"
+        src="https://drulpact.sirv.com/Images/sp/pp-placeholder-min.png"
       />
     );
   }

@@ -20,9 +20,8 @@ const initalValues = {
   close: () => {},
 };
 
-const ManageClubPopupContext: Context<ManageClubPopupContext> = React.createContext(
-  initalValues
-);
+const ManageClubPopupContext: Context<ManageClubPopupContext> =
+  React.createContext(initalValues);
 
 export const ManageClubPopupProvider = ManageClubPopupContext.Provider;
 export default ManageClubPopupContext;

@@ -1,11 +1,10 @@
+/* eslint-disable no-irregular-whitespace */
 export function getDictionary(lang: string) {
   const dictionary: any = {
     EN: {
       title: "SpillSjakk User Guide",
-      p1:
-        "Depending on the type of account you have, you may not have access to all the abilities outlined in this user guide.",
-      p2:
-        "If the tournament is over the board and not online, stages 1 - 4 don’t apply.",
+      p1: "Depending on the type of account you have, you may not have access to all the abilities outlined in this user guide.",
+      p2: "If the tournament is over the board and not online, stages 1 - 4 don’t apply.",
       index: "index:",
       c1: "Getting an account and logging in",
       c2: "Creating a club",
@@ -20,20 +19,14 @@ export function getDictionary(lang: string) {
       c10: "Accessing tournament printouts",
       c11: "Inputting or changing results",
       c12: "Checking club/organisation statistics",
-      c1p1:
-        "There are a few different types of account, with different powers and permissions.",
-      c1p2:
-        "Player accounts can be made by anyone with a Club Manager or Organisation account. Club Manager accounts can only be made by those with an Organisation account.",
-      c1p3:
-        "A player account is not needed for solely over the board pairings. For help on adding offline players for an entirely over the board event, section 6 has further information.",
-      c1p4:
-        "Some chess federations offer accounts for their members. It may be worth contacting your chess federation to see if they have an agreement with our service.",
-      c1p5:
-        "Otherwise, you can purchase a Club Manager or Organisation account, based on your needs and the relevant pricing. ",
+      c1p1: "There are a few different types of account, with different powers and permissions.",
+      c1p2: "Player accounts can be made by anyone with a Club Manager or Organisation account. Club Manager accounts can only be made by those with an Organisation account.",
+      c1p3: "A player account is not needed for solely over the board pairings. For help on adding offline players for an entirely over the board event, section 6 has further information.",
+      c1p4: "Some chess federations offer accounts for their members. It may be worth contacting your chess federation to see if they have an agreement with our service.",
+      c1p5: "Otherwise, you can purchase a Club Manager or Organisation account, based on your needs and the relevant pricing. ",
       c1p6: `To log in, click the "log in" button on the top right, and enter your username and then your password. If you have forgotten your password but have an email set on the account, you can follow the "forgotten password?" link to recover your account. `,
-      c1p7: `Once you are logged in successfully, “log in” on the top right should be replaced by your username. `,
-      c2p1:
-        "The fastest way to create a club is via the dropdown on the top bar. So long as your account’s permissions are Club Manager or Organisation, you can create a club. ",
+      c1p7: `Once you are logged in successfully, “log in” on the top right should be replaced by your username.`,
+      c2p1: "The fastest way to create a club is via the dropdown on the top bar. So long as your account’s permissions are Club Manager or Organisation, you can create a club. ",
       c2p2: `On the top bar of the page, click “manage”. A drop-down list will appear, and then choose “create club”.`,
       c2p3: `You can also access it any time, on the following URL: https://spillsjakk.no/club/manage`,
       c2p4: `Several fields will appear. “Name” is what will appear as the public club name. “ID” is the unique URL ending you can give for your club. “Description” is a field for information or further details about your club. “Country” allows you to select your country. “Region” is only active for Norway presently. `,
@@ -110,10 +103,8 @@ Under the tournament information, you will now see a new button “Manage [“Cl
     },
     NO: {
       title: "SpillSjakk brukerhåndbok",
-      p1:
-        "Avhengig av hvilken type konto du har, har du kanskje ikke tilgang til alle funksjonene som er beskrevet i denne brukerhåndboken.",
-      p2:
-        "Hvis turneringen er over brettet, gjelder ikke trinn 1 - 4 som omhandler online spill.",
+      p1: "Avhengig av hvilken type konto du har, har du kanskje ikke tilgang til alle funksjonene som er beskrevet i denne brukerhåndboken.",
+      p2: "Hvis turneringen er over brettet, gjelder ikke trinn 1 - 4 som omhandler online spill.",
       index: "Indeks:",
       c1: "Kontotilgang og innlogging",
       c2: "Opprette en klubb",
@@ -129,18 +120,13 @@ Under the tournament information, you will now see a new button “Manage [“Cl
       c11: "Skrive inn eller endre resultater",
       c12: "Klubb- og organisasjonsstatistikk",
       c1p1: `Det er flere typer kontoer, med forskjellige fullmakter og tillatelser.`,
-      c1p2:
-        "Spillerkontoer kan lages av alle som har en klubbleder- eller organisasjonskonto. Klubbleder-kontoer kan bare opprettes av de som har en organisasjonskonto.",
-      c1p3:
-        "En spillerkonto er ikke nødvendig for spill over brett. Informasjon om hvordan å legge til offline spillere finnes i seksjon 6 .",
-      c1p4:
-        "Noen Sjakkforbund tilbyr kontoer for sine medlemmer. Det kan være verdt å kontakte sjakkforbundet for å se om de har avtale med tjenesten vår.",
-      c1p5:
-        "Ellers kan du kjøpe en klubbleder- eller organisasjonskonto, basert på dine behov og relevant pris.",
+      c1p2: "Spillerkontoer kan lages av alle som har en klubbleder- eller organisasjonskonto. Klubbleder-kontoer kan bare opprettes av de som har en organisasjonskonto.",
+      c1p3: "En spillerkonto er ikke nødvendig for spill over brett. Informasjon om hvordan å legge til offline spillere finnes i seksjon 6 .",
+      c1p4: "Noen Sjakkforbund tilbyr kontoer for sine medlemmer. Det kan være verdt å kontakte sjakkforbundet for å se om de har avtale med tjenesten vår.",
+      c1p5: "Ellers kan du kjøpe en klubbleder- eller organisasjonskonto, basert på dine behov og relevant pris.",
       c1p6: `For å logge inn, klikk på "logg inn" -knappen øverst til høyre, og skriv inn brukernavnet ditt og deretter passordet ditt. Hvis du har glemt passordet ditt, men har en e-post tilknyttet kontoen, kan du følge lenken "glemt passord?" for å gjenopprette kontoen din.`,
       c1p7: `Når innlogging er vellykket, skal “logge inn” øverst til høyre erstattes av brukernavnet ditt.`,
-      c2p1:
-        "Den raskeste måten å opprette en klubb på er ved å åpne rullegardinmenyen på den øverste linjen. Så lenge tillatelsene til kontoen din er klubbleder eller organisasjon, kan du opprette en klubb.",
+      c2p1: "Den raskeste måten å opprette en klubb på er ved å åpne rullegardinmenyen på den øverste linjen. Så lenge tillatelsene til kontoen din er klubbleder eller organisasjon, kan du opprette en klubb.",
       c2p2: `Klikk på "administrer" øverst på siden. En rullegardinliste vil vises, og velg deretter “opprett klubb”.`,
       c2p3: `Du kan også få tilgang til den når som helst, på følgende URL: https://spillsjakk.no/club/manage`,
       c2p4: `Av flere felt vil “Navn” vises som det offentlige klubbnavnet. “ID” er den unike URL-eningen du kan gi for klubben din. “Beskrivelse” er et felt for informasjon eller ytterligere detaljer om klubben din. "Land" lar deg velge ditt land. “Region” er for tiden bare aktiv for Norge.`,

@@ -225,7 +225,7 @@ class Profile extends Component<
                 }
               >
                 <img
-                  src={`/images/${
+                  src={`https://drulpact.sirv.com/sp/${
                     this.state.online ? "online" : "offline"
                   }-circle.svg`}
                   height={25}

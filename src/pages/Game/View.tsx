@@ -14,6 +14,7 @@ import "./View.css";
 import { UserInfoBox } from "./play/user-info-box";
 import { Tournament } from "../Tournament/Types";
 import { DRAW_OFFER_SIGN } from "../../constants";
+import { FileCopy } from "@material-ui/icons";
 
 type ViewProps = {
   id: string;
@@ -410,15 +411,14 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
               </Tooltip>
             }
           >
-            <button
-              className="btn"
+            <span
               onClick={() => {
                 navigator.clipboard.writeText(this.getPgn());
                 this.setState({ pgnCopied: true });
               }}
             >
-              <img src="/icons/clipboard-plus.svg" alt="Copy to clipboard" />
-            </button>
+              <FileCopy />
+            </span>
           </OverlayTrigger>
         </div>
       </>

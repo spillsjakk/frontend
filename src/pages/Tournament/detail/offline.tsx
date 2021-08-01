@@ -16,7 +16,7 @@ const Offline = () => {
       >
         <img
           className={style.offline}
-          src="/images/offline-circle.svg"
+          src="https://drulpact.sirv.com/sp/offline-circle.svg"
           height="15"
           width="15"
         />

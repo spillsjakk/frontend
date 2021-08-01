@@ -1,13 +1,13 @@
-import React, { FunctionComponent, useContext, useEffect } from "react";
+import React from "react";
 import LangContext from "../../components/LangContext";
 import { getDictionary } from "./translations";
 import "./style.css";
 import { Link } from "react-router-dom";
 
-const UserGuide: FunctionComponent<{}> = () => {
-  const { lang } = useContext(LangContext);
+const UserGuide: React.FunctionComponent<unknown> = () => {
+  const { lang } = React.useContext(LangContext);
   const { getString } = getDictionary(lang);
-  useEffect(() => {
+  React.useEffect(() => {
     document.getElementsByTagName("body")[0].id = "User-Guide";
   });
   return (
@@ -194,4 +194,5 @@ const UserGuide: FunctionComponent<{}> = () => {
     </main>
   );
 };
+
 export { UserGuide };

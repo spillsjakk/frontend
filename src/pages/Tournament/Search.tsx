@@ -1,15 +1,16 @@
 import React, { Component, ChangeEvent, FormEvent } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { Tournament } from "./Types";
 import { Link } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import "./Search.css";
+import { SearchOutlined } from "@material-ui/icons";
 
 type SearchState = {
-  query: string,
-  results: Tournament[]
-}
+  query: string;
+  results: Tournament[];
+};
 
 class Search extends Component<{}, SearchState> {
   constructor(props: {}) {
@@ -28,9 +29,14 @@ class Search extends Component<{}, SearchState> {
   getResults(e: FormEvent) {
     e.preventDefault();
 
-    fetchJson(`/s/tournament/search?q=${encodeURIComponent(this.state.query)}`, "GET", undefined, json => {
-      this.setState({ results: json.results });
-    });
+    fetchJson(
+      `/s/tournament/search?q=${encodeURIComponent(this.state.query)}`,
+      "GET",
+      undefined,
+      (json) => {
+        this.setState({ results: json.results });
+      }
+    );
   }
 
   onChange(e: ChangeEvent<HTMLInputElement>) {
@@ -48,21 +54,30 @@ class Search extends Component<{}, SearchState> {
         </h1>
         <form className="mt-5" onSubmit={this.getResults}>
           <div className="d-flex align-items-stretch">
-            <input name="q" value={this.state.query} className="flex-fill" onChange={this.onChange} />
+            <input
+              name="q"
+              value={this.state.query}
+              className="flex-fill"
+              onChange={this.onChange}
+            />
             <button type="submit" className="btn btn-primary">
-              <img className="icon" src="/icons/search.svg" alt="?" />
+              <SearchOutlined />
             </button>
           </div>
         </form>
 
         <table className="mt-3 table">
-          {this.state.results.map(tournament =>
-            <tr>
-              <td><Link to={"/tournament/view/" + tournament.id}>{tournament.name}</Link></td>
+          {this.state.results.map((tournament, i) => (
+            <tr key={i}>
+              <td>
+                <Link to={"/tournament/view/" + tournament.id}>
+                  {tournament.name}
+                </Link>
+              </td>
               <td>{tournament.start_date}</td>
               <td>{tournament.end_date}</td>
             </tr>
-          )}
+          ))}
         </table>
       </>
     );

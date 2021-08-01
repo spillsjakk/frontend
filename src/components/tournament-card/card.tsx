@@ -47,7 +47,7 @@ const Card: FunctionComponent<Props> = (props) => {
           className={style.image}
           src={
             props.profile ||
-            "/images/tournament/home-tournament-placeholder.jpg"
+            "https://drulpact.sirv.com/Images/sp/home-tournament-placeholder-min.jpg"
           }
         />
         <div className={style.name}>{props.name}</div>

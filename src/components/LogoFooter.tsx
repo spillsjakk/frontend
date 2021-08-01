@@ -14,7 +14,11 @@ class LogoFooter extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/icons/logos/NSF.png" className="nsf" alt="NSF" />
+                <img
+                  src="https://drulpact.sirv.com/sp/NSF.png"
+                  className="nsf"
+                  alt="NSF"
+                />
               </Link>
             </div>
             <div>
@@ -23,7 +27,10 @@ class LogoFooter extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/icons/logos/SkoleSjakken.png" alt="SkoleSjakken" />
+                <img
+                  src="https://drulpact.sirv.com/sp/SkoleSjakken.png"
+                  alt="SkoleSjakken"
+                />
               </Link>
             </div>
             <div>
@@ -32,7 +39,11 @@ class LogoFooter extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src="/icons/logos/USF.png" className="usf" alt="USF" />
+                <img
+                  src="https://drulpact.sirv.com/sp/USF.png"
+                  className="usf"
+                  alt="USF"
+                />
               </Link>
             </div>
           </div>

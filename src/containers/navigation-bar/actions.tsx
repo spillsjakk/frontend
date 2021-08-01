@@ -57,7 +57,7 @@ const Actions: FunctionComponent<unknown> = () => {
           text={Translated.byKey("userIconHelpbox")}
           show={authenticated()}
         >
-          <img src="/images/user.svg" width="35px" />
+          <img src="https://drulpact.sirv.com/sp/user.svg" width="35px" />
         </HelpBox>
         <div className="menu">
           <Link to={"/profile/" + user.info?.id} className="item">
@@ -129,7 +129,7 @@ const MobileActions: FunctionComponent<unknown> = () => {
         >
           <img
             id="navigation-user-icon"
-            src="/images/user.svg"
+            src="https://drulpact.sirv.com/sp/user.svg"
             width="35px"
             onClick={() => setOpen(true)}
           />

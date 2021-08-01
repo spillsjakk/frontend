@@ -10,7 +10,7 @@ const Header: FunctionComponent<{}> = () => {
         <img
           className={style.tick}
           alt="verified"
-          src="/images/tournament/green-tick.png"
+          src="https://drulpact.sirv.com/Images/sp/green-tick-min.png"
         />
       </div>
     </div>

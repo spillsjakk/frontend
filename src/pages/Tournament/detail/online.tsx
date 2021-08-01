@@ -16,7 +16,7 @@ const Online = () => {
       >
         <img
           className={style.online}
-          src="/images/online-circle.svg"
+          src="https://drulpact.sirv.com/sp/online-circle.svg"
           height="15"
           width="15"
         />

@@ -9,7 +9,10 @@ const Header: FunctionComponent<{}> = () => {
         {Translated.byKey("leagueManagePage").toUpperCase()}
       </div>
       <div className={style.icon}>
-        <img className={style.tick} src="/images/tournament/green-tick.png" />
+        <img
+          className={style.tick}
+          src="https://drulpact.sirv.com/Images/sp/green-tick-min.png"
+        />
       </div>
     </div>
   );

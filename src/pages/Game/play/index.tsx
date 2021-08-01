@@ -767,7 +767,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     return (
       <>
         <div className="user-info">
-          {federation && <img src={`/images/flags/${federation}.png`} />}
+          {federation && (
+            <img src={`https://drulpact.sirv.com/sp/flags/${federation}.png`} />
+          )}
           <div className="name">
             <UserLink id={opponent.id} name={opponent.name} ghost={false} />
           </div>
@@ -786,7 +788,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     return (
       <>
         <div className="user-info">
-          {federation && <img src={`/images/flags/${federation}.png`} />}
+          {federation && (
+            <img src={`https://drulpact.sirv.com/sp/flags/${federation}.png`} />
+          )}
           <div className="name">
             <UserLink id={player.id} name={player.name} ghost={false} />
           </div>
@@ -879,25 +883,25 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           <div className="d-flex flex-row justify-content-around">
             <div id="promotion-dialog">
               <img
-                src={`/images/pieces/${
+                src={`https://drulpact.sirv.com/sp/pieces/${
                   this.state.orientation === "black" ? "bQ" : "wQ"
                 }.svg`}
                 onClick={() => this.doPromotion("q")}
               />
               <img
-                src={`/images/pieces/${
+                src={`https://drulpact.sirv.com/sp/pieces/${
                   this.state.orientation === "black" ? "bR" : "wR"
                 }.svg`}
                 onClick={() => this.doPromotion("r")}
               />
               <img
-                src={`/images/pieces/${
+                src={`https://drulpact.sirv.com/sp/pieces/${
                   this.state.orientation === "black" ? "bB" : "wB"
                 }.svg`}
                 onClick={() => this.doPromotion("b")}
               />
               <img
-                src={`/images/pieces/${
+                src={`https://drulpact.sirv.com/sp/pieces/${
                   this.state.orientation === "black" ? "bN" : "wN"
                 }.svg`}
                 onClick={() => this.doPromotion("n")}
