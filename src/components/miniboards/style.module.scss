@@ -18,13 +18,18 @@
   .outcome {
     position: absolute;
     top: 40%;
-    left: 70px;
+    left: 40%;
     background-color: white;
     font-weight: 600;
     z-index: 2;
     padding: 5px;
     max-width: 100px;
   }
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .board {
   position: relative;
@@ -36,8 +41,8 @@
   height: 26px;
   text-align: center;
   position: absolute;
-  top: -20px;
-  right: 10px;
+  top: 0;
+  left: 0;
   font-weight: 600;
   width: 25px;
   z-index: 10;
@@ -52,5 +57,9 @@
       justify-content: center;
       align-items: center;
     }
+  }
+  #pairingnumber {
+    top: 0;
+    left: 10%;
   }
 }

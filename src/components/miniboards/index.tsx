@@ -27,17 +27,22 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
   }, [page, data]);
   return (
     <>
-      <Grid
-        container
-        alignItems="center"
-        justifyContent="center"
-        id={style.miniboards}
-      >
+      <Grid container id={style.miniboards}>
         {Array.isArray(boardsToShow) &&
           boardsToShow.map((game) => (
-            <Grid item key={game.id} className={style.board}>
-              <p id={style.pairingnumber}>{game.boardNumber}</p>
-              <Board game={game} />
+            <Grid
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              item
+              key={game.id}
+              className={style.board}
+            >
+              <div className={style["flex-center"]}>
+                <p id={style.pairingnumber}>{game.boardNumber}</p>
+                <Board game={game} />
+              </div>
             </Grid>
           ))}
       </Grid>
