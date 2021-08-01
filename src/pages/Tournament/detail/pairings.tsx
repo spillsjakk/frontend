@@ -1,12 +1,30 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Nav, Tab } from "react-bootstrap";
-import { useTournamentDetail } from "../../../context/tournament-detail";
-import Translated from "../../../components/translated";
+import { Tab, Tabs, ToggleButton, ToggleButtonGroup } from "@material-ui/core";
+import {
+  GridColDef,
+  DataGrid,
+  GridPageChangeParams,
+} from "@material-ui/data-grid";
+import { List, ViewModule } from "@material-ui/icons";
+import React, { FunctionComponent, memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Translated from "../../../components/translated";
+import { useTournamentDetail } from "../../../context/tournament-detail";
 import style from "./style.module.scss";
-import { defaultDate } from "../../../constants";
+import { useOnlineStatus } from "../../../hocs/with-online-statuses/index";
+import { Online } from "./online";
+import { Offline } from "./offline";
 import { Miniboards } from "../../../components/miniboards";
-import Toggle from "react-bootstrap-toggle";
+
+interface Props {
+  showHeader?: boolean;
+  defaultMiniboards?: boolean;
+}
+
+const commonFields = {
+  headerClassName: style["table-header"],
+  cellClassName: style["table-cell"],
+  width: 120,
+};
 
 function outcomeToStr(outcome: number | undefined) {
   switch (outcome) {
@@ -21,299 +39,303 @@ function outcomeToStr(outcome: number | undefined) {
   }
 }
 
-const Pairings: FunctionComponent<{
-  showHeader?: boolean;
-  defaultMiniboards?: boolean;
-}> = ({ showHeader = true, defaultMiniboards = false }) => {
-  const [pairingPanes, setPairingPanes] = useState<any>([]);
-  const [pairingNav, setPairingNav] = useState<any>([]);
-  const [showMiniboards, setShowMiniboards] = useState(defaultMiniboards);
-  const [pairingDefaultActiveKey, setPairingDefaultActiveKey] = useState(1);
+const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
+  const [pageSize, setPageSize] = useState(15);
 
-  const { pairings, tournament, tko_separation, games, rounds } =
-    useTournamentDetail();
+  const { pairings, tournament, tko_separation, games } = useTournamentDetail();
 
-  function getGameData() {
-    const result: any = {};
-    if (!(Array.isArray(pairings) && pairings.length && tournament && games)) {
-      return [];
-    }
-    pairings.forEach((pairing) => {
-      if (pairing.white === "bye" || pairing.black === "bye") {
-        return;
-      }
-      let localGames =
-        games[
-          pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
-        ] ||
-        games[
-          pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
-        ] ||
-        [];
-      localGames = localGames.map((game) => ({
-        ...game,
-        outcome: pairing.outcome,
-        round: pairing.round,
-        whiteName: tournament.show_only_usernames
-          ? pairing.white_username
-          : pairing.white_name,
-        blackName: tournament.show_only_usernames
-          ? pairing.black_username
-          : pairing.black_name,
-        white: pairing.white,
-        black: pairing.black,
-      }));
-      if (result[pairing.round]) {
-        if (
-          !result[pairing.round].find((game) =>
-            localGames.find((lgame) => lgame.id === game.id)
-          )
-        ) {
-          result[pairing.round].push(...localGames);
-        }
-      } else {
-        result[pairing.round] = localGames;
-      }
-    });
-    setPairingDefaultActiveKey(
-      Object.values(result).filter((r) => Array.isArray(r) && r.length > 0)
-        .length
-    );
-    return result;
+  const { onlineStatus } = useOnlineStatus();
+
+  function getUsername(params, color) {
+    return tournament?.show_only_usernames
+      ? params.getValue(params.id, `${color}_username`) || ""
+      : params.getValue(params.id, `${color}_name`);
   }
 
-  useEffect(() => {
-    if (Array.isArray(pairings) && pairings.length && tournament && games) {
-      const gameData = getGameData();
-      const pairingTabLinks = [];
-      const pairingRows: any[][] = [];
-      for (const pairing of pairings) {
-        if (pairing.round > pairingTabLinks.length) {
-          pairingTabLinks.push(
-            <Nav.Item key={pairing.round}>
-              <Nav.Link eventKey={"round-tab-" + pairing.round.toString()}>
-                <Translated str="round" />
-                &nbsp;{pairing.round}
-              </Nav.Link>
-            </Nav.Item>
-          );
-          pairingRows.push([]);
-        }
-
-        if (pairing.white === "bye" || pairing.black === "bye") {
-          continue;
-        }
-        const boardnocell = (
-          <td>
-            <div key={`${pairing.round}-${pairing.white}`}>
-              <span>{(pairing as any).boardNumber}</span>
-              &nbsp;
-            </div>
-          </td>
-        );
-        const whiteCell = (
-          <td>
-            {pairing.white_title && (
-              <>
-                <span className={style["player-title"]}>
-                  {pairing.white_title}
-                </span>
-                &nbsp;
-              </>
-            )}
-            {tournament.show_only_usernames
-              ? pairing.white_username
-              : pairing.white_name}
-          </td>
-        );
-
-        const outcomeCell = (
-          <td>
-            {tournament.kind !== "TeamKnockout"
-              ? outcomeToStr(pairing.outcome)
-              : outcomeToStr(
-                  tko_separation?.[
-                    pairing.round.toString() + "_" + pairing.white
-                  ].game1
-                )}
-          </td>
-        );
-
-        const blackCell = (
-          <td>
-            {pairing.black_title && (
-              <>
-                <span className={style["player-title"]}>
-                  {pairing.black_title}
-                </span>
-                &nbsp;
-              </>
-            )}
-            {tournament.show_only_usernames
-              ? pairing.black_username
-              : pairing.black_name}
-          </td>
-        );
-
-        const onlineCell = (
-          <td rowSpan={tournament.kind === "TeamKnockout" ? 2 : 1}>
-            <input
-              data-white={pairing.white}
-              data-black={pairing.black}
-              data-round={pairing.round}
-              type="checkbox"
-              className="chk-online"
-              checked={pairing.online}
-              disabled={true}
-            />
-          </td>
-        );
-
-        const localGames =
-          games[
-            pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
-          ] ||
-          games[
-            pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
-          ] ||
-          [];
-
-        const sortedGames = localGames.sort((a, b) =>
-          a.start > b.start ? 1 : a.start === b.start ? 0 : -1
-        );
-        const gameLinkCell = (
-          <td rowSpan={tournament.kind === "TeamKnockout" ? 2 : 1}>
-            {sortedGames.map((g) => (
-              <div key={g.id}>
-                <Link to={"/game/play/" + g.id}>
-                  <Translated str={g.finished ? "finished" : "ongoing"} />
-                </Link>
-              </div>
-            ))}
-          </td>
-        );
-
-        if (pairingRows[pairing.round - 1]) {
-          pairingRows[pairing.round - 1].push(
-            <tr key={pairing.white + "_" + pairing.black}>
-              {boardnocell}
-              {whiteCell}
-              {outcomeCell}
-              {blackCell}
-              {onlineCell}
-              {gameLinkCell}
-            </tr>
-          );
-        }
-
-        if (tournament.kind === "TeamKnockout") {
-          const outcomeCell2 = (
-            <td>
-              {outcomeToStr(
-                tko_separation?.[pairing.round.toString() + "_" + pairing.white]
-                  .game2
-              )}
-            </td>
-          );
-
-          if (pairingRows[pairing.round - 1]) {
-            pairingRows[pairing.round - 1].push(
-              <tr key={"-" + pairing.white + "_" + pairing.black}>
-                {blackCell}
-                {outcomeCell2}
-                {whiteCell}
-              </tr>
-            );
-          }
-        }
-      }
-
-      const pairingNav = (
-        <Nav className={style["nav-tabs"]}>{pairingTabLinks}</Nav>
-      );
-
-      const pairingPanes = pairingRows.map((r, i) => {
-        const round = rounds?.find((round) => round.number === i + 1);
-        return (
-          <Tab.Pane eventKey={"round-tab-" + (i + 1).toString()} key={i}>
-            {round && round?.start_date !== defaultDate && (
-              <div
-                className={style["round-starting-time"]}
-              >{`${Translated.byKey("startDate")}: ${new Date(
-                round?.start_date || 0
-              ).toLocaleString()}`}</div>
-            )}
-            {!showMiniboards && (
-              <table className="table table-striped mt-4 dense pairing-table">
-                <thead>
-                  <tr>
-                    <th>
-                      <Translated str="board number" />
-                    </th>
-                    <th>
-                      <Translated str="player" />
-                    </th>
-                    <th>
-                      <Translated str="result" />
-                    </th>
-                    <th>
-                      <Translated str="player" />
-                    </th>
-                    <th>
-                      <Translated str="online" />?
-                    </th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>{r}</tbody>
-              </table>
-            )}
-            {showMiniboards && gameData && (
-              <Miniboards data={gameData[i + 1]} />
-            )}
-          </Tab.Pane>
-        );
-      });
-      setPairingNav(pairingNav);
-      setPairingPanes(pairingPanes);
-      setPairingDefaultActiveKey(pairingPanes.length);
+  function renderPlayerCell(params, color) {
+    const participantLink = (
+      <div className="text-truncate">
+        <Link to={"/profile/" + params.getValue(params.id, color)}>
+          {getUsername(params, color)}
+        </Link>
+      </div>
+    );
+    const statusCircle = (
+      <>
+        {onlineStatus.find(
+          (obj) => obj.account === params.getValue(params.id, color)
+        )?.online === true ? (
+          <Online />
+        ) : (
+          <Offline />
+        )}
+      </>
+    );
+    const titleSpan = params.getValue(params.id, `${color}_title`) ? (
+      <div className={style["player-title"]}>
+        {params.getValue(params.id, `${color}_title`)}
+      </div>
+    ) : (
+      <></>
+    );
+    const cell = (
+      <div
+        className="d-flex"
+        style={{ lineHeight: "normal", maxWidth: "100%" }}
+      >
+        {statusCircle}
+        {titleSpan} {participantLink}
+      </div>
+    );
+    if (params.getValue(params.id, "eliminated")) {
+      return <s>{cell}</s>;
+    } else {
+      return cell;
     }
-  }, [pairings, tournament, tko_separation, games, rounds, showMiniboards]);
+  }
+
+  function renderResultCell(params) {
+    return (
+      <>
+        {tournament.kind !== "TeamKnockout"
+          ? outcomeToStr(params.getValue(params.id, "outcome"))
+          : outcomeToStr(
+              tko_separation?.[
+                params.getValue(params.id, "round").toString() +
+                  "_" +
+                  params.getValue(params.id, "white")
+              ].game1
+            )}
+      </>
+    );
+  }
+
+  function renderLinkCell(params) {
+    const localGames =
+      games[
+        `${params.getValue(params.id, "round")}_${params.getValue(
+          params.id,
+          "white"
+        )}_${params.getValue(params.id, "black")}`
+      ] ||
+      games[
+        `${params.getValue(params.id, "round")}_${params.getValue(
+          params.id,
+          "black"
+        )}_${params.getValue(params.id, "white")}`
+      ] ||
+      [];
+    const sortedGames = localGames.sort((a, b) =>
+      a.start > b.start ? 1 : a.start === b.start ? 0 : -1
+    );
+    return (
+      <>
+        {sortedGames.map((g) => (
+          <div key={g.id}>
+            <Link to={"/game/play/" + g.id}>
+              <Translated str={g.finished ? "finished" : "ongoing"} />
+            </Link>
+          </div>
+        ))}
+      </>
+    );
+  }
+
+  const columns: GridColDef[] = [
+    {
+      field: "boardNumber",
+      headerName: "Board Number",
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+      minWidth: 200,
+    },
+    {
+      field: "white",
+      headerName: "White",
+      renderCell: (params: any) => renderPlayerCell(params, "white"),
+      hideSortIcons: true,
+      ...commonFields,
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      field: "result",
+      headerName: "Result",
+      renderCell: renderResultCell,
+      hideSortIcons: true,
+      ...commonFields,
+      minWidth: 100,
+    },
+    {
+      field: "black",
+      headerName: "Black",
+      renderCell: (params: any) => renderPlayerCell(params, "black"),
+      hideSortIcons: true,
+      ...commonFields,
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      field: "link",
+      headerName: "Link",
+      renderCell: renderLinkCell,
+      hideSortIcons: true,
+      ...commonFields,
+    },
+  ];
 
   return (
-    <>
-      {Array.isArray(pairingPanes) && pairingPanes.length > 0 && (
-        <div>
+    <div style={{ display: "flex", height: "100%" }}>
+      <div style={{ flexGrow: 1 }}>
+        <DataGrid
+          className={`${style.table}`}
+          autoHeight
+          pageSize={pageSize}
+          onPageSizeChange={(params: GridPageChangeParams) => {
+            setPageSize(params.pageSize);
+          }}
+          rowsPerPageOptions={[15, 30, 50]}
+          pagination
+          rows={pairings.filter(
+            (p) => p.round === round && p.white !== "bye" && p.black !== "bye"
+          )}
+          columns={columns}
+        />
+      </div>
+    </div>
+  );
+});
+
+const MiniBoardsView: FunctionComponent<{ round: number }> = memo(
+  ({ round }) => {
+    const { pairings, tournament, games } = useTournamentDetail();
+
+    function getGameData() {
+      const result = [];
+      if (
+        !(Array.isArray(pairings) && pairings.length && tournament && games)
+      ) {
+        return [];
+      }
+      pairings
+        .filter((p) => p.round === round)
+        .forEach((pairing) => {
+          if (!pairing) {
+            return [];
+          }
+          if (pairing.white === "bye" || pairing.black === "bye") {
+            return;
+          }
+          const localGames =
+            games[
+              pairing.round.toString() +
+                "_" +
+                pairing.white +
+                "_" +
+                pairing.black
+            ] ||
+            games[
+              pairing.round.toString() +
+                "_" +
+                pairing.black +
+                "_" +
+                pairing.white
+            ] ||
+            [];
+          result.push(
+            ...localGames.map((game) => ({
+              ...game,
+              outcome: pairing.outcome,
+              round: pairing.round,
+              whiteName: tournament.show_only_usernames
+                ? pairing.white_username
+                : pairing.white_name,
+              blackName: tournament.show_only_usernames
+                ? pairing.black_username
+                : pairing.black_name,
+              white: pairing.white,
+              black: pairing.black,
+            }))
+          );
+        });
+      return result;
+    }
+    return (
+      <>
+        <Miniboards data={getGameData()} />
+      </>
+    );
+  }
+);
+
+const Pairings: FunctionComponent<Props> = ({
+  showHeader = true,
+  defaultMiniboards = false,
+}) => {
+  const [type, setType] = useState(defaultMiniboards ? "miniboards" : "list");
+  const [tab, setTab] = useState(0);
+  const [uniqueTabs, setUniqueTabs] = useState([]);
+
+  const { pairings } = useTournamentDetail();
+
+  useEffect(() => {
+    if (Array.isArray(pairings) && pairings.length > 0) {
+      const result = Array.from(new Set(pairings.map((p) => p.round)));
+      setUniqueTabs(result);
+      setTab(result.length);
+    }
+  }, [pairings]);
+
+  return (
+    <div className={style["height-600"]}>
+      {Array.isArray(pairings) && pairings.length > 0 && (
+        <div className="mt-4">
           <div className={style["centered-container"]}>
             {showHeader && (
               <>
-                <h3 className="mt-4">
+                <h3>
                   <Translated str="pairings" />
                 </h3>
                 <div className={style["pairing-view-toggle"]}>
-                  <Toggle
-                    onClick={() => {
-                      setShowMiniboards(!showMiniboards);
+                  <ToggleButtonGroup
+                    value={type}
+                    exclusive
+                    onChange={(e, newValue) => {
+                      setType(newValue);
                     }}
-                    on={<div>{Translated.byKey("list")}</div>}
-                    off={<div>{Translated.byKey("miniboards")}</div>}
-                    size="xs"
-                    offstyle="success"
-                    active={showMiniboards}
-                  />
+                    aria-label="text alignment"
+                  >
+                    <ToggleButton value="miniboards">
+                      <ViewModule />
+                    </ToggleButton>
+                    <ToggleButton value="list">
+                      <List />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
                 </div>
               </>
             )}
           </div>
-          <Tab.Container
-            defaultActiveKey={"round-tab-" + pairingDefaultActiveKey}
-          >
-            {pairingNav}
-            <Tab.Content>{pairingPanes}</Tab.Content>
-          </Tab.Container>
+          <div>
+            <Tabs
+              variant="scrollable"
+              scrollButtons="auto"
+              value={tab}
+              onChange={(e, newValue) => setTab(newValue)}
+            >
+              {uniqueTabs.map((round) => (
+                <Tab key={round} label={`Round ${round}`} value={round} />
+              ))}
+            </Tabs>
+          </div>
+          {type === "miniboards" && <MiniBoardsView round={tab} />}
+          {type === "list" && <ListView round={tab} />}
         </div>
       )}
-    </>
+    </div>
   );
 };
+
 export { Pairings };

@@ -1,21 +1,308 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Nav, Tab } from "react-bootstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider, {
-  Search,
-  SearchMatchProps,
-} from "react-bootstrap-table2-toolkit";
-import style from "./style.module.scss";
-import Translated from "../../../components/translated";
+import React, { FunctionComponent, memo, useEffect, useState } from "react";
+import {
+  DataGrid,
+  GridCellParams,
+  GridColDef,
+  GridPageChangeParams,
+} from "@material-ui/data-grid";
+import { Tabs, Tab, Paper } from "@material-ui/core";
 import { useTournamentDetail } from "../../../context/tournament-detail";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import { Participant, TeamParticipant } from "../../../pages/Tournament/Types";
-import { Link } from "react-router-dom";
-import FederationDisplay from "../../../components/FederationDisplay";
-import { fetchJson } from "../../../functions";
+import Translated from "../../../components/translated";
 import { useOnlineStatus } from "../../../hocs/with-online-statuses";
+import { Link } from "react-router-dom";
 import { Online } from "./online";
 import { Offline } from "./offline";
+import style from "./style.module.scss";
+import FederationDisplay from "../../../components/FederationDisplay";
+import { fetchJson } from "../../../functions";
+
+const commonFields = {
+  headerClassName: style["table-header"],
+  cellClassName: style["table-cell"],
+  width: 120,
+};
+
+const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+  const [pageSize, setPageSize] = React.useState<number>(15);
+
+  const { tournament, participants } = useTournamentDetail();
+  const { onlineStatus } = useOnlineStatus();
+
+  function getUsername(params) {
+    return tournament?.show_only_usernames
+      ? params.getValue(params.id, "username") || ""
+      : `${params.getValue(params.id, "first_name")} ${params.getValue(
+          params.id,
+          "last_name"
+        )}`;
+  }
+
+  function renderPlayerCell(params) {
+    const participantLink = (
+      <div className="text-truncate">
+        <Link to={"/profile/" + params.id}>{getUsername(params)}</Link>
+      </div>
+    );
+    const statusCircle = (
+      <>
+        {onlineStatus.find((obj) => obj.account === params.id)?.online ===
+        true ? (
+          <Online />
+        ) : (
+          <Offline />
+        )}
+      </>
+    );
+    const titleSpan = params.getValue(params.id, "title") ? (
+      <div className={style["player-title"]}>
+        {params.getValue(params.id, "title")}
+      </div>
+    ) : (
+      <></>
+    );
+    const cell = (
+      <div
+        className="d-flex"
+        style={{ lineHeight: "normal", maxWidth: "100%" }}
+      >
+        {statusCircle}
+        {titleSpan} {participantLink}
+      </div>
+    );
+    if (params.getValue(params.id, "eliminated")) {
+      return <s>{cell}</s>;
+    } else {
+      return cell;
+    }
+  }
+
+  function renderTeamNameCell(params) {
+    return params.getValue(params.id, "team") ? (
+      <div className="text-truncate" style={{ maxWidth: "100%" }}>
+        <Link to={"/team/view/" + params.getValue(params.id, "team")}>
+          {params.getValue(params.id, "team_name")}
+        </Link>
+      </div>
+    ) : (
+      <></>
+    );
+  }
+
+  function renderScoreCell(params: GridCellParams) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        }}
+      >
+        {tournament?.show_only_top_nr
+          ? params.value >= tournament.show_only_top_nr!
+            ? ""
+            : params.value
+          : params.value}
+      </div>
+    );
+  }
+
+  const columns: GridColDef[] = [
+    {
+      field: "rank",
+      headerName: Translated.byKey("rank"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "seed",
+      headerName: Translated.byKey("seed"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "player",
+      headerName: Translated.byKey("player"),
+      renderCell: renderPlayerCell,
+      valueGetter: getUsername,
+      hideSortIcons: true,
+      minWidth: 200,
+      flex: 1,
+      ...commonFields,
+    },
+    {
+      field: "team_name",
+      headerName: Translated.byKey("team"),
+      renderCell: renderTeamNameCell,
+      hideSortIcons: true,
+      ...commonFields,
+    },
+    {
+      field: "fide_rating",
+      headerName: Translated.byKey("rating"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "federation",
+      headerName: Translated.byKey("federation"),
+      hideSortIcons: true,
+      renderCell: (params) => (
+        <FederationDisplay
+          value={params.getValue(params.id, "federation") as string}
+        />
+      ),
+      ...commonFields,
+    },
+    {
+      field: "score",
+      headerName: Translated.byKey("score"),
+      hideSortIcons: true,
+      renderCell: renderScoreCell,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "tb1",
+      headerName: Translated.byKey("TB1"),
+      hideSortIcons: true,
+      hide: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "tb2",
+      headerName: Translated.byKey("TB2"),
+      hideSortIcons: true,
+      hide: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "tb3",
+      headerName: Translated.byKey("TB3"),
+      hideSortIcons: true,
+      hide: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "tb4",
+      headerName: Translated.byKey("TB4"),
+      hideSortIcons: true,
+      hide: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+  ];
+
+  return (
+    <DataGrid
+      className={`${style.table} ${seen ? "" : style.hide}`}
+      autoHeight
+      pageSize={pageSize}
+      onPageSizeChange={(params: GridPageChangeParams) => {
+        setPageSize(params.pageSize);
+      }}
+      rowsPerPageOptions={[15, 30, 50]}
+      pagination
+      rows={participants}
+      columns={columns}
+    />
+  );
+};
+
+const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+  const [pageSize, setPageSize] = React.useState<number>(15);
+  const { teams, ssw } = useTournamentDetail();
+  function renderTeamNameCell(params) {
+    const link = <Link to={"/team/view/" + params.row.team_id}>{params.row.name}</Link>;
+    if (!params.row.eliminated) {
+      return link;
+    } else {
+      return (
+        <s>
+          {link}
+        </s>
+      );
+    }
+  }
+  const columns: GridColDef[] = [
+    {
+      field: "seed",
+      headerName: Translated.byKey("seed"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "name",
+      headerName: Translated.byKey("team"),
+      renderCell: renderTeamNameCell,
+      hideSortIcons: true,
+      ...commonFields,
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      field: "match_score",
+      headerName: Translated.byKey("matchScore"),
+      hideSortIcons: true,
+      ...commonFields,
+      align: "center",
+      headerAlign: "center",
+      width: 200,
+    },
+    {
+      field: "game_score",
+      headerName: Translated.byKey("gameScore"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+      width: 200,
+    },
+  ];
+
+  if (ssw) {
+    columns.push({
+      field: "ssw",
+      headerName: Translated.byKey("weighted"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => (Math.round(params.row.ssw)),
+      ...commonFields,
+      width: 200,
+    });
+  }
+
+  return (
+    <DataGrid
+      className={`${style.table} ${seen ? "" : style.hide}`}
+      autoHeight
+      pageSize={pageSize}
+      onPageSizeChange={(params: GridPageChangeParams) => {
+        setPageSize(params.pageSize);
+      }}
+      rowsPerPageOptions={[15, 30, 50]}
+      pagination
+      rows={ssw ? teams.map((team, index) => ({ ...team, ssw: ssw[index], })) : teams || []}
+      columns={columns}
+    />
+  );
+};
 
 type Stats = {
   average_rating: number;
@@ -26,477 +313,129 @@ type Stats = {
   number_of_players: number;
 };
 
-const { SearchBar } = Search;
+const Stats: FunctionComponent<{ tournamentId: string }> = memo(
+  ({ tournamentId }) => {
+    const [stats, setStats] = useState<Stats>();
+    const [titleCounts, setTitleCounts] = useState({});
+    const [countryCounts, setCountryCounts] = useState({});
 
-function headerFormatter(column: any, _: any, components: any) {
-  return (
-    <>
-      {Translated.byKey(column.text)}
-      {components.sortElement}
-    </>
-  );
-}
+    function fetchStats(id) {
+      fetchJson(`/s/tournament/stats/${id}`, "GET", undefined, (data) => {
+        if (data) {
+          setStats(data as any);
+          const tCounts = {};
+          for (let i = 0; i < data.titles.length; i++) {
+            const num = data.titles[i];
+            tCounts[num] = tCounts[num] ? tCounts[num] + 1 : 1;
+          }
+          setTitleCounts(tCounts);
+          const cCounts = {};
+          for (let i = 0; i < data.countries.length; i++) {
+            const num = data.countries[i];
+            cCounts[num] = cCounts[num] ? cCounts[num] + 1 : 1;
+          }
+          setCountryCounts(cCounts);
+        }
+      });
+    }
 
-function smallHeader() {
-  return { width: "80px", paddingLeft: "2px" };
-}
+    useEffect(() => {
+      if (tournamentId && !stats) {
+        fetchStats(tournamentId);
+      }
+    }, [tournamentId]);
 
-function mediumHeader() {
-  return { width: "120px", paddingLeft: "2px" };
-}
-
-const tbColumns = [
-  { dataField: "tb1", text: "TB1", sort: true, headerStyle: smallHeader },
-  { dataField: "tb2", text: "TB2", sort: true, headerStyle: smallHeader },
-  { dataField: "tb3", text: "TB3", sort: true, headerStyle: smallHeader },
-  { dataField: "tb4", text: "TB4", sort: true, headerStyle: smallHeader },
-];
-
-function TitlesForStats(titles: Array<string>) {
-  const counts = {};
-  for (let i = 0; i < titles.length; i++) {
-    const num = titles[i];
-    counts[num] = counts[num] ? counts[num] + 1 : 1;
-  }
-  return (
-    <>
-      {Object.keys(counts).map((key) => (
-        <span key={key}>
-          {counts[key]} <span className={style["player-title"]}>{key}</span>
-        </span>
-      ))}
-    </>
-  );
-}
-
-function CountriesForStats(countries: Array<string>) {
-  const counts = {};
-  for (let i = 0; i < countries.length; i++) {
-    const num = countries[i];
-    counts[num] = counts[num] ? counts[num] + 1 : 1;
-  }
-  return (
-    <>
-      {Object.keys(counts).map((key) => (
-        <span key={key}>
-          - <FederationDisplay value={key} /> ({counts[key]}) &nbsp;
-        </span>
-      ))}
-    </>
-  );
-}
-
-const Standings: FunctionComponent<{}> = () => {
-  const { tournament, ssw, is_team_tournament, participants, teams } =
-    useTournamentDetail();
-  const { onlineStatus } = useOnlineStatus();
-  const [sswColumn, setSswColumn] = useState({});
-  const [teamParticipantColumns, setTeamParticipantColumns] = useState<any[]>(
-    []
-  );
-  const [participantColumns, setParticipantColumns] = useState<any[]>([]);
-  const [stats, setStats] = useState<Stats>();
-
-  function getUsername(
-    username: string | undefined,
-    firstName: string | undefined,
-    lastName: string | undefined
-  ) {
-    return tournament?.show_only_usernames
-      ? username || ""
-      : `${firstName} ${lastName}`;
-  }
-
-  function onParticipantsColumnMatch({
-    searchText,
-    value,
-    column,
-    row,
-  }: SearchMatchProps<any>) {
     return (
-      (value !== null &&
-        value !== undefined &&
-        value.toString().toLowerCase().includes(searchText)) ||
-      getUsername(row.username, row.first_name, row.last_name)
-        .toLowerCase()
-        .includes(searchText)
+      <>
+        {stats && (
+          <Paper style={{ padding: 20 }}>
+            <div>
+              {Translated.byKey("statsNumberOfPlayers")}:{" "}
+              {stats.number_of_players}
+            </div>
+            <div>
+              {Translated.byKey("statsTitledPlayers")}:{" "}
+              {Object.keys(titleCounts).map((key) => (
+                <span key={key}>
+                  {titleCounts[key]}{" "}
+                  <span className={style["player-title"]}>{key}</span>
+                </span>
+              ))}
+            </div>
+            <div>
+              {Translated.byKey("statsCountries")}: Total Countries: &nbsp;
+              {[...new Set(stats.countries)].length} &nbsp;
+              {Object.keys(countryCounts).map((key) => (
+                <span key={key}>
+                  - <FederationDisplay value={key} /> ({countryCounts[key]})
+                  &nbsp;
+                </span>
+              ))}
+            </div>
+            <div>
+              {Translated.byKey("statsAverageRating")}: {stats.average_rating}
+            </div>
+            {stats.longest_game && (
+              <div>
+                <Link to={`/game/play/${stats.longest_game}`}>
+                  {Translated.byKey("statsLongestGame")}
+                </Link>
+              </div>
+            )}
+            {stats.shortest_game && (
+              <div>
+                {Translated.byKey("statsShortestGame")}: {stats.shortest_game}
+              </div>
+            )}
+          </Paper>
+        )}
+      </>
     );
   }
+);
 
-  function setup() {
-    setSswColumn({
-      dataField: "ssw",
-      text: "weighted",
-      sort: true,
-      headerFormatter,
-      formatter: function (_: any, row: any, __: number, ___: any) {
-        return Math.round(row.ssw);
-      },
-    });
+const Standings: FunctionComponent<unknown> = () => {
+  const [tab, setTab] = React.useState(0);
 
-    setParticipantColumns([
-      {
-        dataField: "rank",
-        text: "rank",
-        sort: true,
-        headerStyle: smallHeader,
-        headerFormatter,
-      },
-      {
-        dataField: "seed",
-        text: "seed",
-        headerStyle: smallHeader,
-        sort: true,
-        headerFormatter,
-      },
-      {
-        dataField: "account",
-        sort: true,
-        text: "player",
-        headerFormatter,
-        formatter: function (_: any, row: Participant, __: any, ___: any) {
-          const participantLink = (
-            <div className="d-inline-block text-truncate">
-              <Link to={"/profile/" + row.account}>
-                {(row as any).getUsername()}
-              </Link>
-            </div>
-          );
-          const statusCircle = (
-            <>
-              {onlineStatus.find((obj) => obj.account === row.account)
-                ?.online === true ? (
-                <Online />
-              ) : (
-                <Offline />
-              )}
-            </>
-          );
-          const titleSpan = row.title ? (
-            <div className={style["player-title"]}>{row.title}</div>
-          ) : (
-            <></>
-          );
-          if (row.eliminated) {
-            return (
-              <s>
-                <div className="d-flex">
-                  {statusCircle}
-                  {titleSpan} {participantLink}
-                </div>
-              </s>
-            );
-          } else {
-            return (
-              <div className="d-flex">
-                {statusCircle} {titleSpan} {participantLink}
-              </div>
-            );
-          }
-        },
-      },
-      {
-        dataField: "team_name",
-        sort: true,
-        text: "team",
-        headerFormatter,
-        formatter: function f(_: any, row: Participant, __: any, ___: any) {
-          return row.team ? (
-            <Link to={"/team/view/" + row.team}>
-              <span
-                className="d-inline-block text-truncate"
-                style={{ maxWidth: "100%" }}
-              >
-                {row.team_name}
-              </span>
-            </Link>
-          ) : (
-            <></>
-          );
-        },
-      },
-      {
-        dataField: "fide_rating",
-        text: "rating",
-        headerStyle: smallHeader,
-        sort: true,
-        headerFormatter,
-      },
-      {
-        dataField: "federation",
-        text: "federation",
-        headerStyle: mediumHeader,
-        sort: true,
-        headerFormatter,
-        formatter: function f(_: any, row: Participant, __: any, ___: any) {
-          return <FederationDisplay value={row.federation} />;
-        },
-      },
-      {
-        dataField: "score",
-        text: "score",
-        headerStyle: smallHeader,
-        sort: true,
-        style: {
-          textAlign: "center",
-          fontSize: "20px",
-          fontWeight: 600,
-        },
-        headerFormatter,
-        formatter: function (
-          _: any,
-          row: Participant,
-          rowIndex: number,
-          ___: any
-        ) {
-          if (tournament?.show_only_top_nr) {
-            if (rowIndex >= tournament.show_only_top_nr!) {
-              return "";
-            } else {
-              return row.score.toString();
-            }
-          } else {
-            return row.score.toString();
-          }
-        },
-      },
-    ]);
-
-    setTeamParticipantColumns([
-      { dataField: "seed", text: "seed", sort: true, headerFormatter },
-      {
-        dataField: "name",
-        text: "team",
-        sort: true,
-        headerFormatter,
-        formatter: function (_: any, row: TeamParticipant, __: any, ___: any) {
-          if (!row.eliminated) {
-            return <Link to={"/team/view/" + row.team_id}>{row.name}</Link>;
-          } else {
-            return (
-              <s>
-                <Link to={"/team/view/" + row.team_id}>{row.name}</Link>
-              </s>
-            );
-          }
-        },
-      },
-      {
-        dataField: "match_score",
-        text: "matchScore",
-        sort: true,
-        style: {
-          textAlign: "center",
-          fontSize: "20px",
-          fontWeight: 600,
-        },
-        headerFormatter,
-        formatter: function (
-          _: any,
-          row: TeamParticipant,
-          rowIndex: number,
-          ___: any
-        ) {
-          if (tournament?.show_only_top_nr) {
-            if (rowIndex >= tournament.show_only_top_nr!) {
-              return "";
-            } else {
-              return row.match_score.toString();
-            }
-          } else {
-            return row.match_score.toString();
-          }
-        },
-      },
-      {
-        dataField: "game_score",
-        text: "gameScore",
-        sort: true,
-        style: {
-          textAlign: "center",
-          fontSize: "20px",
-          fontWeight: 600,
-        },
-        headerFormatter,
-        formatter: function (
-          _: any,
-          row: TeamParticipant,
-          rowIndex: number,
-          ___: any
-        ) {
-          if (tournament?.show_only_top_nr) {
-            if (rowIndex >= tournament.show_only_top_nr!) {
-              return "";
-            } else {
-              return row.game_score.toString();
-            }
-          } else {
-            return row.game_score.toString();
-          }
-        },
-      },
-    ]);
-  }
-  useEffect(() => {
-    setup();
-  }, [tournament, ssw, participants, onlineStatus]);
-
-  function fetchStats(id) {
-    fetchJson(`/s/tournament/stats/${id}`, "GET", undefined, (data) => {
-      if (data) setStats(data as any);
-    });
-  }
+  const { tournament, participants, is_team_tournament } =
+    useTournamentDetail();
 
   useEffect(() => {
-    if (tournament && tournament.id && !stats) {
-      fetchStats(tournament.id);
+    if (is_team_tournament) {
+      setTab(1);
     }
-  }, [tournament]);
+  }, [is_team_tournament]);
 
   return (
     <>
-      {tournament && Array.isArray(participants) && participants.length > 0 && (
-        <div className={style["standings-container"]}>
-          <div className={style.table}>
+      {tournament &&
+        Array.isArray(participants) &&
+        participants.length > 0 &&
+        (participants[0] as any).id && (
+          <div className={style["standings-container"]}>
             <div className={style["centered-container"]}>
               <h3 className="mt-4">
                 <Translated str="standings" />
               </h3>
             </div>
-            <Tab.Container
-              defaultActiveKey={
-                is_team_tournament ? "standings-t-tab" : "standings-i-tab"
-              }
-            >
-              <Nav className="nav-tabs">
-                <Nav.Item className="nav-item">
-                  <Nav.Link eventKey="standings-i-tab">
-                    <Translated str="individual" />
-                  </Nav.Link>
-                </Nav.Item>
+            <div>
+              <Tabs value={tab} onChange={(e, newValue) => setTab(newValue)}>
+                <Tab value={0} label={<Translated str="individual" />} />
                 {is_team_tournament && (
-                  <Nav.Item className="nav-item">
-                    <Nav.Link eventKey="standings-t-tab">
-                      <Translated str="team" />
-                    </Nav.Link>
-                  </Nav.Item>
+                  <Tab value={1} label={<Translated str="team" />} />
                 )}
-                <Nav.Item className="nav-item">
-                  <Nav.Link eventKey="standings-s-tab">
-                    <Translated str="stats" />
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-              <Tab.Content>
-                <Tab.Pane eventKey="standings-i-tab">
-                  <ToolkitProvider
-                    keyField="account"
-                    data={
-                      participants.map((participant) => ({
-                        ...participant,
-                        getUsername: () => {
-                          return tournament.show_only_usernames
-                            ? participant.username
-                            : `${participant.first_name} ${participant.last_name}`;
-                        },
-                      })) || []
-                    }
-                    columns={
-                      tournament?.kind === "SwissDutch" &&
-                      participants.filter((participant) => participant.tb1)
-                        .length
-                        ? participantColumns.concat(tbColumns as any)
-                        : participantColumns
-                    }
-                    bootstrap4={true}
-                    search={{ onColumnMatch: onParticipantsColumnMatch }}
-                  >
-                    {(props) => (
-                      <>
-                        <SearchBar {...props.searchProps} />
-                        <BootstrapTable
-                          {...props.baseProps}
-                          pagination={paginationFactory({})}
-                        />
-                      </>
-                    )}
-                  </ToolkitProvider>
-                </Tab.Pane>
-
-                {is_team_tournament && (
-                  <Tab.Pane eventKey="standings-t-tab">
-                    <ToolkitProvider
-                      keyField="team_id"
-                      data={
-                        ssw
-                          ? teams.map((team, index) => ({
-                              ...team,
-                              ssw: ssw[index],
-                            }))
-                          : teams || []
-                      }
-                      columns={
-                        ssw
-                          ? teamParticipantColumns.concat([sswColumn])
-                          : teamParticipantColumns
-                      }
-                      bootstrap4={true}
-                      search
-                    >
-                      {(props) => (
-                        <>
-                          <SearchBar {...props.searchProps} />
-                          <BootstrapTable
-                            {...props.baseProps}
-                            pagination={paginationFactory({})}
-                          />
-                        </>
-                      )}
-                    </ToolkitProvider>
-                  </Tab.Pane>
-                )}
-                <Tab.Pane eventKey="standings-s-tab">
-                  {stats && (
-                    <>
-                      <div>
-                        {Translated.byKey("statsNumberOfPlayers")}:{" "}
-                        {stats.number_of_players}
-                      </div>
-                      <div>
-                        {Translated.byKey("statsTitledPlayers")}:{" "}
-                        {TitlesForStats(stats.titles)}
-                      </div>
-                      <div>
-                        {Translated.byKey("statsCountries")}: Total Countries:
-                        &nbsp;
-                        {[...new Set(stats.countries)].length} &nbsp;
-                        {CountriesForStats(stats.countries)}
-                      </div>
-                      <div>
-                        {Translated.byKey("statsAverageRating")}:{" "}
-                        {stats.average_rating}
-                      </div>
-                      {stats.longest_game && (
-                        <div>
-                          <Link to={`/game/play/${stats.longest_game}`}>
-                            {Translated.byKey("statsLongestGame")}
-                          </Link>
-                        </div>
-                      )}
-                      {stats.shortest_game && (
-                        <div>
-                          {Translated.byKey("statsShortestGame")}:{" "}
-                          {stats.shortest_game}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </Tab.Pane>
-              </Tab.Content>
-            </Tab.Container>
+                <Tab value={2} label={<Translated str="stats" />} />
+              </Tabs>
+            </div>
+            <div style={{ display: "flex", height: "100%" }}>
+              <div style={{ flexGrow: 1 }}>
+                <ParticipantsTable seen={tab === 0} />
+                <TeamsTable seen={tab === 1} />
+                {tab === 2 && <Stats tournamentId={tournament.id} />}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 };
