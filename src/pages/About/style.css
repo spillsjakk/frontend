@@ -15,7 +15,7 @@ body#About .table {
 body#About .table-striped tbody tr:nth-of-type(2n + 1) {
     background-color: #fafafa !important;
 }
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 800px) {
     #content-container{
         text-align: left;
         padding: 0;
