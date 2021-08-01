@@ -1,4 +1,10 @@
-import React, { FunctionComponent, memo, useEffect, useRef, useState } from "react";
+import React, {
+  FunctionComponent,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { CircularProgressbarWithChildren as CircularProgressbar } from "react-circular-progressbar";
 import Translated from "../translated";
 import style from "./style.module.scss";
@@ -27,23 +33,23 @@ const Circle: FunctionComponent<{
 });
 
 function useInterval(callback, delay) {
-  const savedCallback: { current: () => void; } = useRef()
+  const savedCallback: { current: () => void } = useRef();
 
   // Remember the latest callback.
   useEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+    savedCallback.current = callback;
+  }, [callback]);
 
   // Set up the interval.
   useEffect(() => {
     function tick() {
-      savedCallback.current()
+      savedCallback.current();
     }
     if (delay !== null) {
-      let id = setInterval(tick, delay)
-      return () => clearInterval(id)
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
     }
-  }, [delay])
+  }, [delay]);
 }
 
 interface Props {
@@ -51,12 +57,17 @@ interface Props {
 }
 
 const STATUS = {
-  STARTED: 'Started',
-  STOPPED: 'Stopped',
-}
+  STARTED: "Started",
+  STOPPED: "Stopped",
+};
 
 const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
-  const [secondsRemaining, setSecondsRemaining] = useState(Math.ceil((Math.max(0, startDate.getTime() - new Date().getTime()) / 1000)));
+  const [secondsRemaining, setSecondsRemaining] = useState(
+    Math.ceil(
+      Math.max(0, new Date("07/07/2022").getTime() - new Date().getTime()) /
+        1000
+    )
+  );
   const [status, setStatus] = useState(STATUS.STOPPED);
 
   const secondsToDisplay = secondsRemaining % 60;
@@ -67,18 +78,17 @@ const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
   const daysRemaining = (hoursRemaining - hoursToDisplay) / 24;
   const daysToDisplay = daysRemaining % 30;
 
-
   useInterval(
     () => {
       if (secondsRemaining > 0) {
-        setSecondsRemaining(secondsRemaining - 1)
+        setSecondsRemaining(secondsRemaining - 1);
       } else {
-        setStatus(STATUS.STOPPED)
+        setStatus(STATUS.STOPPED);
       }
     },
-    status === STATUS.STARTED ? 1000 : null,
+    status === STATUS.STARTED ? 1000 : null
     // passing null stops the interval
-  )
+  );
 
   useEffect(() => {
     if (secondsRemaining > 0 && status === STATUS.STOPPED) {
