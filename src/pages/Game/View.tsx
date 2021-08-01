@@ -412,6 +412,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             }
           >
             <span
+              className="pointer"
               onClick={() => {
                 navigator.clipboard.writeText(this.getPgn());
                 this.setState({ pgnCopied: true });

@@ -64,7 +64,7 @@ const STATUS = {
 const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
   const [secondsRemaining, setSecondsRemaining] = useState(
     Math.ceil(
-      Math.max(0, new Date("07/07/2022").getTime() - new Date().getTime()) /
+      Math.max(0, startDate.getTime() - new Date().getTime()) /
         1000
     )
   );

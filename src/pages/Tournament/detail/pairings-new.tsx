@@ -289,7 +289,7 @@ const Pairings: FunctionComponent<Props> = ({
   }, [pairings]);
 
   return (
-    <>
+    <div className={style["height-600"]}>
       {Array.isArray(pairings) && pairings.length > 0 && (
         <div className="mt-4">
           <div className={style["centered-container"]}>
@@ -334,7 +334,7 @@ const Pairings: FunctionComponent<Props> = ({
           {type === "list" && <ListView round={tab} />}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

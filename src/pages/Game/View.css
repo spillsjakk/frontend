@@ -93,6 +93,9 @@
   display: flex;
   margin-left: 15px;
 }
+.pointer {
+  cursor: pointer;
+}
 .box {
   justify-content: space-between;
 }
