@@ -303,7 +303,7 @@ const Pairings: FunctionComponent<Props> = ({
                     value={type}
                     exclusive
                     onChange={(e, newValue) => {
-                      setType(newValue);
+                      if (newValue) setType(newValue);
                     }}
                     aria-label="text alignment"
                   >

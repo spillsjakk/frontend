@@ -5,6 +5,7 @@ import { fetchJson, generateId } from "../../../functions";
 import style from "./style.module.scss";
 import { SelectClubOrg } from "./select-clubs-orgs";
 import { useLeagueForm } from "./with-form";
+import { Editor } from "../../../components/markdown";
 
 type Props = {};
 
@@ -93,14 +94,9 @@ const Form: FunctionComponent<Props> = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label={Translated.byKey("description")}
-                fullWidth
-                variant="outlined"
-                multiline
+              <Editor
                 value={form.description}
-                onChange={(e) => form.changeDescription(e.target.value)}
-                required
+                onChange={(value) => form.changeDescription(value)}
               />
             </Grid>
             <Grid item xs={12}>

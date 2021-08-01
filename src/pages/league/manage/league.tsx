@@ -7,6 +7,7 @@ import { Button, Grid, TextField } from "@material-ui/core";
 import { fetchJson } from "../../../functions";
 import { SelectClubOrg } from "../build/select-clubs-orgs";
 import { useLeague } from "../../../hocs/with-league/index";
+import { Editor } from "../../../components/markdown";
 
 const LeagueEditForm: FunctionComponent<{}> = () => {
   const form = useLeagueForm();
@@ -88,14 +89,9 @@ const LeagueEditForm: FunctionComponent<{}> = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label={Translated.byKey("description")}
-                fullWidth
-                variant="outlined"
-                multiline
+              <Editor
                 value={form.description}
-                onChange={(e) => form.changeDescription(e.target.value)}
-                required
+                onChange={(value) => form.changeDescription(value)}
               />
             </Grid>
             <Grid item xs={12}>
