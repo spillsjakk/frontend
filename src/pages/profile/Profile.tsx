@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
+import {
+  DataGrid,
+  GridCellParams,
+  GridColDef,
+  GridPageChangeParams,
+} from "@material-ui/data-grid";
 import { fetchCall, fetchJson, title } from "../../functions";
 import { RouteComponentProps, Link } from "react-router-dom";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -19,6 +25,11 @@ import { Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 
 const { SearchBar } = Search;
+
+const commonFields = {
+  headerClassName: "table-header",
+  cellClassName: "table-cell",
+};
 
 const defaultPic = "https://via.placeholder.com/150";
 
@@ -68,44 +79,98 @@ class Profile extends Component<
       tournamentData: [],
       tournamentColumns: [
         {
-          dataField: "tournament",
-          text: Translated.byKey("tournament"),
-          formatter: function (_: any, row: Tournament, __: any, ___: any) {
-            return <Link to={"/tournament/view/" + row.id}>{row.name}</Link>;
+          field: "tournament",
+          headerName: Translated.byKey("tournament"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          renderCell: (params) => {
+            return (
+              <>
+                <Link to={"/tournament/view/" + params.row.id}>
+                  {params.row.name}
+                </Link>
+              </>
+            );
           },
+          ...commonFields,
+          width: 340,
         },
         {
-          dataField: "start_date",
-          text: Translated.byKey("startDate"),
-          sort: true,
+          field: "start_date",
+          headerName: Translated.byKey("startDate"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          width: 340,
+          ...commonFields,
         },
         {
-          dataField: "end_date",
-          text: Translated.byKey("endDate"),
-          sort: true,
+          field: "end_date",
+          headerName: Translated.byKey("endDate"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          width: 340,
+          ...commonFields,
         },
       ],
       gameData: [],
       gameColumns: [
         {
-          dataField: "game",
+          field: "game",
           text: Translated.byKey("game"),
-          formatter: function (_: any, row: Tournament, __: any, ___: any) {
-            return <Link to={"/game/view/" + row.id}>{row.name}</Link>;
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          ...commonFields,
+          width: 240,
+          renderCell: (params) => {
+            return (
+              <>
+                <Link to={"/game/view/" + params.row.id}>
+                  {params.row.name}
+                </Link>
+              </>
+            );
           },
         },
-        { dataField: "start", text: Translated.byKey("dateTime"), sort: true },
         {
-          dataField: "tournament",
-          text: Translated.byKey("tournament"),
-          sort: true,
+          field: "start",
+          headerName: Translated.byKey("dateTime"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          width: 240,
+          ...commonFields,
         },
         {
-          dataField: "timeControl",
-          text: Translated.byKey("timeControl"),
-          sort: true,
+          field: "tournament",
+          headerName: Translated.byKey("tournament"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          width: 240,
+          ...commonFields,
         },
-        { dataField: "result", text: Translated.byKey("result"), sort: true },
+        {
+          field: "timeControl",
+          headerName: Translated.byKey("timeControl"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          width: 180,
+          ...commonFields,
+        },
+        {
+          field: "result",
+          headerName: Translated.byKey("result"),
+          hideSortIcons: true,
+          align: "center",
+          headerAlign: "center",
+          width: 180,
+          ...commonFields,
+        },
       ],
       online: false,
       clubs: [],
@@ -166,7 +231,6 @@ class Profile extends Component<
 
     fetchJson("/s/profile/" + userId, "GET", undefined, (data) => {
       const tournamentData = data.tournaments;
-
       const games: Game[] = data.games;
       const gameData = games.map((g) => {
         return {
@@ -301,46 +365,26 @@ class Profile extends Component<
           show={this.isUserSelf()}
         >
           <div className="box">
-            <ToolkitProvider
-              keyField="id"
-              data={this.state.tournamentData}
+            <DataGrid
+              autoHeight
+              rowsPerPageOptions={[15, 30, 50]}
+              pagination
+              rows={this.state.tournamentData}
               columns={this.state.tournamentColumns}
-              bootstrap4={true}
-              search={{ onColumnMatch: this.onColumnMatch }}
-            >
-              {(props) => (
-                <>
-                  <SearchBar {...props.searchProps} />
-                  <BootstrapTable
-                    {...props.baseProps}
-                    pagination={paginationFactory({})}
-                  />
-                </>
-              )}
-            </ToolkitProvider>
+            />
           </div>
         </HelpBox>
 
         <div className="header">{Translated.byKey("gameHistory")}</div>
 
         <div className="box">
-          <ToolkitProvider
-            keyField="id"
-            data={this.state.gameData}
+          <DataGrid
+            autoHeight
+            rowsPerPageOptions={[15, 30, 50]}
+            pagination
+            rows={this.state.gameData}
             columns={this.state.gameColumns}
-            bootstrap4={true}
-            search={{ onColumnMatch: this.onColumnMatch }}
-          >
-            {(props) => (
-              <>
-                <SearchBar {...props.searchProps} />
-                <BootstrapTable
-                  {...props.baseProps}
-                  pagination={paginationFactory({})}
-                />
-              </>
-            )}
-          </ToolkitProvider>
+          />
         </div>
       </>
     );

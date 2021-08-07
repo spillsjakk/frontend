@@ -1,6 +1,13 @@
 #Profile {
   background-color: #fafafa;
   color: black;
+  .table-header{
+    font-size: 18px!important;
+    font-weight: bold!important;
+  }
+  .table-cell{
+    font-size: 16px;
+  }
   .name-container {
     position: relative;
     display: flex;
