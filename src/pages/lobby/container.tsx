@@ -17,7 +17,6 @@ import {
 } from "../../context/tournament-detail";
 import { Round } from "../../context/tournament-round";
 import { Pairings } from "../Tournament/detail/pairings";
-import "./style.scss";
 
 const commonFields = {
   headerClassName: "table-header",
@@ -60,7 +59,7 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
       align: "center",
       headerAlign: "center",
       ...commonFields,
-      minWidth: 400,
+      minWidth: 390,
       flex: 1,
       renderCell: (params) => {
         return (
