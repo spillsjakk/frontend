@@ -59,6 +59,7 @@ const Profile: FunctionComponent<unknown> = () => {
         );
       },
       ...commonFields,
+      minWidth: 300,
       flex: 1,
     },
     {
@@ -89,6 +90,7 @@ const Profile: FunctionComponent<unknown> = () => {
       align: "center",
       headerAlign: "center",
       ...commonFields,
+      minWidth: 300,
       flex: 1,
       renderCell: (params) => {
         return (
