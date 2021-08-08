@@ -1,4 +1,10 @@
-import React, { Component, SyntheticEvent, FormEvent, RefObject } from "react";
+import React, {
+  Component,
+  SyntheticEvent,
+  FormEvent,
+  RefObject,
+  FunctionComponent,
+} from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { fetchCall, fetchJson, title } from "../../functions";
@@ -41,8 +47,38 @@ import { HelpBox, helpboxNames } from "../../components/help-box";
 import { numToSquare } from "../Game/play/clock";
 import { DRAW_OFFER_SIGN } from "../../constants";
 import { Event, Person, TrackChanges } from "@material-ui/icons";
+import { useNotification } from "../../hocs/with-notification/index";
 
 const { SearchBar } = Search;
+
+const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
+  props
+) => {
+  const notif = useNotification();
+  return (
+    <>
+      <Button
+        variant="primary"
+        className="p-3 mb-3"
+        onClick={() =>
+          fetchCall(
+            `/s/tournament/generate-next-round/${props.tournamentId}`,
+            "POST",
+            {},
+            () => {
+              notif.notify("success", "Success");
+            },
+            () => {
+              notif.notify("error", "Error");
+            }
+          )
+        }
+      >
+        {Translated.byKey("generate-next-round")}
+      </Button>
+    </>
+  );
+};
 
 function ChangeTime(props: { white: boolean; add: boolean; id: string }) {
   return (

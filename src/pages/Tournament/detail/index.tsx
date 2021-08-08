@@ -93,7 +93,10 @@ const TournamentDetail: FunctionComponent<{}> = () => {
             id: pairing.white_name + pairing.black_name + pairing.round,
           };
         }),
-        teams: tournamentDetail.teams.map((team) => ({...team, id: team.name + team.seed})),
+        teams: tournamentDetail.teams.map((team) => ({
+          ...team,
+          id: team.name + team.seed,
+        })),
         sorted: true,
       });
     }
