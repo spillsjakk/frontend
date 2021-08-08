@@ -24,7 +24,7 @@ body#lobby-page {
       font-size: calc(min(6vw, 30px));
       font-style: normal;
       line-height: 44px;
-      margin-top: 30px;
+      margin-top: 60px;
     }
 
     .box {
@@ -34,4 +34,15 @@ body#lobby-page {
       margin-top: 10px;
     }
   }
+  .table-header{
+    font-size: 18px!important;
+    font-weight: 800!important;
+  }
+  .table-cell{
+    font-size: 16px;
+  }
 }
+@media screen and (max-width: 992px) {
+  
+}
+

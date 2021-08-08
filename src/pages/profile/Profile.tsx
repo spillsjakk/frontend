@@ -1,30 +1,19 @@
-import React, { Component } from "react";
-import { Helmet } from "react-helmet";
-import Translated from "../../components/translated";
 import {
   DataGrid,
-  GridCellParams,
   GridColDef,
   GridPageChangeParams,
 } from "@material-ui/data-grid";
-import { fetchCall, fetchJson, title } from "../../functions";
-import { RouteComponentProps, Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
-import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
-import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import paginationFactory from "react-bootstrap-table2-paginator";
-import { Account } from "../Tournament/Types";
-import ToolkitProvider, {
-  Search,
-  SearchMatchProps,
-} from "react-bootstrap-table2-toolkit";
-import { TimestampString } from "../../components/Timestamp";
-import { UserContext } from "../../components/UserContext";
-import "./index.scss";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import { Helmet } from "react-helmet";
+import { Link, useParams } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../components/help-box";
-
-const { SearchBar } = Search;
+import { TimestampString } from "../../components/Timestamp";
+import Translated from "../../components/translated";
+import { useUser } from "../../components/UserContext";
+import { fetchCall, fetchJson, title } from "../../functions";
+import { Account } from "../Tournament/Types";
+import "./index.scss";
 
 const commonFields = {
   headerClassName: "table-header",
@@ -32,17 +21,6 @@ const commonFields = {
 };
 
 const defaultPic = "https://via.placeholder.com/150";
-
-type ProfileState = {
-  account?: Account;
-  tournamentData: Tournament[];
-  tournamentColumns: any[];
-  gameData: any[];
-  gameColumns: any[];
-  online: boolean;
-  clubs: Array<any>;
-  organizations: Array<any>;
-};
 
 type Tournament = {
   id: string;
@@ -62,134 +40,116 @@ type Game = {
   outcome: number;
 };
 
-type ProfileParams = {
-  uid: string;
-};
+const Profile: FunctionComponent<unknown> = () => {
+  const [tournamentData, setTournamentData] = useState([]);
+  const tournamentColumns: GridColDef[] = [
+    {
+      field: "tournament",
+      headerName: Translated.byKey("tournament"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/tournament/view/" + params.row.id}>
+              {params.row.name}
+            </Link>
+          </>
+        );
+      },
+      ...commonFields,
+      minWidth: 300,
+      flex: 1,
+    },
+    {
+      field: "start_date",
+      headerName: Translated.byKey("startDate"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 300,
+      ...commonFields,
+    },
+    {
+      field: "end_date",
+      headerName: Translated.byKey("endDate"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 300,
+      ...commonFields,
+    },
+  ];
+  const [gameData, setGameData] = useState([]);
+  const gameColumns: GridColDef[] = [
+    {
+      field: "game",
+      headerName: Translated.byKey("game"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+      minWidth: 300,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/game/view/" + params.row.id}>{params.row.name}</Link>
+          </>
+        );
+      },
+    },
+    {
+      field: "start",
+      headerName: Translated.byKey("dateTime"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 250,
+      ...commonFields,
+    },
+    {
+      field: "tournament",
+      headerName: Translated.byKey("tournament"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 250,
+      ...commonFields,
+    },
+    {
+      field: "timeControl",
+      headerName: Translated.byKey("timeControl"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 100,
+      ...commonFields,
+    },
+    {
+      field: "result",
+      headerName: Translated.byKey("result"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 100,
+      ...commonFields,
+    },
+  ];
+  const [online, setOnline] = useState(false);
+  const [clubs, setClubs] = useState([]);
+  const [account, setAccount] = useState<Account>();
+  const [organization, setOrganization] = useState([]);
+  const [pageSize, setPageSize] = React.useState<number>(15);
 
-class Profile extends Component<
-  RouteComponentProps<ProfileParams>,
-  ProfileState
-> {
-  static contextType = UserContext;
-  context!: React.ContextType<typeof UserContext>;
+  const params = useParams<{ uid: string }>();
+  const { user } = useUser();
 
-  constructor(props: RouteComponentProps<ProfileParams>) {
-    super(props);
-    this.state = {
-      tournamentData: [],
-      tournamentColumns: [
-        {
-          field: "tournament",
-          headerName: Translated.byKey("tournament"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          renderCell: (params) => {
-            return (
-              <>
-                <Link to={"/tournament/view/" + params.row.id}>
-                  {params.row.name}
-                </Link>
-              </>
-            );
-          },
-          ...commonFields,
-          width: 340,
-        },
-        {
-          field: "start_date",
-          headerName: Translated.byKey("startDate"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          width: 340,
-          ...commonFields,
-        },
-        {
-          field: "end_date",
-          headerName: Translated.byKey("endDate"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          width: 340,
-          ...commonFields,
-        },
-      ],
-      gameData: [],
-      gameColumns: [
-        {
-          field: "game",
-          text: Translated.byKey("game"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          ...commonFields,
-          width: 240,
-          renderCell: (params) => {
-            return (
-              <>
-                <Link to={"/game/view/" + params.row.id}>
-                  {params.row.name}
-                </Link>
-              </>
-            );
-          },
-        },
-        {
-          field: "start",
-          headerName: Translated.byKey("dateTime"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          width: 240,
-          ...commonFields,
-        },
-        {
-          field: "tournament",
-          headerName: Translated.byKey("tournament"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          width: 240,
-          ...commonFields,
-        },
-        {
-          field: "timeControl",
-          headerName: Translated.byKey("timeControl"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          width: 180,
-          ...commonFields,
-        },
-        {
-          field: "result",
-          headerName: Translated.byKey("result"),
-          hideSortIcons: true,
-          align: "center",
-          headerAlign: "center",
-          width: 180,
-          ...commonFields,
-        },
-      ],
-      online: false,
-      clubs: [],
-      organizations: [],
-    };
-  }
-
-  onColumnMatch({ searchText, value, column, row }: SearchMatchProps<any>) {
-    return (
-      (value && value.toLowerCase().includes(searchText)) ||
-      row.id.toLowerCase().includes(searchText) ||
-      row.name.toLowerCase().includes(searchText)
-    );
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     document.getElementsByTagName("body")[0].id = "Profile";
 
-    const userId = this.props.match.params.uid;
+    const userId = params.uid;
 
     fetchCall(`/s/account/clubs/${userId}`, "GET", undefined, (clubIds) => {
       if (Array.isArray(clubIds)) {
@@ -198,7 +158,7 @@ class Profile extends Component<
           fetchCall(`/s/club/get-info/${clubId}`, "GET", undefined, (club) => {
             clubs.push(club);
             if (clubs.length === clubIds.length) {
-              this.setState({ clubs });
+              setClubs(clubs);
             }
           });
         }
@@ -220,7 +180,7 @@ class Profile extends Component<
               (organization) => {
                 organizations.push(organization);
                 if (organizations.length === organizationIds.length) {
-                  this.setState({ organizations });
+                  setOrganization(organizations);
                 }
               }
             );
@@ -232,6 +192,7 @@ class Profile extends Component<
     fetchJson("/s/profile/" + userId, "GET", undefined, (data) => {
       const tournamentData = data.tournaments;
       const games: Game[] = data.games;
+      const account = data.account;
       const gameData = games.map((g) => {
         return {
           id: g.id,
@@ -253,142 +214,140 @@ class Profile extends Component<
           })(g.outcome),
         };
       });
-      this.setState({
-        tournamentData,
-        gameData,
-        account: data.account,
-        online: data.online === "true",
-      });
+      setTournamentData(tournamentData);
+      setGameData(gameData);
+      setAccount(account);
+      setOnline(data.online === "true");
     });
+  }, []);
+
+  function isUserSelf() {
+    return params.uid === user.info?.id;
   }
 
-  isUserSelf() {
-    return this.props.match.params.uid === this.context.user.info?.id;
-  }
-
-  render() {
-    return (
-      <>
-        <Helmet>
-          <title>{title(this.state.account?.username || "")}</title>
-        </Helmet>
-        <div className="name-container">
-          <div className="info">
-            <div className="image">
-              <OverlayTrigger
-                placement="top"
-                overlay={
-                  <Tooltip id="online">
-                    {this.state.online && (
-                      <strong>{Translated.byKey("online")}</strong>
-                    )}
-                    {!this.state.online && (
-                      <strong>{Translated.byKey("offline")}</strong>
-                    )}
-                  </Tooltip>
-                }
-              >
-                <img
-                  src={`https://drulpact.sirv.com/sp/${
-                    this.state.online ? "online" : "offline"
-                  }-circle.svg`}
-                  height={25}
-                  width={25}
-                  alt={`${this.state.online} ? "online" : "offline"`}
-                />
-              </OverlayTrigger>
-            </div>
-
-            <div className="username">{this.state.account?.username}</div>
-          </div>
-          {this.isUserSelf() && (
-            <HelpBox
-              placement="left"
-              name={helpboxNames.userProfileAccountSettings}
-              text={Translated.byKey("userProfileAccountSettingsHelpbox")}
-              show={this.isUserSelf()}
+  return (
+    <>
+      <Helmet>
+        <title>{title(account ? account.username : "")}</title>
+      </Helmet>
+      <div className="name-container">
+        <div className="info">
+          <div className="image">
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                <Tooltip id="online">
+                  {online && <strong>{Translated.byKey("online")}</strong>}
+                  {!online && <strong>{Translated.byKey("offline")}</strong>}
+                </Tooltip>
+              }
             >
-              <div className="settings">
-                <Link to="/account/settings">
-                  <Translated str="accountSettings" />
-                </Link>
-              </div>
-            </HelpBox>
-          )}
-        </div>
-
-        <div className="header">{Translated.byKey("memberships")}</div>
-        {Array.isArray(this.state.organizations) &&
-          Array.isArray(this.state.clubs) && (
-            <div className="box">
-              <Row>
-                {this.state.organizations.map((organization, i) => (
-                  <Col key={i} sm="12" md="4">
-                    <div className="card-wrapper">
-                      <img
-                        height="150"
-                        width="150"
-                        src={organization.profile_picture || defaultPic}
-                      />
-                      <div className="text">
-                        <Link to={"/organization/view/" + organization.id}>
-                          {organization.name}
-                        </Link>
-                      </div>
-                    </div>
-                  </Col>
-                ))}
-                {this.state.clubs.map((club, i) => (
-                  <Col key={i} sm="12" md="4">
-                    <div className="card-wrapper">
-                      <img
-                        height="150"
-                        width="150"
-                        src={club.profile_picture || defaultPic}
-                      />
-                      <div className="text">
-                        <Link to={"/club/view/" + club.id}>{club.name}</Link>
-                      </div>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
-            </div>
-          )}
-
-        <div className="header">{Translated.byKey("tournamentHistory")}</div>
-
-        <HelpBox
-          placement="top"
-          name={helpboxNames.userProfileTournament}
-          text={Translated.byKey("userProfileTournamentHelpbox")}
-          show={this.isUserSelf()}
-        >
-          <div className="box">
-            <DataGrid
-              autoHeight
-              rowsPerPageOptions={[15, 30, 50]}
-              pagination
-              rows={this.state.tournamentData}
-              columns={this.state.tournamentColumns}
-            />
+              <img
+                src={`https://drulpact.sirv.com/sp/${
+                  online ? "online" : "offline"
+                }-circle.svg`}
+                height={25}
+                width={25}
+                alt={`${online} ? "online" : "offline"`}
+              />
+            </OverlayTrigger>
           </div>
-        </HelpBox>
 
-        <div className="header">{Translated.byKey("gameHistory")}</div>
+          <div className="username">{account ? account.username : ""}</div>
+        </div>
+        {isUserSelf() && (
+          <HelpBox
+            placement="left"
+            name={helpboxNames.userProfileAccountSettings}
+            text={Translated.byKey("userProfileAccountSettingsHelpbox")}
+            show={isUserSelf()}
+          >
+            <div className="settings">
+              <Link to="/account/settings">
+                <Translated str="accountSettings" />
+              </Link>
+            </div>
+          </HelpBox>
+        )}
+      </div>
 
+      <div className="header">{Translated.byKey("memberships")}</div>
+      {Array.isArray(organization) && Array.isArray(clubs) && (
+        <div className="box">
+          <Row>
+            {organization.map((organization, i) => (
+              <Col key={i} sm="12" md="4">
+                <div className="card-wrapper">
+                  <img
+                    height="150"
+                    width="150"
+                    src={organization.profile_picture || defaultPic}
+                  />
+                  <div className="text">
+                    <Link to={"/organization/view/" + organization.id}>
+                      {organization.name}
+                    </Link>
+                  </div>
+                </div>
+              </Col>
+            ))}
+            {clubs.map((club, i) => (
+              <Col key={i} sm="12" md="4">
+                <div className="card-wrapper">
+                  <img
+                    height="150"
+                    width="150"
+                    src={club.profile_picture || defaultPic}
+                  />
+                  <div className="text">
+                    <Link to={"/club/view/" + club.id}>{club.name}</Link>
+                  </div>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
+
+      <div className="header">{Translated.byKey("tournamentHistory")}</div>
+
+      <HelpBox
+        placement="top"
+        name={helpboxNames.userProfileTournament}
+        text={Translated.byKey("userProfileTournamentHelpbox")}
+        show={isUserSelf()}
+      >
         <div className="box">
           <DataGrid
             autoHeight
+            pageSize={pageSize}
+            onPageSizeChange={(params: GridPageChangeParams) => {
+              setPageSize(params.pageSize);
+            }}
             rowsPerPageOptions={[15, 30, 50]}
             pagination
-            rows={this.state.gameData}
-            columns={this.state.gameColumns}
+            rows={tournamentData}
+            columns={tournamentColumns}
           />
         </div>
-      </>
-    );
-  }
-}
+      </HelpBox>
 
+      <div className="header">{Translated.byKey("gameHistory")}</div>
+
+      <div className="box">
+        <DataGrid
+          autoHeight
+          pageSize={pageSize}
+          onPageSizeChange={(params: GridPageChangeParams) => {
+            setPageSize(params.pageSize);
+          }}
+          rowsPerPageOptions={[15, 30, 50]}
+          pagination
+          rows={gameData}
+          columns={gameColumns}
+        />
+      </div>
+    </>
+  );
+};
 export default Profile;
