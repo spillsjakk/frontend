@@ -1,23 +1,28 @@
 /* eslint-disable react/display-name */
 import React, { FunctionComponent, useEffect, useState } from "react";
-import ToolkitProvider, {
-  Search,
-  SearchMatchProps,
-} from "react-bootstrap-table2-toolkit";
+import {
+  DataGrid,
+  GridColDef,
+  GridPageChangeParams,
+} from "@material-ui/data-grid";
 import { Link } from "react-router-dom";
 import { TimestampString } from "../../components/Timestamp";
 import Translated from "../../components/translated";
 import { fetchJson } from "../../functions";
-import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import paginationFactory from "react-bootstrap-table2-paginator";
 import {
   TournamentDetail,
   TournamentDetailProvider,
 } from "../../context/tournament-detail";
 import { Round } from "../../context/tournament-round";
 import { Pairings } from "../Tournament/detail/pairings";
+import "./style.scss";
+
+const commonFields = {
+  headerClassName: "table-header",
+  cellClassName: "table-cell",
+};
 
 type Tournament = {
   id: string;
@@ -44,49 +49,104 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
     Partial<TournamentDetail>
   >({});
   const [rounds, setRounds] = useState<Array<Round>>([]);
+  const [pageSize, setPageSize] = React.useState<number>(15);
 
   const [tournamentData, setTournamentData] = useState<any>();
-  const [tournamentColumns] = useState([
+  const tournamentColumns: GridColDef[] = [
     {
-      dataField: "tournament",
-      text: Translated.byKey("tournament"),
-      formatter: function (_: any, row: Tournament, __: any, ___: any) {
-        return <Link to={"/tournament/view/" + row.id}>{row.name}</Link>;
+      field: "tournament",
+      headerName: Translated.byKey("tournament"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+      minWidth: 400,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/tournament/view/" + params.row.id}>
+              {params.row.name}
+            </Link>
+          </>
+        );
       },
     },
     {
-      dataField: "start_date",
-      text: Translated.byKey("startDate"),
-      sort: true,
+      field: "start_date",
+      headerName: Translated.byKey("startDate"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 200,
+      ...commonFields,
     },
     {
-      dataField: "end_date",
-      text: Translated.byKey("endDate"),
-      sort: true,
+      field: "end_date",
+      headerName: Translated.byKey("endDate"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 200,
+      ...commonFields,
     },
-  ]);
+  ];
   const [gameData, setGameData] = useState<any>();
-  const [gameColumns] = useState([
+  const gameColumns: GridColDef[] = [
     {
-      dataField: "game",
-      text: Translated.byKey("game"),
-      formatter: function (_: any, row: Tournament, __: any, ___: any) {
-        return <Link to={"/game/view/" + row.id}>{row.name}</Link>;
+      field: "game",
+      headerName: Translated.byKey("game"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+      minWidth: 300,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link to={"/game/view/" + params.row.id}>{params.row.name}</Link>
+          </>
+        );
       },
     },
-    { dataField: "start", text: Translated.byKey("dateTime"), sort: true },
     {
-      dataField: "tournament",
-      text: Translated.byKey("tournament"),
-      sort: true,
+      field: "start",
+      headerName: Translated.byKey("dateTime"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 300,
+      ...commonFields,
     },
     {
-      dataField: "timeControl",
-      text: Translated.byKey("timeControl"),
-      sort: true,
+      field: "tournament",
+      headerName: Translated.byKey("tournament"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 300,
+      ...commonFields,
     },
-    { dataField: "result", text: Translated.byKey("result"), sort: true },
-  ]);
+    {
+      field: "timeControl",
+      headerName: Translated.byKey("timeControl"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 150,
+      ...commonFields,
+    },
+    {
+      field: "result",
+      headerName: Translated.byKey("result"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 150,
+      ...commonFields,
+    },
+  ];
 
   function fetchTournament(id: string) {
     fetchJson("/s/tournament/view/" + id, "GET", undefined, (json) => {
@@ -148,19 +208,6 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
     });
   }, [userId]);
 
-  function onColumnMatch({
-    searchText,
-    value,
-    column,
-    row,
-  }: SearchMatchProps<any>) {
-    return (
-      (value && value.toLowerCase().includes(searchText)) ||
-      row.id.toLowerCase().includes(searchText) ||
-      row.name.toLowerCase().includes(searchText)
-    );
-  }
-
   return (
     <>
       {tournamentDetail && (
@@ -189,41 +236,29 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
       <div className="box">
         {Array.isArray(gameData) && Array.isArray(tournamentData) && (
           <>
-            <ToolkitProvider
-              keyField="id"
-              data={tournamentData}
+            <DataGrid
+              autoHeight
+              pageSize={pageSize}
+              onPageSizeChange={(params: GridPageChangeParams) => {
+                setPageSize(params.pageSize);
+              }}
+              rowsPerPageOptions={[15, 30, 50]}
+              pagination
+              rows={tournamentData}
               columns={tournamentColumns}
-              bootstrap4={true}
-              search={{ onColumnMatch: onColumnMatch }}
-            >
-              {(props) => (
-                <>
-                  <Search.SearchBar {...props.searchProps} />
-                  <BootstrapTable
-                    {...props.baseProps}
-                    pagination={paginationFactory({})}
-                  />
-                </>
-              )}
-            </ToolkitProvider>
+            />
 
-            <ToolkitProvider
-              keyField="id"
-              data={gameData}
+            <DataGrid
+              autoHeight
+              pageSize={pageSize}
+              onPageSizeChange={(params: GridPageChangeParams) => {
+                setPageSize(params.pageSize);
+              }}
+              rowsPerPageOptions={[15, 30, 50]}
+              pagination
+              rows={gameData}
               columns={gameColumns}
-              bootstrap4={true}
-              search={{ onColumnMatch: onColumnMatch }}
-            >
-              {(props) => (
-                <>
-                  <Search.SearchBar {...props.searchProps} />
-                  <BootstrapTable
-                    {...props.baseProps}
-                    pagination={paginationFactory({})}
-                  />
-                </>
-              )}
-            </ToolkitProvider>
+            />
           </>
         )}
       </div>
