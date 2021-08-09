@@ -289,7 +289,7 @@ const Pairings: FunctionComponent<Props> = ({
   }, [pairings]);
 
   return (
-    <div className={style["height-600"]}>
+    <div className={style["min-height"]}>
       {Array.isArray(pairings) && pairings.length > 0 && (
         <div className="mt-4">
           <div className={style["centered-container"]}>
