@@ -8,7 +8,7 @@ import { ClubsSummary } from "./summary/clubs";
 import { AccountsSummary } from "./summary/accounts";
 import { SharePowerSummary } from "./summary/share-power";
 import { MessageSummary } from "./summary/message";
-import { Col, Row } from "react-bootstrap";
+import { Grid } from "@material-ui/core";
 import { useManageOrganizationPopup } from "../../../context/manage-organization-popup";
 
 const ManageOrganization: FunctionComponent<{}> = () => {
@@ -20,8 +20,14 @@ const ManageOrganization: FunctionComponent<{}> = () => {
     openAccountsWithPowers,
   } = useManageOrganizationPopup();
   return (
-    <Row className={style.row}>
-      <Col className={style.col} xs="auto">
+    <Grid
+      container
+      spacing={1}
+      justifyContent="center"
+      alignItems="center"
+      className={style.row}
+    >
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard
           onAction={() => {
             openDetailEdit();
@@ -29,8 +35,8 @@ const ManageOrganization: FunctionComponent<{}> = () => {
           actionName={Translated.byKey("update").toUpperCase()}
           content={<DetailSummaryContent />}
         />
-      </Col>
-      <Col className={style.col} xs="auto">
+      </Grid>
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard
           onAction={() => {
             openStats();
@@ -38,8 +44,8 @@ const ManageOrganization: FunctionComponent<{}> = () => {
           actionName={Translated.byKey("expandAll").toUpperCase()}
           content={<StatsSummary />}
         />
-      </Col>
-      <Col className={style.col} xs="auto">
+      </Grid>
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard
           onAction={() => {
             openClubList();
@@ -47,8 +53,8 @@ const ManageOrganization: FunctionComponent<{}> = () => {
           actionName={Translated.byKey("expandAll").toUpperCase()}
           content={<ClubsSummary />}
         />
-      </Col>
-      <Col className={style.col} xs="auto">
+      </Grid>
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard
           onAction={() => {
             openPlayerList();
@@ -62,14 +68,14 @@ const ManageOrganization: FunctionComponent<{}> = () => {
           ).toUpperCase()}
           content={<AccountsSummary />}
         />
-      </Col>
-      <Col className={style.col} xs="auto">
+      </Grid>
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard content={<SharePowerSummary />} />
-      </Col>
-      <Col className={style.col} xs="auto">
+      </Grid>
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard content={<MessageSummary />} />
-      </Col>
-    </Row>
+      </Grid>
+    </Grid>
   );
 };
 

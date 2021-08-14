@@ -17,7 +17,8 @@
 
 .items {
   margin: 20px 10px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   max-height: 400px;
   .item {
     display: flex;
@@ -28,7 +29,6 @@
     color: white;
   }
 }
-
 .label {
   font-weight: 600;
   font-size: 16px;
@@ -38,11 +38,10 @@
 
 #share-power {
   max-height: 550px;
-  overflow: scroll;
+  overflow-y: scroll;
   .item {
     display: flex;
     margin: 20px 0;
-
     .toggle {
       display: flex;
       align-items: center;
@@ -93,4 +92,8 @@
     color: white;
     border-radius: 10px;
   }
+}
+
+.savedlist{
+  color: #469a88 !important;
 }
