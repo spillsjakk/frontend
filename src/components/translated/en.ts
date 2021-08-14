@@ -308,6 +308,7 @@ const en = {
 	"roundRobin": "Round Robin",
 	"rounds": "rounds",
 	"saveUpdates": "Save Updates",
+	"savedtournaments" : "Saved Tournaments",
 	"score": "Score",
 	"searchByFideId": "Search By FIDE ID",
 	"searchEllipsis": "Search...",

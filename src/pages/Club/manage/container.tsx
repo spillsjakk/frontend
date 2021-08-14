@@ -6,6 +6,7 @@ import { DetailSummaryContent } from "./summary/detail-content";
 import { StatsSummary } from "./summary/stats";
 import { TeamsSummary } from "./summary/teams";
 import { AccountsSummary } from "./summary/accounts";
+import { TournamentList } from "./summary/tournament";
 import { SharePowerSummary } from "./summary/share-power";
 import { MessageSummary } from "./summary/message";
 import { Grid } from "@material-ui/core";
@@ -74,6 +75,15 @@ const ManageClub: FunctionComponent<{}> = () => {
       </Grid>
       <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
         <SummaryCard content={<MessageSummary />} />
+      </Grid>
+      <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
+        <SummaryCard
+          onAction={() => {
+            openClubList();
+          }}
+          actionName={Translated.byKey("expandAll").toUpperCase()}
+          content={<TournamentList />}
+        />
       </Grid>
     </Grid>
   );
