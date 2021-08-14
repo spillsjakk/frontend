@@ -75,11 +75,15 @@ export function StartDate() {
             )
           }
           onChange={(value: Date) => {
-            const dateString = value.toISOString().slice(0, 10);
-            form.changeStartDate(dateString);
-            form.changeEndDate(dateString);
-            form.changeFirstPairingDate(dateString);
-            form.changeFirstPairingTime(value.toISOString().slice(11, 16));
+            try {
+              const dateString = value.toISOString().slice(0, 10);
+              form.changeStartDate(dateString);
+              form.changeEndDate(dateString);
+              form.changeFirstPairingDate(dateString);
+              form.changeFirstPairingTime(value.toISOString().slice(11, 16));
+            } catch (e) {
+              console.error("error while setting date", e);
+            }
           }}
         />
       </div>
@@ -239,11 +243,15 @@ export function StartDateInterval() {
           }
           ampm={false}
           onChange={(value: Date) => {
-            const dateString = value.toISOString().slice(0, 10);
-            form.changeStartDate(dateString);
-            form.changeEndDate(dateString);
-            form.changeFirstPairingDate(dateString);
-            form.changeFirstPairingTime(value.toISOString().slice(11, 16));
+            try {
+              const dateString = value.toISOString().slice(0, 10);
+              form.changeStartDate(dateString);
+              form.changeEndDate(dateString);
+              form.changeFirstPairingDate(dateString);
+              form.changeFirstPairingTime(value.toISOString().slice(11, 16));
+            } catch (e) {
+              console.error("error while setting date", e);
+            }
           }}
         />
         <TextField

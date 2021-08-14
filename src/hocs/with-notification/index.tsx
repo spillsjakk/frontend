@@ -1,17 +1,12 @@
 import React, { FunctionComponent, useState, Context, useContext } from "react";
 
-import { Snackbar } from "@material-ui/core";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import { Snackbar, Alert } from "@material-ui/core";
 
 interface Props {
   open: boolean;
   message: string;
   setOpen: (e: boolean) => void;
   severity?: NotificationSeverity;
-}
-
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const Notification: FunctionComponent<Props> = ({
