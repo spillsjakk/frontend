@@ -38,6 +38,11 @@
 @media screen and (max-width: 1024px) {
     .card-container {
       width: 100% !important;
+    .action {
+      button {
+        width: 130px;
+      }
     }
+  }
 }
 
