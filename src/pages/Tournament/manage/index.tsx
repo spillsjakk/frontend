@@ -1,3 +1,5 @@
+// THIS COMPONENT IS NOT IN USE, IT IS THE NEW COMPONENT WHICH IS UNDER DEVELOPMENT
+
 import React, { FunctionComponent, useState } from "react";
 import { useEffect } from "react-router/node_modules/@types/react";
 import { fetchJson, title } from "../../../functions";
