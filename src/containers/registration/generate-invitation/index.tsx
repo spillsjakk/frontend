@@ -77,13 +77,13 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
 
   return (
     <main>
+      <div className="header">
+        {Translated.byKey("organizationInvitations").toUpperCase()}
+      </div>
       {invitations &&
         Array.isArray(invitations.organizations) &&
         invitations.organizations.map((organization) => (
           <div key={organization.id}>
-            <div className="header">
-              {Translated.byKey("organizationInvitations").toUpperCase()}
-            </div>
             <div className="box row-flex">
               <div className="name">{organization.name}</div>
               {Array.isArray(organization.invitations) &&
@@ -112,13 +112,13 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
             </div>
           </div>
         ))}
+      <div className="header">
+        {Translated.byKey("clubInvitations").toUpperCase()}
+      </div>
       {invitations &&
         Array.isArray(invitations.clubs) &&
         invitations.clubs.map((club) => (
           <div key={club.id}>
-            <div className="header">
-              {Translated.byKey("clubInvitations").toUpperCase()}
-            </div>
             <div className="box row-flex">
               <div className="name">{club.name}</div>
               {Array.isArray(club.invitations) && !club.invitations.length && (
