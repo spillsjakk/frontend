@@ -118,6 +118,7 @@ const en = {
 	"gameScore": "Game score",
 	"games": "Games",
 	"gender": "Gender",
+	"generate-next-round" : "Generate Next Round",
 	"getInTouch": "GET IN TOUCH",
 	"goToLobby": "Go to the lobby.",
 	"goodGame": "Good game",
