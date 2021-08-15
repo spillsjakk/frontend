@@ -874,6 +874,11 @@ class View extends Component<
 
                 {this.context.user.authenticated && (
                   <form>
+                    {info.tournament.started && (
+                      <GenerateNextRoundButton
+                        tournamentId={info.tournament.id}
+                      />
+                    )}
                     {!info.tournament.started && (
                       <>
                         <Button
