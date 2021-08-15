@@ -77,13 +77,7 @@ const ManageClub: FunctionComponent<{}> = () => {
         <SummaryCard content={<MessageSummary />} />
       </Grid>
       <Grid item className={style.col} xs={12} sm={12} md={6} lg={4}>
-        <SummaryCard
-          onAction={() => {
-            openClubList();
-          }}
-          actionName={Translated.byKey("expandAll").toUpperCase()}
-          content={<TournamentList />}
-        />
+        <SummaryCard content={<TournamentList />} />
       </Grid>
     </Grid>
   );
