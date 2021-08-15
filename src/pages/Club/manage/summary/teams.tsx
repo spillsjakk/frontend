@@ -6,6 +6,7 @@ import Translated from "../../../../components/translated";
 import { useClub } from "../../../../context/club";
 import { fetchJson } from "../../../../functions";
 import style from "../style.module.scss";
+import { Delete } from "@material-ui/icons";
 
 const TeamsSummary: FunctionComponent<{}> = () => {
   const club = useClub();
@@ -43,11 +44,8 @@ const TeamsSummary: FunctionComponent<{}> = () => {
                   <Link to={"/team/view/" + team.id}>{team.name}</Link>
                 </div>
                 <div>
-                  <a
-                    className="btn btn-danger"
-                    onClick={() => removeTeam(team.id)}
-                  >
-                    X
+                  <a onClick={() => removeTeam(team.id)}>
+                    <Delete color="action" />
                   </a>
                 </div>
               </div>

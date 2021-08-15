@@ -307,7 +307,7 @@ const no = {
 	"roundRobin": "Berger",
 	"rounds": "runder",
 	"saveUpdates": "Lagre oppdateringer",
-	"savedtournaments" : "Lagrede Turneringer",
+	"savedtournament" : "Lagrede turneringsmaler",
 	"score": "Resultater",
 	"searchByFideId": "Søk etter FIDE-ID",
 	"searchEllipsis": "Søk...",
