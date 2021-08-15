@@ -118,6 +118,7 @@ const no = {
 	"gameScore": "Partiresultat",
 	"games": "Partier",
 	"gender": "Kjønn",
+	"generate-next-round" : "Generer neste runde",
 	"getInTouch": "TA KONTAKT!",
 	"goToLobby": "Gå til lobbyen",
 	"goodGame": "Bra parti",
