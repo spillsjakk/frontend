@@ -145,7 +145,7 @@ const Home: FunctionComponent<{}> = () => {
                           }
                           format={tournament.kind}
                           rounds={tournament.rounds}
-                          startDate={tournament.first_online_pairing}
+                          startDate={tournament.current_online_pairing_time}
                           profile={tournament.profile_picture}
                         />
                       </div>
