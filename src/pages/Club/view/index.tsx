@@ -8,16 +8,28 @@ import { Link, useParams } from "react-router-dom";
 import { Club } from "../../../context/club";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../../components/translated";
-import UserLink from "../../../components/UserLink";
 import { Tournament } from "../../Tournament/Types";
+import {
+  DataGrid,
+  GridCellParams,
+  GridColDef,
+  GridPageChangeParams,
+} from "@material-ui/data-grid";
 
 const defaultPic = "https://via.placeholder.com/150";
+
+const commonFields = {
+  headerClassName: style["table-header"],
+  cellClassName: style["table-cell"],
+  width: 320,
+};
 
 const ClubView: FunctionComponent<{}> = () => {
   const [club, setClub] = useState<Club>();
   const [tournaments, setTournaments] = useState<Array<Tournament>>([]);
   const [members, setMembers] = useState<Array<any>>();
   const [teams, setTeams] = useState<Array<any>>();
+  const [pageSize, setPageSize] = React.useState<number>(15);
 
   const { cid } = useParams<{ cid: string }>();
 
@@ -58,6 +70,58 @@ const ClubView: FunctionComponent<{}> = () => {
     getClubInfo();
     getTournaments();
   }, []);
+
+  function getFullName(params) {
+    return `${params.getValue(params.id, "firstName") || ""} ${
+      params.getValue(params.id, "lastName") || ""
+    }`;
+  }
+
+  function getFederation(params) {
+    return `${params.getValue(params.fidefederation, "firstName") || ""}}`;
+  }
+  const columns: GridColDef[] = [
+    {
+      field: "rank",
+      headerName: Translated.byKey("rank"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "player",
+      headerName: Translated.byKey("player"),
+      valueGetter: getFullName,
+      hideSortIcons: true,
+      minWidth: 200,
+      flex: 1,
+      ...commonFields,
+    },
+    {
+      field: "fide_rating",
+      headerName: Translated.byKey("rating"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "federation",
+      headerName: Translated.byKey("federation"),
+      hideSortIcons: true,
+      renderCell: getFederation,
+      ...commonFields,
+    },
+    {
+      field: "score",
+      headerName: Translated.byKey("score"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+  ];
 
   return (
     <>
@@ -113,22 +177,17 @@ const ClubView: FunctionComponent<{}> = () => {
             {Translated.byKey("members")}
           </div>
           <div className={style.box}>
-            <table className="mt-4 table">
-              <tbody>
-                {Array.isArray(members) &&
-                  members.map((member) => (
-                    <tr key={member.account_id}>
-                      <td>
-                        <UserLink
-                          id={member.account_id}
-                          name={member.first_name + " " + member.last_name}
-                          ghost={false}
-                        />
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+            <DataGrid
+              autoHeight
+              pageSize={pageSize}
+              onPageSizeChange={(params: GridPageChangeParams) => {
+                setPageSize(params.pageSize);
+              }}
+              rowsPerPageOptions={[15, 30, 50]}
+              pagination
+              rows={members.map((member) => member)}
+              columns={columns}
+            />
           </div>
         </div>
       )}
