@@ -33,7 +33,7 @@ export const TournamentList: FunctionComponent<{}> = () => {
           <div key={i} className={style.item}>
             <p className={style.savedlist}>{i.name}</p>
             <div>
-              <a style={{cursor: "pointer"}} onClick={() => removeList(i.id)}>
+              <a style={{ cursor: "pointer" }} onClick={() => removeList(i.id)}>
                 <Delete color="action" />
               </a>
             </div>

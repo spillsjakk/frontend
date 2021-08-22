@@ -11,10 +11,10 @@ import Translated from "../../../components/translated";
 import { Tournament } from "../../Tournament/Types";
 import {
   DataGrid,
-  GridCellParams,
   GridColDef,
   GridPageChangeParams,
 } from "@material-ui/data-grid";
+import FederationDisplay from "../../../components/FederationDisplay";
 
 const defaultPic = "https://via.placeholder.com/150";
 
@@ -87,16 +87,9 @@ const ClubView: FunctionComponent<{}> = () => {
       </div>
     );
   }
-
-  function getFederation(params) {
-    return `${params.row.fidefederation || ""}`;
-  }
-
   function getRating(params) {
     return `${params.row.fiderating || ""}`;
   }
-
-  console.log(members);
   const columns: GridColDef[] = [
     {
       field: "player",
@@ -125,10 +118,36 @@ const ClubView: FunctionComponent<{}> = () => {
       hideSortIcons: true,
       align: "center",
       headerAlign: "center",
-      renderCell: getFederation,
+      renderCell: (params) => (
+        <FederationDisplay value={params.row.fidefederation || ""} />
+      ),
+      ...commonFields,
+    },
+    {
+      field: "fide_profil",
+      headerName: Translated.byKey("fideprofil"),
+      renderCell: (params) => {
+        return params.row.fidenumber !== null ? (
+          <>
+            <a
+              href={"https://ratings.fide.com/profile/" + params.row.fidenumber}
+              target="_blank"
+              rel="noreferrer"
+            >
+              FIDE profile
+            </a>
+          </>
+        ) : (
+          ""
+        );
+      },
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
       ...commonFields,
     },
   ];
+  console.log(members);
 
   return (
     <>

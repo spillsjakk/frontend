@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from "react";
+import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import { HelpBox, helpboxNames } from "../../../../components/help-box";
 import Translated from "../../../../components/translated";
 import { useClub } from "../../../../context/club";
 import style from "../style.module.scss";
+import xssFilters from "xss-filters";
 
 const DetailSummaryContent: FunctionComponent<{}> = () => {
   const club = useClub();
@@ -32,7 +34,12 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
             <div className={style.label}>
               {Translated.byKey("manageClub_aboutClub")}
             </div>
-            <div className={style["scroll-max-70"]}>{club.description}</div>
+            <ReactMarkdown
+              linkTarget="_blank"
+              className={style["scroll-max-70"]}
+            >
+              {xssFilters.inHTMLData(club.description || "")}
+            </ReactMarkdown>
           </>
         </HelpBox>
       )}

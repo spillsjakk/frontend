@@ -44,7 +44,10 @@ const TeamsSummary: FunctionComponent<{}> = () => {
                   <Link to={"/team/view/" + team.id}>{team.name}</Link>
                 </div>
                 <div>
-                  <a style={{cursor: "pointer"}} onClick={() => removeTeam(team.id)}>
+                  <a
+                    style={{ cursor: "pointer" }}
+                    onClick={() => removeTeam(team.id)}
+                  >
                     <Delete color="action" />
                   </a>
                 </div>

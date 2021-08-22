@@ -4,6 +4,7 @@ import Translated from "../../../../components/translated";
 import { useManageClubPopup } from "../../../../context/manage-club-popup";
 import { useClub } from "../../../../context/club";
 import { fetchJson } from "../../../../functions";
+import { Editor } from "../../../../components/markdown";
 
 const InputGroup: FunctionComponent<{
   label: string;
@@ -83,12 +84,10 @@ const EditForm: FunctionComponent<{}> = () => {
           onChange={(value: string) => setOrgName(value)}
         />
 
-        <InputGroup
-          label={Translated.byKey("manageClub_aboutClub")}
-          description={Translated.byKey("manageClub_aboutClubDesc")}
+        <Editor
           value={description}
+          height={150}
           onChange={(value: string) => setDescription(value)}
-          textArea
         />
 
         <InputGroup
