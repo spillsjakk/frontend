@@ -21,13 +21,13 @@ const defaultPic = "https://via.placeholder.com/150";
 const commonFields = {
   headerClassName: style["table-header"],
   cellClassName: style["table-cell"],
-  width: 320,
+  width: 330,
 };
 
 const ClubView: FunctionComponent<{}> = () => {
   const [club, setClub] = useState<Club>();
   const [tournaments, setTournaments] = useState<Array<Tournament>>([]);
-  const [members, setMembers] = useState<Array<any>>();
+  const [members, setMembers] = useState<Array<any>>([]);
   const [teams, setTeams] = useState<Array<any>>();
   const [pageSize, setPageSize] = React.useState<number>(15);
 
@@ -35,7 +35,10 @@ const ClubView: FunctionComponent<{}> = () => {
 
   function loadMembers() {
     fetchCall(`/s/club/members/${cid}`, "GET", undefined, (members) => {
-      setMembers(members);
+      if (Array.isArray(members))
+        setMembers(
+          members.map((member) => ({ ...member, id: member.account_id }))
+        );
     });
   }
 
@@ -72,28 +75,37 @@ const ClubView: FunctionComponent<{}> = () => {
   }, []);
 
   function getFullName(params) {
-    return `${params.getValue(params.id, "firstName") || ""} ${
-      params.getValue(params.id, "lastName") || ""
-    }`;
+    return `${params.row.first_name} ${params.row.last_name}`;
+  }
+
+  function renderPlayerCell(params) {
+    return (
+      <div>
+        <Link to={"/profile/" + params.row.account_id}>
+          {getFullName(params)}
+        </Link>
+      </div>
+    );
   }
 
   function getFederation(params) {
-    return `${params.getValue(params.fidefederation, "firstName") || ""}}`;
+    return `${params.row.fidefederation || ""}`;
   }
+
+  function getRating(params) {
+    return `${params.row.fiderating || ""}`;
+  }
+
+  console.log(members);
   const columns: GridColDef[] = [
-    {
-      field: "rank",
-      headerName: Translated.byKey("rank"),
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      ...commonFields,
-    },
     {
       field: "player",
       headerName: Translated.byKey("player"),
+      renderCell: renderPlayerCell,
       valueGetter: getFullName,
       hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
       minWidth: 200,
       flex: 1,
       ...commonFields,
@@ -104,21 +116,16 @@ const ClubView: FunctionComponent<{}> = () => {
       hideSortIcons: true,
       align: "center",
       headerAlign: "center",
+      valueGetter: getRating,
       ...commonFields,
     },
     {
       field: "federation",
       headerName: Translated.byKey("federation"),
       hideSortIcons: true,
-      renderCell: getFederation,
-      ...commonFields,
-    },
-    {
-      field: "score",
-      headerName: Translated.byKey("score"),
-      hideSortIcons: true,
       align: "center",
       headerAlign: "center",
+      renderCell: getFederation,
       ...commonFields,
     },
   ];
@@ -185,7 +192,7 @@ const ClubView: FunctionComponent<{}> = () => {
               }}
               rowsPerPageOptions={[15, 30, 50]}
               pagination
-              rows={members.map((member) => member)}
+              rows={members}
               columns={columns}
             />
           </div>
