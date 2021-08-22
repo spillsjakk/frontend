@@ -11,6 +11,7 @@ import Translated from "../../../components/translated";
 import { Tournament } from "../../Tournament/Types";
 import {
   DataGrid,
+  GridCellParams,
   GridColDef,
   GridPageChangeParams,
 } from "@material-ui/data-grid";
@@ -74,7 +75,17 @@ const ClubView: FunctionComponent<{}> = () => {
   }, []);
 
   function getFullName(params) {
-    return `${params.row.first_name || ""} ${params.row.last_name || ""}`;
+    return `${params.row.first_name} ${params.row.last_name}`;
+  }
+
+  function renderPlayerCell(params) {
+    return (
+      <div>
+        <Link to={"/profile/" + params.row.account_id}>
+          {getFullName(params)}
+        </Link>
+      </div>
+    );
   }
 
   function getFederation(params) {
@@ -90,6 +101,7 @@ const ClubView: FunctionComponent<{}> = () => {
     {
       field: "player",
       headerName: Translated.byKey("player"),
+      renderCell: renderPlayerCell,
       valueGetter: getFullName,
       hideSortIcons: true,
       align: "center",
