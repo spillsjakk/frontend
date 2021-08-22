@@ -62,7 +62,7 @@ const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
         className="p-3 mb-3"
         onClick={() =>
           fetchCall(
-            `/s/tournament/generate-next-round/${props.tournamentId}`,
+            `/s/tournament/next-round/${props.tournamentId}/pairings`,
             "POST",
             {},
             () => {
