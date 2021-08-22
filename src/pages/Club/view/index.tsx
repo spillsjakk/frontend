@@ -123,7 +123,31 @@ const ClubView: FunctionComponent<{}> = () => {
       ),
       ...commonFields,
     },
+    {
+      field: "fide_profil",
+      headerName: Translated.byKey("fideprofil"),
+      renderCell: (params) => {
+        return params.row.fidenumber !== null ? (
+          <>
+            <a
+              href={"https://ratings.fide.com/profile/" + params.row.fidenumber}
+              target="_blank"
+              rel="noreferrer"
+            >
+              FIDE profile
+            </a>
+          </>
+        ) : (
+          ""
+        );
+      },
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
   ];
+  console.log(members);
 
   return (
     <>

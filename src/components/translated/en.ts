@@ -99,6 +99,7 @@ const en = {
 	"featuresWeOffer": "FEATURES WE OFFER",
 	"federation": "Federation",
 	"fideFederation": "FIDE federation",
+	"fideprofil" : "FIDE Profil",
 	"fideInfoText": "Add your FIDE ID if you have one, if not press next",
 	"fideNumber": "FIDE number",
 	"fideRated": "This is a FIDE rated tournament.",

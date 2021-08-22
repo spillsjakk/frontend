@@ -99,6 +99,7 @@ const no = {
 	"featuresWeOffer": "FUNKSJONER VI TILBYR",
 	"federation": "Forbund",
 	"fideFederation": "Verdens Sjakkforbund - FIDE",
+	"fideprofil" : "FIDE Profil",
 	"fideInfoText": "Legg til FIDE-ID-en din hvis du har en, hvis ikke, trykk neste ",
 	"fideNumber": "FIDE-nummer",
 	"fideRated": "Dette er en FIDE-ratet turnering.",
