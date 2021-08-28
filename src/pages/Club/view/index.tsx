@@ -147,7 +147,6 @@ const ClubView: FunctionComponent<{}> = () => {
       ...commonFields,
     },
   ];
-  console.log(members);
 
   return (
     <>
@@ -159,7 +158,38 @@ const ClubView: FunctionComponent<{}> = () => {
             bannerPicture={club.banner_picture}
             name={club.name}
           />
-          <p className={style.description}>{club.description}</p>
+          <p className={style.description}>
+            {club.description}
+            <div className={style.about}>
+              <div>
+                <p>
+                  Manager: <span>{club.manager}</span>
+                </p>
+
+                <p>
+                  Website: <span>{club.website}</span>
+                </p>
+                <p>
+                  Email : <span>{club.email}</span>
+                </p>
+              </div>
+              <div>
+                <p>
+                  Address:{" "}
+                  <span>
+                    {club.address}
+                    sadfghjk,juhytrewqasdfghjukhytrewadgfhjmk,jhgfrdsadfgthjhgfrd
+                  </span>
+                </p>
+                <p>
+                  Country: <span>{club.country}</span>
+                </p>
+                <p>
+                  Region: <span>{club.region}</span>
+                </p>
+              </div>
+            </div>
+          </p>
           <div className={`${style.header} mt-3`}>
             {Translated.byKey("teams")}
           </div>

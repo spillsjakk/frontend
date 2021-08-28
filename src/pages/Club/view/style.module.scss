@@ -6,7 +6,23 @@
     margin-top: 15px;
     font-weight: bold;
   }
-
+    .about{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      p:not(span){
+        font-weight: bold;
+        font-size: calc(min(4vw, 20px));
+        color: #469a88;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow:hidden;
+        width: 610px;
+      }
+      span{
+        font-size: calc(min(4vw, 20px));
+      }
+    }
   .header-container {
     display: flex;
     justify-content: space-between;
@@ -65,6 +81,7 @@
 
   .description {
     font-size: calc(min(3vw, 25px));
+    font-weight: bold;
   }
 }
 
