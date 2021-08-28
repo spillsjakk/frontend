@@ -15,6 +15,8 @@ import {
   GridPageChangeParams,
 } from "@material-ui/data-grid";
 import FederationDisplay from "../../../components/FederationDisplay";
+import ReactMarkdown from "react-markdown";
+import xssFilters from "xss-filters";
 
 const defaultPic = "https://via.placeholder.com/150";
 
@@ -147,7 +149,6 @@ const ClubView: FunctionComponent<{}> = () => {
       ...commonFields,
     },
   ];
-  console.log(members);
 
   return (
     <>
@@ -159,7 +160,34 @@ const ClubView: FunctionComponent<{}> = () => {
             bannerPicture={club.banner_picture}
             name={club.name}
           />
-          <p className={style.description}>{club.description}</p>
+          <ReactMarkdown linkTarget="_blank" className={style.description}>
+            {xssFilters.inHTMLData(club.description || "")}
+          </ReactMarkdown>
+          <div className={style.about}>
+            <div>
+              <p>
+                Manager: <span>{club.manager}</span>
+              </p>
+
+              <p>
+                Website: <span>{club.website}</span>
+              </p>
+              <p>
+                Email : <span>{club.email}</span>
+              </p>
+            </div>
+            <div>
+              <p>
+                Address: <span>{club.address}</span>
+              </p>
+              <p>
+                Country: <span>{club.country}</span>
+              </p>
+              <p>
+                Region: <span>{club.region}</span>
+              </p>
+            </div>
+          </div>
           <div className={`${style.header} mt-3`}>
             {Translated.byKey("teams")}
           </div>

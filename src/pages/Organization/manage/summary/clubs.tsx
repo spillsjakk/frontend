@@ -5,6 +5,7 @@ import Translated from "../../../../components/translated";
 import { useOrganization } from "../../../../context/organization";
 import { fetchJson } from "../../../../functions";
 import style from "../style.module.scss";
+import { Delete } from "@material-ui/icons";
 
 const ClubsSummary: FunctionComponent<{}> = () => {
   const organization = useOrganization();
@@ -46,10 +47,10 @@ const ClubsSummary: FunctionComponent<{}> = () => {
               </div>
               <div>
                 <a
-                  className="btn btn-danger"
+                  style={{ cursor: "pointer" }}
                   onClick={() => removeClub(club.id)}
                 >
-                  X
+                  <Delete color="action" />
                 </a>
               </div>
             </div>
