@@ -42,7 +42,7 @@ class Settings extends PureComponent<{}, SettingsState> {
       this.setState({
         email: result.email,
         lichessUsername: result.lichess_username,
-        showHelpText: result.showHelpText,
+        showHelpText: result.show_help_text,
       });
     });
   }
@@ -103,8 +103,8 @@ class Settings extends PureComponent<{}, SettingsState> {
 
   check(): void {
     fetchJson(
-      "/s/account-settings",
-      "POST",
+      "/s/account/settings",
+      "PUT",
       { showHelpText: !this.state.showHelpText },
       () => ({})
     );
