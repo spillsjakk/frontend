@@ -16,3 +16,8 @@ body#Account-Settings .table {
 body#Account-Settings .table-striped tbody tr:nth-of-type(2n + 1) {
     background-color: #fafafa !important;
 }
+.toogle-text{
+    margin-top: 20px!important;
+    font-weight: bold;
+    margin-bottom:5px;
+}

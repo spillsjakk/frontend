@@ -1,8 +1,10 @@
+import { ToggleButton } from "@material-ui/core";
 import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { title, fetchJson } from "../../functions";
 import "./Settings.css";
+import CheckIcon from "@material-ui/icons/Check";
 
 type SettingsState = {
   email: string;
@@ -10,6 +12,7 @@ type SettingsState = {
   newPassword1: string;
   newPassword2: string;
   lichessUsername: string;
+  showHelpText: boolean;
 };
 
 class Settings extends PureComponent<{}, SettingsState> {
@@ -22,12 +25,14 @@ class Settings extends PureComponent<{}, SettingsState> {
       newPassword1: "",
       newPassword2: "",
       lichessUsername: "",
+      showHelpText: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.onLinkLichessAccount = this.onLinkLichessAccount.bind(this);
+    this.check = this.check.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +42,7 @@ class Settings extends PureComponent<{}, SettingsState> {
       this.setState({
         email: result.email,
         lichessUsername: result.lichess_username,
+        showHelpText: result.showHelpText,
       });
     });
   }
@@ -93,6 +99,16 @@ class Settings extends PureComponent<{}, SettingsState> {
         alert(Translated.byKey("passwordChanged"));
       }
     );
+  }
+
+  check(): void {
+    fetchJson(
+      "/s/account-settings",
+      "POST",
+      { showHelpText: !this.state.showHelpText },
+      () => ({})
+    );
+    this.setState({ showHelpText: !this.state.showHelpText });
   }
 
   render() {
@@ -195,6 +211,17 @@ class Settings extends PureComponent<{}, SettingsState> {
             <Translated str="linkLichessAccount" />
           </button>
         </form>
+        <p className="toogle-text">Display help texts on pages</p>
+        <ToggleButton
+          value="check"
+          className="toggle-button"
+          selected={this.state.showHelpText}
+          onChange={() => {
+            this.check();
+          }}
+        >
+          <CheckIcon />
+        </ToggleButton>
       </>
     );
   }
