@@ -1,3 +1,4 @@
+import { readCookie } from "@mehmetsefabalik/cookie-helper/dist";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Translated from "../translated";
@@ -18,7 +19,11 @@ const HelpBox: FunctionComponent<Props> = (props) => {
   const { children, placement, text, name } = props;
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (props.show && !localStorage.getItem(getKey(name))) {
+    if (
+      props.show &&
+      readCookie("show_help_text") === "true" &&
+      !localStorage.getItem(getKey(name))
+    ) {
       setShow(true);
     }
   }, [props.show]);

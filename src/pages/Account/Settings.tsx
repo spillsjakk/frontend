@@ -1,10 +1,11 @@
-import { ToggleButton } from "@material-ui/core";
+import { Checkbox, FormControlLabel, ToggleButton } from "@material-ui/core";
 import React, { PureComponent, ChangeEvent, FormEvent } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
 import { title, fetchJson } from "../../functions";
 import "./Settings.css";
 import CheckIcon from "@material-ui/icons/Check";
+import { createCookie } from "@mehmetsefabalik/cookie-helper/dist";
 
 type SettingsState = {
   email: string;
@@ -32,7 +33,7 @@ class Settings extends PureComponent<{}, SettingsState> {
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.onLinkLichessAccount = this.onLinkLichessAccount.bind(this);
-    this.check = this.check.bind(this);
+    this.onChangeShowHelpText = this.onChangeShowHelpText.bind(this);
   }
 
   componentDidMount() {
@@ -101,11 +102,12 @@ class Settings extends PureComponent<{}, SettingsState> {
     );
   }
 
-  check(): void {
+  onChangeShowHelpText(): void {
+    createCookie("show_help_text", String(!this.state.showHelpText), 365);
     fetchJson(
       "/s/account/settings",
       "PUT",
-      { showHelpText: !this.state.showHelpText },
+      { show_help_text: !this.state.showHelpText },
       () => ({})
     );
     this.setState({ showHelpText: !this.state.showHelpText });
@@ -211,17 +213,17 @@ class Settings extends PureComponent<{}, SettingsState> {
             <Translated str="linkLichessAccount" />
           </button>
         </form>
-        <p className="toogle-text">Display help texts on pages</p>
-        <ToggleButton
-          value="check"
-          className="toggle-button"
-          selected={this.state.showHelpText}
-          onChange={() => {
-            this.check();
-          }}
-        >
-          <CheckIcon />
-        </ToggleButton>
+        <FormControlLabel
+          className="toogle-text"
+          control={
+            <Checkbox
+              checked={this.state.showHelpText}
+              onChange={this.onChangeShowHelpText}
+              color="primary"
+            />
+          }
+          label="Display help texts on pages"
+        />
       </>
     );
   }
