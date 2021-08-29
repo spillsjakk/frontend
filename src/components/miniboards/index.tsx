@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
+import { ToggleButton, ToggleButtonGroup, Grid } from "@material-ui/core";
+import ViewListIcon from "@material-ui/icons/ViewList";
 import { Pagination } from "@material-ui/lab";
 import { Board } from "./board";
 import style from "./style.module.scss";
@@ -11,11 +12,20 @@ interface Props {
 const Miniboards: FunctionComponent<Props> = ({ data }) => {
   const [page, setPage] = useState(1);
   const [boardsToShow, setBoardsToShow] = useState([]);
+  const [selectedDisplayOption, setSelectedDisplayOption] = useState("default");
 
   useEffect(() => {
     if (Array.isArray(data)) {
       setBoardsToShow(
         data
+          .filter((game) => {
+            if (selectedDisplayOption === "finished") {
+              return game.finished;
+            } else if (selectedDisplayOption === "ongoing") {
+              return !game.finished;
+            }
+            return true;
+          })
           .filter((game, index) => {
             if ((page - 1) * 12 <= index && index < page * 12) {
               return true;
@@ -24,7 +34,8 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
           .map((game, index) => ({ ...game, boardNumber: index + 1 }))
       );
     }
-  }, [page, data]);
+  }, [page, data, selectedDisplayOption]);
+
   return (
     <>
       <Grid container id={style.miniboards}>
@@ -52,6 +63,24 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
         onChange={(e, value) => setPage(value)}
         className={style.pagination}
       />
+      <ToggleButtonGroup
+        orientation="horizontal"
+        exclusive
+        value={selectedDisplayOption}
+        onChange={(e, newValue) => {
+          setSelectedDisplayOption(newValue);
+        }}
+      >
+        <ToggleButton value="default">
+          <ViewListIcon />
+        </ToggleButton>
+        <ToggleButton value="finished">
+          <ViewListIcon />
+        </ToggleButton>
+        <ToggleButton value="ongoing">
+          <ViewListIcon />
+        </ToggleButton>
+      </ToggleButtonGroup>
     </>
   );
 };

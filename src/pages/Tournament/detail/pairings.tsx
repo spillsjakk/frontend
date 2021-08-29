@@ -277,7 +277,6 @@ const Pairings: FunctionComponent<Props> = ({
   const [type, setType] = useState(defaultMiniboards ? "miniboards" : "list");
   const [tab, setTab] = useState(0);
   const [uniqueTabs, setUniqueTabs] = useState([]);
-
   const { pairings } = useTournamentDetail();
 
   useEffect(() => {
