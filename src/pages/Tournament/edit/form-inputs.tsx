@@ -192,7 +192,7 @@ const FormInputs: FunctionComponent<{}> = () => {
             <Translated str="teamSwissDutch" />
           </label>
         </div>
-        {/* <div className="form-check">
+        <div className="form-check">
           <input
             className="form-check-input"
             type="radio"
@@ -205,7 +205,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           <label className="form-check-label" htmlFor="kind4">
             <Translated str="teamMonrad" />
           </label>
-        </div> */}
+        </div>
         <div className="form-check">
           <input
             className="form-check-input"
