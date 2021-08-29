@@ -139,6 +139,7 @@ const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
       renderCell: renderTeamNameCell,
       hideSortIcons: true,
       ...commonFields,
+      width: 180,
     },
     {
       field: "fide_rating",
