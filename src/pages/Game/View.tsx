@@ -19,7 +19,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 type ViewProps = {
   id: string;
@@ -79,10 +79,27 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     this.getSelfInfo = this.getSelfInfo.bind(this);
     this.renderOpponentBox = this.renderOpponentBox.bind(this);
     this.renderSelfBox = this.renderSelfBox.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+  }
+
+  onKeyPress(e) {
+    if (e.keyCode === 39) {
+      this.updateBoard(this.state.currentMove + 1)
+    }
+
+    if (e.keyCode === 37) {
+      this.updateBoard(this.state.currentMove - 1)
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.onKeyPress);
   }
 
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Game-View";
+
+    document.addEventListener("keydown", this.onKeyPress);
 
     fetchJson(`/s/game/view/${this.gameId}`, "GET", undefined, (result) => {
       if (result.game.outcome === null) {
@@ -318,76 +335,76 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           <title>{title("viewGame")}</title>
         </Helmet>
 
-        <div className="d-flex flex-row mt-4 box">
-          <div id="move-div">
-            <div className="tournament-link">
-              <Link to={`/tournament/view/${this.state.tournamentData?.id}`}>
-                {Translated.byKey("backToTournament")}
-              </Link>
-            </div>
-            <table id="move-table">
-              <tbody>{rows}</tbody>
-            </table>
-          </div>
-
-          <div className="d-flex flex-column play-box">
-            <div className="d-flex flex-row user-box">
-              {this.renderOpponentBox()}
-            </div>
-            <div className="d-flex flex-row">
-              <Chessground
-                fen={this.state.fen}
-                orientation={this.state.myColor || "white"}
-                movable={{ free: false, color: undefined }}
-                lastMove={this.state.lastMove}
-                turnColor={this.state.turn}
-                check={this.state.check}
-                drawable={{ enabled: true }}
-              />
-            </div>
-            <div className="d-flex flex-row user-box">
-              {this.renderSelfBox()}
-            </div>
-            <div className="d-flex flex-row" id="controls">
-              <div
-                id="controls-begin"
-                className="flex-fill p-3"
-                onClick={() => this.updateBoard(0)}
-              >
-                <Button variant="outlined">
-                  <FirstPageIcon />
-                </Button>
+        <div className="box">
+          <Grid container>
+            <Grid item container sm={12} md={9} justifyContent="center">
+              <div className="play-box">
+                <div className="user-box">
+                  {this.renderOpponentBox()}
+                </div>
+                <div id="board">
+                  <Chessground
+                    fen={this.state.fen}
+                    orientation={this.state.myColor || "white"}
+                    movable={{ free: false, color: undefined }}
+                    lastMove={this.state.lastMove}
+                    turnColor={this.state.turn}
+                    check={this.state.check}
+                    drawable={{ enabled: true }}
+                  />
+                </div>
+                <div className="user-box">
+                  {this.renderSelfBox()}
+                </div>
+                <div id="controls">
+                  <div
+                    id="controls-begin"
+                    onClick={() => this.updateBoard(0)}
+                  >
+                    <Button variant="outlined">
+                      <FirstPageIcon />
+                    </Button>
+                  </div>
+                  <div
+                    id="controls-prev"
+                    onClick={() => this.updateBoard(this.state.currentMove - 1)}
+                  >
+                    <Button variant="outlined">
+                      <KeyboardArrowLeftIcon />
+                    </Button>
+                  </div>
+                  <div
+                    id="controls-next"
+                    onClick={() => this.updateBoard(this.state.currentMove + 1)}
+                  >
+                    <Button variant="outlined">
+                      <KeyboardArrowRightIcon />
+                    </Button>
+                  </div>
+                  <div
+                    id="controls-end"
+                    onClick={() => this.updateBoard(this.allMoves.length / 3 - 1)}
+                  >
+                    <Button variant="outlined">
+                      <LastPageIcon />
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <div
-                id="controls-prev"
-                className="flex-fill p-3"
-                onClick={() => this.updateBoard(this.state.currentMove - 1)}
-              >
-                <Button variant="outlined">
-                  <KeyboardArrowLeftIcon />
-                </Button>
+            </Grid>
+            <Grid item container sm={12} md={3} justifyContent="center">
+              <div id="move-div">
+                <div className="tournament-link">
+                  <Link to={`/tournament/view/${this.state.tournamentData?.id}`}>
+                    {Translated.byKey("backToTournament")}
+                  </Link>
+                </div>
+                <table id="move-table">
+                  <tbody>{rows}</tbody>
+                </table>
               </div>
-              <div
-                id="controls-next"
-                className="flex-fill p-3"
-                onClick={() => this.updateBoard(this.state.currentMove + 1)}
-              >
-                <Button variant="outlined">
-                  <KeyboardArrowRightIcon />
-                </Button>
-              </div>
-              <div
-                id="controls-end"
-                className="flex-fill p-3"
-                onClick={() => this.updateBoard(this.allMoves.length / 3 - 1)}
-              >
-                <Button variant="outlined">
-                  <LastPageIcon />
-                </Button>
-              </div>
-            </div>
-          </div>
-
+            </Grid>
+          </Grid>
           <div
             className="d-flex flex-column justify-content-around"
             id="player-links"
