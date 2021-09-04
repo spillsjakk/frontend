@@ -45,8 +45,15 @@
   font-weight: 600;
   width: 25px;
   z-index: 10;
-  background-color: white;
+  background-color: transparent;
   padding: px;
+}
+.toogle{
+  float: right;
+  button{
+    width:1.7vw;
+    height: 3.5vh;
+  }
 }
 @media only screen and (max-width: 800px) {
   #miniboards {
@@ -60,5 +67,6 @@
   #pairingnumber {
     top: 0;
     left: 10%;
+    background-color: transparent;
   }
 }
