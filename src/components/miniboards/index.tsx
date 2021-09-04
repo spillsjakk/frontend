@@ -96,5 +96,4 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
     </>
   );
 };
-
 export { Miniboards };
