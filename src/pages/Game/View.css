@@ -9,9 +9,9 @@
 #Game-View div.cg-wrap,
 #Game-View cg-container {
   width: 90vh; /* Firefox mobile compat */
-  width: min(525px, 90vh);
+  width:calc(min(80vw, 75vh));
   height: 90vw;
-  height: min(525px, 90vh);
+  height: calc(min(80vw, 75vh));
   z-index: -1;
 }
 #Game-View #move-div {
@@ -45,14 +45,10 @@
 #Game-View #controls div {
   text-align: center;
   cursor: pointer;
-  border: 1px solid #444;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-#Game-View #controls div:hover {
-  background: #b5bdc5;
 }
 #Game-View #controls {
   padding-left: 5px;
@@ -81,7 +77,7 @@
 
 #Game-View .play-box .user-box .user-info {
   display: flex;
-  margin: 10px 20px;
+  margin: 25px 20px 10px 20px;
 }
 
 #Game-View .tournament-link {
@@ -98,6 +94,9 @@
 }
 .box {
   justify-content: space-between;
+}
+#Game-View .flex-fill.p-3 button{
+  width: 100%;
 }
 @media screen and (max-width: 500px) {
   #Game-View #move-div {
