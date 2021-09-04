@@ -81,12 +81,12 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
               <ViewListIcon />
             </Tooltip>
           </ToggleButton>
-          <ToggleButton value="finished">
-            <Tooltip title="Show only ongoing">
+          <ToggleButton value="ongoing">
+            <Tooltip title="Show only ongoing games">
               <ViewModuleIcon />
             </Tooltip>
           </ToggleButton>
-          <ToggleButton value="ongoing">
+          <ToggleButton value="finished">
             <Tooltip title="Show only finished games">
               <ViewQuiltIcon />
             </Tooltip>
