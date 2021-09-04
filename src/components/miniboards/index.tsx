@@ -1,6 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { ToggleButton, ToggleButtonGroup, Grid } from "@material-ui/core";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import ViewModuleIcon from "@material-ui/icons/ViewModule";
+import ViewQuiltIcon from "@material-ui/icons/ViewQuilt";
+import Tooltip from '@material-ui/core/Tooltip';
 import { Pagination } from "@material-ui/lab";
 import { Board } from "./board";
 import style from "./style.module.scss";
@@ -63,24 +66,33 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
         onChange={(e, value) => setPage(value)}
         className={style.pagination}
       />
-      <ToggleButtonGroup
-        orientation="horizontal"
-        exclusive
-        value={selectedDisplayOption}
-        onChange={(e, newValue) => {
-          setSelectedDisplayOption(newValue);
-        }}
-      >
-        <ToggleButton value="default">
-          <ViewListIcon />
-        </ToggleButton>
-        <ToggleButton value="finished">
-          <ViewListIcon />
-        </ToggleButton>
-        <ToggleButton value="ongoing">
-          <ViewListIcon />
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <div className={style.toogle}>
+        <ToggleButtonGroup
+          orientation="horizontal"
+          exclusive
+          value={selectedDisplayOption}
+          onChange={(e, newValue) => {
+            setSelectedDisplayOption(newValue);
+          }}
+          aria-label="text alignment"
+        >
+          <ToggleButton value="default">
+            <Tooltip title="See all">
+              <ViewListIcon />
+            </Tooltip>
+          </ToggleButton>
+          <ToggleButton value="finished">
+            <Tooltip title="Show only ongoing">
+              <ViewModuleIcon />
+            </Tooltip>
+          </ToggleButton>
+          <ToggleButton value="ongoing">
+            <Tooltip title="Show only finished games">
+              <ViewQuiltIcon />
+            </Tooltip>
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
     </>
   );
 };
