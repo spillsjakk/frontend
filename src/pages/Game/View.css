@@ -9,7 +9,7 @@
 #Game-View div.cg-wrap,
 #Game-View cg-container {
   width: 90vh; /* Firefox mobile compat */
-  width:calc(min(78vw, 73vh));
+  width: calc(min(78vw, 73vh));
   height: 90vw;
   height: calc(min(78vw, 73vh));
   z-index: -1;
@@ -96,34 +96,45 @@
 .box {
   justify-content: space-between;
 }
-#Game-View .flex-fill.p-3 button{
+#Game-View .flex-fill.p-3 button {
   width: 100%;
 }
-  #Game-View #controls{
+#Game-View #controls {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+#Game-View #move-div {
+  margin-top: 20px;
+}
+#Game-View #controls div {
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 1080px) and (min-width: 500px) {
+  #Game-View div.cg-wrap,
+  #Game-View cg-container {
+    width: calc(min(60vw, 60vh));
+    height: calc(min(60vw, 60vh));
   }
-  #Game-View #move-div {
-    margin-top: 20px;
+  #Game-View .play-box {
+    padding-right: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    max-width: calc(min(60vw, 60vh));
   }
-  #Game-View #controls div{
-   margin-bottom: 5px;
-  }
-@media screen and (max-width: 500px) {
+}
+@media screen and (max-width: 900px) {
   #Game-View #move-div {
     min-width: 0;
     max-height: 150px !important;
   }
+}
+@media screen and (max-width: 500px) {
   #Game-View div.cg-wrap,
   #Game-View cg-container {
     width: calc(min(78vw, 73vh));
     height: calc(min(78vw, 73vh));
-  }
-  #Game-View .play-box {
-    margin-top: 35px;
-    max-width: calc(min(78vw, 73vh));
   }
   .box {
     justify-content: center;
@@ -131,15 +142,15 @@
   #Game-View .tournament-link a {
     margin-left: 15px;
   }
-  #Game-View .play-box .user-box .user-info .name a{
+  #Game-View .play-box .user-box .user-info .name a {
     font-size: 17px;
     margin-left: -8px;
   }
-  #Game-View #controls{
+  #Game-View #controls {
     margin-top: 15px;
     margin-bottom: 20px;
   }
-  #Game-View #controls div{
+  #Game-View #controls div {
     height: 30px;
     display: flex;
     justify-content: center;
