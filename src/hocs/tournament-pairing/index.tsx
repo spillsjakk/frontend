@@ -9,16 +9,13 @@ import {
   Pairing,
   TournamentPairingProvider,
 } from "../../context/tournament-pairing";
-import { useTournament } from "../../context/tournament";
 
-const WithTournamentPairing: FunctionComponent = ({ children }) => {
+const WithTournamentPairing: FunctionComponent<{tournamentId: string}> = ({ children, tournamentId }) => {
   const [pairings, setPairings] = useState<Array<Pairing>>([]);
-
-  const { tournament } = useTournament();
 
   async function fetchPairings() {
     fetchJson(
-      `/s/pairings?tournament=${tournament!.id}`,
+      `/s/pairings?tournament=${tournamentId}`,
       "GET",
       undefined,
       (result: Array<Pairing>) => {
@@ -38,7 +35,7 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
       `/s/pairings`,
       "POST",
       {
-        tournament: tournament?.id,
+        tournament: tournamentId,
         round: body.round,
         white: body.whiteAccountId,
         black: body.blackAccounntId,
@@ -60,7 +57,7 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
       `/s/pairings`,
       "DELETE",
       {
-        tournament: tournament?.id,
+        tournament: tournamentId,
         round: body.round,
         white: body.whiteAccountId,
         black: body.blackAccounntId,
@@ -74,7 +71,7 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
 
   const add = useCallback(
     (whiteAccountId: string, blackAccounntId: string, round: number) => {
-      if (tournament && tournament.id) {
+      if (tournamentId) {
         addPairing({
           whiteAccountId,
           blackAccounntId,
@@ -82,12 +79,12 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
         });
       }
     },
-    [tournament]
+    [tournamentId]
   );
 
   const del = useCallback(
     (whiteAccountId: string, blackAccounntId: string, round: number) => {
-      if (tournament && tournament.id) {
+      if (tournamentId) {
         deletePairing({
           whiteAccountId,
           blackAccounntId,
@@ -95,14 +92,14 @@ const WithTournamentPairing: FunctionComponent = ({ children }) => {
         });
       }
     },
-    [tournament]
+    [tournamentId]
   );
 
   useEffect(() => {
-    if (tournament && tournament.id) {
+    if (tournamentId) {
       fetchPairings();
     }
-  }, [tournament]);
+  }, [tournamentId]);
 
   return (
     <TournamentPairingProvider

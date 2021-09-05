@@ -7,7 +7,7 @@ import { Contact } from "./pages/contact/index";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
-import TournamentManage from "./pages/Tournament/Manage";
+import TournamentManage from "./pages/Tournament/manage";
 import TournamentPlayers from "./pages/Tournament/players/index";
 import TournamentSearch from "./pages/Tournament/Search";
 import TournamentFind from "./pages/Tournament/Find";
