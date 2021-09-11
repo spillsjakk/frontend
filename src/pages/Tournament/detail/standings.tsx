@@ -22,7 +22,9 @@ const commonFields = {
   width: 120,
 };
 
-const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
+  visible,
+}) => {
   const [pageSize, setPageSize] = React.useState<number>(15);
 
   const { tournament, participants } = useTournamentDetail();
@@ -209,7 +211,7 @@ const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
 
   return (
     <DataGrid
-      className={`${style.table} ${seen ? "" : style.hide}`}
+      className={`${style.table} ${visible ? "" : style.hide}`}
       autoHeight
       pageSize={pageSize}
       onPageSizeChange={(params: GridPageChangeParams) => {
@@ -223,7 +225,7 @@ const ParticipantsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
   );
 };
 
-const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
+const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
   const [pageSize, setPageSize] = React.useState<number>(15);
   const { teams, ssw } = useTournamentDetail();
   function renderTeamNameCell(params) {
@@ -289,7 +291,7 @@ const TeamsTable: FunctionComponent<{ seen: boolean }> = ({ seen }) => {
 
   return (
     <DataGrid
-      className={`${style.table} ${seen ? "" : style.hide}`}
+      className={`${style.table} ${visible ? "" : style.hide}`}
       autoHeight
       pageSize={pageSize}
       onPageSizeChange={(params: GridPageChangeParams) => {
@@ -432,8 +434,8 @@ const Standings: FunctionComponent<unknown> = () => {
             </div>
             <div style={{ display: "flex", height: "100%" }}>
               <div style={{ flexGrow: 1 }}>
-                <ParticipantsTable seen={tab === 0} />
-                <TeamsTable seen={tab === 1} />
+                <ParticipantsTable visible={tab === 0} />
+                <TeamsTable visible={tab === 1} />
                 {tab === 2 && <Stats tournamentId={tournament.id} />}
               </div>
             </div>
