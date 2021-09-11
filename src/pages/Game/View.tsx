@@ -15,10 +15,10 @@ import { UserInfoBox } from "./play/user-info-box";
 import { Tournament } from "../Tournament/Types";
 import { DRAW_OFFER_SIGN } from "../../constants";
 import { FileCopy } from "@material-ui/icons";
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import LastPageIcon from "@material-ui/icons/LastPage";
+import FirstPageIcon from "@material-ui/icons/FirstPage";
 import { Button, Grid } from "@material-ui/core";
 
 type ViewProps = {
@@ -84,11 +84,11 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
 
   onKeyPress(e) {
     if (e.keyCode === 39) {
-      this.updateBoard(this.state.currentMove + 1)
+      this.updateBoard(this.state.currentMove + 1);
     }
 
     if (e.keyCode === 37) {
-      this.updateBoard(this.state.currentMove - 1)
+      this.updateBoard(this.state.currentMove - 1);
     }
   }
 
@@ -135,8 +135,8 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             result.game.outcome === 1
               ? GameOutcome.WhiteWins
               : result.game.outcome === -1
-                ? GameOutcome.BlackWins
-                : GameOutcome.Draw,
+              ? GameOutcome.BlackWins
+              : GameOutcome.Draw,
         },
         () => {
           const currentMove = Math.max(
@@ -210,25 +210,25 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   getOpponentInfo() {
     return this.state.orientation === "black"
       ? {
-        id: this.state.whiteId,
-        name: this.state.whiteName,
-      }
+          id: this.state.whiteId,
+          name: this.state.whiteName,
+        }
       : {
-        id: this.state.blackId,
-        name: this.state.blackName,
-      };
+          id: this.state.blackId,
+          name: this.state.blackName,
+        };
   }
 
   getSelfInfo() {
     return this.state.orientation !== "black"
       ? {
-        id: this.state.whiteId,
-        name: this.state.whiteName,
-      }
+          id: this.state.whiteId,
+          name: this.state.whiteName,
+        }
       : {
-        id: this.state.blackId,
-        name: this.state.blackName,
-      };
+          id: this.state.blackId,
+          name: this.state.blackName,
+        };
   }
 
   getPgn() {
@@ -239,10 +239,11 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       [round "${this.state.round}"]
       [White "${this.state.whiteName}"]
       [Black "${this.state.blackName}"]
-      [Result "${this.state.outcome !== GameOutcome.Ongoing &&
-      (this.state.outcome === GameOutcome.WhiteWins
-        ? "1-0"
-        : this.state.outcome === GameOutcome.BlackWins
+      [Result "${
+        this.state.outcome !== GameOutcome.Ongoing &&
+        (this.state.outcome === GameOutcome.WhiteWins
+          ? "1-0"
+          : this.state.outcome === GameOutcome.BlackWins
           ? "0-1"
           : "1/2-1/2")
       }"]
@@ -339,9 +340,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           <Grid container>
             <Grid item container sm={12} md={9} justifyContent="center">
               <div className="play-box">
-                <div className="user-box">
-                  {this.renderOpponentBox()}
-                </div>
+                <div className="user-box">{this.renderOpponentBox()}</div>
                 <div id="board">
                   <Chessground
                     fen={this.state.fen}
@@ -353,14 +352,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
                     drawable={{ enabled: true }}
                   />
                 </div>
-                <div className="user-box">
-                  {this.renderSelfBox()}
-                </div>
+                <div className="user-box">{this.renderSelfBox()}</div>
                 <div id="controls">
-                  <div
-                    id="controls-begin"
-                    onClick={() => this.updateBoard(0)}
-                  >
+                  <div id="controls-begin" onClick={() => this.updateBoard(0)}>
                     <Button variant="outlined">
                       <FirstPageIcon />
                     </Button>
@@ -383,7 +377,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
                   </div>
                   <div
                     id="controls-end"
-                    onClick={() => this.updateBoard(this.allMoves.length / 3 - 1)}
+                    onClick={() =>
+                      this.updateBoard(this.allMoves.length / 3 - 1)
+                    }
                   >
                     <Button variant="outlined">
                       <LastPageIcon />
@@ -395,7 +391,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             <Grid item container sm={12} md={3} justifyContent="center">
               <div id="move-div">
                 <div className="tournament-link">
-                  <Link to={`/tournament/view/${this.state.tournamentData?.id}`}>
+                  <Link
+                    to={`/tournament/view/${this.state.tournamentData?.id}`}
+                  >
                     {Translated.byKey("backToTournament")}
                   </Link>
                 </div>
