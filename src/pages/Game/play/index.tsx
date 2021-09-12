@@ -33,7 +33,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import CreateIcon from "@material-ui/icons/Create";
 import InfoIcon from "@material-ui/icons/Info";
 import { AnyKindOfDictionary } from "lodash";
-import { Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 
 type PlayProps = {
@@ -951,175 +951,196 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         )}
 
         <div className="wrapper">
-          <div className="board-area">
-            <div className="play-box">
-              <div className="user-box">{this.renderOpponentBox()}</div>
-              <Chessground
-                fen={this.state.fen}
-                orientation={this.state.orientation}
-                turnColor={this.state.turn}
-                onMove={this.onMove}
-                ref={this.groundRef}
-                style={
-                  this.state.isPromoting && {
-                    pointerEvents: "none",
-                    filter: "blur(3px)",
-                  }
-                }
-                movable={{
-                  free: false,
-                  color: this.state.myColor,
-                  dests: this.state.dests,
-                  showDests: true,
-                  rookCastle: false,
-                }}
-                premovable={{
-                  enabled: true,
-                  showDests: true,
-                  castle: true,
-                  events: {
-                    set: (orig: any, dest: any) => {
-                      this.setState({
-                        premove: true,
-                        premoveData: { source: orig, dest },
-                      });
-                    },
-                    unset: () => {
-                      this.setState({
-                        premove: false,
-                        premoveData: { source: "", dest: "" },
-                      });
-                    },
-                  },
-                }}
-                lastMove={this.state.lastMove}
-                check={this.state.check}
-              />
-              <div className="user-box self-box">{this.renderSelfBox()}</div>
-            </div>
-          </div>
-          <div className="info-area">
-            <div className="info-wrapper">
-              <Paper square>
-                <Tabs
-                  value={this.state.value}
-                  variant="fullWidth"
-                  indicatorColor="primary"
-                  textColor="primary"
-                  aria-label="icon tabs example"
-                  onChange={this.handleTab}
-                >
-                  <Tab icon={<MessageIcon />} aria-label="message" />
-                  <Tab icon={<SettingsIcon />} aria-label="settings" />
-                  <Tab icon={<CreateIcon />} aria-label="create" />
-                  <Tab icon={<InfoIcon />} aria-label="info" />
-                </Tabs>
-                <this.TabPanel
-                  className="tab-panel"
-                  value={this.state.value}
-                  index={0}
-                >
-                  {this.state.tournament && this.state.tournament.chat_enabled && (
-                    <WithChatService
-                      messages={this.state.messages}
-                      gameId={this.gameId}
-                      side={this.state.myColor === "white" ? 0 : 1}
-                    >
-                      <GameChat color={this.state.myColor} />
-                    </WithChatService>
-                  )}
-                </this.TabPanel>
-                <this.TabPanel
-                  className="tab-panel"
-                  value={this.state.value}
-                  index={1}
-                >
-                  sound hotkeys
-                </this.TabPanel>
-                <this.TabPanel
-                  className="tab-panel"
-                  value={this.state.value}
-                  index={2}
-                >
-                  {this.state.outcome === GameOutcome.Ongoing && (
-                    <>
-                      <div>
-                        <a
-                          className="action-button"
-                          id="resign-btn"
-                          onClick={this.resignFirst}
-                        >
-                          <Translated str="resign" />
-                        </a>
-                        {this.state.showResignConfirm && (
-                          <div className="decide-buttons">
-                            <a
-                              className="btn btn-danger"
-                              id="no-resign-btn"
-                              onClick={this.resignNo}
-                            >
-                              <Translated str="no" />
-                            </a>
-                            <a
-                              className="btn btn-success"
-                              id="yes-resign-btn"
-                              onClick={this.resignYes}
-                            >
-                              <Translated str="yes" />
-                            </a>
-                          </div>
-                        )}
-                      </div>
-
-                      <div>
-                        <a
-                          className="action-button"
-                          id="draw-btn"
-                          onClick={this.drawFirst}
-                        >
-                          {this.state.pendingDrawOffer === 2 ? (
-                            <Translated str="acceptDraw" />
-                          ) : this.state.pendingDrawOffer === 1 ? (
-                            <Translated str="drawOfferPending" />
-                          ) : (
-                            <Translated str="offerDraw" />
-                          )}
-                        </a>
-                        {this.state.showDrawConfirm && (
-                          <div className="decide-buttons">
-                            <a
-                              className="btn btn-danger"
-                              id="no-draw-btn"
-                              onClick={this.drawNo}
-                            >
-                              <Translated str="no" />
-                            </a>
-                            <a
-                              className="btn btn-success"
-                              id="yes-draw-btn"
-                              onClick={this.drawYes}
-                            >
-                              <Translated str="yes" />
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </this.TabPanel>
-                <this.TabPanel
-                  className="tab-panel"
-                  value={this.state.value}
-                  index={3}
-                >
-                  <div className="tournament-info">
-                    Round: {this.state.round}, {this.state.initialTime}+
-                    {this.state.incrementTime}
+          <Grid container justifyContent="center" spacing={5}>
+            <Grid container justifyContent="center" item md={12} lg={6}>
+              <div className="board-area">
+                <div className="play-box">
+                  <div className="user-box">{this.renderOpponentBox()}</div>
+                  <Chessground
+                    fen={this.state.fen}
+                    orientation={this.state.orientation}
+                    turnColor={this.state.turn}
+                    onMove={this.onMove}
+                    ref={this.groundRef}
+                    style={
+                      this.state.isPromoting && {
+                        pointerEvents: "none",
+                        filter: "blur(3px)",
+                      }
+                    }
+                    movable={{
+                      free: false,
+                      color: this.state.myColor,
+                      dests: this.state.dests,
+                      showDests: true,
+                      rookCastle: false,
+                    }}
+                    premovable={{
+                      enabled: true,
+                      showDests: true,
+                      castle: true,
+                      events: {
+                        set: (orig: any, dest: any) => {
+                          this.setState({
+                            premove: true,
+                            premoveData: { source: orig, dest },
+                          });
+                        },
+                        unset: () => {
+                          this.setState({
+                            premove: false,
+                            premoveData: { source: "", dest: "" },
+                          });
+                        },
+                      },
+                    }}
+                    lastMove={this.state.lastMove}
+                    check={this.state.check}
+                  />
+                  <div className="user-box self-box">
+                    {this.renderSelfBox()}
                   </div>
-                </this.TabPanel>
-              </Paper>
-            </div>
-          </div>
+                </div>
+              </div>
+            </Grid>
+            <Grid container justifyContent="center" item md={12} lg={6}>
+              <div className="info-area">
+                {this.getOpponentCountdown()}
+
+                {this.getResult()}
+                {!this.state.showBlackInitialCountdown &&
+                  !this.state.showWhiteInitialCountdown && (
+                    <Paper>
+                      <Tabs
+                        value={this.state.value}
+                        variant="fullWidth"
+                        indicatorColor="primary"
+                        textColor="primary"
+                        aria-label="icon tabs example"
+                        onChange={this.handleTab}
+                      >
+                        <Tab icon={<MessageIcon />} aria-label="message" />
+                        <Tab icon={<SettingsIcon />} aria-label="settings" />
+                        <Tab icon={<CreateIcon />} aria-label="create" />
+                        <Tab icon={<InfoIcon />} aria-label="info" />
+                      </Tabs>
+                      <this.TabPanel
+                        className="tab-panel"
+                        value={this.state.value}
+                        index={0}
+                      >
+                        {this.state.tournament &&
+                          this.state.tournament.chat_enabled && (
+                            <WithChatService
+                              messages={this.state.messages}
+                              gameId={this.gameId}
+                              side={this.state.myColor === "white" ? 0 : 1}
+                            >
+                              <GameChat color={this.state.myColor} />
+                            </WithChatService>
+                          )}
+                      </this.TabPanel>
+                      <this.TabPanel
+                        className="tab-panel"
+                        value={this.state.value}
+                        index={1}
+                      ></this.TabPanel>
+                      <this.TabPanel
+                        className="tab-panel"
+                        value={this.state.value}
+                        index={2}
+                      >
+                        {this.state.outcome === GameOutcome.Ongoing && (
+                          <>
+                            <div>
+                              <a
+                                className="action-button"
+                                id="resign-btn"
+                                onClick={this.resignFirst}
+                              >
+                                <Translated str="resign" />
+                              </a>
+                              {this.state.showResignConfirm && (
+                                <div className="decide-buttons">
+                                  <a
+                                    className="btn btn-danger"
+                                    id="no-resign-btn"
+                                    onClick={this.resignNo}
+                                  >
+                                    <Translated str="no" />
+                                  </a>
+                                  <a
+                                    className="btn btn-success"
+                                    id="yes-resign-btn"
+                                    onClick={this.resignYes}
+                                  >
+                                    <Translated str="yes" />
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+
+                            <div>
+                              <a
+                                className="action-button"
+                                id="draw-btn"
+                                onClick={this.drawFirst}
+                              >
+                                {this.state.pendingDrawOffer === 2 ? (
+                                  <Translated str="acceptDraw" />
+                                ) : this.state.pendingDrawOffer === 1 ? (
+                                  <Translated str="drawOfferPending" />
+                                ) : (
+                                  <Translated str="offerDraw" />
+                                )}
+                              </a>
+                              {this.state.showDrawConfirm && (
+                                <div className="decide-buttons">
+                                  <a
+                                    className="btn btn-danger"
+                                    id="no-draw-btn"
+                                    onClick={this.drawNo}
+                                  >
+                                    <Translated str="no" />
+                                  </a>
+                                  <a
+                                    className="btn btn-success"
+                                    id="yes-draw-btn"
+                                    onClick={this.drawYes}
+                                  >
+                                    <Translated str="yes" />
+                                  </a>
+                                </div>
+                              )}
+                            </div>
+                          </>
+                        )}
+                      </this.TabPanel>
+                      <this.TabPanel
+                        className="tab-panel"
+                        value={this.state.value}
+                        index={3}
+                      >
+                        <>
+                          <div className="tournament-info">
+                            Round: {this.state.round}, {this.state.initialTime}+
+                            {this.state.incrementTime}
+                          </div>
+                          <div className="tournament-link">
+                            <Link
+                              to={`/tournament/view/${this.state.tournament?.id}`}
+                            >
+                              {Translated.byKey("backToTournament")}
+                            </Link>
+                          </div>
+                        </>
+                      </this.TabPanel>
+                    </Paper>
+                  )}
+                {this.getSelfCountdown()}
+              </div>
+            </Grid>
+          </Grid>
           <div className="png-area">
             <div id="move-div">{rows}</div>
           </div>
