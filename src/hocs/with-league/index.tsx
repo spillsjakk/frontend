@@ -50,11 +50,18 @@ export interface Season {
   ended: boolean;
 }
 
+export interface SeasonsCategories {
+  season: string;
+  category: string;
+  tournament: string;
+}
+
 const LeagueContext: Context<
   Partial<{
     league: League;
     seasons: Array<Season>;
     categories: Array<Category>;
+    seasonsCategories: Array<SeasonsCategories>;
     tournaments: Array<Record<string, Tournament>>;
     fetchLeague: () => void;
     fetchCategories: () => void;
@@ -75,9 +82,10 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
   const [league, setLeague] = useState<League>();
   const [categories, setCategories] = useState<Array<Category>>();
   const [seasons, setSeasons] = useState<Array<Season>>();
-  const [tournaments, setTournaments] = useState<
-    Array<Record<string, Tournament>>
-  >();
+  const [seasonsCategories, setSeasonsCategories] =
+    useState<Array<SeasonsCategories>>();
+  const [tournaments, setTournaments] =
+    useState<Array<Record<string, Tournament>>>();
 
   function fetchLeague() {
     fetchCall(`/s/leagues/${id}`, "GET", undefined, (result) => {
@@ -95,6 +103,17 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
     fetchCall(`/s/leagues/${id}/seasons`, "GET", undefined, (result) => {
       setSeasons(result);
     });
+  }
+
+  function fetchSeasonsCategories() {
+    fetchCall(
+      `/s/leagues/${id}/seasons-categories`,
+      "GET",
+      undefined,
+      (result) => {
+        setSeasonsCategories(result);
+      }
+    );
   }
 
   function fetchTournaments() {
@@ -122,6 +141,7 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
     fetchLeague();
     fetchCategories();
     fetchSeasons();
+    fetchSeasonsCategories();
   }, []);
 
   useEffect(() => {
@@ -136,6 +156,7 @@ const WithLeague: FunctionComponent<Props> = ({ id, children }) => {
         seasons,
         categories,
         tournaments,
+        seasonsCategories,
         fetchLeague,
         fetchCategories,
         fetchSeasons,
