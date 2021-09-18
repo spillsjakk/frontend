@@ -101,6 +101,38 @@ class About extends PureComponent {
               and using it for your tournament, club or organisation, contact{" "}
               <Link to="mailto:hei@spillsjakk.no">hei@spillsjakk.no</Link>
             </p>
+            <p>
+              <strong>Terms of purchase:</strong>
+            </p>
+            <p>
+              When registering for a tournament with a participation fee, an
+              advance payment of the tournament fee is required.
+            </p>
+            <p>The following purchase terms apply to the payment:</p>
+            <ul>
+              <li>The Cancellation Act does not apply, cf. § 22 letter.</li>
+            </ul>
+            <p>
+              The prepaid starting fee is refundable only in the following
+              cases:
+            </p>
+            <ul>
+              <li>Federation / club / organizer cancels the tournament</li>
+              <li>
+                If a tournament participant cancels the registration before the
+                registration deadline expires, the organizer will refund the
+                paid tournament fee. After the registration deadline has
+                expired, the tournament participant is not entitled to a refund
+                of the tournament fee.
+              </li>
+            </ul>
+            <p>
+              <div>Turneringsplattform AS</div>
+              <div>Organization number: 827 073 032</div>
+              <div>Sandakerveien 24 C, 0473 Oslo</div>
+              <div>Phone: 22151241</div>
+              <div>Email: hei@spillsjakk.no</div>
+            </p>
           </>
         ) : (
           <>
@@ -172,6 +204,40 @@ class About extends PureComponent {
               <Link to="mailto:hei@spillsjakk.no">hei@spillsjakk.no</Link> for
               mer informasjon om SpillSjakk og bruk av den til din turnering,
               klubb eller organisasjon.
+            </p>
+            <p>
+              <strong>Kjøpsvilkår:</strong>
+            </p>
+            <p>
+              Ved påmelding til turnering med deltakeravgift er det påkrevd med
+              forhåndsbetaling av turneringsavgift.
+            </p>
+            <p>Følgende kjøpsvilkår gjelder for betalingen:</p>
+            <ul>
+              <li>
+                Angrerettloven kommer ikke til anvendelse, jf. angrerettloven §
+                22 bokstav m.
+              </li>
+            </ul>
+            <p>
+              Den forhåndsbetalte startkontingenten refunderes kun i følgende
+              tilfeller:
+            </p>
+            <ul>
+              <li>Forbund/klubb/arrangør avlyser eller avbryter turneringen</li>
+              <li>
+                Om turneringsdeltakeren melder seg av turneringen innen
+                påmeldingsfristen utløper, vil arrangør refundere innbetalt
+                turneringsavgift. Etter at påmeldingsfristen har utløpt har
+                turneringsdeltakeren ikke rett til refusjon av turneringsavgift.
+              </li>
+            </ul>
+            <p>
+              <div>Turneringsplattform AS</div>
+              <div>Orgnr: 827 073 032</div>
+              <div>Sandakerveien 24 C, 0473 Oslo</div>
+              <div>Tlf: 22151241</div>
+              <div>Epost: hei@spillsjakk.no</div>
             </p>
           </>
         )}
