@@ -9,15 +9,10 @@ import { Helmet } from "react-helmet";
 import Translated from "../../../components/translated";
 import { fetchCall, fetchJson, title } from "../../../functions";
 import { RouteComponentProps, Link } from "react-router-dom";
-import BootstrapTable from "react-bootstrap-table-next";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
-import paginationFactory from "react-bootstrap-table2-paginator";
 
-import ToolkitProvider, {
-  Search,
-  SearchMatchProps,
-} from "react-bootstrap-table2-toolkit";
+import { SearchMatchProps } from "react-bootstrap-table2-toolkit";
 import UserLink from "../../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
 import Chess from "chess.js";
@@ -39,6 +34,7 @@ import { Countdown } from "../../../components/count-down/index";
 import { ManageRoundsAndPairings } from "../../../containers/manage-rounds-and-pairings/index";
 import { SetupRoundButton } from "../../../containers/setup-round-button/index";
 import { TournamentProvider } from "../../../context/tournament";
+import { TournamentDetailProvider } from "../../../context/tournament-detail";
 import { TournamentParticipantsProvider } from "../../../context/tournament-participants";
 import { WithTournamentRound } from "../../../hocs/tournament-round";
 import { WithTournamentPairing } from "../../../hocs/tournament-pairing";
@@ -48,8 +44,8 @@ import { numToSquare } from "../../Game/play/clock";
 import { DRAW_OFFER_SIGN } from "../../../constants";
 import { Event, Person, TrackChanges } from "@material-ui/icons";
 import { useNotification } from "../../../hocs/with-notification/index";
-
-const { SearchBar } = Search;
+import { Standings } from "./standings";
+import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
 
 const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
   props
@@ -390,6 +386,33 @@ class Manage extends Component<
       "GET",
       undefined,
       (json) => {
+        if (json && json.participants) {
+          // sorting participants and adding ranks
+          json.participants.sort(function (a, b) {
+            if (a.score === b.score) {
+              if (a.tb1 === b.tb1) {
+                if (a.tb2 === b.tb2) {
+                  if (a.tb3 === b.tb3) {
+                    return b.tb4 - a.tb4;
+                  }
+                  return b.tb3 - a.tb3;
+                }
+                return b.tb2 - a.tb2;
+              }
+              return b.tb1 - a.tb1;
+            }
+            return a.score > b.score ? -1 : 1;
+          });
+          json.participants = json.participants.map((detail, i) => ({
+            rank: i + 1,
+            id: detail.account,
+            ...detail,
+          }));
+          json.teams = json.teams.map((p) => ({
+            ...p,
+            id: p.team_id,
+          }));
+        }
         this.setState({ loaded: true, info: json });
       }
     );
@@ -849,323 +872,266 @@ class Manage extends Component<
 
     return (
       <TournamentProvider value={{ tournament: this.state.info?.tournament }}>
-        <TournamentParticipantsProvider
-          value={{ participants: this.state.info?.participants || [] }}
+        <TournamentDetailProvider
+          value={{
+            tournament: this.state.info?.tournament,
+            teams: this.state.info?.teams,
+            ssw: this.state.info?.ssw,
+            participants: this.state.info?.participants,
+            is_team_tournament: this.state.info?.is_team_tournament,
+          }}
         >
-          <WithTournamentRound>
-            <WithTournamentPairing tournamentId={this.state.info?.tournament?.id}>
-              <WithRoundSetupPopup>
-                <Helmet>
-                  <title>
-                    {title(this.state.info?.tournament.name || "tournament")}
-                  </title>
-                </Helmet>
+          <TournamentParticipantsProvider
+            value={{ participants: this.state.info?.participants || [] }}
+          >
+            <WithTournamentRound>
+              <WithTournamentPairing
+                tournamentId={this.state.info?.tournament?.id}
+              >
+                <WithRoundSetupPopup>
+                  <Helmet>
+                    <title>
+                      {title(this.state.info?.tournament.name || "tournament")}
+                    </title>
+                  </Helmet>
 
-                <h1 className="mt-4 p-3">{this.state.info?.tournament.name}</h1>
+                  <h1 className="mt-4 p-3">
+                    {this.state.info?.tournament.name}
+                  </h1>
 
-                <p
-                  className="mt-4"
-                  id="description"
-                  style={{ whiteSpace: "pre-line" }}
-                  dangerouslySetInnerHTML={{
-                    __html: this.state.info?.tournament.description || "",
-                  }}
-                ></p>
+                  <p
+                    className="mt-4"
+                    id="description"
+                    style={{ whiteSpace: "pre-line" }}
+                    dangerouslySetInnerHTML={{
+                      __html: this.state.info?.tournament.description || "",
+                    }}
+                  ></p>
 
-                {this.context.user.authenticated && (
-                  <form>
-                    {info.tournament.started &&
-                      (info.tournament.kind === "SwissDutch" ||
-                        info.tournament.kind === "TeamSwissDutch") && (
-                        <GenerateNextRoundButton
-                          tournamentId={info.tournament.id}
-                        />
-                      )}
-                    {!info.tournament.started && (
-                      <>
-                        <Button
-                          variant="primary"
-                          className="p-3 mb-3"
-                          disabled={false}
-                          onClick={this.onPressStart}
-                        >
-                          <Translated str="start" />
-                        </Button>
-                        <HelpBox
-                          placement="bottom"
-                          name={helpboxNames.manageTournamentManageParticipants}
-                          text={Translated.byKey(
-                            "manageTournamentManageParticipantsHelpbox"
-                          )}
-                          show={true}
-                        >
-                          <Link
-                            className="p-3 btn btn-primary ml-5 mb-3"
-                            to={"/tournament/players/" + info.tournament.id}
+                  {this.context.user.authenticated && (
+                    <form>
+                      {info.tournament.started &&
+                        (info.tournament.kind === "SwissDutch" ||
+                          info.tournament.kind === "TeamSwissDutch") && (
+                          <GenerateNextRoundButton
+                            tournamentId={info.tournament.id}
+                          />
+                        )}
+                      {!info.tournament.started && (
+                        <>
+                          <Button
+                            variant="primary"
+                            className="p-3 mb-3"
+                            disabled={false}
+                            onClick={this.onPressStart}
                           >
-                            <Translated str="manageParticipants" />
-                          </Link>
-                        </HelpBox>
-                      </>
-                    )}
-                    {info.managed_teams &&
-                      info.managed_teams?.map((t) => (
-                        <Link
-                          key={t.id}
-                          className="p-3 btn btn-primary ml-5 mb-3"
-                          to={
-                            "/tournament/manage-team/" +
-                            info.tournament.id +
-                            "/" +
-                            t.id
-                          }
-                        >
-                          <Translated str="manage" /> &quot;{t.name}&quot;
-                        </Link>
-                      ))}
-                    <Link
-                      className={`p-3 ml-3 btn btn-primary ${
-                        info.pairings.length === 0 ? "ml-5" : ""
-                      } mb-3`}
-                      to={"/tournament/edit/" + info.tournament.id}
-                    >
-                      <Translated str="editTournament" />
-                    </Link>
-                    <div
-                      className="p-3 btn btn-danger ml-5 mb-3"
-                      onClick={() => this.onDeleteTournament()}
-                    >
-                      <Translated str="deleteTournament" />
-                    </div>
-                  </form>
-                )}
-
-                {this.context.user.authenticated && (
-                  <div className="mt-4">
-                    <Link
-                      to={
-                        "/s/tournament/printout/results/" + info.tournament.id
-                      }
-                    >
-                      <Translated str="resultPrintouts" />
-                    </Link>
-                    &nbsp;|&nbsp;
-                    <Link
-                      to={
-                        "/s/tournament/printout/pairings/" + info.tournament.id
-                      }
-                    >
-                      <Translated str="pairingPrintouts" />
-                    </Link>
-                  </div>
-                )}
-
-                {info.tournament.kind !== "ManualPairing" &&
-                  info.tournament.kind !== "RoundRobin" && (
-                    <div className="mt-5">
-                      <Countdown
-                        time={info.tournament.current_online_pairing_time}
-                      />
-                      <Translated str="nextOnlinePairingWillBeAt" />:{" "}
-                      <Timestamp
-                        time={info.tournament.current_online_pairing_time}
-                      />
-                      {this.context.user.authenticated && (
-                        <form onSubmit={this.onUpdatePairingTime}>
+                            <Translated str="start" />
+                          </Button>
                           <HelpBox
                             placement="bottom"
-                            name={helpboxNames.manageTournamentChangeTime}
+                            name={
+                              helpboxNames.manageTournamentManageParticipants
+                            }
                             text={Translated.byKey(
-                              "manageTournamentChangeTimeHelpbox"
+                              "manageTournamentManageParticipantsHelpbox"
                             )}
                             show={true}
                           >
-                            <label htmlFor="next_pairing_date">
-                              <Translated str="changeNextPairingDateTime" />{" "}
-                              (hh:mm, <Translated str="localTime" />
-                              !):
-                            </label>
+                            <Link
+                              className="p-3 btn btn-primary ml-5 mb-3"
+                              to={"/tournament/players/" + info.tournament.id}
+                            >
+                              <Translated str="manageParticipants" />
+                            </Link>
                           </HelpBox>
-                          <input
-                            ref={this.pairingDateRef}
-                            type="date"
-                            id="next_pairing_date"
-                            className="form-control"
-                            name="next_pairing_date"
-                            style={{ display: "inline", width: "13%" }}
-                            required
-                            min="2000-01-01"
-                            max="2099-12-31"
-                          />
-                          <input
-                            ref={this.pairingHourRef}
-                            type="input"
-                            className="form-control"
-                            name="next_pairing_time"
-                            style={{ display: "inline", width: "13%" }}
-                            required
-                            pattern="\d\d?:\d\d"
-                          />
-                          <button
-                            className="p-2 btn btn-primary mb-1"
-                            type="submit"
-                          >
-                            <Translated str="update" />
-                          </button>
-                        </form>
-                      )}
-                    </div>
-                  )}
-
-                <div className="d-flex flex-row mt-5 justify-content-around">
-                  <div>
-                    <TrackChanges />
-                    &nbsp;
-                    <Translated
-                      str={
-                        info.tournament.kind.charAt(0).toLowerCase() +
-                        info.tournament.kind.slice(1)
-                      }
-                    />
-                    {info.tournament.rounds &&
-                      info.tournament.kind !== "ManualPairing" && (
-                        <>
-                          &nbsp;- {info.tournament.rounds}&nbsp;
-                          <Translated str="rounds" />
                         </>
                       )}
-                  </div>
-                  <div>
-                    <Event />
-                    &nbsp;
-                    {info.tournament.start_date} - {info.tournament.end_date}
-                  </div>
-                  <div>
-                    <Person />
-                    &nbsp;
-                    <UserLink
-                      id={info.tournament.organizer}
-                      name={info.tournament.organizer}
-                      ghost={false}
-                    />
-                  </div>
-                </div>
-
-                {this.state.info?.tournament?.kind === "ManualPairing" &&
-                  this.context.user.authenticated && (
-                    <ManageRoundsAndPairings />
-                  )}
-                <HelpBox
-                  placement="top"
-                  name={helpboxNames.manageTournamentStandings}
-                  text={Translated.byKey("manageTournamentStandingsHelpbox")}
-                  show={true}
-                >
-                  <h3 className="mt-5 mb-4">
-                    <Translated str="standings" />
-                  </h3>
-                </HelpBox>
-
-                <Tab.Container defaultActiveKey="standings-i-tab">
-                  <Nav className="nav-tabs">
-                    <Nav.Item>
-                      <Nav.Link eventKey="standings-i-tab">
-                        <Translated str="individual" />
-                      </Nav.Link>
-                    </Nav.Item>
-                    {info.is_team_tournament && (
-                      <Nav.Item>
-                        <Nav.Link eventKey="standings-t-tab">
-                          <Translated str="team" />
-                        </Nav.Link>
-                      </Nav.Item>
-                    )}
-                  </Nav>
-                  <Tab.Content>
-                    <Tab.Pane eventKey="standings-i-tab">
-                      <ToolkitProvider
-                        keyField="account"
-                        data={info.participants}
-                        columns={
-                          info.tournament.kind === "SwissDutch"
-                            ? this.participantColumns.concat(this.tbColumns)
-                            : this.participantColumns
-                        }
-                        bootstrap4={true}
-                        search={{
-                          onColumnMatch: this.onParticipantsColumnMatch,
-                        }}
+                      {info.managed_teams &&
+                        info.managed_teams?.map((t) => (
+                          <Link
+                            key={t.id}
+                            className="p-3 btn btn-primary ml-5 mb-3"
+                            to={
+                              "/tournament/manage-team/" +
+                              info.tournament.id +
+                              "/" +
+                              t.id
+                            }
+                          >
+                            <Translated str="manage" /> &quot;{t.name}&quot;
+                          </Link>
+                        ))}
+                      <Link
+                        className={`p-3 ml-3 btn btn-primary ${
+                          info.pairings.length === 0 ? "ml-5" : ""
+                        } mb-3`}
+                        to={"/tournament/edit/" + info.tournament.id}
                       >
-                        {(props) => (
-                          <>
-                            <SearchBar {...props.searchProps} />
-                            <BootstrapTable
-                              {...props.baseProps}
-                              pagination={paginationFactory({})}
+                        <Translated str="editTournament" />
+                      </Link>
+                      <div
+                        className="p-3 btn btn-danger ml-5 mb-3"
+                        onClick={() => this.onDeleteTournament()}
+                      >
+                        <Translated str="deleteTournament" />
+                      </div>
+                    </form>
+                  )}
+
+                  {this.context.user.authenticated && (
+                    <div className="mt-4">
+                      <Link
+                        to={
+                          "/s/tournament/printout/results/" + info.tournament.id
+                        }
+                      >
+                        <Translated str="resultPrintouts" />
+                      </Link>
+                      &nbsp;|&nbsp;
+                      <Link
+                        to={
+                          "/s/tournament/printout/pairings/" +
+                          info.tournament.id
+                        }
+                      >
+                        <Translated str="pairingPrintouts" />
+                      </Link>
+                    </div>
+                  )}
+
+                  {info.tournament.kind !== "ManualPairing" &&
+                    info.tournament.kind !== "RoundRobin" && (
+                      <div className="mt-5">
+                        <Countdown
+                          time={info.tournament.current_online_pairing_time}
+                        />
+                        <Translated str="nextOnlinePairingWillBeAt" />:{" "}
+                        <Timestamp
+                          time={info.tournament.current_online_pairing_time}
+                        />
+                        {this.context.user.authenticated && (
+                          <form onSubmit={this.onUpdatePairingTime}>
+                            <HelpBox
+                              placement="bottom"
+                              name={helpboxNames.manageTournamentChangeTime}
+                              text={Translated.byKey(
+                                "manageTournamentChangeTimeHelpbox"
+                              )}
+                              show={true}
+                            >
+                              <label htmlFor="next_pairing_date">
+                                <Translated str="changeNextPairingDateTime" />{" "}
+                                (hh:mm, <Translated str="localTime" />
+                                !):
+                              </label>
+                            </HelpBox>
+                            <input
+                              ref={this.pairingDateRef}
+                              type="date"
+                              id="next_pairing_date"
+                              className="form-control"
+                              name="next_pairing_date"
+                              style={{ display: "inline", width: "13%" }}
+                              required
+                              min="2000-01-01"
+                              max="2099-12-31"
                             />
+                            <input
+                              ref={this.pairingHourRef}
+                              type="input"
+                              className="form-control"
+                              name="next_pairing_time"
+                              style={{ display: "inline", width: "13%" }}
+                              required
+                              pattern="\d\d?:\d\d"
+                            />
+                            <button
+                              className="p-2 btn btn-primary mb-1"
+                              type="submit"
+                            >
+                              <Translated str="update" />
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    )}
+
+                  <div className="d-flex flex-row mt-5 justify-content-around">
+                    <div>
+                      <TrackChanges />
+                      &nbsp;
+                      <Translated
+                        str={
+                          info.tournament.kind.charAt(0).toLowerCase() +
+                          info.tournament.kind.slice(1)
+                        }
+                      />
+                      {info.tournament.rounds &&
+                        info.tournament.kind !== "ManualPairing" && (
+                          <>
+                            &nbsp;- {info.tournament.rounds}&nbsp;
+                            <Translated str="rounds" />
                           </>
                         )}
-                      </ToolkitProvider>
-                    </Tab.Pane>
-
-                    {info.is_team_tournament && (
-                      <Tab.Pane eventKey="standings-t-tab">
-                        <ToolkitProvider
-                          keyField="team_id"
-                          data={info.teams}
-                          columns={
-                            info.ssw
-                              ? this.teamParticipantColumns.concat([
-                                  this.sswColumn,
-                                ])
-                              : this.teamParticipantColumns
-                          }
-                          bootstrap4={true}
-                          search
-                        >
-                          {(props) => (
-                            <>
-                              <SearchBar {...props.searchProps} />
-                              <BootstrapTable
-                                {...props.baseProps}
-                                pagination={paginationFactory({})}
-                              />
-                            </>
-                          )}
-                        </ToolkitProvider>
-                      </Tab.Pane>
-                    )}
-                  </Tab.Content>
-                </Tab.Container>
-
-                {info.pairings.length !== 0 && (
-                  <>
-                    <div className="pairing-heading">
-                      <h3 className="mt-4">
-                        <Translated str="pairings" />
-                      </h3>
-                      <Button
-                        className="download"
-                        variant="primary"
-                        onClick={this.downloadPgn}
-                      >
-                        {Translated.byKey("downloadPgns")}
-                      </Button>
                     </div>
-                    <Tab.Container
-                      defaultActiveKey={
-                        "round-tab-" + pairingPanes.length.toString()
-                      }
-                    >
-                      {pairingNav}
-                      <Tab.Content>{pairingPanes}</Tab.Content>
-                    </Tab.Container>
-                  </>
-                )}
-              </WithRoundSetupPopup>
-            </WithTournamentPairing>
-          </WithTournamentRound>
-        </TournamentParticipantsProvider>
+                    <div>
+                      <Event />
+                      &nbsp;
+                      {info.tournament.start_date} - {info.tournament.end_date}
+                    </div>
+                    <div>
+                      <Person />
+                      &nbsp;
+                      <UserLink
+                        id={info.tournament.organizer}
+                        name={info.tournament.organizer}
+                        ghost={false}
+                      />
+                    </div>
+                  </div>
+
+                  {this.state.info?.tournament?.kind === "ManualPairing" &&
+                    this.context.user.authenticated && (
+                      <ManageRoundsAndPairings />
+                    )}
+
+                  <WithOnlineStatus
+                    accounts={this.state.info?.participants?.map(
+                      (p) => p.account
+                    )}
+                  >
+                    <Standings />
+                  </WithOnlineStatus>
+
+                  {info.pairings.length !== 0 && (
+                    <>
+                      <div className="pairing-heading">
+                        <h3 className="mt-4">
+                          <Translated str="pairings" />
+                        </h3>
+                        <Button
+                          className="download"
+                          variant="primary"
+                          onClick={this.downloadPgn}
+                        >
+                          {Translated.byKey("downloadPgns")}
+                        </Button>
+                      </div>
+                      <Tab.Container
+                        defaultActiveKey={
+                          "round-tab-" + pairingPanes.length.toString()
+                        }
+                      >
+                        {pairingNav}
+                        <Tab.Content>{pairingPanes}</Tab.Content>
+                      </Tab.Container>
+                    </>
+                  )}
+                </WithRoundSetupPopup>
+              </WithTournamentPairing>
+            </WithTournamentRound>
+          </TournamentParticipantsProvider>
+        </TournamentDetailProvider>
       </TournamentProvider>
     );
   }

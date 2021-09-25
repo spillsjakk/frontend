@@ -28,6 +28,10 @@ type CreateState = {
   passwordCsv: string;
 };
 
+function Required() {
+  return <span style={{ color: "red" }}>(required)</span>;
+}
+
 class Create extends Component<{}, CreateState> {
   static contextType = UserContext;
   context!: React.ContextType<typeof UserContext>;
@@ -150,12 +154,15 @@ class Create extends Component<{}, CreateState> {
               <tr>
                 <th scope="col">
                   <Translated str="username" />
+                  <Required />
                 </th>
                 <th scope="col">
                   <Translated str="firstName" />
+                  <Required />
                 </th>
                 <th scope="col">
                   <Translated str="lastName" />
+                  <Required />
                 </th>
                 <th scope="col">
                   <Translated str="fideNumber" />
@@ -171,6 +178,7 @@ class Create extends Component<{}, CreateState> {
                 </th>
                 <th scope="col">
                   <Translated str="birthDate" />
+                  <Required />
                 </th>
                 <th scope="col">
                   <Translated str="sex" />

@@ -11,8 +11,7 @@ import Translated from "../../../components/translated";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import style from "./style.module.scss";
 import { useOnlineStatus } from "../../../hocs/with-online-statuses/index";
-import { Online } from "./online";
-import { Offline } from "./offline";
+import { Online, Offline } from "../../../components/status-circles";
 import { Miniboards } from "../../../components/miniboards";
 
 interface Props {
