@@ -11,6 +11,7 @@
     display: flex;
     flex-wrap: wrap;
     .board-area {
+      width: calc(min(85vw, 80vh)) !important;
       .play-box {
         padding-right: 1vh;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -50,18 +51,32 @@
       flex-basis: 20%;
       z-index: 2;
 
-      .info-wrapper {
-        display: grid;
-        grid-gap: 10px;
-
-        .tournament-info {
-          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 18px;
-          height: 40px;
+      .tab-panel {
+        p{
+          width: 100%;
+          height: 400px;
         }
+        .MuiBox-root {
+          padding: 0 !important;
+          div{
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+      
+      .tournament-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        height: 40px;
+      }
+
+      .game-chat {
+        width: 100%;
+        height: 400px;
+        box-shadow: none;
       }
 
       .decide-buttons {
@@ -76,13 +91,14 @@
         justify-content: center;
         align-items: center;
         background-color: #375a7f;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         color: white;
         border: none;
         height: 40px;
         font-weight: 500;
         border-radius: 35px;
         cursor: pointer;
+        width: 80%;
+        margin: 10px;
       }
     }
     .png-area {

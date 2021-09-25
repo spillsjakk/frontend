@@ -3,7 +3,7 @@ import { ToggleButton, ToggleButtonGroup, Grid } from "@material-ui/core";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import ViewQuiltIcon from "@material-ui/icons/ViewQuilt";
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from "@material-ui/core/Tooltip";
 import { Pagination } from "@material-ui/lab";
 import { Board } from "./board";
 import style from "./style.module.scss";

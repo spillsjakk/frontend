@@ -120,6 +120,64 @@ function ActionButtons({
   );
 }
 
+function SaveButton(props: { form: FormContext }) {
+  const form = props.form;
+  function save() {
+    const body = {
+      id: form.id,
+      name: form.name,
+      description: form.description,
+      kind: form.kind,
+      default_game_location: form.defaultGameLocation,
+      start_date: form.startDate,
+      end_date: form.endDate,
+      publicly_viewable: form.publiclyViewable,
+      first_pairing_date: form.firstPairingDate,
+      first_pairing_time: form.firstPairingTime,
+      online_pairing_interval_n: form.onlinePairingIntervalN,
+      online_pairing_interval_t: form.onlinePairingIntervalT,
+      initial_time: form.initialTime,
+      increment: form.increment,
+      self_joinable: form.selfJoinable,
+      show_only_top: form.showOnlyTop,
+      show_only_top_nr: form.showOnlyTopNr,
+      win_points: form.winPoints,
+      draw_points: form.drawPoints,
+      loss_points: form.lossPoints,
+      tb1: form.tb1 !== "" ? parseInt(form.tb1!, 10) : undefined,
+      tb2: form.tb2 !== "" ? parseInt(form.tb2!, 10) : undefined,
+      tb3: form.tb3 !== "" ? parseInt(form.tb3!, 10) : undefined,
+      tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
+      rounds: form.rounds,
+      fide_rated: form.fideRated,
+      per_team: form.perTeam,
+      show_only_usernames: form.showOnlyUsernames,
+      profile_picture: form.profilePicture,
+      banner_picture: form.bannerPicture,
+      organiser: form.organiser,
+      organiser_type: form.organiserType,
+      chat_enabled: form.chatEnabled,
+      remove_inactive_participants: form.removeInactive,
+    };
+
+    fetchJson(`/s/tournament/template/save`, "POST", body, () => {});
+
+    fetchJson(`/s/tournament/build`, "POST", body, (result) => {
+      window.location.assign(`/tournament/view/${result.id}`);
+    });
+  }
+  return (
+    <Button
+      className={style.save}
+      onClick={() => save()}
+      variant="contained"
+      color="primary"
+    >
+      {Translated.byKey("saveAndCreate")}
+    </Button>
+  );
+}
+
 function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
 }
@@ -268,6 +326,7 @@ function TemplateForm(props: { onCustom: () => void }) {
             rightText={Translated.byKey("create")}
             leftText={Translated.byKey("buildTournament_reviewAll")}
           />
+          <SaveButton form={form} />
         </StepContent>
       </Step>
     </Stepper>
@@ -394,6 +453,7 @@ function Form(props: { onTemplate: () => void }) {
             onLeftClick={previous}
             rightText={Translated.byKey("create")}
           />
+          <SaveButton form={form} />
         </StepContent>
       </Step>
     </Stepper>
