@@ -39,7 +39,7 @@ const ActionButton: FunctionComponent<{}> = () => {
           className={`${style["action-button"]} ${style["manage-tournament"]}`}
         >
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             className={style["absolute-right"]}
             onClick={onClickManage}
