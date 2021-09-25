@@ -157,7 +157,7 @@ const en = {
   "loginFirst": "Please login first",
   "logout": "Log out",
   "lossPoints": "Points for a loss",
-  "manage": "Manage",
+  "manage": "Manage League ",
   "manageClub": "Manage club",
   "manageClub_aboutClub": "About the Club: ",
   "manageClub_aboutClubDesc": "(this is publicly viewable and is a chance to tell the public about your club)",

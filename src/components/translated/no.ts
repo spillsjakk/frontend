@@ -157,7 +157,7 @@ const no = {
   "loginFirst": "Logg inn først",
   "logout": "Logg ut",
   "lossPoints": "Poeng ved tap",
-  "manage": "Administrer",
+  "manage": "Administrer ligaen",
   "manageClub": "Administrer klubb",
   "manageClub_aboutClub": "Om klubben:",
   "manageClub_aboutClubDesc": "Informasjonen er åpen for alle og du kan promotere klubben din her.",

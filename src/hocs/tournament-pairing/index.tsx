@@ -10,7 +10,10 @@ import {
   TournamentPairingProvider,
 } from "../../context/tournament-pairing";
 
-const WithTournamentPairing: FunctionComponent<{tournamentId: string}> = ({ children, tournamentId }) => {
+const WithTournamentPairing: FunctionComponent<{ tournamentId: string }> = ({
+  children,
+  tournamentId,
+}) => {
   const [pairings, setPairings] = useState<Array<Pairing>>([]);
 
   async function fetchPairings() {
