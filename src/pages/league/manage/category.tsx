@@ -22,6 +22,7 @@ import { useCategoryForm, WithCategoryForm } from "./with-category-form";
 import { Category as ICategory } from "../../../hocs/with-league/index";
 import EditIcon from "@material-ui/icons/Edit";
 import { FORM_TYPE } from "./with-season-form";
+import { Delete } from "@material-ui/icons";
 
 const Heading: FunctionComponent<{ translateKey: string }> = ({
   translateKey,
@@ -431,11 +432,21 @@ const AddCategory: FunctionComponent<unknown> = memo(() => {
 const CategoryItem: FunctionComponent<{
   item: ICategory;
   edit: (item: ICategory) => void;
-}> = memo(({ item, edit }) => {
+  del: (id: string, league: string) => void;
+}> = memo(({ item, edit, del }) => {
   return (
     <ListItem disableGutters>
       <ListItemText primary={item.name} />
       <ListItemSecondaryAction>
+        <IconButton>
+          <Delete
+            onClick={() => {
+              if (window.confirm("Do you really want to delete category?")) {
+                del(item.id, item.league);
+              }
+            }}
+          />
+        </IconButton>
         <IconButton
           onClick={() => {
             edit(item);
@@ -453,6 +464,16 @@ const CategoryList: FunctionComponent<unknown> = memo(() => {
   const { changeOpen } = usePopup();
   const { changeType, fillValues } = useCategoryForm();
 
+  function del(id: string, leagueId: string) {
+    fetchJson(
+      `/s/leagues/${leagueId}/categories/${id}`,
+      "DELETE",
+      undefined,
+      () => {
+        league.fetchCategories();
+      }
+    );
+  }
   const edit = useCallback(
     (item: ICategory) => {
       changeType(FORM_TYPE.EDIT);
@@ -467,7 +488,7 @@ const CategoryList: FunctionComponent<unknown> = memo(() => {
       {league &&
         Array.isArray(league.categories) &&
         league.categories.map((item, i) => (
-          <CategoryItem item={item} key={i} edit={edit} />
+          <CategoryItem item={item} key={i} edit={edit} del={del} />
         ))}
     </List>
   );
