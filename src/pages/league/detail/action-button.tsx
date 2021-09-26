@@ -44,7 +44,7 @@ const ActionButton: FunctionComponent<{}> = () => {
             className={style["absolute-right"]}
             onClick={onClickManage}
           >
-            {Translated.byKey("manage")}
+            {Translated.byKey("manageLeague")}
           </Button>
         </div>
       )}
