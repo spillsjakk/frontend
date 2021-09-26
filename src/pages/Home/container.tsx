@@ -212,7 +212,10 @@ const Home: FunctionComponent<{}> = () => {
           <div className={style.heading}>
             {Translated.byKey("leagues").toUpperCase()}
           </div>
-          <div className={style.wrapper}>
+          <div className={style.emptyheading}>
+            {Translated.byKey("leagues").toUpperCase()}
+          </div>
+          <div className={style.leaguewrapper}>
             {leagues.map((league) => (
               <League id={league.id} key={league.id} />
             ))}
