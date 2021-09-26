@@ -161,6 +161,7 @@ const en = {
   "manageLeague": "Manage League",
   "manageClub": "Manage club",
   "manageClub_aboutClub": "About the Club: ",
+  "manageClub_clubsManager": "Club's Manager: ",
   "manageClub_aboutClubDesc": "(this is publicly viewable and is a chance to tell the public about your club)",
   "manageClub_accounts": "Accounts within Club",
   "manageClub_addNewTeam": "new team",

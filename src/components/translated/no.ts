@@ -159,6 +159,7 @@ const no = {
   "lossPoints": "Poeng ved tap",
   "manage": "Administrer",
   "manageLeague": "Administrer Ligaen",
+  "manageClub_clubsManager": "Klubbens Manager",
   "manageClub": "Administrer klubb",
   "manageClub_aboutClub": "Om klubben:",
   "manageClub_aboutClubDesc": "Informasjonen er åpen for alle og du kan promotere klubben din her.",

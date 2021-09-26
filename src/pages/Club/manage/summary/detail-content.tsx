@@ -6,6 +6,7 @@ import Translated from "../../../../components/translated";
 import { useClub } from "../../../../context/club";
 import style from "../style.module.scss";
 import xssFilters from "xss-filters";
+import UserLink from "../../../../components/UserLink";
 
 const DetailSummaryContent: FunctionComponent<{}> = () => {
   const club = useClub();
@@ -23,6 +24,10 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
               {Translated.byKey("manageClub_clubsName")}
             </div>
             <div>{club.name}</div>
+            <div className={style.label}>
+              {Translated.byKey("manageClub_clubsManager")}
+            </div>
+            <UserLink id={club.manager} name={club.manager} ghost={false} />
             <div className={style.label}>
               {Translated.byKey("manageClub_clubsId")}
             </div>
