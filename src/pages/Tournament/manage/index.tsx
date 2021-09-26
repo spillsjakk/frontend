@@ -898,7 +898,13 @@ class Manage extends Component<
                   <h1 className="mt-4 p-3">
                     {this.state.info?.tournament.name}
                   </h1>
-
+                  <p>
+                    <Link
+                      to={"/tournament/view/" + this.state.info?.tournament.id}
+                    >
+                      <Translated str="backToTournament" />
+                    </Link>
+                  </p>
                   <p
                     className="mt-4"
                     id="description"
