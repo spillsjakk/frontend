@@ -504,7 +504,7 @@ const en = {
   "relegate": "Relegate",
   "pleaseSelectPlayer": "Please Select Player",
   "pleaseSelectCategory": "Please Select Category",
-  "successfull": "Successfull",
+  "successfull": "Successful",
   "error": "Error",
   "endSeasonAndStartNewOne": "End Season and Start New One",
   "startSeason": "Start Season",
