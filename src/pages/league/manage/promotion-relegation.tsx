@@ -90,7 +90,7 @@ const CategoryStep: FunctionComponent<{
 
   function fetchParticipants() {
     fetchCall(
-      `/s/leagues/${props.leagueId}/categories/${props.category.id}/participants`,
+      `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/categories/${props.category.id}/participants`,
       "GET",
       undefined,
       (response) => {
@@ -103,7 +103,7 @@ const CategoryStep: FunctionComponent<{
 
   function fetchTeamParticipants() {
     fetchCall(
-      `/s/leagues/${props.leagueId}/categories/${props.category.id}/team-participants`,
+      `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/categories/${props.category.id}/team-participants`,
       "GET",
       undefined,
       (response) => {
@@ -138,20 +138,28 @@ const CategoryStep: FunctionComponent<{
 
           if (!selectedCategoryId || !selectedUserId) return;
 
+          let body: any = {
+            old_category: props.category.id,
+            new_category: selectedCategoryId,
+          };
+
+          if (isTeam()) {
+            body.team_id = selectedUserId;
+            body.tournament_id = props.tournament.id;
+          } else {
+            body.user_id = selectedUserId;
+          }
+
           fetchCall(
             `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/promotion-relegation`,
             "POST",
-            {
-              user_id: selectedUserId,
-              old_category: props.category.id,
-              new_category: selectedCategoryId,
-            },
+            body,
             () => {
               setSelectedCategoryId("");
               setSelectedUserId("");
               setUserText("");
               setCategoryText("");
-              notification.notify("success", Translated.byKey("successfull"));
+              notification.notify("success", Translated.byKey("successful"));
               props.refreshPromotionRelegation();
             },
             () => {
@@ -178,7 +186,7 @@ const CategoryStep: FunctionComponent<{
             inputValue={userText}
           />
         }
-        {/* {
+        {
           isTeam() && <Autocomplete
             data={teamParticipants.map((participant) => ({
               name: participant.name,
@@ -195,7 +203,7 @@ const CategoryStep: FunctionComponent<{
             value={selectedUserId}
             inputValue={userText}
           />
-        } */}
+        }
         <Autocomplete
           data={props.categories
             .filter((category) => category.id !== props.category.id)
