@@ -11,12 +11,22 @@ import {
   Stepper,
   Typography,
 } from "@material-ui/core";
-import React, { FunctionComponent, memo, useCallback, useEffect, useState } from "react";
+import React, {
+  FunctionComponent,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Translated from "../../../components/translated";
 import { Category, useLeague, Season } from "../../../hocs/with-league/index";
 import style from "./style.module.scss";
 import { fetchCall, fetchJson } from "../../../functions";
-import { Participant, Tournament, TeamParticipant } from "../../Tournament/Types";
+import {
+  Participant,
+  Tournament,
+  TeamParticipant,
+} from "../../Tournament/Types";
 import { Autocomplete, Option } from "../../../components/autocomplete";
 import { useNotification } from "../../../hocs/with-notification";
 import {
@@ -27,13 +37,13 @@ import { ChevronRight, Delete } from "@material-ui/icons";
 import { FORM_TYPE, useSeasonForm } from "./with-season-form";
 import { usePopup } from "../../../hocs/popup";
 
-function Label({ text }: { text: string; }) {
+function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
 }
 
 function ActionButtons({
-  onLeftClick = () => { },
-  onRightClick = () => { },
+  onLeftClick = () => {},
+  onRightClick = () => {},
   leftText = Translated.byKey("back"),
   rightText = Translated.byKey("next"),
   rightDisabled = false,
@@ -76,7 +86,9 @@ const CategoryStep: FunctionComponent<{
   tournament: Tournament;
 }> = memo((props) => {
   const [participants, setParticipants] = useState<Array<Participant>>([]);
-  const [teamParticipants, setTeamParticipants] = useState<Array<TeamParticipant>>([]);
+  const [teamParticipants, setTeamParticipants] = useState<
+    Array<TeamParticipant>
+  >([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [userText, setUserText] = useState("");
@@ -168,12 +180,14 @@ const CategoryStep: FunctionComponent<{
           );
         }}
       >
-        {
-          !isTeam() && <Autocomplete
-            data={participants.map((participant) => ({
-              name: `${participant.first_name} ${participant.last_name}`,
-              value: participant.account,
-            }))}
+        {!isTeam() && (
+          <Autocomplete
+            data={participants
+              .sort((a, b) => b.score - a.score)
+              .map((participant) => ({
+                name: `${participant.first_name} ${participant.last_name}`,
+                value: participant.account,
+              }))}
             label={Translated.byKey("pleaseSelectPlayer")}
             onSelect={(value: Option) => {
               setSelectedUserId(value.value);
@@ -185,9 +199,9 @@ const CategoryStep: FunctionComponent<{
             value={selectedUserId}
             inputValue={userText}
           />
-        }
-        {
-          isTeam() && <Autocomplete
+        )}
+        {isTeam() && (
+          <Autocomplete
             data={teamParticipants.map((participant) => ({
               name: participant.name,
               value: participant.team_id,
@@ -203,7 +217,7 @@ const CategoryStep: FunctionComponent<{
             value={selectedUserId}
             inputValue={userText}
           />
-        }
+        )}
         <Autocomplete
           data={props.categories
             .filter((category) => category.id !== props.category.id)
@@ -266,12 +280,19 @@ const PromotionRelegationForm: FunctionComponent<{
   const league = useLeague();
   const promotionRelegation = usePromotionRelegation();
 
-  const getTournament = useCallback((category) => {
-    const seasonCategory = league.seasonsCategories.find((s) => s.season === season.id && s.category === category.id);
-    if (seasonCategory) {
-      return league.tournaments[season.name]?.find((t) => t.id === seasonCategory.tournament);
-    }
-  }, [league, season]);
+  const getTournament = useCallback(
+    (category) => {
+      const seasonCategory = league.seasonsCategories.find(
+        (s) => s.season === season.id && s.category === category.id
+      );
+      if (seasonCategory) {
+        return league.tournaments[season.name]?.find(
+          (t) => t.id === seasonCategory.tournament
+        );
+      }
+    },
+    [league, season]
+  );
 
   function endSeason() {
     fetchJson(
