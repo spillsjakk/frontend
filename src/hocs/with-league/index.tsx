@@ -22,6 +22,7 @@ export interface League {
 export interface Category {
   id: string;
   name: string;
+  index: number;
   description: string;
   profile_picture: string;
   banner_picture: string;
