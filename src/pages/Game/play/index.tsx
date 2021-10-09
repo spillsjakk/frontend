@@ -951,8 +951,15 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         )}
 
         <div className="wrapper">
-          <Grid container justifyContent="center" spacing={5}>
-            <Grid container justifyContent="center" item md={12} lg={6}>
+          <Grid container justifyContent="center" spacing={6}>
+            <Grid
+              container
+              justifyContent="end"
+              className="board-grid"
+              item
+              md={12}
+              lg={8}
+            >
               <div className="board-area">
                 <div className="play-box">
                   <div className="user-box">{this.renderOpponentBox()}</div>
@@ -1003,13 +1010,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 </div>
               </div>
             </Grid>
-            <Grid container justifyContent="center" item md={12} lg={6}>
+            <Grid container justifyContent="center" item md={12} lg={4}>
               <div className="info-area">
                 {this.getOpponentCountdown()}
 
                 {this.getResult()}
                 {!this.state.showBlackInitialCountdown &&
-                  !this.state.showWhiteInitialCountdown && (
+                  !this.state.showWhiteInitialCountdown &&
+                  this.state.isPlayer && (
                     <Paper>
                       <Tabs
                         value={this.state.value}
@@ -1052,7 +1060,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       >
                         {this.state.outcome === GameOutcome.Ongoing && (
                           <>
-                            <div>
+                            <div className="buttons-container">
                               <a
                                 className="action-button"
                                 id="resign-btn"
@@ -1080,7 +1088,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                               )}
                             </div>
 
-                            <div>
+                            <div className="buttons-container">
                               <a
                                 className="action-button"
                                 id="draw-btn"
@@ -1123,7 +1131,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       >
                         <>
                           <div className="tournament-info">
-                            Round: {this.state.round}, {this.state.initialTime}+
+                          {Translated.byKey("round")}: {this.state.round}, {this.state.initialTime}+
                             {this.state.incrementTime}
                           </div>
                           <div className="tournament-link">
@@ -1137,6 +1145,21 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       </this.TabPanel>
                     </Paper>
                   )}
+                {!this.state.isPlayer && (
+                  <>
+                    <div className="tournament-info">
+                    {Translated.byKey("round")}: {this.state.round}, {this.state.initialTime}+
+                      {this.state.incrementTime}
+                    </div>
+                    <div className="tournament-link">
+                      <Link
+                        to={`/tournament/view/${this.state.tournament?.id}`}
+                      >
+                        {Translated.byKey("backToTournament")}
+                      </Link>
+                    </div>
+                  </>
+                )}
                 {this.getSelfCountdown()}
               </div>
             </Grid>

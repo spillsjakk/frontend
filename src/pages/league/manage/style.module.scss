@@ -4,7 +4,6 @@
   font-family: Montserrat;
 }
 
-
 .content {
   margin-top: 10px;
 }
@@ -193,7 +192,6 @@
   .save {
     margin-top: 20px;
   }
-  
 }
 
 .tournament-row {
@@ -223,5 +221,9 @@
   flex-direction: column;
 }
 
-
-
+.dehaze {
+  cursor: row-resize;
+}
+.dehaze:hover:focus {
+  cursor: row-resize;
+}

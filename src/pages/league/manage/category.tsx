@@ -6,6 +6,7 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemIcon,
   ListItemSecondaryAction,
   ListItemText,
   Radio,
@@ -14,7 +15,7 @@ import {
 import React, { FunctionComponent, memo, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
-import { fetchJson, generateId } from "../../../functions";
+import { fetchCall, fetchJson, generateId } from "../../../functions";
 import { usePopup, WithPopup } from "../../../hocs/popup/index";
 import { useLeague } from "../../../hocs/with-league";
 import style from "./style.module.scss";
@@ -22,7 +23,12 @@ import { useCategoryForm, WithCategoryForm } from "./with-category-form";
 import { Category as ICategory } from "../../../hocs/with-league/index";
 import EditIcon from "@material-ui/icons/Edit";
 import { FORM_TYPE } from "./with-season-form";
-import { Delete } from "@material-ui/icons";
+import { Delete, Dehaze } from "@material-ui/icons";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+} from "react-sortable-hoc";
 
 const Heading: FunctionComponent<{ translateKey: string }> = ({
   translateKey,
@@ -429,13 +435,14 @@ const AddCategory: FunctionComponent<unknown> = memo(() => {
   );
 });
 
-const CategoryItem: FunctionComponent<{
-  item: ICategory;
-  edit: (item: ICategory) => void;
-  del: (id: string, league: string) => void;
-}> = memo(({ item, edit, del }) => {
+const DragHandle = SortableHandle(() => <Dehaze className={style.dehaze} />);
+
+const CategoryItem = SortableElement(({ item, edit, del }) => {
   return (
     <ListItem disableGutters>
+      <ListItemIcon>
+        <DragHandle />
+      </ListItemIcon>
       <ListItemText primary={item.name} />
       <ListItemSecondaryAction>
         <IconButton>
@@ -457,6 +464,10 @@ const CategoryItem: FunctionComponent<{
       </ListItemSecondaryAction>
     </ListItem>
   );
+});
+
+const SortableList = SortableContainer(({ children }) => {
+  return <List className={style.list}>{children}</List>;
 });
 
 const CategoryList: FunctionComponent<unknown> = memo(() => {
@@ -483,14 +494,29 @@ const CategoryList: FunctionComponent<unknown> = memo(() => {
     [changeOpen, changeType, fillValues]
   );
 
+  function onSortEnd(event) {
+    const replacingCategory = league.categories[event.oldIndex];
+    const replacedCategory = league.categories[event.newIndex];
+    if (replacingCategory && replacingCategory) {
+      fetchCall(
+        `/s/leagues/${replacingCategory.league}/categories/${replacingCategory.id}/change-order-with/${replacedCategory.id}`,
+        "PUT",
+        undefined,
+        () => {
+          league.fetchCategories();
+        }
+      );
+    }
+  }
+
   return (
-    <List className={style.list}>
+    <SortableList onSortEnd={onSortEnd} useDragHandle>
       {league &&
         Array.isArray(league.categories) &&
         league.categories.map((item, i) => (
-          <CategoryItem item={item} key={i} edit={edit} del={del} />
+          <CategoryItem index={i} item={item} key={i} edit={edit} del={del} />
         ))}
-    </List>
+    </SortableList>
   );
 });
 
