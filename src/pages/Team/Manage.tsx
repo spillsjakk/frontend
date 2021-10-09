@@ -117,8 +117,8 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
       "POST",
       {
         name: this.state.newName,
-        description: this.state.newDescription,
-        profile_picture: this.state.profilePicture,
+        description: this.state.newDescription ? this.state.newDescription : "",
+        profile_picture: this.state.profilePicture ? this.state.profilePicture : "",
       },
       (_) => {
         const info = { ...this.state.info! };
@@ -189,7 +189,6 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
               className="form-control w-50"
               name="newDescription"
               id="newDescription"
-              required
               value={this.state.newDescription}
               onChange={this.handleChange}
             />
