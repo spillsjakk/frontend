@@ -120,6 +120,7 @@ const ActionButton: FunctionComponent<{}> = () => {
               {self_join_teams &&
                 Array.isArray(currentRoundNumbers) &&
                 tournament.rounds > currentRoundNumbers.length &&
+                !tournament.pairing_generation_failed &&
                 self_join_teams?.map((t, i) => (
                   <form onSubmit={onClickSelfJoin(t.id)} key={i}>
                     <div
@@ -134,15 +135,21 @@ const ActionButton: FunctionComponent<{}> = () => {
                 ))}
             </>
           ) : (
-            <form onSubmit={onClickSelfLeave}>
-              <div
-                className={`${style["action-button"]} ${style["leave-tournament"]}`}
-              >
-                <button type="submit">
-                  <Translated str="leave" />
-                </button>
-              </div>
-            </form>
+            <>
+              {Array.isArray(currentRoundNumbers) &&
+                tournament.rounds > currentRoundNumbers.length &&
+                !tournament.pairing_generation_failed && (
+                  <form onSubmit={onClickSelfLeave}>
+                    <div
+                      className={`${style["action-button"]} ${style["leave-tournament"]}`}
+                    >
+                      <button type="submit">
+                        <Translated str="leave" />
+                      </button>
+                    </div>
+                  </form>
+                )}
+            </>
           )}
         </>
       )}
