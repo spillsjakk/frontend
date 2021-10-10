@@ -36,6 +36,7 @@ import {
 import { ChevronRight, Delete } from "@material-ui/icons";
 import { FORM_TYPE, useSeasonForm } from "./with-season-form";
 import { usePopup } from "../../../hocs/popup";
+import { parseCastlingFen } from "chessops/fen";
 
 function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
@@ -140,7 +141,6 @@ const CategoryStep: FunctionComponent<{
       }
     );
   }
-
   return (
     <>
       <form
@@ -185,7 +185,7 @@ const CategoryStep: FunctionComponent<{
             data={participants
               .sort((a, b) => b.score - a.score)
               .map((participant) => ({
-                name: `${participant.first_name} ${participant.last_name}`,
+                name: `${participant.first_name} ${participant.last_name} (${participant.score})`,
                 value: participant.account,
               }))}
             label={Translated.byKey("pleaseSelectPlayer")}
@@ -203,7 +203,7 @@ const CategoryStep: FunctionComponent<{
         {isTeam() && (
           <Autocomplete
             data={teamParticipants.map((participant) => ({
-              name: participant.name,
+              name: `${participant.name} (${participant.game_score})`,
               value: participant.team_id,
             }))}
             label={Translated.byKey("pleaseSelectTeam")}
