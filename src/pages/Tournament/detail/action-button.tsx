@@ -23,6 +23,7 @@ const ActionButton: FunctionComponent<{}> = () => {
     update,
     self_join_teams,
     can_manage,
+    currentRoundNumbers,
   } = useTournamentDetail();
   const {
     user: { authenticated, info },
@@ -117,6 +118,8 @@ const ActionButton: FunctionComponent<{}> = () => {
           {!is_participating ? (
             <>
               {self_join_teams &&
+                Array.isArray(currentRoundNumbers) &&
+                tournament.rounds > currentRoundNumbers.length &&
                 self_join_teams?.map((t, i) => (
                   <form onSubmit={onClickSelfJoin(t.id)} key={i}>
                     <div

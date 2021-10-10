@@ -29,6 +29,7 @@ export interface TournamentDetail {
   sorted?: boolean;
   league?: { league_name: string; league_id: string };
   can_manage: boolean;
+  currentRoundNumbers: Array<number>;
 }
 
 export type TournamentDetailContext = TournamentDetail;

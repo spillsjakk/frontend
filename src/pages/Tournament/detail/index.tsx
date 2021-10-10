@@ -98,6 +98,9 @@ const TournamentDetail: FunctionComponent<{}> = () => {
           id: team.name + team.seed,
         })),
         sorted: true,
+        currentRoundNumbers: Array.from(
+          new Set(tournamentDetail.pairings.map((p) => p.round))
+        ),
       });
     }
   }, [tournamentDetail]);
