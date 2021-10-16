@@ -36,7 +36,6 @@ import {
 import { ChevronRight, Delete } from "@material-ui/icons";
 import { FORM_TYPE, useSeasonForm } from "./with-season-form";
 import { usePopup } from "../../../hocs/popup";
-import { parseCastlingFen } from "chessops/fen";
 
 function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
@@ -150,7 +149,7 @@ const CategoryStep: FunctionComponent<{
 
           if (!selectedCategoryId || !selectedUserId) return;
 
-          let body: any = {
+          const body: any = {
             old_category: props.category.id,
             new_category: selectedCategoryId,
           };
