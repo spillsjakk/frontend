@@ -44,7 +44,10 @@ import { HelpBox, helpboxNames } from "../../../components/help-box";
 import { numToSquare } from "../../Game/play/clock";
 import { DRAW_OFFER_SIGN } from "../../../constants";
 import { Event, Person, TrackChanges } from "@material-ui/icons";
-import { WithNotification, useNotification } from "../../../hocs/with-notification/index";
+import {
+  WithNotification,
+  useNotification,
+} from "../../../hocs/with-notification/index";
 import { Standings } from "./standings";
 import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
 import { ChangePairingTime } from "./change-pairing-time";

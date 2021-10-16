@@ -500,7 +500,7 @@ export function Format() {
             )}
           </Grid>
           <Grid item xs={6}>
-            {form.kind === 1 && (
+            {[1, 3, 9].includes(form.kind) && (
               <Grid container spacing={3}>
                 <Grid item>
                   <TiebreakerDropdownV2
