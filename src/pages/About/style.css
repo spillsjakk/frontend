@@ -1,33 +1,37 @@
 body#About {
-    background-color: #fafafa;
-    color: black !important;
-    font-family: Montserrat;
+  background-color: #fafafa;
+  color: black !important;
+  font-family: Montserrat;
 }
 
 body#About .nav-item {
-    background-color: gray;
+  background-color: gray;
 }
 
 body#About .table {
-    color: black !important;
+  color: black !important;
+}
+
+body#About #content-container {
+  max-width: 900px;
 }
 
 body#About .table-striped tbody tr:nth-of-type(2n + 1) {
-    background-color: #fafafa !important;
+  background-color: #fafafa !important;
 }
 @media only screen and (max-width: 800px) {
-    #content-container{
-        text-align: left;
-        padding: 0;
-    }
-   #content-container > h1{
-       font-size: 30px;
-       text-align: center;
-   }
-   #content-container > p{
-      margin-bottom:15px ;
-   }
-    #content-container > ul > li{
-       margin-bottom:15px ;
-   }
+  #content-container {
+    text-align: left;
+    padding: 0;
+  }
+  #content-container > h1 {
+    font-size: 30px;
+    text-align: center;
+  }
+  #content-container > p {
+    margin-bottom: 15px;
+  }
+  #content-container > ul > li {
+    margin-bottom: 15px;
+  }
 }
