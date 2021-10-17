@@ -152,6 +152,16 @@
     border-radius: 0 0 50px 0;
     font-size: calc(min(3vw, 20px));
     padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex: row;
+    .crosstable{
+      margin-right: 40px;
+      button{
+        box-shadow: none;
+        background-color: #78b7a9;
+      }
+    }
   }
 
   .content {
@@ -165,4 +175,17 @@
 
 .m-tb-1 {
   margin: 10px 0 !important;
+}
+
+.table-header{
+  font-size: 18px!important;
+  font-weight: 800!important;
+  font-family: Montserrat!important;
+}
+.table-cell{
+  font-size: 16px;
+  a{
+  color: #00bc8c;
+  font-family: Montserrat!important;
+  }
 }
