@@ -1,9 +1,26 @@
-import { Button } from "@material-ui/core";
-import React, { FunctionComponent, memo, useState } from "react";
-import { usePopup, WithPopup } from "../../../hocs/popup/index";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { DataGrid, GridColDef } from "@material-ui/data-grid";
+import { fetchJson } from "../../../functions";
 
-const CrossTable: FunctionComponent<unknown> = () => {
+const CrossTable: FunctionComponent<{ seasonId: string; leagueId: string }> = (
+  props
+) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchJson(
+      `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/results`,
+      "GET",
+      undefined,
+      (response) => {
+        if (Array.isArray(response)) {
+          console.log("response", response);
+          setData(response);
+        }
+      }
+    );
+  }, []);
+
   const columns: GridColDef[] = [
     {
       field: "rank",
@@ -27,8 +44,7 @@ const CrossTable: FunctionComponent<unknown> = () => {
       hideSortIcons: true,
       align: "center",
       headerAlign: "center",
-      minWidth: 250,
-      flex: 1,
+      width: 180,
     },
     {
       field: "federation",
@@ -72,40 +88,10 @@ const CrossTable: FunctionComponent<unknown> = () => {
   ];
 
   return (
-    <div>
+    <div style={{ minWidth: "1200px" }}>
       <DataGrid autoHeight rows={rows} columns={columns} />
     </div>
   );
 };
 
 export { CrossTable };
-
-const CrossTableButton: FunctionComponent<unknown> = memo(() => {
-  const popup = usePopup();
-
-  return (
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => {
-        popup.changeOpen(true);
-      }}
-    >
-      cross table
-    </Button>
-  );
-});
-
-export { CrossTableButton };
-
-const CrossTablePopup: FunctionComponent<{}> = () => {
-  return (
-    <div>
-      <WithPopup content={<CrossTable />}>
-        <CrossTableButton />
-      </WithPopup>
-    </div>
-  );
-};
-
-export { CrossTablePopup };
