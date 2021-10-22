@@ -14,6 +14,7 @@ import { Online, Offline } from "../../../components/status-circles";
 import style from "./style.module.scss";
 import FederationDisplay from "../../../components/FederationDisplay";
 import { fetchJson } from "../../../functions";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const commonFields = {
   headerClassName: style["table-header"],
@@ -25,6 +26,7 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
   visible,
 }) => {
   const [pageSize, setPageSize] = React.useState<number>(15);
+  const [hover, setHover] = React.useState<boolean>(true);
 
   const { tournament, participants } = useTournamentDetail();
   const { onlineStatus } = useOnlineStatus();
@@ -80,9 +82,26 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
   function renderTeamNameCell(params) {
     return params.getValue(params.id, "team") ? (
       <div className="text-truncate" style={{ maxWidth: "100%" }}>
-        <Link to={"/team/view/" + params.getValue(params.id, "team")}>
-          {params.getValue(params.id, "team_name")}
-        </Link>
+        <OverlayTrigger
+          placement="top"
+          overlay={
+            <Tooltip id={`tooltip-top-copy`}>
+              {hover && (
+                <strong> {params.getValue(params.id, "team_name")}</strong>
+              )}
+            </Tooltip>
+          }
+        >
+          <span
+            className="pointer"
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            <Link to={"/team/view/" + params.getValue(params.id, "team")}>
+              {params.getValue(params.id, "team_name")}
+            </Link>
+          </span>
+        </OverlayTrigger>
       </div>
     ) : (
       <></>
