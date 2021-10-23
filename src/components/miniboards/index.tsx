@@ -34,7 +34,10 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
               return true;
             }
           })
-          .map((game, index) => ({ ...game, boardNumber: index + 1 }))
+          .map((game, index) => ({
+            ...game,
+            boardNumber: (page - 1) * 12 + index + 1,
+          }))
       );
     }
   }, [page, data, selectedDisplayOption]);
