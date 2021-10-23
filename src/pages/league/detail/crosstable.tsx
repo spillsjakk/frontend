@@ -59,6 +59,10 @@ const CrossTable: FunctionComponent<{ seasonId: string; leagueId: string }> = (
                 const roundData = {};
 
                 whitePairings.forEach((pairing) => {
+                  if (pairing.black === "bye") {
+                    roundData[`round${pairing.round}`] = "bye";
+                    return;
+                  }
                   const opponentIndex = category.participants.findIndex(
                     (p) => p.account === pairing.black
                   );
@@ -75,6 +79,10 @@ const CrossTable: FunctionComponent<{ seasonId: string; leagueId: string }> = (
                   }w${outcome}`;
                 });
                 blackPairings.forEach((pairing) => {
+                  if (pairing.white === "bye") {
+                    roundData[`round${pairing.round}`] = "bye";
+                    return;
+                  }
                   const opponentIndex = category.participants.findIndex(
                     (p) => p.account === pairing.white
                   );
