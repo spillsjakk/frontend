@@ -35,7 +35,10 @@ const Tournaments: FunctionComponent<unknown> = memo(() => {
 
   return (
     <>
-      <WithPopup content={<></>} dialogProps={{ maxWidth: "xl" }}>
+      <WithPopup
+        content={<></>}
+        dialogProps={{ fullWidth: true, maxWidth: "xl" }}
+      >
         <div className={style["tournament-row"]}>
           {league &&
             league.tournaments &&

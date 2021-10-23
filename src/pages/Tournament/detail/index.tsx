@@ -18,6 +18,22 @@ import { Pairings } from "./pairings";
 import style from "./style.module.scss";
 import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
 
+export function sortByRank(a, b) {
+  if (a.score === b.score) {
+    if (a.tb1 === b.tb1) {
+      if (a.tb2 === b.tb2) {
+        if (a.tb3 === b.tb3) {
+          return b.tb4 - a.tb4;
+        }
+        return b.tb3 - a.tb3;
+      }
+      return b.tb2 - a.tb2;
+    }
+    return b.tb1 - a.tb1;
+  }
+  return a.score > b.score ? -1 : 1;
+}
+
 const TournamentDetail: FunctionComponent<{}> = () => {
   const [tournamentDetail, setTournamentDetail] = useState<
     Partial<ITournamentDetail>
@@ -55,21 +71,7 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       Array.isArray(tournamentDetail.participants)
     ) {
       // sorting participants and adding ranks
-      tournamentDetail.participants.sort(function (a, b) {
-        if (a.score === b.score) {
-          if (a.tb1 === b.tb1) {
-            if (a.tb2 === b.tb2) {
-              if (a.tb3 === b.tb3) {
-                return b.tb4 - a.tb4;
-              }
-              return b.tb3 - a.tb3;
-            }
-            return b.tb2 - a.tb2;
-          }
-          return b.tb1 - a.tb1;
-        }
-        return a.score > b.score ? -1 : 1;
-      });
+      tournamentDetail.participants.sort(sortByRank);
       let tempRound = null;
       let boardNumber = 1;
       setTournamentDetail({
