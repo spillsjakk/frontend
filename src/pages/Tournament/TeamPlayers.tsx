@@ -39,8 +39,9 @@ type TeamPlayersState = {
 
 const DragHandle = SortableHandle(() => <Dehaze className="dehaze" />);
 
-const SortableItem = SortableElement(({ value, id, remove }) => (
+const SortableItem = SortableElement(({ value, id, remove, playerIndex }) => (
   <ListItem>
+    <span className="playerIndex">{playerIndex}</span>
     <ListItemIcon>
       <DragHandle />
     </ListItemIcon>
@@ -195,7 +196,7 @@ class TeamPlayers extends Component<
           {info.participating.map((player, index) => (
             <SortableItem
               key={`item-${player}`}
-              index={index}
+              playerIndex={index + 1}
               id={player[0]}
               value={player[1] + " " + player[2]}
               remove={this.removeParticipant}
