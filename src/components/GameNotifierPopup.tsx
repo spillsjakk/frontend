@@ -20,7 +20,7 @@ const GameNotifierPopup: FunctionComponent<Props> = ({ show, onClose }) => {
           className="gamenotifier-text"
           sx={{ backgroundColor: "#F39C12", color: "#FFFFFF" }}
         >
-          You are about the start playing a game!
+          <Translated str="aboutToPlay" />
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button onClick={onClose}>Dismiss</Button>
