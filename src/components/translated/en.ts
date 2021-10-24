@@ -121,7 +121,7 @@ const en = {
   "gender": "Gender",
   "generate-next-round": "Generate Next Round",
   "getInTouch": "GET IN TOUCH",
-  "goToLobby": "Go to the lobby.",
+  "goToLobby": "Go to the lobby",
   "goodGame": "Good game",
   "greatEndgame": "Great endgame technique",
   "hello": "Hello",

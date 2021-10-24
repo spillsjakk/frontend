@@ -1,17 +1,14 @@
-import React, { Component, PureComponent } from "react";
-import { Container, Alert } from "react-bootstrap";
+import React, { PureComponent } from "react";
+import { Alert } from "react-bootstrap";
 import Translated from "./translated";
-import {
-  Link,
-  useHistory,
-  withRouter,
-  RouteComponentProps,
-} from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { fetchJson } from "../functions";
 import { UserContext } from "./UserContext";
+import { GameNotifierPopup } from "./GameNotifierPopup";
 
 type GameNotifierState = {
   shouldPlay: boolean;
+  showGameNotifierPopup: boolean;
   mayShowNotification: boolean;
   gameId: string;
   unlisten?: Function;
@@ -31,6 +28,7 @@ class GameNotifier extends PureComponent<
 
     this.state = {
       shouldPlay: false,
+      showGameNotifierPopup: false,
       mayShowNotification: true,
       gameId: "",
     };
@@ -75,9 +73,20 @@ class GameNotifier extends PureComponent<
       }
 
       if (result.next !== -1 && result.next <= 600000) {
+        const gameIdFromLocalStorage = localStorage.getItem(
+          "gameNotifierPopupIsShownFor"
+        );
+        let showGameNotifierPopup;
+        if (gameIdFromLocalStorage === result.id) {
+          showGameNotifierPopup = false;
+        } else {
+          showGameNotifierPopup = true;
+          localStorage.setItem("gameNotifierPopupIsShownFor", result.id);
+        }
         this.setState({
           shouldPlay: true,
           gameId: result.id,
+          showGameNotifierPopup,
           mayShowNotification: !(
             this.props.location.pathname === "/calendar" ||
             this.props.location.pathname === "/game/play/" + result.id
@@ -115,6 +124,10 @@ class GameNotifier extends PureComponent<
           <Link to="/calendar">
             <Translated str="goToLobby" />
           </Link>
+          <GameNotifierPopup
+            show={this.state.showGameNotifierPopup}
+            onClose={() => this.setState({ showGameNotifierPopup: false })}
+          />
         </strong>
       </Alert>
     );
