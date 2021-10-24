@@ -4,6 +4,7 @@ import Translated from "../../../components/translated";
 import { fetchJson } from "../../../functions";
 import { useOrganization } from "../../../context/organization";
 import { useManageOrganizationPopup } from "../../../context/manage-organization-popup";
+import { Button } from "@material-ui/core";
 
 const InputGroup: FunctionComponent<{
   label: string;
@@ -126,9 +127,9 @@ const EditForm: FunctionComponent<{}> = () => {
           value={email}
           onChange={(value: string) => setEmail(value)}
         />
-        <button type="submit">
+        <Button variant="contained" color="primary" type="submit">
           {Translated.byKey("saveUpdates").toUpperCase()}
-        </button>
+        </Button>
       </form>
     </div>
   );

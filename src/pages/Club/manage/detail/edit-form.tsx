@@ -5,6 +5,7 @@ import { useManageClubPopup } from "../../../../context/manage-club-popup";
 import { useClub } from "../../../../context/club";
 import { fetchJson } from "../../../../functions";
 import { Editor } from "../../../../components/markdown";
+import { Button } from "@material-ui/core";
 
 const InputGroup: FunctionComponent<{
   label: string;
@@ -125,9 +126,9 @@ const EditForm: FunctionComponent<{}> = () => {
           value={email}
           onChange={(value: string) => setEmail(value)}
         />
-        <button type="submit">
+        <Button color="primary" variant="contained" type="submit">
           {Translated.byKey("saveUpdates").toUpperCase()}
-        </button>
+        </Button>
       </form>
     </div>
   );
