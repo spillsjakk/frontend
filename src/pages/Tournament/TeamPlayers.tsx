@@ -200,6 +200,7 @@ class TeamPlayers extends Component<
               id={player[0]}
               value={player[1] + " " + player[2]}
               remove={this.removeParticipant}
+              index={index}
             />
           ))}
         </SortableList>
