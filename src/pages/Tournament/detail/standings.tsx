@@ -15,6 +15,7 @@ import style from "./style.module.scss";
 import FederationDisplay from "../../../components/FederationDisplay";
 import { fetchJson } from "../../../functions";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { KeyboardArrowDown } from "@material-ui/icons";
 
 const commonFields = {
   headerClassName: style["table-header"],
@@ -239,6 +240,9 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
       pagination
       rows={participants}
       columns={columns}
+      components={{
+        ColumnMenuIcon: KeyboardArrowDown,
+      }}
     />
   );
 };
@@ -323,6 +327,9 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
           : teams || []
       }
       columns={columns}
+      components={{
+        ColumnMenuIcon: KeyboardArrowDown,
+      }}
     />
   );
 };
