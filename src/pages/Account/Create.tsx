@@ -374,13 +374,13 @@ class Create extends Component<{}, CreateState> {
           <Translated str="thisIsTheOnlyTimeYouSeeThesePasswords" />
         </p>
         <p>
-          <Link
-            to={this.state.passwordCsv}
+          <a
+            href={this.state.passwordCsv}
             download="accounts.csv"
             id="csvDownloadLink"
           >
             <Translated str="downloadAsCsv" />
-          </Link>
+          </a>
         </p>
         <div>
           {this.state.passwords.map((up, i) => (

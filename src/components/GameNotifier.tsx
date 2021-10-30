@@ -73,25 +73,22 @@ class GameNotifier extends PureComponent<
       }
 
       if (result.next !== -1 && result.next <= 600000) {
-        const gameIdFromLocalStorage = localStorage.getItem(
-          "gameNotifierPopupIsShownFor"
-        );
-        let showGameNotifierPopup;
-        if (gameIdFromLocalStorage === result.id) {
-          showGameNotifierPopup = false;
-        } else {
-          showGameNotifierPopup = true;
-          localStorage.setItem("gameNotifierPopupIsShownFor", result.id);
-        }
-        this.setState({
+        const localState = {
           shouldPlay: true,
           gameId: result.id,
-          showGameNotifierPopup,
           mayShowNotification: !(
             this.props.location.pathname === "/calendar" ||
             this.props.location.pathname === "/game/play/" + result.id
           ),
-        });
+        };
+        const gameIdFromLocalStorage = localStorage.getItem(
+          "gameNotifierPopupIsShownFor"
+        );
+        if (result.id && gameIdFromLocalStorage !== result.id) {
+          (localState as any).showGameNotifierPopup = true;
+          localStorage.setItem("gameNotifierPopupIsShownFor", result.id);
+        }
+        this.setState(localState);
       } else {
         this.setState({ shouldPlay: false, gameId: "" });
       }
@@ -100,7 +97,7 @@ class GameNotifier extends PureComponent<
 
   componentWillUnmount() {
     window.clearInterval(this.interval);
-    this.state.unlisten?.();
+    this.state.unlisten();
   }
 
   render() {

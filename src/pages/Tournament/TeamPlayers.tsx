@@ -197,11 +197,9 @@ class TeamPlayers extends Component<
             <SortableItem
               key={`item-${player}`}
               playerIndex={index + 1}
-              index={index}
               id={player[0]}
               value={player[1] + " " + player[2]}
               remove={this.removeParticipant}
-              index={index}
             />
           ))}
         </SortableList>
