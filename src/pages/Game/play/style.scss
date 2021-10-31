@@ -82,8 +82,9 @@
 
       .buttons-container{
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        max-height: 30px;
+        margin-bottom: 100px;
       }
 
       .decide-buttons {
@@ -95,7 +96,7 @@
           margin-left: 20px;
         }
       }
-
+       
       .action-button {
         display: flex;
         justify-content: center;
@@ -107,8 +108,8 @@
         font-weight: 500;
         border-radius: 35px;
         cursor: pointer;
-        width: 80%;
-        margin: 10px;
+        width: 100px;
+        margin: 20px;
       }
     }
     .png-area {
