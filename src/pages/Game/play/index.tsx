@@ -30,9 +30,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import MessageIcon from "@material-ui/icons/Message";
 import SettingsIcon from "@material-ui/icons/Settings";
-import CreateIcon from "@material-ui/icons/Create";
 import InfoIcon from "@material-ui/icons/Info";
-import { AnyKindOfDictionary } from "lodash";
 import { Grid, Typography } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 
@@ -1029,7 +1027,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       >
                         <Tab icon={<MessageIcon />} aria-label="message" />
                         <Tab icon={<SettingsIcon />} aria-label="settings" />
-                        <Tab icon={<CreateIcon />} aria-label="create" />
                         <Tab icon={<InfoIcon />} aria-label="info" />
                       </Tabs>
                       <this.TabPanel
@@ -1058,81 +1055,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                         value={this.state.value}
                         index={2}
                       >
-                        {this.state.outcome === GameOutcome.Ongoing && (
-                          <>
-                            <div className="buttons-container">
-                              <a
-                                className="action-button"
-                                id="resign-btn"
-                                onClick={this.resignFirst}
-                              >
-                                <Translated str="resign" />
-                              </a>
-                              {this.state.showResignConfirm && (
-                                <div className="decide-buttons">
-                                  <a
-                                    className="btn btn-danger"
-                                    id="no-resign-btn"
-                                    onClick={this.resignNo}
-                                  >
-                                    <Translated str="no" />
-                                  </a>
-                                  <a
-                                    className="btn btn-success"
-                                    id="yes-resign-btn"
-                                    onClick={this.resignYes}
-                                  >
-                                    <Translated str="yes" />
-                                  </a>
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="buttons-container">
-                              <a
-                                className="action-button"
-                                id="draw-btn"
-                                onClick={this.drawFirst}
-                              >
-                                {this.state.pendingDrawOffer === 2 ? (
-                                  <Translated str="acceptDraw" />
-                                ) : this.state.pendingDrawOffer === 1 ? (
-                                  <Translated str="drawOfferPending" />
-                                ) : (
-                                  <Translated str="offerDraw" />
-                                )}
-                              </a>
-                              {this.state.showDrawConfirm && (
-                                <div className="decide-buttons">
-                                  <a
-                                    className="btn btn-danger"
-                                    id="no-draw-btn"
-                                    onClick={this.drawNo}
-                                  >
-                                    <Translated str="no" />
-                                  </a>
-                                  <a
-                                    className="btn btn-success"
-                                    id="yes-draw-btn"
-                                    onClick={this.drawYes}
-                                  >
-                                    <Translated str="yes" />
-                                  </a>
-                                </div>
-                              )}
-                            </div>
-                          </>
-                        )}
-                      </this.TabPanel>
-                      <this.TabPanel
-                        className="tab-panel"
-                        value={this.state.value}
-                        index={3}
-                      >
                         <>
                           <div className="tournament-info">
-                          {Translated.byKey("round")}: {this.state.round}, {this.state.initialTime}+
-                            {this.state.incrementTime}
+                            {Translated.byKey("round")}: {this.state.round},{" "}
+                            {this.state.initialTime}+{this.state.incrementTime}
                           </div>
                           <div className="tournament-link">
                             <Link
@@ -1148,8 +1074,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 {!this.state.isPlayer && (
                   <>
                     <div className="tournament-info">
-                    {Translated.byKey("round")}: {this.state.round}, {this.state.initialTime}+
-                      {this.state.incrementTime}
+                      {Translated.byKey("round")}: {this.state.round},{" "}
+                      {this.state.initialTime}+{this.state.incrementTime}
                     </div>
                     <div className="tournament-link">
                       <Link
@@ -1160,6 +1086,74 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                     </div>
                   </>
                 )}
+                {this.state.outcome === GameOutcome.Ongoing &&
+                  !this.state.showBlackInitialCountdown &&
+                  !this.state.showWhiteInitialCountdown &&
+                  this.state.isPlayer && (
+                    <div className="buttons-container">
+                      <div className="buttons">
+                        <a
+                          className="action-button"
+                          id="resign-btn"
+                          onClick={this.resignFirst}
+                        >
+                          <Translated str="resign" />
+                        </a>
+                        {this.state.showResignConfirm && (
+                          <div className="decide-buttons">
+                            <a
+                              className="btn btn-danger"
+                              id="no-resign-btn"
+                              onClick={this.resignNo}
+                            >
+                              <Translated str="no" />
+                            </a>
+                            <a
+                              className="btn btn-success"
+                              id="yes-resign-btn"
+                              onClick={this.resignYes}
+                            >
+                              <Translated str="yes" />
+                            </a>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="buttons">
+                        <a
+                          className="action-button"
+                          id="draw-btn"
+                          onClick={this.drawFirst}
+                        >
+                          {this.state.pendingDrawOffer === 2 ? (
+                            <Translated str="acceptDraw" />
+                          ) : this.state.pendingDrawOffer === 1 ? (
+                            <Translated str="drawOfferPending" />
+                          ) : (
+                            <Translated str="offerDraw" />
+                          )}
+                        </a>
+                        {this.state.showDrawConfirm && (
+                          <div className="decide-buttons">
+                            <a
+                              className="btn btn-danger"
+                              id="no-draw-btn"
+                              onClick={this.drawNo}
+                            >
+                              <Translated str="no" />
+                            </a>
+                            <a
+                              className="btn btn-success"
+                              id="yes-draw-btn"
+                              onClick={this.drawYes}
+                            >
+                              <Translated str="yes" />
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 {this.getSelfCountdown()}
               </div>
             </Grid>
