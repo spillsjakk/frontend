@@ -61,8 +61,10 @@ type PlayState = {
   dests: any;
   whiteId: string;
   whiteName: string;
+  whiteUserName: string;
   blackId: string;
   blackName: string;
+  blackUserName: string;
   pgn: string;
   showResignConfirm: boolean;
   showDrawConfirm: boolean;
@@ -130,8 +132,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       ),
       whiteId: "",
       whiteName: "",
+      whiteUserName: "",
       blackId: "",
       blackName: "",
+      blackUserName: "",
       pgn: "",
       showResignConfirm: false,
       showDrawConfirm: false,
@@ -225,8 +229,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         orientation: json.my_color ? json.my_color : "white",
         whiteId: json.game_info.white,
         whiteName: json.game_info.white_name,
+        whiteUserName: json.game_info.white_username,
         blackId: json.game_info.black,
         blackName: json.game_info.black_name,
+        blackUserName: json.game_info.black_username,
         round: json.game_info.round,
         initialTime: json.game_info.initial_time,
         incrementTime: json.game_info.increment,
@@ -751,11 +757,15 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     return this.state.orientation === "black"
       ? {
           id: this.state.whiteId,
-          name: this.state.whiteName,
+          name: this.state.tournament?.show_only_usernames
+            ? this.state.whiteUserName
+            : this.state.whiteName,
         }
       : {
           id: this.state.blackId,
-          name: this.state.blackName,
+          name: this.state.tournament?.show_only_usernames
+            ? this.state.blackUserName
+            : this.state.blackName,
         };
   }
 

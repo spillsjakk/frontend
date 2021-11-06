@@ -30,7 +30,9 @@ type ViewState = {
   whiteId: string;
   blackId: string;
   whiteName: string;
+  whiteUserName: string;
   blackName: string;
+  blackUserName: string;
   outcome: GameOutcome;
   fen: string;
   lastMove?: string[];
@@ -58,7 +60,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       whiteId: "",
       blackId: "",
       whiteName: "",
+      whiteUserName: "",
       blackName: "",
+      blackUserName: "",
       outcome: GameOutcome.Ongoing,
       fen: "8/8/8/8/8/8/8/8 w KQkq - 0 1",
       check: false,
@@ -127,7 +131,9 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           whiteId: result.game.white,
           blackId: result.game.black,
           whiteName: result.game.white_name,
+          whiteUserName: result.game.white_username,
           blackName: result.game.black_name,
+          blackUserName: result.game.black_username,
           startDate: result.game.start,
           round: result.game.round,
           tournamentData: result.tournament,
@@ -211,11 +217,15 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     return this.state.orientation === "black"
       ? {
           id: this.state.whiteId,
-          name: this.state.whiteName,
+          name: this.state.tournamentData?.show_only_usernames
+            ? this.state.whiteUserName
+            : this.state.whiteName,
         }
       : {
           id: this.state.blackId,
-          name: this.state.blackName,
+          name: this.state.tournamentData?.show_only_usernames
+            ? this.state.blackUserName
+            : this.state.blackName,
         };
   }
 
@@ -223,11 +233,15 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     return this.state.orientation !== "black"
       ? {
           id: this.state.whiteId,
-          name: this.state.whiteName,
+          name: this.state.tournamentData?.show_only_usernames
+            ? this.state.whiteUserName
+            : this.state.whiteName,
         }
       : {
           id: this.state.blackId,
-          name: this.state.blackName,
+          name: this.state.tournamentData?.show_only_usernames
+            ? this.state.blackUserName
+            : this.state.blackName,
         };
   }
 
