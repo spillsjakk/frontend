@@ -82,9 +82,9 @@
 
       .buttons-container{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         max-height: 30px;
-        margin-bottom: 100px;
+        margin-bottom: 150px;
       }
 
       .decide-buttons {
@@ -108,8 +108,8 @@
         font-weight: 500;
         border-radius: 35px;
         cursor: pointer;
-        width: 100px;
-        margin: 20px;
+        width: 200px;
+        margin: 10px;
       }
     }
     .png-area {

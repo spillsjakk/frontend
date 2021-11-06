@@ -1086,8 +1086,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                     </div>
                   </>
                 )}
-                {this.state.outcome === GameOutcome.Ongoing &&
-                  !this.state.showBlackInitialCountdown &&
+                {!this.state.showBlackInitialCountdown &&
                   !this.state.showWhiteInitialCountdown &&
                   this.state.isPlayer && (
                     <div className="buttons-container">
