@@ -961,22 +961,22 @@ class Manage extends Component<
 
                   {this.context.user.authenticated && (
                     <div className="mt-4">
-                      <Link
-                        to={
+                      <a
+                        href={
                           "/s/tournament/printout/results/" + info.tournament.id
                         }
                       >
                         <Translated str="resultPrintouts" />
-                      </Link>
+                      </a>
                       &nbsp;|&nbsp;
-                      <Link
-                        to={
+                      <a
+                        href={
                           "/s/tournament/printout/pairings/" +
                           info.tournament.id
                         }
                       >
                         <Translated str="pairingPrintouts" />
-                      </Link>
+                      </a>
                     </div>
                   )}
 
