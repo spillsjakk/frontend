@@ -2,8 +2,7 @@ import { Tab, Tabs, ToggleButton, ToggleButtonGroup } from "@material-ui/core";
 import {
   GridColDef,
   DataGrid,
-  GridPageChangeParams,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
 import { List, ViewModule } from "@material-ui/icons";
 import React, { FunctionComponent, memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -192,8 +191,8 @@ const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
           className={`${style.table}`}
           autoHeight
           pageSize={pageSize}
-          onPageSizeChange={(params: GridPageChangeParams) => {
-            setPageSize(params.pageSize);
+          onPageSizeChange={(pageSize: number) => {
+            setPageSize(pageSize);
           }}
           rowsPerPageOptions={[15, 30, 50]}
           pagination

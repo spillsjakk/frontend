@@ -3,8 +3,7 @@ import {
   DataGrid,
   GridCellParams,
   GridColDef,
-  GridPageChangeParams,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
 import { Tabs, Tab, Paper } from "@material-ui/core";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
@@ -213,8 +212,8 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
       className={`${style.table} ${visible ? "" : style.hide}`}
       autoHeight
       pageSize={pageSize}
-      onPageSizeChange={(params: GridPageChangeParams) => {
-        setPageSize(params.pageSize);
+      onPageSizeChange={(pageSize: number) => {
+        setPageSize(pageSize);
       }}
       rowsPerPageOptions={[15, 30, 50]}
       pagination
@@ -293,8 +292,8 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       className={`${style.table} ${visible ? "" : style.hide}`}
       autoHeight
       pageSize={pageSize}
-      onPageSizeChange={(params: GridPageChangeParams) => {
-        setPageSize(params.pageSize);
+      onPageSizeChange={(pageSize: number) => {
+        setPageSize(pageSize);
       }}
       rowsPerPageOptions={[15, 30, 50]}
       pagination

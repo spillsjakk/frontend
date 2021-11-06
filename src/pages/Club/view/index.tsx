@@ -12,8 +12,7 @@ import { Tournament } from "../../Tournament/Types";
 import {
   DataGrid,
   GridColDef,
-  GridPageChangeParams,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
 import FederationDisplay from "../../../components/FederationDisplay";
 import ReactMarkdown from "react-markdown";
 import xssFilters from "xss-filters";
@@ -234,8 +233,8 @@ const ClubView: FunctionComponent<{}> = () => {
             <DataGrid
               autoHeight
               pageSize={pageSize}
-              onPageSizeChange={(params: GridPageChangeParams) => {
-                setPageSize(params.pageSize);
+              onPageSizeChange={(pageSize: number) => {
+                setPageSize(pageSize);
               }}
               rowsPerPageOptions={[15, 30, 50]}
               pagination

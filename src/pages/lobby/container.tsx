@@ -3,8 +3,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import {
   DataGrid,
   GridColDef,
-  GridPageChangeParams,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { TimestampString } from "../../components/Timestamp";
 import Translated from "../../components/translated";
@@ -238,8 +237,8 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
             <DataGrid
               autoHeight
               pageSize={pageSize}
-              onPageSizeChange={(params: GridPageChangeParams) => {
-                setPageSize(params.pageSize);
+              onPageSizeChange={(pageSize: number) => {
+                setPageSize(pageSize);
               }}
               rowsPerPageOptions={[15, 30, 50]}
               pagination
@@ -250,8 +249,8 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
             <DataGrid
               autoHeight
               pageSize={pageSize}
-              onPageSizeChange={(params: GridPageChangeParams) => {
-                setPageSize(params.pageSize);
+              onPageSizeChange={(pageSize: number) => {
+                setPageSize(pageSize);
               }}
               rowsPerPageOptions={[15, 30, 50]}
               pagination

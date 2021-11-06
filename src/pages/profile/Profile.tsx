@@ -1,8 +1,7 @@
 import {
   DataGrid,
   GridColDef,
-  GridPageChangeParams,
-} from "@material-ui/data-grid";
+} from "@mui/x-data-grid";
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { Helmet } from "react-helmet";
@@ -321,8 +320,8 @@ const Profile: FunctionComponent<unknown> = () => {
           <DataGrid
             autoHeight
             pageSize={pageSize}
-            onPageSizeChange={(params: GridPageChangeParams) => {
-              setPageSize(params.pageSize);
+            onPageSizeChange={(pageSize: number) => {
+              setPageSize(pageSize);
             }}
             rowsPerPageOptions={[15, 30, 50]}
             pagination
@@ -338,8 +337,8 @@ const Profile: FunctionComponent<unknown> = () => {
         <DataGrid
           autoHeight
           pageSize={pageSize}
-          onPageSizeChange={(params: GridPageChangeParams) => {
-            setPageSize(params.pageSize);
+          onPageSizeChange={(pageSize: number) => {
+            setPageSize(pageSize);
           }}
           rowsPerPageOptions={[15, 30, 50]}
           pagination

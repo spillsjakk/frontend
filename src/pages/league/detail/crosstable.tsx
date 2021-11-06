@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, memo } from "react";
-import { DataGrid, GridColDef } from "@material-ui/data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { fetchJson } from "../../../functions";
 import { Pairing, Participant, Tournament } from "../../Tournament/Types";
 import { Link } from "react-router-dom";
