@@ -3,6 +3,15 @@ import ReactDOM from "react-dom";
 import Translated from "./components/translated";
 import { KIND } from "./constants";
 
+const FORCE_RELOAD = "forceReload";
+
+function checkForceReload(error: string) {
+  if (error === "502" && !window.location.hash.includes(FORCE_RELOAD)) {
+    window.location.hash = FORCE_RELOAD;
+    window.location.reload();
+  }
+}
+
 type ErrorProps = {
   err: string;
 };
@@ -78,6 +87,7 @@ export function fetchJson(
         handler(json);
       } else {
         const err: string = json.error;
+        checkForceReload(String(err));
         ReactDOM.render(
           <>
             <ErrorComponent err={Translated.byKey(err)} />
@@ -87,6 +97,7 @@ export function fetchJson(
       }
     })
     .catch((err) => {
+      checkForceReload(err.toString());
       ReactDOM.render(
         <>
           <ErrorComponent err={err.toString()} />
@@ -140,5 +151,9 @@ export function generateId(length: number) {
 }
 
 export function isTeam(kind: number) {
-  return kind === KIND.TeamKonrad || kind === KIND.TeamRoundRobin || kind === KIND.TeamSwissDutch;
+  return (
+    kind === KIND.TeamKonrad ||
+    kind === KIND.TeamRoundRobin ||
+    kind === KIND.TeamSwissDutch
+  );
 }
