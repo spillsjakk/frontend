@@ -54,28 +54,6 @@ const OrganizationsAndClubs: FunctionComponent<{}> = () => {
           ))}
         </Row>
       </div>
-
-      <div className="header">
-        {Translated.byKey("browseClubs").toUpperCase()}
-      </div>
-      <div className="box">
-        <Row>
-          {clubs.map((club, i) => (
-            <Col key={i} sm="12" md="4">
-              <div className="card-wrapper">
-                <img
-                  height="150"
-                  width="150"
-                  src={club.profile_picture || defaultPic}
-                />
-                <div className="text">
-                  <Link to={"/club/view/" + club.id}>{club.name}</Link>
-                </div>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </div>
     </>
   );
 };
