@@ -11,17 +11,12 @@ const defaultPic = "https://via.placeholder.com/150";
 
 const OrganizationsAndClubs: FunctionComponent<{}> = () => {
   const [organizations, setOrganizations] = useState<any[]>([]);
-  const [clubs, setClubs] = useState<any[]>([]);
 
   useEffect(() => {
     document.getElementsByTagName("body")[0].id =
       "organizations-and-clubs-page";
     fetchJson("/s/organization/all", "GET", undefined, (response) => {
       setOrganizations(response);
-    });
-
-    fetchJson("/s/club/all", "GET", undefined, (response) => {
-      setClubs(response);
     });
   }, []);
 
