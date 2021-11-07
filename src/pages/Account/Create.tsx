@@ -16,29 +16,11 @@ import SexDropdown from "../../components/SexDropdown";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 import { SelectClubOrg } from "../league/build/select-clubs-orgs";
 
-type CreateState = {
-  username: string;
-  first_name: string;
-  last_name: string;
-  fide_number: string;
-  title: string;
-  fide_rating: string;
-  fide_federation: string;
-  birth_date: string;
-  sex: string;
-  email: string;
-  level: string;
-  accounts: any[];
-  passwords: string[][];
-  passwordCsv: string;
-  newState: any;
-};
-
 function Required() {
   return <span style={{ color: "red" }}>(required)</span>;
 }
 
-const Create: FunctionComponent<{ CreateState }> = () => {
+const Create: FunctionComponent<{}> = () => {
   const [username, setUserName] = useState("");
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
