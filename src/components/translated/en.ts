@@ -511,7 +511,8 @@ const en = {
   "startSeason": "Start Season",
   "saveAndCreate": "Create and Save as Template",
   "manageTeam": "Manage Team",
-  "removeInactive": "Remove Inactive Players"
+  "removeInactive": "Remove Inactive Players",
+  "selectClub": "Select Club"
 };
 
 export { en };

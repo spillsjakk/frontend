@@ -506,7 +506,8 @@ const no = {
   "startSeason": "Start sesongen",
   "saveAndCreate": "Lagre og opprett",
   "manageTeam": "Administrer laget",
-  "removeInactive": "Fjern inaktive spillere"
+  "removeInactive": "Fjern inaktive spillere",
+  "selectClub": "Velge Klubb"
 };
 
 export { no };
