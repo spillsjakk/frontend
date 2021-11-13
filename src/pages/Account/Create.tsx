@@ -12,13 +12,44 @@ import { fetchJson, title as titleFn } from "../../functions";
 import "./Create.css";
 import FederationDropdown from "../../components/FederationDropdown";
 import TitleDropdown from "../../components/TitleDropdown";
+import { NativeSelect } from "@material-ui/core";
 import SexDropdown from "../../components/SexDropdown";
 import { HelpBox, helpboxNames } from "../../components/help-box";
-import { SelectClubOrg } from "../league/build/select-clubs-orgs";
+import style from "./style.module.scss"
+import { useOrgsClubs, WithUserOrgsClubs } from "../../hocs/user-orgs-and-clubs";
 
 function Required() {
   return <span style={{ color: "red" }}>(required)</span>;
 }
+
+function SelectClubs(props: {value: string; onChange: (value: string) => void}) {
+  const { clubs } = useOrgsClubs();
+  return (
+    <div className={style.select}>
+      <div className={style.inputs}>
+        <NativeSelect
+          onChange={(e) => {
+            const value = e.target.value;
+            props.onChange(value);
+          }}
+          value={props.value}
+          required
+        >
+          <option value="" disabled>
+            {Translated.byKey("selectClub")}
+          </option>
+          {Array.isArray(clubs) &&
+            clubs.map((club) => (
+              <option key={club.id} value={club.id}>
+                {club.name}
+              </option>
+            ))}
+        </NativeSelect>
+      </div>
+    </div>
+  );
+}
+
 
 const Create: FunctionComponent<{}> = () => {
   const [username, setUserName] = useState("");
@@ -37,6 +68,7 @@ const Create: FunctionComponent<{}> = () => {
   const [passwordCsv, setPasswordCsv] = useState(
     "data:text/plain;charset=utf-8,"
   );
+  const [selectedClub, setSelectedClub] = useState("");
   const { user } = useUser();
 
   function fideNumberBlur() {
@@ -90,6 +122,7 @@ const Create: FunctionComponent<{}> = () => {
       email: email || undefined,
       level: parseInt(level, 10) || 0,
       ghost: false,
+      club:selectedClub
     };
     fetchJson(`/s/account/create`, "POST", data, (result) => {
       result.level = data.level;
@@ -107,6 +140,7 @@ const Create: FunctionComponent<{}> = () => {
       setPasswordCsv(
         passwordCsv + encodeURIComponent(`${result.id},${result.password}\n`)
       );
+      setSelectedClub("");
     });
   }
 
@@ -165,9 +199,10 @@ const Create: FunctionComponent<{}> = () => {
               <th scope="col">
                 <Translated str="permissions" />
               </th>
-              {/* <th scope="col">
-                <Translated str="orgorclub" />
-              </th> */}
+              <th scope="col">
+                <Translated str="selectClub" />
+                <Required />
+              </th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -325,9 +360,11 @@ const Create: FunctionComponent<{}> = () => {
                   )}
                 </select>
               </td>
-              {/* <td>
-                <SelectClubOrg />
-              </td> */}
+              <td>
+                <WithUserOrgsClubs>
+                  <SelectClubs value={selectedClub} onChange={(value: string) => setSelectedClub(value)} />
+                </WithUserOrgsClubs>
+              </td>
               <td>
                 <HelpBox
                   placement="bottom"
