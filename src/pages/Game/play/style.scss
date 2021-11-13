@@ -54,18 +54,27 @@
       max-width: 300px;
 
       .tab-panel {
-        p{
-          height: 400px;
+        .tab-panel-container {
+          padding: 0px !important;
         }
-        .MuiBox-root {
-          padding: 0 !important;
-          div{
-            display: flex;
-            justify-content: center;
+        .tab-container {
+          height: 400px;
+          .MuiBox-root {
+            padding: 0 !important;
+          }
+          .auto-promotion-container {
+            .auto-promotion {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            .choices {
+              padding-left: 20px;
+            }
           }
         }
       }
-      
+
       .tournament-info {
         display: flex;
         justify-content: center;
@@ -80,7 +89,7 @@
         box-shadow: none;
       }
 
-      .buttons-container{
+      .buttons-container {
         display: flex;
         flex-direction: column;
         max-height: 30px;
@@ -92,11 +101,11 @@
         justify-content: center;
         color: white;
         margin-top: 5px;
-        a{
+        a {
           margin-left: 20px;
         }
       }
-       
+
       .action-button {
         display: flex;
         justify-content: center;

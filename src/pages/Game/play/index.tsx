@@ -31,7 +31,14 @@ import Tab from "@material-ui/core/Tab";
 import MessageIcon from "@material-ui/icons/Message";
 import SettingsIcon from "@material-ui/icons/Settings";
 import InfoIcon from "@material-ui/icons/Info";
-import { Grid, Typography } from "@material-ui/core";
+import {
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Switch,
+  Typography,
+} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 
 type PlayProps = {
@@ -94,7 +101,9 @@ type PlayState = {
   round: number;
   initialTime: number;
   incrementTime: number;
-  value: number;
+  tabIndex: number;
+  promotionPreference: string | null;
+  autoPromotion: boolean;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -104,7 +113,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   blackClockRef: RefObject<Clock> | undefined;
   moveSound: Howl;
   timeout = 250;
-  value: any;
 
   constructor(props: RouteComponentProps<PlayProps>) {
     super(props);
@@ -162,7 +170,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       round: 0,
       initialTime: 0,
       incrementTime: 0,
-      value: 0,
+      tabIndex: 0,
+      promotionPreference: null,
+      autoPromotion: false,
     };
     this.groundRef = React.createRef();
     this.moveSound = new Howl({
@@ -189,10 +199,28 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.connect = this.connect.bind(this);
     this.handleTab = this.handleTab.bind(this);
     this.TabPanel = this.TabPanel.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+  }
+
+  onKeyPress(e) {
+    if (e.keyCode === 81) {
+      this.setState({ promotionPreference: "q", autoPromotion: true });
+    } else if (e.keyCode === 82) {
+      this.setState({ promotionPreference: "r", autoPromotion: true });
+    } else if (e.keyCode === 66) {
+      this.setState({ promotionPreference: "b", autoPromotion: true });
+    } else if (e.keyCode === 78) {
+      this.setState({ promotionPreference: "n", autoPromotion: true });
+    } else if (e.keyCode === 88) {
+      // x
+      this.setState({ promotionPreference: null, autoPromotion: false });
+    }
   }
 
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Game-Play";
+
+    document.addEventListener("keydown", this.onKeyPress);
 
     this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
 
@@ -247,6 +275,8 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   componentWillUnmount() {
     window.clearInterval(this.state.clocksInterval);
+    document.removeEventListener("keydown", this.onKeyPress);
+    this.state?.ws?.close();
   }
 
   connect = () => {
@@ -498,11 +528,15 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         (_) => {}
       );
     } else {
-      this.setState({
-        isPromoting: true,
-        promotionTempSource: source,
-        promotionTempTarget: target,
-      });
+      if (this.state.autoPromotion) {
+        this.doPromotion(this.state.promotionPreference || "q", source, target);
+      } else {
+        this.setState({
+          isPromoting: true,
+          promotionTempSource: source,
+          promotionTempTarget: target,
+        });
+      }
     }
   }
 
@@ -518,9 +552,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     }
   }
 
-  doPromotion(which: string) {
+  doPromotion(which: string, source?: string, target?: string) {
+    const localSource = source || this.state.promotionTempSource;
+    const localTarget = target || this.state.promotionTempTarget;
     fetchJson(
-      `/s/game/move/${this.gameId}/${this.state.promotionTempSource}/${this.state.promotionTempTarget}?promotion=${which}`,
+      `/s/game/move/${this.gameId}/${localSource}/${localTarget}?promotion=${which}`,
       "POST",
       undefined,
       (_) => {
@@ -782,23 +818,23 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   handleTab(event, newValue) {
-    this.setState({ value: newValue });
+    this.setState({ tabIndex: newValue });
   }
 
   TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, tabIndex, index, ...other } = props;
 
     return (
       <div
         role="tabpanel"
-        hidden={value !== index}
+        hidden={tabIndex !== index}
         id={`full-width-tabpanel-${index}`}
         aria-labelledby={`full-width-tab-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
+        {tabIndex === index && (
+          <Box p={3} className="tab-panel-container">
+            <div className="tab-container">{children}</div>
           </Box>
         )}
       </div>
@@ -1028,7 +1064,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                   this.state.isPlayer && (
                     <Paper>
                       <Tabs
-                        value={this.state.value}
+                        value={this.state.tabIndex}
                         variant="fullWidth"
                         indicatorColor="primary"
                         textColor="primary"
@@ -1041,7 +1077,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       </Tabs>
                       <this.TabPanel
                         className="tab-panel"
-                        value={this.state.value}
+                        tabIndex={this.state.tabIndex}
                         index={0}
                       >
                         {this.state.tournament &&
@@ -1057,12 +1093,62 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       </this.TabPanel>
                       <this.TabPanel
                         className="tab-panel"
-                        value={this.state.value}
+                        tabIndex={this.state.tabIndex}
                         index={1}
-                      ></this.TabPanel>
+                      >
+                        <div className="auto-promotion-container">
+                          <div className="auto-promotion">
+                            <Typography>Automatic Promotion</Typography>
+                            <Switch
+                              checked={this.state.autoPromotion}
+                              onChange={(e) =>
+                                this.setState({
+                                  autoPromotion: e.target.checked,
+                                  promotionPreference: "q",
+                                })
+                              }
+                              inputProps={{
+                                "aria-label": "secondary checkbox",
+                              }}
+                            />
+                          </div>
+                          {this.state.autoPromotion && (
+                            <RadioGroup
+                              value={this.state.promotionPreference}
+                              onChange={(e) =>
+                                this.setState({
+                                  promotionPreference: e.target.value,
+                                })
+                              }
+                              className="choices"
+                            >
+                              <FormControlLabel
+                                value="q"
+                                control={<Radio />}
+                                label="Queen"
+                              />
+                              <FormControlLabel
+                                value="r"
+                                control={<Radio />}
+                                label="Rook"
+                              />
+                              <FormControlLabel
+                                value="b"
+                                control={<Radio />}
+                                label="Bishop"
+                              />
+                              <FormControlLabel
+                                value="n"
+                                control={<Radio />}
+                                label="Knight"
+                              />
+                            </RadioGroup>
+                          )}
+                        </div>
+                      </this.TabPanel>
                       <this.TabPanel
                         className="tab-panel"
-                        value={this.state.value}
+                        tabIndex={this.state.tabIndex}
                         index={2}
                       >
                         <>
