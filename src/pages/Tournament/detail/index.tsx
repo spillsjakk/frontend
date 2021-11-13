@@ -82,10 +82,6 @@ const TournamentDetail: FunctionComponent<{}> = () => {
           ...detail,
         })),
         pairings: tournamentDetail.pairings.map((pairing) => {
-          const id = pairing.white_name + pairing.black_name + pairing.round;
-          if (pairing.white_ghost || pairing.black_ghost) {
-            return { ...pairing, id };
-          }
           if (tempRound !== null && tempRound !== pairing.round) {
             boardNumber = 1;
           }
@@ -93,7 +89,7 @@ const TournamentDetail: FunctionComponent<{}> = () => {
           return {
             ...pairing,
             boardNumber: boardNumber++,
-            id,
+            id: pairing.white_name + pairing.black_name + pairing.round,
           };
         }),
         teams: tournamentDetail.teams.map((team) => ({

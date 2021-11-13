@@ -15,14 +15,20 @@ import TitleDropdown from "../../components/TitleDropdown";
 import { NativeSelect } from "@material-ui/core";
 import SexDropdown from "../../components/SexDropdown";
 import { HelpBox, helpboxNames } from "../../components/help-box";
-import style from "./style.module.scss"
-import { useOrgsClubs, WithUserOrgsClubs } from "../../hocs/user-orgs-and-clubs";
+import style from "./style.module.scss";
+import {
+  useOrgsClubs,
+  WithUserOrgsClubs,
+} from "../../hocs/user-orgs-and-clubs";
 
 function Required() {
   return <span style={{ color: "red" }}>(required)</span>;
 }
 
-function SelectClubs(props: {value: string; onChange: (value: string) => void}) {
+function SelectClubs(props: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
   const { clubs } = useOrgsClubs();
   return (
     <div className={style.select}>
@@ -49,7 +55,6 @@ function SelectClubs(props: {value: string; onChange: (value: string) => void}) 
     </div>
   );
 }
-
 
 const Create: FunctionComponent<{}> = () => {
   const [username, setUserName] = useState("");
@@ -122,7 +127,7 @@ const Create: FunctionComponent<{}> = () => {
       email: email || undefined,
       level: parseInt(level, 10) || 0,
       ghost: false,
-      club:selectedClub
+      club: selectedClub,
     };
     fetchJson(`/s/account/create`, "POST", data, (result) => {
       result.level = data.level;
@@ -362,7 +367,10 @@ const Create: FunctionComponent<{}> = () => {
               </td>
               <td>
                 <WithUserOrgsClubs>
-                  <SelectClubs value={selectedClub} onChange={(value: string) => setSelectedClub(value)} />
+                  <SelectClubs
+                    value={selectedClub}
+                    onChange={(value: string) => setSelectedClub(value)}
+                  />
                 </WithUserOrgsClubs>
               </td>
               <td>
