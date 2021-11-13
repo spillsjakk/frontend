@@ -77,90 +77,94 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
 
   return (
     <main>
-      <div className="header">
-        {Translated.byKey("organizationInvitations").toUpperCase()}
-      </div>
-      {invitations &&
-        Array.isArray(invitations.organizations) &&
-        invitations.organizations.map((organization) => (
-          <div key={organization.id}>
-            <div className="box row-flex">
-              <div className="name">{organization.name}</div>
-              {Array.isArray(organization.invitations) &&
-                !organization.invitations.length && (
-                  <button
-                    onClick={() => createInvitation(organization.id, 0)}
-                    className="blue-button"
-                  >
-                    {Translated.byKey("create")}
-                  </button>
-                )}
-              {Array.isArray(organization.invitations) &&
-                organization.invitations.map((invitation) => (
-                  <div className="row-flex" key={invitation}>
-                    <InvitationLink invitationId={invitation} />
+      <div id="organisation">
+        <div className="header">
+          {Translated.byKey("organizationInvitations").toUpperCase()}
+        </div>
+        {invitations &&
+          Array.isArray(invitations.organizations) &&
+          invitations.organizations.map((organization) => (
+            <div key={organization.id}>
+              <div className="box row-flex">
+                <div className="name">{organization.name}</div>
+                {Array.isArray(organization.invitations) &&
+                  !organization.invitations.length && (
                     <button
-                      onClick={() =>
-                        deleteInvitation(organization.id, invitation, 0)
-                      }
-                      className="red-button"
+                      onClick={() => createInvitation(organization.id, 0)}
+                      className="blue-button"
                     >
-                      {Translated.byKey("delete")}
+                      {Translated.byKey("create")}
                     </button>
-                  </div>
-                ))}
-            </div>
-          </div>
-        ))}
-      <div className="header">
-        {Translated.byKey("clubInvitations").toUpperCase()}
-      </div>
-      {invitations &&
-        Array.isArray(invitations.clubs) &&
-        invitations.clubs.map((club) => (
-          <div key={club.id}>
-            <div className="box row-flex">
-              <div className="name">{club.name}</div>
-              {Array.isArray(club.invitations) && !club.invitations.length && (
-                <HelpBox
-                  placement="bottom"
-                  name={helpboxNames.generateInvitationLink}
-                  text={Translated.byKey("generateInvitationLinkHelpbox")}
-                  show={true}
-                >
-                  <button
-                    onClick={() => createInvitation(club.id, 1)}
-                    className="blue-button"
-                  >
-                    {Translated.byKey("create")}
-                  </button>
-                </HelpBox>
-              )}
-              {Array.isArray(club.invitations) &&
-                club.invitations.map((invitation) => (
-                  <div className="row-flex" key={invitation}>
-                    <HelpBox
-                      placement="bottom"
-                      name={helpboxNames.invitationLinkDescription}
-                      text={Translated.byKey(
-                        "invitationLinkDescriptionHelpbox"
-                      )}
-                      show={true}
-                    >
+                  )}
+                {Array.isArray(organization.invitations) &&
+                  organization.invitations.map((invitation) => (
+                    <div className="row-flex" key={invitation}>
                       <InvitationLink invitationId={invitation} />
-                    </HelpBox>
-
-                    <button
-                      onClick={() => deleteInvitation(club.id, invitation, 1)}
-                      className="red-button"
-                    >
-                      {Translated.byKey("delete")}
-                    </button>
-                  </div>
-                ))}
+                      <button
+                        onClick={() =>
+                          deleteInvitation(organization.id, invitation, 0)
+                        }
+                        className="red-button"
+                      >
+                        {Translated.byKey("delete")}
+                      </button>
+                    </div>
+                  ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
+      <div id="club">
+        <div className="header">
+          {Translated.byKey("clubInvitations").toUpperCase()}
+        </div>
+        {invitations &&
+          Array.isArray(invitations.clubs) &&
+          invitations.clubs.map((club) => (
+            <div key={club.id}>
+              <div className="box row-flex">
+                <div className="name">{club.name}</div>
+                {Array.isArray(club.invitations) && !club.invitations.length && (
+                  <HelpBox
+                    placement="bottom"
+                    name={helpboxNames.generateInvitationLink}
+                    text={Translated.byKey("generateInvitationLinkHelpbox")}
+                    show={true}
+                  >
+                    <button
+                      onClick={() => createInvitation(club.id, 1)}
+                      className="blue-button"
+                    >
+                      {Translated.byKey("create")}
+                    </button>
+                  </HelpBox>
+                )}
+                {Array.isArray(club.invitations) &&
+                  club.invitations.map((invitation) => (
+                    <div className="row-flex" key={invitation}>
+                      <HelpBox
+                        placement="bottom"
+                        name={helpboxNames.invitationLinkDescription}
+                        text={Translated.byKey(
+                          "invitationLinkDescriptionHelpbox"
+                        )}
+                        show={true}
+                      >
+                        <InvitationLink invitationId={invitation} />
+                      </HelpBox>
+
+                      <button
+                        onClick={() => deleteInvitation(club.id, invitation, 1)}
+                        className="red-button"
+                      >
+                        {Translated.byKey("delete")}
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
+      </div>
     </main>
   );
 };
