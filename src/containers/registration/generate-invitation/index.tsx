@@ -77,7 +77,7 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
 
   return (
     <main>
-      <div id="organisation">
+      <div id="organisation-list">
         <div className="header">
           {Translated.byKey("organizationInvitations").toUpperCase()}
         </div>
@@ -114,7 +114,7 @@ const GenerateInvitation: FunctionComponent<{}> = () => {
             </div>
           ))}
       </div>
-      <div id="club">
+      <div id="club-list">
         <div className="header">
           {Translated.byKey("clubInvitations").toUpperCase()}
         </div>
