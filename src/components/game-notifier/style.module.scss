@@ -1,0 +1,32 @@
+.game-notifier-alert {
+  text-align: center;
+  position: sticky;
+  top: 75px;
+  z-index: 20;
+  margin-top: 1rem !important;
+  border: none;
+  color: #fff;
+  background-color: #f39c12;
+  border-radius: 0.25rem;
+  padding: 0.3rem 1.25rem;
+  margin-bottom: 5px;
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .close {
+    color: white;
+  }
+}
+
+.small-view-top-right {
+  top: 5px;
+}
+
+@media screen and (min-width: 600px) {
+  .small-view-top-right {
+    width: 500px;
+    left: 70vw;
+    top: 5px;
+  }
+}

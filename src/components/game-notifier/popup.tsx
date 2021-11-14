@@ -5,7 +5,7 @@ import {
   DialogContent,
 } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
-import Translated from "./translated";
+import Translated from "../translated";
 import { Link } from "react-router-dom";
 
 interface Props {

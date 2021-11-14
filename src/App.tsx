@@ -5,7 +5,7 @@ import { NavigationBar } from "./containers/navigation-bar/index";
 import LangContext from "./components/LangContext";
 import { UserContext, UserContextDataType } from "./components/UserContext";
 import { fetchJson } from "./functions";
-import GameNotifier from "./components/GameNotifier";
+import { GameNotifier } from "./components/game-notifier";
 import { WithTheme } from "./hocs/with-theme";
 import { WithNotification } from "./hocs/with-notification";
 import "./index.css";
