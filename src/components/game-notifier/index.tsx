@@ -47,7 +47,7 @@ const GameNotifier: FunctionComponent<unknown> = () => {
 
   useEffect(() => {
     checkForGame();
-    const interval = setInterval(checkForGame, 5000);
+    const interval = setInterval(checkForGame, 30000);
 
     return () => {
       clearInterval(interval);
