@@ -1,21 +1,25 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
 import { fetchJson } from "../../functions";
 import { HelpBox, helpboxNames } from "../../components/help-box";
 import { ListItem, ListItemText, Menu } from "@material-ui/core";
+import { MessageNotification } from "./message-notification";
 
-const Actions: FunctionComponent<unknown> = () => {
-  const [hasMessage, setHasMessage] = useState(false);
+function useMessages() {
+  const [messages, setMessages] = useState([]);
+  const [messageNotificationOpen, setMessageNotificationOpen] = useState(false);
 
-  const { user, setUser } = useUser();
+  const { user } = useUser();
+  const location = useLocation();
 
-  // required for rendering when route is changed
-  useParams();
+  function authenticated() {
+    return user && user.authenticated === true;
+  }
 
-  useEffect(() => {
-    if (user && user.authenticated) {
+  function checkMessages() {
+    if (authenticated()) {
       fetch("/s/messages/has-unread", {
         method: "GET",
         credentials: "same-origin",
@@ -29,12 +33,40 @@ const Actions: FunctionComponent<unknown> = () => {
           }
         })
         .then((json) => {
-          if (!json.error) {
-            setHasMessage(!!json.has);
+          if (!json.error && Array.isArray(json) && json.length > 0) {
+            setMessages(json);
+            setMessageNotificationOpen(true);
+          } else {
+            setMessages([]);
+            setMessageNotificationOpen(false);
           }
         });
     }
-  }, [user]);
+  }
+
+  useEffect(() => {
+    if (location.pathname !== "/inbox") {
+      checkMessages();
+      const interval = setInterval(checkMessages, 30000);
+      return () => clearInterval(interval);
+    } else {
+      setMessages([]);
+      setMessageNotificationOpen(false);
+    }
+  }, [user, location.pathname]);
+
+  return { messages, messageNotificationOpen, setMessageNotificationOpen };
+}
+
+const Actions: FunctionComponent<unknown> = () => {
+  const { user, setUser } = useUser();
+
+  const { messages, messageNotificationOpen, setMessageNotificationOpen } =
+    useMessages();
+
+  function authenticated() {
+    return user && user.authenticated === true;
+  }
 
   function onLogout() {
     fetchJson("/s/account/logout", "POST", {}, (_) => {
@@ -43,14 +75,10 @@ const Actions: FunctionComponent<unknown> = () => {
     });
   }
 
-  function authenticated() {
-    return user && user.authenticated === true;
-  }
-
   return (
     <>
       <div className="link">
-        {hasMessage && <div className="unread-icon"></div>}
+        {messages.length > 0 && <div className="unread-icon"></div>}
         <HelpBox
           placement="left"
           name={helpboxNames.userIcon}
@@ -71,40 +99,25 @@ const Actions: FunctionComponent<unknown> = () => {
           </a>
         </div>
       </div>
+      <MessageNotification
+        open={messageNotificationOpen}
+        changeOpen={(open) => setMessageNotificationOpen(open)}
+        messages={messages}
+      />
     </>
   );
 };
 
 const MobileActions: FunctionComponent<unknown> = () => {
   const [open, setOpen] = useState(false);
-  const [hasMessage, setHasMessage] = useState(false);
-
   const { user, setUser } = useUser();
 
-  // required for rendering when route is changed
-  useParams();
+  const { messages, messageNotificationOpen, setMessageNotificationOpen } =
+    useMessages();
 
-  useEffect(() => {
-    if (user && user.authenticated) {
-      fetch("/s/messages/has-unread", {
-        method: "GET",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => {
-          if (response.status < 400) {
-            return response.json();
-          } else {
-            return Promise.resolve({ error: response.status.toString() });
-          }
-        })
-        .then((json) => {
-          if (!json.error) {
-            setHasMessage(!!json.has);
-          }
-        });
-    }
-  }, [user]);
+  function authenticated() {
+    return user && user.authenticated === true;
+  }
 
   function onLogout() {
     fetchJson("/s/account/logout", "POST", {}, (_) => {
@@ -113,14 +126,10 @@ const MobileActions: FunctionComponent<unknown> = () => {
     });
   }
 
-  function authenticated() {
-    return user && user.authenticated === true;
-  }
-
   return (
     <>
       <div className="link">
-        {hasMessage && <div className="unread-icon"></div>}
+        {messages.length > 0 && <div className="unread-icon"></div>}
         <HelpBox
           placement="left"
           name={helpboxNames.userIcon}
@@ -134,6 +143,11 @@ const MobileActions: FunctionComponent<unknown> = () => {
             onClick={() => setOpen(true)}
           />
         </HelpBox>
+        <MessageNotification
+          open={messageNotificationOpen}
+          changeOpen={(open) => setMessageNotificationOpen(open)}
+          messages={messages}
+        />
         <div className="menu">
           <Link to={"/profile/" + user.info?.id} className="item">
             {user?.info?.name}
