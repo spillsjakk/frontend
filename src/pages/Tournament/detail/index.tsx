@@ -137,7 +137,9 @@ const TournamentDetail: FunctionComponent<{}> = () => {
               accounts={tournamentDetail?.participants?.map((p) => p.account)}
             >
               <Standings />
-              <Pairings defaultMiniboards={true} />
+              <Pairings
+                defaultMiniboards={!tournamentDetail?.tournament?.default_otb}
+              />
             </WithOnlineStatus>
           </div>
         </div>
