@@ -802,8 +802,8 @@ class Manage extends Component<
                 this.state.info?.tournament.kind === "TeamRoundRobin") && (
                 <SetupRoundButton roundNumber={i + 1} />
               )}
-              <Link
-                to={
+              <a
+                href={
                   "/s/tournament/printout/boardcards/" +
                   info.tournament.id +
                   "/" +
@@ -811,7 +811,7 @@ class Manage extends Component<
                 }
               >
                 <Translated str="boardCards" />
-              </Link>
+              </a>
             </div>
           )}
           <table className="table table-striped mt-4 dense pairing-table">
