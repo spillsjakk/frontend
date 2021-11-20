@@ -105,7 +105,7 @@ const CrossTable: FunctionComponent<{ seasonId: string; leagueId: string }> = (
                   ...roundData,
                 };
               });
-            category.pairings.sort((a, b) => (a.round - b.round ? -1 : 1));
+            category.pairings.sort((a, b) => (a.round < b.round ? 1 : -1));
             return {
               ...category,
               participants,
