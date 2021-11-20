@@ -44,6 +44,9 @@ function SelectClubs(props: {
           <option value="" disabled>
             {Translated.byKey("selectClub")}
           </option>
+          <option value="n/a">
+            N/A
+          </option>
           {Array.isArray(clubs) &&
             clubs.map((club) => (
               <option key={club.id} value={club.id}>
@@ -114,7 +117,7 @@ const Create: FunctionComponent<{}> = () => {
   function addNewAcc(e: FormEvent) {
     e.preventDefault();
 
-    const data = {
+    const data: any = {
       username: username,
       first_name: first_name,
       last_name: last_name,
@@ -127,8 +130,11 @@ const Create: FunctionComponent<{}> = () => {
       email: email || undefined,
       level: parseInt(level, 10) || 0,
       ghost: false,
-      club: selectedClub,
     };
+
+    if (selectedClub && selectedClub !== "n/a") {
+      data.club = selectedClub;
+    }
     fetchJson(`/s/account/create`, "POST", data, (result) => {
       result.level = data.level;
       setUserName("");
