@@ -12,10 +12,12 @@ import { fetchJson, title as titleFn } from "../../functions";
 import "./Create.css";
 import FederationDropdown from "../../components/FederationDropdown";
 import TitleDropdown from "../../components/TitleDropdown";
-import { NativeSelect } from "@material-ui/core";
+import { NativeSelect, TextField, Grid } from "@material-ui/core";
 import SexDropdown from "../../components/SexDropdown";
 import { HelpBox, helpboxNames } from "../../components/help-box";
+
 import style from "./style.module.scss";
+
 import {
   useOrgsClubs,
   WithUserOrgsClubs,
@@ -44,9 +46,7 @@ function SelectClubs(props: {
           <option value="" disabled>
             {Translated.byKey("selectClub")}
           </option>
-          <option value="n/a">
-            N/A
-          </option>
+          <option value="n/a">N/A</option>
           {Array.isArray(clubs) &&
             clubs.map((club) => (
               <option key={club.id} value={club.id}>
@@ -168,11 +168,164 @@ const Create: FunctionComponent<{}> = () => {
       <div className="header">
         <Translated str="createAccounts" />
       </div>
-
+      <form>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <TextField
+              label={Translated.byKey("username")}
+              id="username"
+              name="username"
+              // pattern="^[a-zA-Z0-9-_]+$"
+              fullWidth
+              variant="outlined"
+              type="text"
+              required
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label={Translated.byKey("firstName")}
+              type="text"
+              id="firstNameInput"
+              name="first_name"
+              value={first_name}
+              onChange={(e) => setFirstName(e.target.value)}
+              fullWidth
+              variant="outlined"
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label={Translated.byKey("lastName")}
+              type="text"
+              id="lastNameInput"
+              name="last_name"
+              value={last_name}
+              onChange={(e) => setLastName(e.target.value)}
+              fullWidth
+              variant="outlined"
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label={Translated.byKey("fideNumber")}
+              type="number"
+              id="fideNumberInput"
+              name="fide_number"
+              value={fide_number}
+              onChange={(e) => setFideNumber(e.target.value)}
+              onBlur={fideNumberBlur}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <NativeSelect
+              id="titleInput"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            >
+              <option value="" disabled>
+                {Translated.byKey("title")}
+              </option>
+            </NativeSelect>
+          </Grid>
+          <Grid item xs={6}>
+            <HelpBox
+              placement="bottom"
+              name={helpboxNames.createAccountsInputs}
+              text={Translated.byKey("createAccountsInputsHelpbox")}
+              show={true}
+            >
+              <td>
+                <input
+                  type="number"
+                  id="fideRatingInput"
+                  name="fide_rating"
+                  value={fide_rating}
+                  onChange={(e) => setFideRating(e.target.value)}
+                />
+              </td>
+            </HelpBox>
+          </Grid>
+          <Grid item xs={6}>
+            <FederationDropdown
+              id="fideFederationInput"
+              name="fide_federation"
+              value={fide_federation}
+              onChange={(e) => setFideFederation(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label={Translated.byKey("birthDate")}
+              type="date"
+              id="birthDateInput"
+              name="birth_date"
+              value={birth_date}
+              onChange={(e) => setBirthDate(e.target.value)}
+              fullWidth
+              variant="outlined"
+              required
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SexDropdown
+              id="sexInput"
+              name="sex"
+              value={sex}
+              onChange={(e) => setSex(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label={Translated.byKey("email")}
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <select
+              id="level"
+              name="level"
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+            >
+              <option value="0">Player</option>
+              {(user.info?.level || 0) > 1 && (
+                <>
+                  <option value="1">Club Manager</option>
+                  {(user.info?.level || 0) > 2 && (
+                    <option value="2">Org Manager</option>
+                  )}
+                </>
+              )}
+            </select>
+          </Grid>
+          <Grid item xs={6}>
+            <WithUserOrgsClubs>
+              <SelectClubs
+                value={selectedClub}
+                onChange={(value: string) => setSelectedClub(value)}
+              />
+            </WithUserOrgsClubs>
+          </Grid>
+        </Grid>
+      </form>
       <form onSubmit={addNewAcc}>
         <table className="table">
           <thead>
-            <tr>
+            {/* <tr>
               <th scope="col">
                 <Translated str="username" />
                 <Required />
@@ -215,7 +368,7 @@ const Create: FunctionComponent<{}> = () => {
                 <Required />
               </th>
               <th scope="col"></th>
-            </tr>
+            </tr> */}
           </thead>
           <tbody>
             {accounts.map((account, i) => (
@@ -251,7 +404,7 @@ const Create: FunctionComponent<{}> = () => {
                 <td>{account.level}</td>
               </tr>
             ))}
-            <tr>
+            {/* <tr>
               <td>
                 <input
                   type="text"
@@ -395,7 +548,7 @@ const Create: FunctionComponent<{}> = () => {
                   </button>
                 </HelpBox>
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </form>
