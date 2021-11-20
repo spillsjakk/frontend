@@ -98,7 +98,7 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
         }}
       >
         {tournament?.show_only_top_nr
-          ? params.value >= tournament.show_only_top_nr!
+          ? params.row.rank > tournament.show_only_top_nr!
             ? ""
             : params.value
           : params.value}
