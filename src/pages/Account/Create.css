@@ -14,7 +14,9 @@
     line-height: 44px;
     margin: 30px 0px 20px 0px;
 }
-
+#Account-Create #content-container{
+    max-width: none !important;
+}
 body#Account-Create {
     background-color: #fafafa;
     color: black !important;

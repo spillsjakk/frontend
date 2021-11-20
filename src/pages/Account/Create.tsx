@@ -10,23 +10,25 @@ import { useUser } from "../../components/UserContext";
 import UserLink from "../../components/UserLink";
 import { fetchJson, title as titleFn } from "../../functions";
 import "./Create.css";
-import FederationDropdown from "../../components/FederationDropdown";
-import TitleDropdown from "../../components/TitleDropdown";
-import { NativeSelect, TextField, Grid } from "@material-ui/core";
-import SexDropdown from "../../components/SexDropdown";
+import { NativeSelect, TextField, Grid, Button } from "@material-ui/core";
 import { HelpBox, helpboxNames } from "../../components/help-box";
-
 import style from "./style.module.scss";
 
 import {
   useOrgsClubs,
   WithUserOrgsClubs,
 } from "../../hocs/user-orgs-and-clubs";
+import { MuiFederationDropdown } from "../../components/FederationDropdown";
+import { MuiTitleDropdown } from "../../components/TitleDropdown";
+import { MuiSexDropdown } from "../../components/SexDropdown";
+import {
+  DataGrid,
+  GridColDef,
+} from "@mui/x-data-grid";
 
 function Required() {
-  return <span style={{ color: "red" }}>(required)</span>;
+  return <span style={{ color: "red" }}>(required)</span>
 }
-
 function SelectClubs(props: {
   value: string;
   onChange: (value: string) => void;
@@ -59,6 +61,7 @@ function SelectClubs(props: {
   );
 }
 
+
 const Create: FunctionComponent<{}> = () => {
   const [username, setUserName] = useState("");
   const [first_name, setFirstName] = useState("");
@@ -78,6 +81,114 @@ const Create: FunctionComponent<{}> = () => {
   );
   const [selectedClub, setSelectedClub] = useState("");
   const { user } = useUser();
+
+  const commonFields = {
+    headerClassName: style["table-header"],
+    cellClassName: style["table-cell"],
+  };
+
+  const accountsColumns: GridColDef[] = [
+    {
+      field: "username",
+      headerName: Translated.byKey("username"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      minWidth: 140,
+      flex: 1,
+      ...commonFields,
+    },
+    {
+      field: "first_name",
+      headerName: Translated.byKey("firstName"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "last_name",
+      headerName: Translated.byKey("lastName"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "fide_number",
+      headerName: Translated.byKey("fideNumber"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "title",
+      headerName: Translated.byKey("title"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "fide_rating",
+      headerName: Translated.byKey("fideRating"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "fide_federation",
+      headerName: Translated.byKey("fideFederation"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "birth_date",
+      headerName: Translated.byKey("birthDate"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "sex",
+      headerName: Translated.byKey("sex"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "email",
+      headerName: Translated.byKey("email"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+    {
+      field: "level",
+      headerName: Translated.byKey("level"),
+      hideSortIcons: true,
+      align: "center",
+      headerAlign: "center",
+      width: 140,
+      ...commonFields,
+    },
+  ];
 
   function fideNumberBlur() {
     if (isNaN(parseInt(fide_number as string, 10))) {
@@ -113,7 +224,6 @@ const Create: FunctionComponent<{}> = () => {
       }
     );
   }
-
   function addNewAcc(e: FormEvent) {
     e.preventDefault();
 
@@ -154,10 +264,25 @@ const Create: FunctionComponent<{}> = () => {
       setSelectedClub("");
     });
   }
-
   useEffect(() => {
     document.getElementsByTagName("body")[0].id = "Account-Create";
   }, []);
+
+  const accountData = accounts.map((account, i) => {
+    return {
+      username: account.username,
+      firstName: account.first_name,
+      lastName: account.last_name,
+      fideNumber: account.fide_number,
+      title: account.title,
+      fideRating: account.fide_rating,
+      fideFederation: account.fide_federation,
+      birthDate:account.birth_date,
+      sex:account.sex,
+      email:account.email,
+      level:account.level,
+    }
+  })
 
   return (
     <>
@@ -168,14 +293,14 @@ const Create: FunctionComponent<{}> = () => {
       <div className="header">
         <Translated str="createAccounts" />
       </div>
-      <form>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
+      <form onSubmit={addNewAcc}>
+        <Grid container spacing={3} item justifyContent="center">
+          <Grid item xs={12} lg={4} md={12}>
             <TextField
               label={Translated.byKey("username")}
               id="username"
               name="username"
-              // pattern="^[a-zA-Z0-9-_]+$"
+              inputProps={{ pattern: "^[a-zA-Z0-9-_]+$" }}
               fullWidth
               variant="outlined"
               type="text"
@@ -184,7 +309,7 @@ const Create: FunctionComponent<{}> = () => {
               onChange={(e) => setUserName(e.target.value)}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} lg={4} md={12}>
             <TextField
               label={Translated.byKey("firstName")}
               type="text"
@@ -197,7 +322,7 @@ const Create: FunctionComponent<{}> = () => {
               required
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} lg={4} md={12}>
             <TextField
               label={Translated.byKey("lastName")}
               type="text"
@@ -210,7 +335,19 @@ const Create: FunctionComponent<{}> = () => {
               required
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} lg={4} md={12}>
+            <TextField
+              label={Translated.byKey("email")}
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} lg={4} md={12}>
             <TextField
               label={Translated.byKey("fideNumber")}
               type="number"
@@ -223,19 +360,7 @@ const Create: FunctionComponent<{}> = () => {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={6}>
-            <NativeSelect
-              id="titleInput"
-              name="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            >
-              <option value="" disabled>
-                {Translated.byKey("title")}
-              </option>
-            </NativeSelect>
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} lg={4} md={12}>
             <HelpBox
               placement="bottom"
               name={helpboxNames.createAccountsInputs}
@@ -243,59 +368,34 @@ const Create: FunctionComponent<{}> = () => {
               show={true}
             >
               <td>
-                <input
+                <TextField
+                  label={Translated.byKey("fideRating")}
                   type="number"
                   id="fideRatingInput"
                   name="fide_rating"
                   value={fide_rating}
                   onChange={(e) => setFideRating(e.target.value)}
+                  fullWidth
                 />
               </td>
             </HelpBox>
           </Grid>
-          <Grid item xs={6}>
-            <FederationDropdown
+          <Grid item xs={12} lg={3} md={12}>
+            <MuiFederationDropdown
               id="fideFederationInput"
               name="fide_federation"
               value={fide_federation}
-              onChange={(e) => setFideFederation(e.target.value)}
-            />
+              onChange={(e) => setFideFederation(e.target.value)} />
           </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label={Translated.byKey("birthDate")}
-              type="date"
-              id="birthDateInput"
-              name="birth_date"
-              value={birth_date}
-              onChange={(e) => setBirthDate(e.target.value)}
-              fullWidth
-              variant="outlined"
-              required
-            />
+          <Grid item xs={12} lg={9} md={12}>
+            <MuiTitleDropdown
+              id="titleInput"
+              name="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)} />
           </Grid>
-          <Grid item xs={6}>
-            <SexDropdown
-              id="sexInput"
-              name="sex"
-              value={sex}
-              onChange={(e) => setSex(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label={Translated.byKey("email")}
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              fullWidth
-              variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <select
+          <Grid item xs={12} lg={3} md={12}>
+            <NativeSelect
               id="level"
               name="level"
               value={level}
@@ -310,9 +410,16 @@ const Create: FunctionComponent<{}> = () => {
                   )}
                 </>
               )}
-            </select>
+            </NativeSelect>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} lg={9} md={12}>
+            <MuiSexDropdown
+              id="sexInput"
+              name="sex"
+              value={sex}
+              onChange={(e) => setSex(e.target.value)} />
+          </Grid>
+          <Grid item xs={12} lg={3} md={12}>
             <WithUserOrgsClubs>
               <SelectClubs
                 value={selectedClub}
@@ -320,55 +427,36 @@ const Create: FunctionComponent<{}> = () => {
               />
             </WithUserOrgsClubs>
           </Grid>
+          <Grid item xs={12} lg={9} md={12}>
+            <input
+              type="date"
+              id="birthDateInput"
+              name="birth_date"
+              value={birth_date}
+              onChange={(e) => setBirthDate(e.target.value)}
+            />
+          </Grid>
         </Grid>
+        <br/>
+        <HelpBox
+          placement="bottom"
+          name={helpboxNames.createAccountsAction}
+          text={Translated.byKey("createAccountsActionHelpbox")}
+          show={true}
+        >
+          <Button
+            id="addButton"
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Create Account
+          </Button>
+        </HelpBox>
       </form>
       <form onSubmit={addNewAcc}>
-        <table className="table">
+        {/* <table className="table">
           <thead>
-            {/* <tr>
-              <th scope="col">
-                <Translated str="username" />
-                <Required />
-              </th>
-              <th scope="col">
-                <Translated str="firstName" />
-                <Required />
-              </th>
-              <th scope="col">
-                <Translated str="lastName" />
-                <Required />
-              </th>
-              <th scope="col">
-                <Translated str="fideNumber" />
-              </th>
-              <th scope="col">
-                <Translated str="title" />
-              </th>
-              <th scope="col">
-                <Translated str="fideRating" />
-              </th>
-              <th scope="col">
-                <Translated str="fideFederation" />
-              </th>
-              <th scope="col">
-                <Translated str="birthDate" />
-                <Required />
-              </th>
-              <th scope="col">
-                <Translated str="sex" />
-              </th>
-              <th scope="col">
-                <Translated str="email" />
-              </th>
-              <th scope="col">
-                <Translated str="permissions" />
-              </th>
-              <th scope="col">
-                <Translated str="selectClub" />
-                <Required />
-              </th>
-              <th scope="col"></th>
-            </tr> */}
           </thead>
           <tbody>
             {accounts.map((account, i) => (
@@ -404,153 +492,15 @@ const Create: FunctionComponent<{}> = () => {
                 <td>{account.level}</td>
               </tr>
             ))}
-            {/* <tr>
-              <td>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  pattern="^[a-zA-Z0-9-_]+$"
-                  value={username}
-                  onChange={(e) => setUserName(e.target.value)}
-                  required
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="firstNameInput"
-                  name="first_name"
-                  value={first_name}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  id="lastNameInput"
-                  name="last_name"
-                  value={last_name}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  id="fideNumberInput"
-                  name="fide_number"
-                  value={fide_number}
-                  onChange={(e) => setFideNumber(e.target.value)}
-                  onBlur={fideNumberBlur}
-                />
-              </td>
-              <td>
-                <TitleDropdown
-                  id="titleInput"
-                  name="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </td>
-              <HelpBox
-                placement="bottom"
-                name={helpboxNames.createAccountsInputs}
-                text={Translated.byKey("createAccountsInputsHelpbox")}
-                show={true}
-              >
-                <td>
-                  <input
-                    type="number"
-                    id="fideRatingInput"
-                    name="fide_rating"
-                    value={fide_rating}
-                    onChange={(e) => setFideRating(e.target.value)}
-                  />
-                </td>
-              </HelpBox>
-
-              <td>
-                <FederationDropdown
-                  id="fideFederationInput"
-                  name="fide_federation"
-                  value={fide_federation}
-                  onChange={(e) => setFideFederation(e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="date"
-                  id="birthDateInput"
-                  name="birth_date"
-                  value={birth_date}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  required
-                />
-              </td>
-              <td>
-                <SexDropdown
-                  id="sexInput"
-                  name="sex"
-                  value={sex}
-                  onChange={(e) => setSex(e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </td>
-              <td>
-                <select
-                  id="level"
-                  name="level"
-                  value={level}
-                  onChange={(e) => setLevel(e.target.value)}
-                >
-                  <option value="0">Player</option>
-                  {(user.info?.level || 0) > 1 && (
-                    <>
-                      <option value="1">Club Manager</option>
-                      {(user.info?.level || 0) > 2 && (
-                        <option value="2">Org Manager</option>
-                      )}
-                    </>
-                  )}
-                </select>
-              </td>
-              <td>
-                <WithUserOrgsClubs>
-                  <SelectClubs
-                    value={selectedClub}
-                    onChange={(value: string) => setSelectedClub(value)}
-                  />
-                </WithUserOrgsClubs>
-              </td>
-              <td>
-                <HelpBox
-                  placement="bottom"
-                  name={helpboxNames.createAccountsAction}
-                  text={Translated.byKey("createAccountsActionHelpbox")}
-                  show={true}
-                >
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    id="addButton"
-                  >
-                    +
-                  </button>
-                </HelpBox>
-              </td>
-            </tr> */}
+          
           </tbody>
-        </table>
+        </table> */}
+        <br/>
+        <DataGrid
+          autoHeight
+          rows={accountData}
+          columns={accountsColumns}
+        />
       </form>
 
       <h3 className="mt-5">
