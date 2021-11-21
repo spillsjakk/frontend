@@ -104,6 +104,7 @@ type PlayState = {
   tabIndex: number;
   promotionPreference: string | null;
   autoPromotion: boolean;
+  flagRequestIsSent: boolean;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -173,6 +174,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       tabIndex: 0,
       promotionPreference: null,
       autoPromotion: false,
+      flagRequestIsSent: false,
     };
     this.groundRef = React.createRef();
     this.moveSound = new Howl({
@@ -625,7 +627,12 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       if (clockRef) {
         clockRef.tick();
         const newTime = clockRef.state.current;
-        if (newTime < 0 && this.state.isPlayer) {
+        if (
+          newTime < 0 &&
+          this.state.isPlayer &&
+          !this.state.flagRequestIsSent
+        ) {
+          this.setState({ flagRequestIsSent: true });
           fetchJson(
             `/s/game/move/${this.gameId}/flag/flag`,
             "POST",
