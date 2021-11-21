@@ -22,7 +22,6 @@ export default function SexDropdown(props: {
   );
 }
 export function MuiSexDropdown(props: {
-  className?: string;
   value?: string;
   name?: string;
   id?: string;
@@ -33,7 +32,6 @@ export function MuiSexDropdown(props: {
       variant="outlined"
       value={props.value}
       onChange={props.onChange}
-      className={props.className}
       name={props.name}
       id={props.id}
     >

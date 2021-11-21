@@ -222,7 +222,6 @@ export default function FederationDropdown(props: {
   );
 }
 export function MuiFederationDropdown(props: {
-  className?: string;
   value?: string;
   name?: string;
   id?: string;
@@ -235,7 +234,6 @@ export function MuiFederationDropdown(props: {
       value={props.value}
       onChange={props.onChange}
       required={!!props.required}
-      className={props.className}
       name={props.name}
       id={props.id}
     >

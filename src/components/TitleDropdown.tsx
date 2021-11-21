@@ -30,7 +30,6 @@ export default function TitleDropdown(props: {
   );
 }
 export function MuiTitleDropdown(props: {
-  className?: string;
   value?: string;
   name?: string;
   id?: string;
@@ -41,11 +40,10 @@ export function MuiTitleDropdown(props: {
     variant="outlined"
     value={props.value}
     onChange={props.onChange}
-    className={props.className}
     name={props.name}
     id={props.id}
   >
-    <option value="">{Translated.byKey("title")}</option>
+    <option value="" disabled>{Translated.byKey("title")}</option>
     <option value="GM">GM</option>
     <option value="IM">IM</option>
     <option value="FM">FM</option>

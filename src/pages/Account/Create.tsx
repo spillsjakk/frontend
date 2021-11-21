@@ -36,6 +36,7 @@ function SelectClubs(props: {
     <div className={style.select}>
       <div className={style.inputs}>
         <NativeSelect
+         id="selectclub"
           onChange={(e) => {
             const value = e.target.value;
             props.onChange(value);
