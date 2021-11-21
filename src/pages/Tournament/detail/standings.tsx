@@ -1,9 +1,5 @@
 import React, { FunctionComponent, memo, useEffect, useState } from "react";
-import {
-  DataGrid,
-  GridCellParams,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import { Tabs, Tab, Paper } from "@material-ui/core";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
@@ -185,6 +181,15 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
       headerName: Translated.byKey("score"),
       hideSortIcons: true,
       renderCell: renderScoreCell,
+      align: "center",
+      headerAlign: "center",
+      ...commonFields,
+    },
+    {
+      field: "performanceRating",
+      headerName: "Rp",
+      hideSortIcons: true,
+      hide: true,
       align: "center",
       headerAlign: "center",
       ...commonFields,

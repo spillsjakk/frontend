@@ -76,11 +76,49 @@ const TournamentDetail: FunctionComponent<{}> = () => {
       let boardNumber = 1;
       setTournamentDetail({
         ...tournamentDetail,
-        participants: tournamentDetail.participants.map((detail, i) => ({
-          rank: i + 1,
-          id: detail.account,
-          ...detail,
-        })),
+        participants: tournamentDetail.participants.map((participant, i) => {
+          const opponentRatings = [];
+          const opponenScores = [];
+          tournamentDetail.pairings.forEach((pairing) => {
+            if (pairing.white === participant.account) {
+              const blackParticipant = tournamentDetail.participants.find(
+                (participant) => participant.account === pairing.black
+              );
+              if (blackParticipant && blackParticipant.fide_rating) {
+                opponentRatings.push(blackParticipant.fide_rating);
+                opponenScores.push(blackParticipant.score);
+              }
+            } else if (pairing.black === participant.account) {
+              const whiteParticipant = tournamentDetail.participants.find(
+                (participant) => participant.account === pairing.white
+              );
+              if (whiteParticipant && whiteParticipant.fide_rating) {
+                opponentRatings.push(whiteParticipant.fide_rating);
+                opponenScores.push(whiteParticipant.score);
+              }
+            }
+          });
+          const averageOpponentRating =
+            opponentRatings.reduce((acc, cur) => acc + cur, 0) /
+            opponentRatings.length;
+          const averageOpponentScore =
+            opponenScores.reduce((acc, cur) => acc + cur, 0) /
+            opponenScores.length;
+          const performanceRating =
+            averageOpponentRating && averageOpponentScore
+              ? Math.floor(
+                  averageOpponentRating + (averageOpponentScore * 800 - 400)
+                )
+              : 0;
+          return {
+            rank: i + 1,
+            id: participant.account,
+            averageOpponentRating,
+            averageOpponentScore,
+            performanceRating,
+            ...participant,
+          };
+        }),
         pairings: tournamentDetail.pairings.map((pairing) => {
           if (tempRound !== null && tempRound !== pairing.round) {
             boardNumber = 1;
