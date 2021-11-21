@@ -32,3 +32,16 @@ body#Account-Create .table {
 body#Account-Create .table-striped tbody tr:nth-of-type(2n + 1) {
     background-color: #fafafa !important;
 }
+#Account-Create .table-header{
+    font-size: 15px!important;
+    font-weight: 800!important;
+    font-family: Montserrat!important;
+}
+#Account-Create .table-cell{
+    font-size: 16px;
+}
+
+#Account-Create .table-cell > a{
+color: #00bc8c;
+font-family: Montserrat!important;
+}
