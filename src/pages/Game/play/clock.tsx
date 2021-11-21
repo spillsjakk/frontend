@@ -12,6 +12,10 @@ type ClockState = {
   current: number;
 };
 
+function getFirstDecimalDigit(num: number) {
+  return Math.floor(num * 10) % 10;
+}
+
 export class Clock extends PureComponent<{}, ClockState> {
   constructor(props: {}) {
     super(props);
@@ -51,21 +55,19 @@ export class Clock extends PureComponent<{}, ClockState> {
     const minutes_f = seconds_left / 60;
     const minutes = Math.floor(minutes_f);
     const seconds = Math.floor(seconds_left % 60);
+    const deciseconds = Math.max(0, getFirstDecimalDigit(this.state.current));
 
-    if (hours !== 0) {
-      return (
-        <>
-          {hours}:{minutes.toString().padStart(2, "0")}:
-          {seconds.toString().padStart(2, "0")}
-        </>
-      );
-    } else {
-      return (
-        <>
-          &nbsp;{minutes.toString().padStart(2, "0")}:
-          {seconds.toString().padStart(2, "0")}&nbsp;
-        </>
-      );
-    }
+    return (
+      <>
+        {hours > 0 && <>{hours}:</>}
+        {minutes.toString().padStart(2, "0")}:
+        {seconds.toString().padStart(2, "0")}
+        {minutes === 0 && seconds <= 15 && (
+          <span className="small">
+            .{deciseconds.toString().padStart(1, "0")}
+          </span>
+        )}
+      </>
+    );
   }
 }
