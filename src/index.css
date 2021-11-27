@@ -39,6 +39,10 @@ img.usf {
   padding-right: 2rem;
 }
 
+.container {
+  max-width: 100%;
+}
+
 #content-container {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -84,4 +88,3 @@ body#NotFound {
   font-family: Montserrat;
 }
 
- 
