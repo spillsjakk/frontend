@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Snackbar } from "@material-ui/core";
+import { Snackbar, IconButton } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import style from "./style.module.scss";
 import { Link } from "react-router-dom";
 
@@ -15,15 +16,23 @@ const MessageNotification: FunctionComponent<Props> = ({
   messages,
 }) => {
   return (
-    <Link to="/inbox">
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={open}
-        onClose={() => changeOpen(false)}
-        message={`${messages.length} new messages`}
-        className={style.messageNotification}
-      />
-    </Link>
+    <Snackbar
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      open={open}
+      className={style.messageNotification}
+      onClose={() => changeOpen(false)}
+      message={<Link to="/inbox">{messages.length} new messages</Link>}
+      action={[
+        <IconButton
+          key="close"
+          aria-label="Close"
+          color="inherit"
+          onClick={() => changeOpen(false)}
+        >
+          <CloseIcon />
+        </IconButton>,
+      ]}
+    />
   );
 };
 

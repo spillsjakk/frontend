@@ -58,7 +58,9 @@ const NavigationBar: FunctionComponent<{}> = () => {
               {isTablet ? <MobileLangSwitcher /> : <LangSwitcher />}
               {anon() && (
                 <Link to="/login">
-                  <button>{Translated.byKey("navbarLogin")}</button>
+                  <button id="login-button">
+                    {Translated.byKey("navbarLogin")}
+                  </button>
                 </Link>
               )}
               {authenticated() && (isTablet ? <MobileActions /> : <Actions />)}
