@@ -457,6 +457,7 @@ export function Format() {
           <Grid item container xs={6} spacing={3}>
             <Grid item>
               <NativeSelect
+                id="teams"
                 onChange={(e) => form.changeKind(Number(e.target.value))}
                 variant="outlined"
                 value={form.kind}
