@@ -931,6 +931,7 @@ class Manage extends Component<
                         info.managed_teams?.map((t) => (
                           <Link
                             key={t.id}
+                            id="manage-team"
                             className="p-3 btn btn-primary ml-5 mb-3"
                             to={
                               "/tournament/manage-team/" +
