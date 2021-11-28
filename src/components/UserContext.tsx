@@ -26,6 +26,7 @@ const defaults: UserContextDataType = {
 export const UserContext = React.createContext({
   user: defaults,
   setUser: (_: UserContextDataType) => {},
+  checkUser: () => {},
 });
 
 export const useUser = () => React.useContext(UserContext);

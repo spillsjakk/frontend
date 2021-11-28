@@ -24,12 +24,17 @@ class App extends Component<{}, AppState> {
         authenticated: null,
       },
     };
+    this.checkUser = this.checkUser.bind(this);
   }
 
-  componentDidMount() {
+  checkUser() {
     fetchJson("/s/account/auth-info", "GET", undefined, (data) =>
       this.setState({ user: data })
     );
+  }
+
+  componentDidMount() {
+    this.checkUser();
   }
 
   render() {
@@ -44,6 +49,7 @@ class App extends Component<{}, AppState> {
     const userProviderValue = {
       user: this.state.user,
       setUser: (u: UserContextDataType) => this.setState({ user: u }),
+      checkUser: this.checkUser,
     };
     return (
       <WithTheme>

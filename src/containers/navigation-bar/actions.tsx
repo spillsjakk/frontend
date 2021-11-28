@@ -11,7 +11,7 @@ function useMessages() {
   const [messages, setMessages] = useState([]);
   const [messageNotificationOpen, setMessageNotificationOpen] = useState(false);
 
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const location = useLocation();
 
   function authenticated() {
@@ -33,6 +33,9 @@ function useMessages() {
           }
         })
         .then((json) => {
+          if (json.error === "404") {
+            setUser({ authenticated: false });
+          }
           if (!json.error && Array.isArray(json) && json.length > 0) {
             setMessages(json);
             setMessageNotificationOpen(true);
