@@ -5,6 +5,7 @@ import { fetchJson } from "../../../functions";
 import { useOrganization } from "../../../context/organization";
 import { useManageOrganizationPopup } from "../../../context/manage-organization-popup";
 import { Button } from "@material-ui/core";
+import { Editor } from "../../../components/markdown";
 
 const InputGroup: FunctionComponent<{
   label: string;
@@ -84,12 +85,10 @@ const EditForm: FunctionComponent<{}> = () => {
           onChange={(value: string) => setOrgName(value)}
         />
 
-        <InputGroup
-          label={Translated.byKey("manageOrg_orgsDesc")}
-          description={Translated.byKey("manageOrg_orgsDescDesc")}
+        <Editor
           value={description}
+          height={150}
           onChange={(value: string) => setDescription(value)}
-          textArea
         />
 
         <InputGroup
