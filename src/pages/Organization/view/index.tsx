@@ -8,6 +8,8 @@ import { Link, useParams } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../../components/translated";
 import { Tournament } from "../../Tournament/Types";
+import ReactMarkdown from "react-markdown";
+import xssFilters from "xss-filters";
 
 const defaultPic = "https://via.placeholder.com/150";
 
@@ -59,7 +61,9 @@ const OrganizationView: FunctionComponent<{}> = () => {
             bannerPicture={org.banner_picture}
             name={org.name}
           />
-          <p className={style.description}>{org.description}</p>
+          <ReactMarkdown linkTarget="_blank" className={style.description}>
+            {xssFilters.inHTMLData(org.description || "")}
+          </ReactMarkdown>
           <div className={`${style.header} mt-3`}>
             {Translated.byKey("clubs")}
           </div>
