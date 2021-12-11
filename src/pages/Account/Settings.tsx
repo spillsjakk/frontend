@@ -201,7 +201,7 @@ class Settings extends PureComponent<{}, SettingsState> {
             <input
               type="text"
               className="form-control w-25"
-              minLength={7}
+              minLength={2}
               name="lichessUsername"
               id="lichessUsername"
               value={this.state.lichessUsername}
