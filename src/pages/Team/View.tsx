@@ -8,6 +8,8 @@ import { RouteComponentProps, Link } from "react-router-dom";
 import { fetchJson, title } from "../../functions";
 import { TeamMember } from "./Types";
 import "./View.css";
+import ReactMarkdown from "react-markdown";
+import xssFilters from "xss-filters";
 
 type ViewProps = {
   tid: string;
@@ -67,8 +69,12 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           {this.getProfilePicture()}
           <h1 className="mt-4 p-3">{info.team.name}</h1>
         </div>
-
-        <p>{info.team.description}</p>
+        <ReactMarkdown
+          linkTarget="_blank"
+          className="scroll-max-70"
+        >
+          {xssFilters.inHTMLData(info.team.description || "")}
+        </ReactMarkdown>
 
         {this.context.user.authenticated &&
           (this.context.user.info?.id === info.club_manager ||

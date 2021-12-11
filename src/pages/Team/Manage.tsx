@@ -8,6 +8,7 @@ import { fetchJson } from "../../functions";
 import { TeamMember } from "./Types";
 import { Form } from "react-bootstrap";
 import "./Manage.css";
+import { Editor } from "../../components/markdown";
 
 type ManageProps = {
   tid: string;
@@ -185,12 +186,12 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
             <label htmlFor="newDescription">
               <Translated str="description" />:
             </label>
-            <textarea
-              className="form-control w-50"
-              name="newDescription"
-              id="newDescription"
+            <Editor
               value={this.state.newDescription}
-              onChange={this.handleChange}
+              height={150}
+              onChange={(value) => {
+                this.setState({ newDescription:  value });
+              }}
             />
           </div>
           <div className="mt-4">
