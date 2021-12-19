@@ -11,6 +11,7 @@ import FederationDisplay from "../../../components/FederationDisplay";
 import { fetchJson } from "../../../functions";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { KeyboardArrowDown } from "@material-ui/icons";
+import { CrossTable } from "../../league/detail/crosstable";
 
 const commonFields = {
   headerClassName: style["table-header"],
@@ -431,7 +432,7 @@ const Stats: FunctionComponent<{ tournamentId: string }> = memo(
 const Standings: FunctionComponent<unknown> = () => {
   const [tab, setTab] = React.useState(0);
 
-  const { tournament, participants, is_team_tournament } =
+  const { tournament, participants, is_team_tournament, pairings } =
     useTournamentDetail();
 
   useEffect(() => {
@@ -459,6 +460,7 @@ const Standings: FunctionComponent<unknown> = () => {
                   <Tab value={1} label={<Translated str="team" />} />
                 )}
                 <Tab value={2} label={<Translated str="stats" />} />
+                <Tab value={3} label={<Translated str="crossTables" />} />
               </Tabs>
             </div>
             <div style={{ display: "flex", height: "100%" }}>
@@ -466,6 +468,13 @@ const Standings: FunctionComponent<unknown> = () => {
                 <ParticipantsTable visible={tab === 0} />
                 <TeamsTable visible={tab === 1} />
                 {tab === 2 && <Stats tournamentId={tournament.id} />}
+                {tab === 3 && (
+                  <CrossTable
+                    pairings={pairings}
+                    participants={participants}
+                    tournament={tournament}
+                  />
+                )}
               </div>
             </div>
           </div>
