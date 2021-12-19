@@ -125,7 +125,13 @@ const CrossTable: FunctionComponent<{
   useEffect(() => {
     if (props.seasonId && props.leagueId) {
       fetchSeasonResults();
-    } else if (props.pairings && props.participants && props.tournament) {
+    } else if (
+      Array.isArray(props.pairings) &&
+      props.pairings.length &&
+      Array(props.participants) &&
+      props.participants.length &&
+      props.tournament
+    ) {
       const participants = [...props.participants];
       const pairings = [...props.pairings];
       setData([
