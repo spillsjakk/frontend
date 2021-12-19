@@ -34,238 +34,243 @@ const CategoryTable: FunctionComponent<{ category: any; columns: any }> = memo(
   }
 );
 
-const CrossTable: FunctionComponent<{ seasonId: string; leagueId: string }> = (
-  props
-) => {
-  const [data, setData] = useState<Categories>([]);
+const CrossTable: FunctionComponent<{ seasonId?: string; leagueId?: string }> =
+  (props) => {
+    const [data, setData] = useState<Categories>([]);
 
-  useEffect(() => {
-    fetchJson(
-      `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/results`,
-      "GET",
-      undefined,
-      (response: Categories) => {
-        if (Array.isArray(response)) {
-          response = response.map((category) => {
-            const participants = category.participants
-              .sort(sortByRank)
-              .map((p, i) => {
-                const whitePairings = category.pairings.filter(
-                  (pairing) => pairing.white === p.account
-                );
-                const blackPairings = category.pairings.filter(
-                  (pairing) => pairing.black === p.account
-                );
-                const roundData = {};
-
-                whitePairings.forEach((pairing) => {
-                  if (pairing.black === "bye") {
-                    roundData[`round${pairing.round}`] = "bye";
-                    return;
-                  }
-                  const opponentIndex = category.participants.findIndex(
-                    (p) => p.account === pairing.black
+    function fetchSeasonResults() {
+      fetchJson(
+        `/s/leagues/${props.leagueId}/seasons/${props.seasonId}/results`,
+        "GET",
+        undefined,
+        (response: Categories) => {
+          if (Array.isArray(response)) {
+            response = response.map((category) => {
+              const participants = category.participants
+                .sort(sortByRank)
+                .map((p, i) => {
+                  const whitePairings = category.pairings.filter(
+                    (pairing) => pairing.white === p.account
                   );
-                  let outcome = "*";
-                  if (pairing.outcome === -1) {
-                    outcome = "0";
-                  } else if (pairing.outcome === 1) {
-                    outcome = "1";
-                  } else if (pairing.outcome === 0) {
-                    outcome = "½";
-                  }
-                  roundData[`round${pairing.round}`] = `${
-                    opponentIndex + 1
-                  }w${outcome}`;
-                });
-                blackPairings.forEach((pairing) => {
-                  if (pairing.white === "bye") {
-                    roundData[`round${pairing.round}`] = "bye";
-                    return;
-                  }
-                  const opponentIndex = category.participants.findIndex(
-                    (p) => p.account === pairing.white
+                  const blackPairings = category.pairings.filter(
+                    (pairing) => pairing.black === p.account
                   );
-                  let outcome = "1/2";
-                  if (pairing.outcome === -1) {
-                    outcome = "1";
-                  } else if (pairing.outcome === 1) {
-                    outcome = "0";
-                  } else if (pairing.outcome === 0) {
-                    outcome = "½";
-                  }
-                  roundData[`round${pairing.round}`] = `${
-                    opponentIndex + 1
-                  }b${outcome}`;
+                  const roundData = {};
+
+                  whitePairings.forEach((pairing) => {
+                    if (pairing.black === "bye") {
+                      roundData[`round${pairing.round}`] = "bye";
+                      return;
+                    }
+                    const opponentIndex = category.participants.findIndex(
+                      (p) => p.account === pairing.black
+                    );
+                    let outcome = "*";
+                    if (pairing.outcome === -1) {
+                      outcome = "0";
+                    } else if (pairing.outcome === 1) {
+                      outcome = "1";
+                    } else if (pairing.outcome === 0) {
+                      outcome = "½";
+                    }
+                    roundData[`round${pairing.round}`] = `${
+                      opponentIndex + 1
+                    }w${outcome}`;
+                  });
+                  blackPairings.forEach((pairing) => {
+                    if (pairing.white === "bye") {
+                      roundData[`round${pairing.round}`] = "bye";
+                      return;
+                    }
+                    const opponentIndex = category.participants.findIndex(
+                      (p) => p.account === pairing.white
+                    );
+                    let outcome = "1/2";
+                    if (pairing.outcome === -1) {
+                      outcome = "1";
+                    } else if (pairing.outcome === 1) {
+                      outcome = "0";
+                    } else if (pairing.outcome === 0) {
+                      outcome = "½";
+                    }
+                    roundData[`round${pairing.round}`] = `${
+                      opponentIndex + 1
+                    }b${outcome}`;
+                  });
+                  return {
+                    ...p,
+                    id: p.account,
+                    rank: i + 1,
+                    ...roundData,
+                  };
                 });
-                return {
-                  ...p,
-                  id: p.account,
-                  rank: i + 1,
-                  ...roundData,
-                };
-              });
-            category.pairings.sort((a, b) => (a.round < b.round ? 1 : -1));
-            return {
-              ...category,
-              participants,
-            };
-          });
-          setData(response);
-        }
-      }
-    );
-  }, []);
-
-  function getUsername(params) {
-    return `${params.row.first_name} ${params.row.last_name}`;
-  }
-
-  function renderPlayerCell(params) {
-    const participantLink = (
-      <div className="text-truncate">
-        <Link to={"/profile/" + params.id}>{getUsername(params)}</Link>
-      </div>
-    );
-    const titleSpan = params.row.title ? (
-      <div className={style["player-title"]}>{params.row.title}</div>
-    ) : (
-      <></>
-    );
-    const cell = (
-      <div
-        className="d-flex"
-        style={{ lineHeight: "normal", maxWidth: "100%" }}
-      >
-        {titleSpan} {participantLink}
-      </div>
-    );
-    if (params.row.eliminated) {
-      return <s>{cell}</s>;
-    } else {
-      return cell;
-    }
-  }
-
-  function renderFederationCell(params) {
-    return <FederationDisplay value={params.row.federation} />;
-  }
-
-  const columns: GridColDef[] = [
-    {
-      field: "rank",
-      headerName: Translated.byKey("rank"),
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-    {
-      field: "name",
-      headerName: Translated.byKey("player"),
-      hideSortIcons: true,
-      width: 180,
-      renderCell: renderPlayerCell,
-      valueGetter: getUsername,
-    },
-    {
-      field: "federation",
-      headerName: Translated.byKey("federation"),
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-      renderCell: renderFederationCell,
-    },
-    {
-      field: "fide_rating",
-      headerName: Translated.byKey("rating"),
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-    {
-      field: "score",
-      headerName: Translated.byKey("score"),
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-  ];
-
-  const tbColumns = [
-    {
-      field: "tb1",
-      headerName: Translated.byKey("TB1"),
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-    {
-      field: "tb2",
-      headerName: Translated.byKey("TB2"),
-      hide: true,
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-    {
-      field: "tb3",
-      headerName: Translated.byKey("TB3"),
-      hide: true,
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-    {
-      field: "tb4",
-      headerName: Translated.byKey("TB4"),
-      hide: true,
-      hideSortIcons: true,
-      align: "center",
-      headerAlign: "center",
-      width: 110,
-    },
-  ];
-  return (
-    <div>
-      {Array.isArray(data) &&
-        data.map((categoryData, i) => {
-          const roundColumns = [];
-          if (
-            Array.isArray(categoryData.pairings) &&
-            categoryData.pairings.length > 0
-          ) {
-            Array(categoryData.pairings[0].round)
-              .fill(0)
-              .forEach((_, j) => {
-                roundColumns.push({
-                  field: `round${j + 1}`,
-                  headerName: `Round ${j + 1}`,
-                  hideSortIcons: true,
-                  align: "center",
-                  headerAlign: "center",
-                  width: 110,
-                });
-              });
+              category.pairings.sort((a, b) => (a.round < b.round ? 1 : -1));
+              return {
+                ...category,
+                participants,
+              };
+            });
+            setData(response);
           }
-          const categoryColumns = [...columns, ...roundColumns, ...tbColumns];
-          return (
-            <div className={style["crosstable-category"]} key={i}>
-              <CategoryTable
-                category={categoryData}
-                columns={categoryColumns}
-              />
-            </div>
-          );
-        })}
-    </div>
-  );
-};
+        }
+      );
+    }
+
+    useEffect(() => {
+      if (props.seasonId && props.leagueId) {
+        fetchSeasonResults();
+      }
+    }, []);
+
+    function getUsername(params) {
+      return `${params.row.first_name} ${params.row.last_name}`;
+    }
+
+    function renderPlayerCell(params) {
+      const participantLink = (
+        <div className="text-truncate">
+          <Link to={"/profile/" + params.id}>{getUsername(params)}</Link>
+        </div>
+      );
+      const titleSpan = params.row.title ? (
+        <div className={style["player-title"]}>{params.row.title}</div>
+      ) : (
+        <></>
+      );
+      const cell = (
+        <div
+          className="d-flex"
+          style={{ lineHeight: "normal", maxWidth: "100%" }}
+        >
+          {titleSpan} {participantLink}
+        </div>
+      );
+      if (params.row.eliminated) {
+        return <s>{cell}</s>;
+      } else {
+        return cell;
+      }
+    }
+
+    function renderFederationCell(params) {
+      return <FederationDisplay value={params.row.federation} />;
+    }
+
+    const columns: GridColDef[] = [
+      {
+        field: "rank",
+        headerName: Translated.byKey("rank"),
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+      {
+        field: "name",
+        headerName: Translated.byKey("player"),
+        hideSortIcons: true,
+        width: 180,
+        renderCell: renderPlayerCell,
+        valueGetter: getUsername,
+      },
+      {
+        field: "federation",
+        headerName: Translated.byKey("federation"),
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+        renderCell: renderFederationCell,
+      },
+      {
+        field: "fide_rating",
+        headerName: Translated.byKey("rating"),
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+      {
+        field: "score",
+        headerName: Translated.byKey("score"),
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+    ];
+
+    const tbColumns = [
+      {
+        field: "tb1",
+        headerName: Translated.byKey("TB1"),
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+      {
+        field: "tb2",
+        headerName: Translated.byKey("TB2"),
+        hide: true,
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+      {
+        field: "tb3",
+        headerName: Translated.byKey("TB3"),
+        hide: true,
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+      {
+        field: "tb4",
+        headerName: Translated.byKey("TB4"),
+        hide: true,
+        hideSortIcons: true,
+        align: "center",
+        headerAlign: "center",
+        width: 110,
+      },
+    ];
+    return (
+      <div>
+        {Array.isArray(data) &&
+          data.map((categoryData, i) => {
+            const roundColumns = [];
+            if (
+              Array.isArray(categoryData.pairings) &&
+              categoryData.pairings.length > 0
+            ) {
+              Array(categoryData.pairings[0].round)
+                .fill(0)
+                .forEach((_, j) => {
+                  roundColumns.push({
+                    field: `round${j + 1}`,
+                    headerName: `Round ${j + 1}`,
+                    hideSortIcons: true,
+                    align: "center",
+                    headerAlign: "center",
+                    width: 110,
+                  });
+                });
+            }
+            const categoryColumns = [...columns, ...roundColumns, ...tbColumns];
+            return (
+              <div className={style["crosstable-category"]} key={i}>
+                <CategoryTable
+                  category={categoryData}
+                  columns={categoryColumns}
+                />
+              </div>
+            );
+          })}
+      </div>
+    );
+  };
 
 export { CrossTable };
