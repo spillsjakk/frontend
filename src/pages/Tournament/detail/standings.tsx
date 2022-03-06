@@ -12,6 +12,7 @@ import { fetchJson } from "../../../functions";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { KeyboardArrowDown } from "@material-ui/icons";
 import { CrossTable } from "../../league/detail/crosstable";
+import { KIND } from "../../../constants";
 
 const commonFields = {
   headerClassName: style["table-header"],
@@ -139,6 +140,7 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
       align: "center",
       headerAlign: "center",
       ...commonFields,
+      hide: tournament.kind === "TeamMonrad",
     },
     {
       field: "player",
@@ -165,6 +167,7 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
       align: "center",
       headerAlign: "center",
       ...commonFields,
+      hide: tournament.kind === "TeamMonrad",
     },
     {
       field: "federation",
@@ -254,7 +257,7 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
 
 const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
   const [pageSize, setPageSize] = React.useState<number>(15);
-  const { teams, ssw } = useTournamentDetail();
+  const { teams, ssw, tournament } = useTournamentDetail();
   function renderTeamNameCell(params) {
     const link = (
       <Link to={"/team/view/" + params.row.team_id}>{params.row.name}</Link>
@@ -291,6 +294,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       align: "center",
       headerAlign: "center",
       width: 200,
+      hide: tournament.kind === "TeamMonrad",
     },
     {
       field: "game_score",
@@ -300,6 +304,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       headerAlign: "center",
       ...commonFields,
       width: 200,
+      hide: tournament.kind === "TeamMonrad",
     },
   ];
 
