@@ -1,11 +1,14 @@
-import { Tab, Tabs, ToggleButton, ToggleButtonGroup } from "@material-ui/core";
 import {
-  GridColDef,
-  DataGrid,
-} from "@mui/x-data-grid";
+  Button,
+  Tab,
+  Tabs,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@material-ui/core";
+import { GridColDef, DataGrid } from "@mui/x-data-grid";
 import { List, ViewModule } from "@material-ui/icons";
 import React, { FunctionComponent, memo, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Translated from "../../../components/translated";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import style from "./style.module.scss";
@@ -277,6 +280,8 @@ const Pairings: FunctionComponent<Props> = ({
   const [uniqueTabs, setUniqueTabs] = useState([]);
   const { pairings } = useTournamentDetail();
 
+  const params = useParams<{ tid: string }>();
+
   useEffect(() => {
     if (Array.isArray(pairings) && pairings.length > 0) {
       const result = Array.from(new Set(pairings.map((p) => p.round)));
@@ -329,6 +334,18 @@ const Pairings: FunctionComponent<Props> = ({
           </div>
           {type === "miniboards" && <MiniBoardsView round={tab} />}
           {type === "list" && <ListView round={tab} />}
+          <div
+            style={{
+              display: "flex",
+              width: "100%",
+              flexFlow: "row-reverse",
+              flexDirection: "column",
+            }}
+          >
+            <Link to={`/tournament/view/${params.tid}/pairings/${tab}`}>
+              <Button>Printout Page (Round {tab})</Button>
+            </Link>
+          </div>
         </div>
       )}
     </div>

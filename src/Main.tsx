@@ -35,6 +35,7 @@ import { Home } from "./pages/Home/index";
 import { Inbox } from "./pages/inbox/index";
 import { OrganizationsAndClubs } from "./pages/organizations-and-clubs/index";
 import { TournamentDetail } from "./pages/Tournament/detail";
+import { TournamentPairings } from "./pages/Tournament/pairings";
 import { UserAgreement } from "./pages/contracts/user-agreement";
 import { PrivacyNotice } from "./pages/contracts/privacy-notice";
 import { Lobby } from "./pages/lobby/index";
@@ -61,6 +62,11 @@ const Main = () => {
         exact
         path="/tournament/view/:tid"
         component={TournamentDetail}
+      ></Route>
+      <Route
+        exact
+        path="/tournament/view/:tid/pairings/:round"
+        component={TournamentPairings}
       ></Route>
       <Route
         exact
