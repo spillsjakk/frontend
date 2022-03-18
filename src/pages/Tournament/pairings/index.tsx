@@ -2,14 +2,11 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import {
   TournamentDetail,
-  TournamentDetailProvider,
 } from "../../../context/tournament-detail";
 import { Round } from "../../../context/tournament-round";
 import { fetchJson, title } from "../../../functions";
 import { sortByRank } from "../detail/index";
 import { Helmet } from "react-helmet";
-import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
-import style from "./style.module.scss";
 import Translated from "../../../components/translated";
 
 function outcomeToStr(outcome: number | undefined) {
@@ -140,15 +137,20 @@ const TournamentPairings: FunctionComponent<{}> = () => {
 
   return (
     <div style={{ marginTop: "50px" }}>
-      <h4>Round {params.round}</h4>
+      <h4><Translated str="round"  /> {params.round}</h4>
+      <Helmet>
+        <title>
+          {title(tournamentDetail?.tournament?.name || "tournament")}
+        </title>
+      </Helmet>
       <br />
       <table style={{ width: "100%" }}>
         <thead>
           <tr>
             <th>Board Number</th>
-            <th>White</th>
-            <th>Result</th>
-            <th>Black</th>
+            <th><Translated str="white" /></th>
+            <th><Translated str="result" /></th>
+            <th><Translated str="black" /></th>
           </tr>
         </thead>
         <tbody>
