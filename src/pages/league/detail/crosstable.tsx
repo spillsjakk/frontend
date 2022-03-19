@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, useEffect, memo } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import { fetchJson } from "../../../functions";
 import { Pairing, Participant, Tournament } from "../../Tournament/Types";
 import { Link } from "react-router-dom";
@@ -179,6 +179,23 @@ const CrossTable: FunctionComponent<{
   function renderFederationCell(params) {
     return <FederationDisplay value={params.row.federation} />;
   }
+  function renderScoreCell(params: GridCellParams) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        }}
+      >
+        {props.tournament?.show_only_top_nr
+          ? params.row.rank > props.tournament.show_only_top_nr!
+            ? ""
+            : params.value
+          : params.value}
+      </div>
+    );
+  }
 
   const columns: GridColDef[] = [
     {
@@ -221,6 +238,7 @@ const CrossTable: FunctionComponent<{
       align: "center",
       headerAlign: "center",
       width: 110,
+      renderCell: renderScoreCell,
     },
   ];
 

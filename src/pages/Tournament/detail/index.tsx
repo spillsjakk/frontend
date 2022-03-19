@@ -130,9 +130,10 @@ const TournamentDetail: FunctionComponent<{}> = () => {
             id: pairing.white_name + pairing.black_name + pairing.round,
           };
         }),
-        teams: tournamentDetail.teams.map((team) => ({
+        teams: tournamentDetail.teams.map((team, i) => ({
           ...team,
           id: team.name + team.seed,
+          rank: i + 1,
         })),
         sorted: true,
         currentRoundNumbers: Array.from(

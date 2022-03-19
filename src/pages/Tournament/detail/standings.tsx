@@ -268,6 +268,40 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       return <s>{link}</s>;
     }
   }
+  function renderSsw(params: GridCellParams) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        }}
+      >
+        {tournament?.show_only_top_nr
+          ? params.row.rank > tournament.show_only_top_nr!
+            ? ""
+            : Math.round(params.row.ssw)
+          : Math.round(params.row.ssw)}
+      </div>
+    );
+  }
+  function renderScore(params: GridCellParams) {
+    return (
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: 600,
+        }}
+      >
+        {tournament?.show_only_top_nr
+          ? params.row.rank > tournament.show_only_top_nr!
+            ? ""
+            : params.row
+          : params.row}
+      </div>
+    );
+  }
   const columns: GridColDef[] = [
     {
       field: "seed",
@@ -294,6 +328,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       align: "center",
       headerAlign: "center",
       width: 200,
+      renderCell: renderScore,
       hide: tournament.kind === "TeamMonrad",
     },
     {
@@ -304,6 +339,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       headerAlign: "center",
       ...commonFields,
       width: 200,
+      renderCell: renderScore,
       hide: tournament.kind === "TeamMonrad",
     },
   ];
@@ -315,7 +351,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       hideSortIcons: true,
       align: "center",
       headerAlign: "center",
-      renderCell: (params) => Math.round(params.row.ssw),
+      renderCell: renderSsw,
       ...commonFields,
       width: 200,
     });
