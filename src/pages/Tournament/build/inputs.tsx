@@ -386,7 +386,7 @@ export function Advanced() {
               />
             </Grid>
 
-            {!isTeam(form.kind) && (
+            {!isTeam(form.kind) && form.kind !== KIND.TeamMonrad && (
               <Grid item>
                 <FormControlLabel
                   value="end"
