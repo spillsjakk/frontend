@@ -507,7 +507,8 @@ const no = {
   "saveAndCreate": "Lagre og opprett",
   "manageTeam": "Administrer laget",
   "removeInactive": "Fjern inaktive spillere",
-  "selectClub": "Velge Klubb"
+  "selectClub": "Velge Klubb",
+  "print": "trykke"
 };
 
 export { no };

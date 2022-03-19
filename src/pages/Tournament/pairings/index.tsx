@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import {
-  TournamentDetail,
-} from "../../../context/tournament-detail";
+import { TournamentDetail } from "../../../context/tournament-detail";
 import { Round } from "../../../context/tournament-round";
 import { fetchJson, title } from "../../../functions";
 import { sortByRank } from "../detail/index";
 import { Helmet } from "react-helmet";
 import Translated from "../../../components/translated";
+import { Button } from "@material-ui/core";
 
 function outcomeToStr(outcome: number | undefined) {
   switch (outcome) {
@@ -137,7 +136,25 @@ const TournamentPairings: FunctionComponent<{}> = () => {
 
   return (
     <div style={{ marginTop: "50px" }}>
-      <h4><Translated str="round"  /> {params.round}</h4>
+      <br />
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <h4>
+            <Translated str="round" /> {params.round}
+          </h4>
+        </div>
+        <div>
+          <Button onClick={() => window.print()}>
+            <Translated str="print" />
+          </Button>
+        </div>
+      </div>
       <Helmet>
         <title>
           {title(tournamentDetail?.tournament?.name || "tournament")}
@@ -148,9 +165,15 @@ const TournamentPairings: FunctionComponent<{}> = () => {
         <thead>
           <tr>
             <th>Board Number</th>
-            <th><Translated str="white" /></th>
-            <th><Translated str="result" /></th>
-            <th><Translated str="black" /></th>
+            <th>
+              <Translated str="white" />
+            </th>
+            <th>
+              <Translated str="result" />
+            </th>
+            <th>
+              <Translated str="black" />
+            </th>
           </tr>
         </thead>
         <tbody>

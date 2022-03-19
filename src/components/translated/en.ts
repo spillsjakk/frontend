@@ -512,7 +512,8 @@ const en = {
   "saveAndCreate": "Create and Save as Template",
   "manageTeam": "Manage Team",
   "removeInactive": "Remove Inactive Players",
-  "selectClub": "Select Club"
+  "selectClub": "Select Club",
+  "print": "Print"
 };
 
 export { en };
