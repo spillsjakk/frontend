@@ -112,8 +112,14 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       form.changeIncrement(tournament.increment);
       form.changeSelfJoinable(tournament.self_joinable);
       form.changeFideRated(tournament.fide_rated);
-      form.changeShowOnlyTop(!!tournament.show_only_top_nr);
-      if (tournament.show_only_top_nr) {
+      form.changeShowOnlyTop(
+        typeof tournament.show_only_top_nr !== "undefined" &&
+          tournament.show_only_top_nr !== null
+      );
+      if (
+        typeof tournament.show_only_top_nr !== "undefined" &&
+        tournament.show_only_top_nr !== null
+      ) {
         form.changeShowOnlyTopNr(tournament.show_only_top_nr);
       }
       form.changeWinPoints(tournament.win_points);

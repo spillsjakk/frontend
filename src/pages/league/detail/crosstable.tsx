@@ -188,7 +188,8 @@ const CrossTable: FunctionComponent<{
           fontWeight: 600,
         }}
       >
-        {props.tournament?.show_only_top_nr
+        {typeof props.tournament.show_only_top_nr !== "undefined" &&
+        props.tournament.show_only_top_nr !== null
           ? params.row.rank > props.tournament.show_only_top_nr!
             ? ""
             : params.value

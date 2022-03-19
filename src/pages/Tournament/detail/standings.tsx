@@ -115,7 +115,8 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
           fontWeight: 600,
         }}
       >
-        {tournament?.show_only_top_nr
+        {typeof tournament.show_only_top_nr !== "undefined" &&
+        tournament.show_only_top_nr !== null
           ? params.row.rank > tournament.show_only_top_nr!
             ? ""
             : params.value
@@ -277,7 +278,8 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
           fontWeight: 600,
         }}
       >
-        {tournament?.show_only_top_nr
+        {typeof tournament.show_only_top_nr !== "undefined" &&
+        tournament.show_only_top_nr !== null
           ? params.row.rank > tournament.show_only_top_nr!
             ? ""
             : Math.round(params.row.ssw)
@@ -294,7 +296,8 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
           fontWeight: 600,
         }}
       >
-        {tournament?.show_only_top_nr
+        {typeof tournament.show_only_top_nr !== "undefined" &&
+        tournament.show_only_top_nr !== null
           ? params.row.rank > tournament.show_only_top_nr!
             ? ""
             : params.row
