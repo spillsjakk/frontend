@@ -430,6 +430,7 @@ const no = {
   "onSpillsjakk": "på SpillSjakk",
   "editAccount": "administrer konto",
   "edit": "Administrer",
+  "teamSize": "Klassestørrelse",
   "invitePairPlay": "Inviter - Sett opp - Spill",
   "soon": "snart",
   "later": "senere",

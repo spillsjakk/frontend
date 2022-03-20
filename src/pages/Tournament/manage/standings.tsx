@@ -1,10 +1,6 @@
 import React, { FunctionComponent, memo, useEffect, useState } from "react";
-import {
-  DataGrid,
-  GridCellParams,
-  GridColDef,
-} from "@mui/x-data-grid";
-import { Tabs, Tab, Paper } from "@material-ui/core";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
+import { Tabs, Tab, Paper, TextField, Button } from "@material-ui/core";
 import { useTournamentDetail } from "../../../context/tournament-detail";
 import Translated from "../../../components/translated";
 import { useOnlineStatus } from "../../../hocs/with-online-statuses";
@@ -13,6 +9,8 @@ import { Online, Offline } from "../../../components/status-circles";
 import style from "./style.module.scss";
 import FederationDisplay from "../../../components/FederationDisplay";
 import { fetchJson } from "../../../functions";
+import { usePopup } from "../../../hocs/popup";
+import { ChangeMemberCount } from "./change-member-count";
 
 const commonFields = {
   headerClassName: style["table-header"],
@@ -225,7 +223,8 @@ const ParticipantsTable: FunctionComponent<{ visible: boolean }> = ({
 
 const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
   const [pageSize, setPageSize] = React.useState<number>(15);
-  const { teams, ssw } = useTournamentDetail();
+  const { teams, ssw, tournament } = useTournamentDetail();
+  const popup = usePopup();
   function renderTeamNameCell(params) {
     const link = (
       <Link to={"/team/view/" + params.row.team_id}>{params.row.name}</Link>
@@ -235,6 +234,31 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
     } else {
       return <s>{link}</s>;
     }
+  }
+  function renderTeamSizeCell(params) {
+    let member_count = params.row.member_count;
+    if (params.row.member_count === null) {
+      member_count = 40;
+    }
+    return (
+      <div>
+        {member_count}
+        <Button
+          onClick={() => {
+            popup.changeContent(
+              <ChangeMemberCount
+                tournamentId={tournament.id}
+                teamId={params.row.id}
+                memberCount={params.row.member_count}
+              />
+            );
+            popup.changeOpen(true);
+          }}
+        >
+          {Translated.byKey("edit")}
+        </Button>
+      </div>
+    );
   }
   const columns: GridColDef[] = [
     {
@@ -262,6 +286,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       align: "center",
       headerAlign: "center",
       width: 200,
+      hide: tournament.kind === "TeamMonrad",
     },
     {
       field: "game_score",
@@ -271,8 +296,21 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       headerAlign: "center",
       ...commonFields,
       width: 200,
+      hide: tournament.kind === "TeamMonrad",
     },
   ];
+
+  if (tournament.kind === "TeamMonrad") {
+    columns.push({
+      field: "id",
+      headerName: Translated.byKey("teamSize"),
+      align: "center",
+      headerAlign: "center",
+      renderCell: renderTeamSizeCell,
+      ...commonFields,
+      width: 200,
+    });
+  }
 
   if (ssw) {
     columns.push({

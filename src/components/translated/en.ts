@@ -432,6 +432,7 @@ const en = {
   "onSpillsjakk": "on SpillSjakk",
   "editAccount": "Edit Account",
   "edit": "Edit",
+  "teamSize": "Team Size",
   "confirmRemoveUser": "Do you want to remove user?",
   "invitePairPlay": "Invite · Pair · Play",
   "soon": "soon",

@@ -46,6 +46,8 @@ import { useNotification } from "../../../hocs/with-notification/index";
 import { Standings } from "./standings";
 import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
 import { ChangePairingTime } from "./change-pairing-time";
+import { WithPopup } from "../../../hocs/popup";
+import { ChangeMemberCount } from "./change-member-count";
 
 const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
   props
@@ -854,6 +856,7 @@ class Manage extends Component<
             ssw: this.state.info?.ssw,
             participants: this.state.info?.participants,
             is_team_tournament: this.state.info?.is_team_tournament,
+            update: this.loadState,
           }}
         >
           <TournamentParticipantsProvider
@@ -1044,7 +1047,9 @@ class Manage extends Component<
                       (p) => p.account
                     )}
                   >
-                    <Standings />
+                    <WithPopup content={<ChangeMemberCount />}>
+                      <Standings />
+                    </WithPopup>
                   </WithOnlineStatus>
 
                   {info.pairings.length !== 0 && (

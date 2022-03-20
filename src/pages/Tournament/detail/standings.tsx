@@ -305,6 +305,15 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       </div>
     );
   }
+
+  function renderTeamSizeCell(params) {
+    let member_count = params.row.member_count;
+    if (params.row.member_count === null) {
+      member_count = 40;
+    }
+    return <div>{member_count}</div>;
+  }
+
   const columns: GridColDef[] = [
     {
       field: "seed",
@@ -346,6 +355,18 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       hide: tournament.kind === "TeamMonrad",
     },
   ];
+
+  if (tournament.kind === "TeamMonrad") {
+    columns.push({
+      field: "id",
+      headerName: Translated.byKey("teamSize"),
+      align: "center",
+      headerAlign: "center",
+      renderCell: renderTeamSizeCell,
+      ...commonFields,
+      width: 200,
+    });
+  }
 
   if (ssw) {
     columns.push({
