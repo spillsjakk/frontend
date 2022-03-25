@@ -5,6 +5,7 @@ import { useLeague } from "../../../hocs/with-league/index";
 import { Card } from "../../../components/tournament-card/card";
 import { usePopup, WithPopup } from "../../../hocs/popup/index";
 import { Button } from "@material-ui/core";
+import Translated from "../../../components/translated";
 
 const CrossTableButton: FunctionComponent<{
   seasonId: string;
@@ -23,7 +24,7 @@ const CrossTableButton: FunctionComponent<{
         popup.changeOpen(true);
       }}
     >
-      cross table
+      <Translated str="crossTable" />
     </Button>
   );
 });

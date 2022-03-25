@@ -145,7 +145,7 @@ const ListView: FunctionComponent<{ round: number }> = memo(({ round }) => {
   const columns: GridColDef[] = [
     {
       field: "boardNumber",
-      headerName: "Board Number",
+      headerName: Translated.byKey("boardNumber"),
       hideSortIcons: true,
       align: "center",
       headerAlign: "center",
@@ -343,7 +343,10 @@ const Pairings: FunctionComponent<Props> = ({
             }}
           >
             <Link to={`/tournament/view/${params.tid}/pairings/${tab}`}>
-              <Button>Printout Page (Round {tab})</Button>
+              <Button>
+                <Translated str="printoutPage" /> (<Translated str="round" />{" "}
+                {tab})
+              </Button>
             </Link>
           </div>
         </div>

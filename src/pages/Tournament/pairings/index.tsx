@@ -164,7 +164,9 @@ const TournamentPairings: FunctionComponent<{}> = () => {
       <table style={{ width: "100%" }}>
         <thead>
           <tr>
-            <th>Board Number</th>
+            <th>
+              <Translated str="boardNumber" />
+            </th>
             <th>
               <Translated str="white" />
             </th>

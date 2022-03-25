@@ -460,6 +460,7 @@ const no = {
   "leagueHomepage": "Ligaens hjemmeside",
   "createSeason": "Opprett en sesong",
   "createCategory": "Opprett en kategori",
+  "crossTable": "Krysstabell",
   "genderRestricted": "Begrensning kjønn",
   "ageRestricted": "Begrensning alder",
   "ratingRestricted": "Begrensning rating",
@@ -509,7 +510,9 @@ const no = {
   "manageTeam": "Administrer laget",
   "removeInactive": "Fjern inaktive spillere",
   "selectClub": "Velge Klubb",
-  "print": "trykke"
+  "print": "Utskrift",
+  "boardNumber": "Bordnummer",
+  "printoutPage": "Utskrift"
 };
 
 export { no };

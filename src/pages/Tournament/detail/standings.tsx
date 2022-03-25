@@ -525,7 +525,7 @@ const Standings: FunctionComponent<unknown> = () => {
                   <Tab value={1} label={<Translated str="team" />} />
                 )}
                 <Tab value={2} label={<Translated str="stats" />} />
-                <Tab value={3} label="Cross Tables" />
+                <Tab value={3} label={<Translated str="crossTable" />} />
               </Tabs>
             </div>
             <div style={{ display: "flex", height: "100%" }}>

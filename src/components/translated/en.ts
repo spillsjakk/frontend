@@ -79,6 +79,7 @@ const en = {
   "createYourAccount": "Create Your Spillsjakk Account",
   "createYourClub": "Create Your Spillsjakk Club",
   "currentPassword": "Current password",
+  "crossTable": "Cross Table",
   "custom": "Custom",
   "dateTime": "Date/time",
   "days": "days",
@@ -287,6 +288,7 @@ const en = {
   "players": "Players",
   "playersPerTeam": "players per team",
   "pleaseSelect": "Please Select",
+  "printoutPage": "Printout Page",
   "privacyPolicy": "privacy policy",
   "privateTournament": "This tournament is private.",
   "productDescription": "Fast, simple, and reliable chess tournament administration and pairings.",
@@ -514,6 +516,7 @@ const en = {
   "manageTeam": "Manage Team",
   "removeInactive": "Remove Inactive Players",
   "selectClub": "Select Club",
+  "boardNumber": "Board Number",
   "print": "Print"
 };
 
