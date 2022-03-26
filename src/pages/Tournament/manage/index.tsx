@@ -523,9 +523,9 @@ class Manage extends Component<
       undefined,
       (result) => {
         if (result && Array.isArray(result.games)) {
-          const element = document.createElement("Link");
+          const element = document.createElement("a");
           element.setAttribute(
-            "to",
+            "href",
             "data:text/plain;charset=utf-8," +
               encodeURIComponent(
                 result.games.reduce((acc, val) => {
