@@ -283,8 +283,6 @@ export function StartDateInterval() {
 }
 
 export function Advanced() {
-  const pointsSettingEnabled = true;
-
   const form = useForm();
 
   return (
@@ -358,23 +356,6 @@ export function Advanced() {
                 control={
                   <Checkbox
                     color="secondary"
-                    checked={form.showOnlyTop}
-                    onChange={(e) => {
-                      form.changeShowOnlyTopNr(3);
-                      form.changeShowOnlyTop(e.target.checked);
-                    }}
-                  />
-                }
-                label={<Translated str="onlyShowScoresOfTop3" />}
-                labelPlacement="end"
-              />
-            </Grid>
-            <Grid item>
-              <FormControlLabel
-                value="end"
-                control={
-                  <Checkbox
-                    color="secondary"
                     checked={form.chatEnabled}
                     onChange={(e) => {
                       form.changeChatEnabled(e.target.checked);
@@ -409,7 +390,6 @@ export function Advanced() {
           <Grid item container md={6} spacing={2}>
             <Grid item>
               <TextField
-                disabled={!pointsSettingEnabled}
                 type="number"
                 label={<Translated str="winPoints" />}
                 variant="outlined"
@@ -420,7 +400,6 @@ export function Advanced() {
             </Grid>
             <Grid item>
               <TextField
-                disabled={!pointsSettingEnabled}
                 type="number"
                 label={<Translated str="drawPoints" />}
                 variant="outlined"
@@ -431,13 +410,39 @@ export function Advanced() {
             </Grid>
             <Grid item>
               <TextField
-                disabled={!pointsSettingEnabled}
                 type="number"
                 label={<Translated str="lossPoints" />}
                 variant="outlined"
                 value={form.lossPoints}
                 InputProps={{ inputProps: { min: 0, step: 0.5 } }}
                 onChange={(e) => form.changeLossPoints(Number(e.target.value))}
+              />
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                value="end"
+                control={
+                  <Checkbox
+                    color="secondary"
+                    checked={form.showOnlyTop}
+                    onChange={(e) => {
+                      form.changeShowOnlyTop(e.target.checked);
+                    }}
+                  />
+                }
+                label={<Translated str="onlyShowScoresOfTop" />}
+                labelPlacement="end"
+              />
+              <TextField
+                disabled={!form.showOnlyTop}
+                type="number"
+                label={<Translated str="top" />}
+                variant="outlined"
+                value={form.showOnlyTopNr}
+                InputProps={{ inputProps: { min: 0, step: 1 } }}
+                onChange={(e) =>
+                  form.changeShowOnlyTopNr(Number(e.target.value))
+                }
               />
             </Grid>
           </Grid>

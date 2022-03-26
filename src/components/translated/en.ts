@@ -440,7 +440,6 @@ const en = {
   "soon": "soon",
   "later": "later",
   "today": "today",
-  "onlyShowScoresOfTop3": "Only show the scores of the top 3 players",
   "realWorld": "Real World",
   "back": "Back",
   "customSettings": "Custom Settings",

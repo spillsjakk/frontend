@@ -435,7 +435,6 @@ const no = {
   "soon": "snart",
   "later": "senere",
   "today": "i dag",
-  "onlyShowScoresOfTop3": "Vis bare resultater for de 3 beste spillerne",
   "realWorld": "Bordsjakk",
   "back": "Tilbake",
   "customSettings": "Endre innstillinger",
