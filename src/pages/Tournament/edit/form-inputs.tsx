@@ -564,7 +564,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           &nbsp;
           <Translated str="chatEnabled" />
         </div>
-        {!isTeam(form.kind) && (
+        {!isTeam(form.kind) && form.kind !== KIND.TeamMonrad && (
           <div className="mt-4">
             <input
               type="checkbox"
