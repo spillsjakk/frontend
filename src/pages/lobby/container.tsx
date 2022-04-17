@@ -1,9 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { FunctionComponent, useEffect, useState } from "react";
-import {
-  DataGrid,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { TimestampString } from "../../components/Timestamp";
 import Translated from "../../components/translated";
@@ -222,7 +219,10 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
                 flexDirection: "column",
               }}
             >
-              <Pairings showHeader={false} defaultMiniboards={true} />
+              <Pairings
+                showHeader={false}
+                defaultMiniboards={!tournamentDetail.tournament?.default_otb}
+              />
             </div>
           </TournamentDetailProvider>
         </>
