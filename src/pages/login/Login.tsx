@@ -23,7 +23,7 @@ class Login extends PureComponent<RouteComponentProps, LoginState> {
     this.state = {
       userId: "",
       password: "",
-      isAccountModalOpen: window.location.hash.includes("account-modal"),
+      isAccountModalOpen: false, // window.location.hash.includes("account-modal"),
     };
     this.handleChange = this.handleChange.bind(this);
     this.doLogin = this.doLogin.bind(this);
