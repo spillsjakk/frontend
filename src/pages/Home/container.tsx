@@ -93,7 +93,7 @@ const Home: FunctionComponent<{}> = () => {
     <div id={style.home}>
       <div id={style.image}>
         <div className={style.pane}>
-          <div className={`${style.title}`}>
+          {/* <div className={`${style.title}`}>
             <div>
               <Translated str="invitePairPlay" />
             </div>
@@ -111,7 +111,7 @@ const Home: FunctionComponent<{}> = () => {
             <Link to="/login#account-modal=true" className={style.button}>
               {Translated.byKey("signup").toUpperCase()}
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
       {((Array.isArray(today) && today.length > 0) ||
