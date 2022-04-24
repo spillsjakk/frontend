@@ -271,19 +271,31 @@ const MiniBoardsView: FunctionComponent<{ round: number }> = memo(
   }
 );
 
+export const participantLimit = 10;
+
 const Pairings: FunctionComponent<Props> = ({
   showHeader = true,
   defaultMiniboards = false,
 }) => {
-  const [type, setType] = useState(defaultMiniboards ? "miniboards" : "list");
+  const { pairings, participants } = useTournamentDetail();
+
+  const defaultType = Array.isArray(participants)
+    ? participants.length > participantLimit
+      ? "list"
+      : defaultMiniboards
+      ? "miniboards"
+      : "list"
+    : "list";
+
+  const [type, setType] = useState(defaultType);
   const [tab, setTab] = useState(0);
   const [uniqueTabs, setUniqueTabs] = useState([]);
-  const { pairings } = useTournamentDetail();
 
   const params = useParams<{ tid: string }>();
 
   useEffect(() => {
     if (Array.isArray(pairings) && pairings.length > 0) {
+      setType(defaultType);
       const result = Array.from(new Set(pairings.map((p) => p.round)));
       setUniqueTabs(result);
       setTab(result.length);
@@ -301,21 +313,23 @@ const Pairings: FunctionComponent<Props> = ({
                   <Translated str="pairings" />
                 </h3>
                 <div className={style["pairing-view-toggle"]}>
-                  <ToggleButtonGroup
-                    value={type}
-                    exclusive
-                    onChange={(e, newValue) => {
-                      if (newValue) setType(newValue);
-                    }}
-                    aria-label="text alignment"
-                  >
-                    <ToggleButton value="miniboards">
-                      <ViewModule />
-                    </ToggleButton>
-                    <ToggleButton value="list">
-                      <List />
-                    </ToggleButton>
-                  </ToggleButtonGroup>
+                  {participants.length <= participantLimit && (
+                    <ToggleButtonGroup
+                      value={type}
+                      exclusive
+                      onChange={(e, newValue) => {
+                        if (newValue) setType(newValue);
+                      }}
+                      aria-label="text alignment"
+                    >
+                      <ToggleButton value="miniboards">
+                        <ViewModule />
+                      </ToggleButton>
+                      <ToggleButton value="list">
+                        <List />
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                  )}
                 </div>
               </>
             )}

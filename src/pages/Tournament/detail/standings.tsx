@@ -531,7 +531,7 @@ const Standings: FunctionComponent<unknown> = () => {
             <div style={{ display: "flex", height: "100%" }}>
               <div style={{ flexGrow: 1 }}>
                 <ParticipantsTable visible={tab === 0} />
-                <TeamsTable visible={tab === 1} />
+                {tab === 1 && <TeamsTable visible={tab === 1} />}
                 {tab === 2 && <Stats tournamentId={tournament.id} />}
                 {tab === 3 && (
                   <CrossTable

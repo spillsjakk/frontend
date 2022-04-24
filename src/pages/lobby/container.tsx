@@ -12,7 +12,7 @@ import {
   TournamentDetailProvider,
 } from "../../context/tournament-detail";
 import { Round } from "../../context/tournament-round";
-import { Pairings } from "../Tournament/detail/pairings";
+import { Pairings, participantLimit } from "../Tournament/detail/pairings";
 
 const commonFields = {
   headerClassName: "table-header",
@@ -205,28 +205,30 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
 
   return (
     <>
-      {tournamentDetail && (
-        <>
-          <div className="header">
-            {Translated.byKey("recentTournament").toUpperCase()}:
-          </div>
-          <TournamentDetailProvider value={{ ...tournamentDetail, rounds }}>
-            <div
-              style={{
-                color: "black",
-                display: "flex",
-                marginTop: "10px",
-                flexDirection: "column",
-              }}
-            >
-              <Pairings
-                showHeader={false}
-                defaultMiniboards={!tournamentDetail.tournament?.default_otb}
-              />
+      {tournamentDetail &&
+        Array.isArray(tournamentDetail.participants) &&
+        tournamentDetail.participants.length <= participantLimit && (
+          <>
+            <div className="header">
+              {Translated.byKey("recentTournament").toUpperCase()}:
             </div>
-          </TournamentDetailProvider>
-        </>
-      )}
+            <TournamentDetailProvider value={{ ...tournamentDetail, rounds }}>
+              <div
+                style={{
+                  color: "black",
+                  display: "flex",
+                  marginTop: "10px",
+                  flexDirection: "column",
+                }}
+              >
+                <Pairings
+                  showHeader={false}
+                  defaultMiniboards={!tournamentDetail.tournament?.default_otb}
+                />
+              </div>
+            </TournamentDetailProvider>
+          </>
+        )}
       <div className="header">
         {Translated.byKey("tournamentSchedule").toUpperCase()}:
       </div>
