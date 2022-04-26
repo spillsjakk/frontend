@@ -271,7 +271,7 @@ const MiniBoardsView: FunctionComponent<{ round: number }> = memo(
   }
 );
 
-export const participantLimit = 10;
+export const participantLimit = 200;
 
 const Pairings: FunctionComponent<Props> = ({
   showHeader = true,
