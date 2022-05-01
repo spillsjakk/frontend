@@ -30,13 +30,13 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
             return true;
           })
           .filter((game, index) => {
-            if ((page - 1) * 12 <= index && index < page * 12) {
+            if ((page - 1) * 6 <= index && index < page * 6) {
               return true;
             }
           })
           .map((game, index) => ({
             ...game,
-            boardNumber: (page - 1) * 12 + index + 1,
+            boardNumber: (page - 1) * 6 + index + 1,
           }))
       );
     }
@@ -47,15 +47,7 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
       <Grid container id={style.miniboards}>
         {Array.isArray(boardsToShow) &&
           boardsToShow.map((game) => (
-            <Grid
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              item
-              key={game.id}
-              className={style.board}
-            >
+            <Grid sm={6} md={4} item key={game.id} className={style.board}>
               <div className={style["flex-center"]}>
                 <p id={style.pairingnumber}>{game.boardNumber}</p>
                 <Board game={game} />
@@ -64,7 +56,7 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
           ))}
       </Grid>
       <Pagination
-        count={Array.isArray(data) ? Math.ceil(data.length / 12) : 0}
+        count={Array.isArray(data) ? Math.ceil(data.length / 6) : 0}
         page={page}
         onChange={(e, value) => setPage(value)}
         className={style.pagination}

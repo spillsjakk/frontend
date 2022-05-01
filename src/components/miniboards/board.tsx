@@ -292,8 +292,8 @@ const Board: FunctionComponent<Props> = (props) => {
           lastMove={lastMove}
           style={{
             pointerEvents: "none",
-            width: "200px",
-            height: "200px",
+            width: "250px",
+            height: "250px",
             opacity: typeof outcome !== "undefined" ? 0.4 : 1,
           }}
         />
