@@ -516,7 +516,8 @@ const en = {
   "removeInactive": "Remove Inactive Players",
   "selectClub": "Select Club",
   "boardNumber": "Board Number",
-  "print": "Print"
+  "print": "Print",
+  "tomorrow": "Tomorrow"
 };
 
 export { en };

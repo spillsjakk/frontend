@@ -511,7 +511,8 @@ const no = {
   "selectClub": "Velge Klubb",
   "print": "Utskrift",
   "boardNumber": "Bordnummer",
-  "printoutPage": "Utskrift"
+  "printoutPage": "Utskrift",
+  "tomorrow": "i morgen"
 };
 
 export { no };
