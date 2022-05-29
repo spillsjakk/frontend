@@ -13,7 +13,7 @@ import { useForm } from "../../hocs/tournament-form";
 import { Tournament } from "../../pages/Tournament/Types";
 
 export const placeholder = {
-  name: "Please Select a Template",
+  name: Translated.byKey("tournamentTemplatePlaceholder"),
   id: "0",
 };
 

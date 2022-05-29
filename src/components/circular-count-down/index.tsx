@@ -63,10 +63,7 @@ const STATUS = {
 
 const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
   const [secondsRemaining, setSecondsRemaining] = useState(
-    Math.ceil(
-      Math.max(0, startDate.getTime() - new Date().getTime()) /
-        1000
-    )
+    Math.ceil(Math.max(0, startDate.getTime() - new Date().getTime()) / 1000)
   );
   const [status, setStatus] = useState(STATUS.STOPPED);
 
@@ -99,16 +96,36 @@ const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
   return (
     <div className={style["countdown-container"]}>
       <div className={style.item}>
-        <Circle min={0} max={365} value={daysToDisplay} textKey={"days"} />
+        <Circle
+          min={0}
+          max={365}
+          value={daysToDisplay}
+          textKey={Translated.byKey("days")}
+        />
       </div>
       <div className={style.item}>
-        <Circle min={0} max={24} value={hoursToDisplay} textKey={"hours"} />
+        <Circle
+          min={0}
+          max={24}
+          value={hoursToDisplay}
+          textKey={Translated.byKey("hours")}
+        />
       </div>
       <div className={style.item}>
-        <Circle min={0} max={60} value={minutesToDisplay} textKey={"minutes"} />
+        <Circle
+          min={0}
+          max={60}
+          value={minutesToDisplay}
+          textKey={Translated.byKey("minutes")}
+        />
       </div>
       <div className={style.item}>
-        <Circle min={0} max={60} value={secondsToDisplay} textKey={"seconds"} />
+        <Circle
+          min={0}
+          max={60}
+          value={secondsToDisplay}
+          textKey={Translated.byKey("seconds")}
+        />
       </div>
     </div>
   );

@@ -39,8 +39,9 @@ const Description: FunctionComponent<{}> = () => {
                 {Translated.byKey("timeControl")}
               </div>
               <p>
-                {tournament?.initial_time} minutes + {tournament?.increment}{" "}
-                seconds increment
+                {tournament?.initial_time} {Translated.byKey("minutes")} +{" "}
+                {tournament?.increment} {Translated.byKey("seconds")}{" "}
+                {Translated.byKey("increment")}
               </p>
             </div>
             <div className={`${style.box} ${style.item}`}>
