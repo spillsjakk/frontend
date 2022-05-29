@@ -37,6 +37,8 @@ export type Tournament = {
   pairing_generation_failed: boolean | null;
   chat_enabled: boolean;
   remove_inactive_participants: boolean;
+  pinned?: boolean;
+  pinned_order?: number;
 };
 
 export type Participant = {

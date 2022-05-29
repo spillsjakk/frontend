@@ -48,6 +48,8 @@ import { WithOnlineStatus } from "../../../hocs/with-online-statuses";
 import { ChangePairingTime } from "./change-pairing-time";
 import { WithPopup } from "../../../hocs/popup";
 import { ChangeMemberCount } from "./change-member-count";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { PinTournament } from "../../../components/pin-tournament";
 
 const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
   props
@@ -891,6 +893,19 @@ class Manage extends Component<
                       __html: this.state.info?.tournament.description || "",
                     }}
                   ></p>
+
+                  {this.context.user.info?.level === 3 && (
+                    <>
+                      <hr />
+                      <PinTournament
+                        tournament={this.state.info.tournament}
+                        onSuccess={() => {
+                          this.loadState();
+                        }}
+                      />
+                      <hr />
+                    </>
+                  )}
 
                   {this.context.user.authenticated && (
                     <form>
