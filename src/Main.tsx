@@ -39,6 +39,7 @@ import { TournamentPairings } from "./pages/Tournament/pairings";
 import { UserAgreement } from "./pages/contracts/user-agreement";
 import { PrivacyNotice } from "./pages/contracts/privacy-notice";
 import { Lobby } from "./pages/lobby/index";
+import { ListTournaments } from "./pages/Tournament/list";
 
 const Main = () => {
   return (
@@ -53,6 +54,7 @@ const Main = () => {
 
       <Route exact path="/profile/:uid" component={Profile}></Route>
 
+      <Route exact path="/tournaments" component={ListTournaments}></Route>
       <Route
         exact
         path="/tournament/manage/:tid"

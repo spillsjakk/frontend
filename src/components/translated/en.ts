@@ -523,6 +523,7 @@ const en = {
   "pinned": "Highlights",
   "tournamentTemplatePlaceholder": "Please Select a Template",
   "increment": "increment",
+  "allTournaments": "All Tournaments",
   "leagues": "Leagues"
 };
 

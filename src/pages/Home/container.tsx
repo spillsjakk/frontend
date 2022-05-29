@@ -8,6 +8,7 @@ import { Tournament } from "../../pages/Tournament/Types";
 import { League } from "./league";
 import { Card } from "../../components/tournament-card/card";
 import style from "./style.module.scss";
+import { Link } from "react-router-dom";
 
 export function categorizeTournaments(tournaments: Array<Tournament>): {
   today: Array<Tournament>;
@@ -127,8 +128,15 @@ const Home: FunctionComponent<{}> = () => {
         (Array.isArray(pinned) && pinned.length > 0) ||
         (Array.isArray(later) && later.length > 0)) && (
         <div className={style.block}>
-          <div className={style.heading}>
-            {Translated.byKey("tournamentCalendar").toUpperCase()}
+          <div className={style.tournamentsHeadingWrapper}>
+            <div className={style.heading}>
+              {Translated.byKey("tournamentCalendar").toUpperCase()}
+            </div>
+            <div className={style.seeAll}>
+              <Link to="/tournaments">
+                {Translated.byKey("allTournaments")}
+              </Link>
+            </div>
           </div>
           <HelpBox
             placement="top"

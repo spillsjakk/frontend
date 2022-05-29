@@ -75,11 +75,11 @@
     max-width: 1000px;
     padding: 10px;
     width: 80%;
-    .leaguewrapper{
+    .leaguewrapper {
       display: flex;
       overflow-x: scroll;
     }
-    .emptyheading{
+    .emptyheading {
       background-color: #469a88;
       color: transparent;
       border-radius: 0 0 50px 0;
@@ -98,6 +98,17 @@
       }
       a:hover {
         color: white;
+      }
+    }
+
+    .tournamentsHeadingWrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 20px;
+      .seeAll {
+        display: flex;
+        align-items: center;
       }
     }
 
@@ -124,55 +135,55 @@
 }
 @media screen and (max-width: 500px) {
   #home {
-  background-color: white;
-  #image {
-    .pane {
-      .action-buttons {
-        width: 80%;
-        .button {
-          height: 40px;
-          font-size: 14px;
-          margin-right: 10px;
+    background-color: white;
+    #image {
+      .pane {
+        .action-buttons {
+          width: 80%;
+          .button {
+            height: 40px;
+            font-size: 14px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+    .block {
+      min-width: 100%;
+      padding: 10px;
+      width: 80%;
+
+      .emptyheading {
+        background-color: #469a88;
+        color: transparent;
+        border-radius: 0 0 50px 0;
+        font-size: calc(min(3vw, 20px));
+        padding: 5px;
+      }
+
+      .heading {
+        a {
+          font-size: 19px;
+        }
+        a:hover {
+          font-size: 19px;
+        }
+      }
+      .wrapper {
+        .row {
+          .heading {
+            font-size: calc(min(3vw, 20px));
+            padding: 5px;
+          }
+          .content {
+            display: grid;
+            grid-auto-flow: column;
+            gap: 40px;
+            overflow-x: scroll;
+            padding: 20px;
+          }
         }
       }
     }
   }
-  .block {
-    min-width: 100%;
-    padding: 10px;
-    width: 80%;
-
-    .emptyheading{
-      background-color: #469a88;
-      color: transparent;
-      border-radius: 0 0 50px 0;
-      font-size: calc(min(3vw, 20px));
-      padding: 5px;
-    }
-
-    .heading {
-      a {
-        font-size: 19px;
-      }
-      a:hover {
-        font-size: 19px;
-      }
-    }
-    .wrapper {
-      .row {
-        .heading {
-          font-size: calc(min(3vw, 20px));
-          padding: 5px;
-        }
-        .content {
-          display: grid;
-          grid-auto-flow: column;
-          gap: 40px;
-          overflow-x: scroll;
-          padding: 20px;
-        }
-      }
-    }
-  }
-}
 }
