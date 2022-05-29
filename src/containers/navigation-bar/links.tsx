@@ -78,6 +78,9 @@ const Links: FunctionComponent<unknown> = () => {
             <Link to="/calendar" className={style.item}>
               {Translated.byKey("myTournamentCalendar")}
             </Link>
+            <Link to="/tournaments" className={style.item}>
+              {Translated.byKey("allTournaments")}
+            </Link>
             {showBuildTournament() && (
               <Link to="/tournament/build" className={style.item}>
                 {Translated.byKey("buildTournament")}
@@ -227,6 +230,11 @@ const MobileLinks: FunctionComponent<any> = forwardRef(() => {
               <ListItemText>
                 {Translated.byKey("myTournamentCalendar")}
               </ListItemText>
+            </ListItem>
+          </Link>
+          <Link to="/tournaments">
+            <ListItem button>
+              <ListItemText>{Translated.byKey("allTournaments")}</ListItemText>
             </ListItem>
           </Link>
           {showBuildTournament() && (
