@@ -62,6 +62,7 @@ const Home: FunctionComponent<{}> = () => {
   const [tomorrow, setTomorrow] = useState<Array<Tournament>>([]);
   const [soon, setSoon] = useState<Array<Tournament>>([]);
   const [later, setLater] = useState<Array<Tournament>>([]);
+  const [pinned, setPinned] = useState<Array<Tournament>>([]);
   const [leagues, setLeagues] = useState<Array<ILeague>>([]);
 
   const { user } = useUser();
@@ -75,6 +76,7 @@ const Home: FunctionComponent<{}> = () => {
         ongoing: Array<Tournament>;
         upcoming: Array<Tournament>;
         privates?: Array<Tournament>;
+        pinned?: Array<Tournament>;
       }) => {
         if (
           data &&
@@ -87,6 +89,7 @@ const Home: FunctionComponent<{}> = () => {
           }
           setTournaments(localTournaments);
         }
+        setPinned(data.pinned || []);
       }
     );
   }
@@ -117,30 +120,11 @@ const Home: FunctionComponent<{}> = () => {
   return (
     <div id={style.home}>
       <div id={style.image}>
-        <div className={style.pane}>
-          {/* <div className={`${style.title}`}>
-            <div>
-              <Translated str="invitePairPlay" />
-            </div>
-            <div>
-              <Translated str="onSpillsjakk" />
-            </div>
-            <div>
-              <Translated str="homev2Desc" />
-            </div>
-          </div>
-          <div className={style["action-buttons"]}>
-            <Link to="/about" className={style.button}>
-              {Translated.byKey("readMore").toUpperCase()}
-            </Link>
-            <Link to="/login#account-modal=true" className={style.button}>
-              {Translated.byKey("signup").toUpperCase()}
-            </Link>
-          </div> */}
-        </div>
+        <div className={style.pane}></div>
       </div>
       {((Array.isArray(today) && today.length > 0) ||
         (Array.isArray(soon) && soon.length > 0) ||
+        (Array.isArray(pinned) && pinned.length > 0) ||
         (Array.isArray(later) && later.length > 0)) && (
         <div className={style.block}>
           <div className={style.heading}>
@@ -153,6 +137,31 @@ const Home: FunctionComponent<{}> = () => {
             show={user && user.authenticated === true}
           >
             <div className={style.wrapper}>
+              {Array.isArray(pinned) && pinned.length > 0 && (
+                <div className={style.row}>
+                  <div className={style.heading}>
+                    {Translated.byKey("pinned").toUpperCase()}
+                  </div>
+                  <div className={style.content}>
+                    {pinned.map((tournament, i) => (
+                      <div key={i}>
+                        <Card
+                          id={tournament.id}
+                          name={tournament.name}
+                          timeControl={tournament.online_pairing_interval_n}
+                          timeControlInterval={
+                            tournament.online_pairing_interval_t
+                          }
+                          format={tournament.kind}
+                          rounds={tournament.rounds}
+                          startDate={tournament.current_online_pairing_time}
+                          profile={tournament.profile_picture}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               {Array.isArray(today) && today.length > 0 && (
                 <div className={style.row}>
                   <div className={style.heading}>

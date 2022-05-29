@@ -6,6 +6,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import React, { FormEvent, FunctionComponent } from "react";
+import { useNotification } from "../../hocs/with-notification";
 import { Tournament } from "../../pages/Tournament/Types";
 import Translated from "../translated";
 
@@ -26,6 +27,8 @@ const PinTournament: FunctionComponent<Props> = (props) => {
       : 0
   );
 
+  const { notify } = useNotification();
+
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     const response = await fetch(`/s/tournament/${props.tournament.id}/pin`, {
@@ -39,6 +42,7 @@ const PinTournament: FunctionComponent<Props> = (props) => {
       }),
     });
     if (response.ok) {
+      notify("success", Translated.byKey("updatePinSuccessfulMessage"));
       props.onSuccess();
     }
   }
@@ -63,7 +67,7 @@ const PinTournament: FunctionComponent<Props> = (props) => {
                 color="primary"
               />
             }
-            label={Translated.byKey("pinTournament")}
+            label={Translated.byKey("pinned")}
           />
         </Grid>
 

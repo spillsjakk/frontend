@@ -512,7 +512,10 @@ const no = {
   "print": "Utskrift",
   "boardNumber": "Bordnummer",
   "printoutPage": "Utskrift",
-  "tomorrow": "i morgen"
+  "tomorrow": "i morgen",
+  "updatePinSuccessfulMessage": "Turneringsstatusen er oppdatert",
+  "pinnedOrder": "Ordre",
+  "pinned": "Høydepunkter"
 };
 
 export { no };

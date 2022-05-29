@@ -517,7 +517,10 @@ const en = {
   "selectClub": "Select Club",
   "boardNumber": "Board Number",
   "print": "Print",
-  "tomorrow": "Tomorrow"
+  "tomorrow": "Tomorrow",
+  "updatePinSuccessfulMessage": "Tournament status is updated successfully",
+  "pinnedOrder": "Order",
+  "pinned": "Highlights",
 };
 
 export { en };
