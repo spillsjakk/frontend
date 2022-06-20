@@ -9,6 +9,7 @@ import { GameNotifier } from "./components/game-notifier";
 import { WithTheme } from "./hocs/with-theme";
 import { WithNotification } from "./hocs/with-notification";
 import "./index.css";
+import { Helmet } from "react-helmet";
 
 type AppState = {
   lang: string;
@@ -38,6 +39,7 @@ class App extends Component<{}, AppState> {
   }
 
   render() {
+    const htmlLang = this.state.lang === "EN" ? "en-GB" : "nb-NO";
     const setLangWithLocalStorage = (newLang: string) => {
       this.setState({ lang: newLang });
       localStorage.setItem("lang", newLang);
@@ -56,6 +58,9 @@ class App extends Component<{}, AppState> {
         <WithNotification>
           <LangContext.Provider value={langProviderValue}>
             <UserContext.Provider value={userProviderValue}>
+              <Helmet>
+                <html lang={htmlLang} />
+              </Helmet>
               <NavigationBar />
               <Container id="main-container">
                 <GameNotifier />

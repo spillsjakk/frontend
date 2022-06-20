@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { useTemplate } from "../../../context/build-tournament-template";
 import style from "./style.module.scss";
-import { DateTimePicker } from "@material-ui/lab";
+import { DateTimePicker, LocalizationProvider } from "@material-ui/lab";
 import { useForm } from "../../../hocs/tournament-form";
 import { KIND } from "../../../constants";
 import Translated from "../../../components/translated";
@@ -20,6 +20,10 @@ import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
 import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
 import { generateId, isTeam } from "../../../functions";
 import { Editor } from "../../../components/markdown";
+import nbLocale from "date-fns/locale/nb";
+import enLocale from "date-fns/locale/en-GB";
+
+import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 
 export function TemplateSelection() {
   const {
@@ -63,29 +67,34 @@ export function StartDate() {
   return (
     <div className={style.content}>
       <div className={style.inputs}>
-        <DateTimePicker
-          ampm={false}
-          renderInput={(params) => <TextField required {...params} />}
-          label={Translated.byKey("startDate")}
-          value={
-            new Date(
-              `${form.firstPairingDate}T${
-                form.firstPairingTime || "00:00"
-              }:00.000Z`
-            )
-          }
-          onChange={(value: Date) => {
-            try {
-              const dateString = value.toISOString().slice(0, 10);
-              form.changeStartDate(dateString);
-              form.changeEndDate(dateString);
-              form.changeFirstPairingDate(dateString);
-              form.changeFirstPairingTime(value.toISOString().slice(11, 16));
-            } catch (e) {
-              console.error("error while setting date", e);
+        <LocalizationProvider
+          dateAdapter={AdapterDateFns}
+          locale={localStorage.getItem("lang") === "NO" ? nbLocale : enLocale}
+        >
+          <DateTimePicker
+            ampm={false}
+            renderInput={(params) => <TextField required {...params} />}
+            label={Translated.byKey("startDate")}
+            value={
+              new Date(
+                `${form.firstPairingDate}T${
+                  form.firstPairingTime || "00:00"
+                }:00.000Z`
+              )
             }
-          }}
-        />
+            onChange={(value: Date) => {
+              try {
+                const dateString = value.toISOString().slice(0, 10);
+                form.changeStartDate(dateString);
+                form.changeEndDate(dateString);
+                form.changeFirstPairingDate(dateString);
+                form.changeFirstPairingTime(value.toISOString().slice(11, 16));
+              } catch (e) {
+                console.error("error while setting date", e);
+              }
+            }}
+          />
+        </LocalizationProvider>
       </div>
     </div>
   );
@@ -231,29 +240,34 @@ export function StartDateInterval() {
   return (
     <div className={style.content}>
       <div className={style.inputs}>
-        <DateTimePicker
-          renderInput={(params) => <TextField required {...params} />}
-          label={Translated.byKey("startDate")}
-          value={
-            new Date(
-              `${form.firstPairingDate}T${
-                form.firstPairingTime || "00:00"
-              }:00.000Z`
-            )
-          }
-          ampm={false}
-          onChange={(value: Date) => {
-            try {
-              const dateString = value.toISOString().slice(0, 10);
-              form.changeStartDate(dateString);
-              form.changeEndDate(dateString);
-              form.changeFirstPairingDate(dateString);
-              form.changeFirstPairingTime(value.toISOString().slice(11, 16));
-            } catch (e) {
-              console.error("error while setting date", e);
+        <LocalizationProvider
+          dateAdapter={AdapterDateFns}
+          locale={localStorage.getItem("lang") === "NO" ? nbLocale : enLocale}
+        >
+          <DateTimePicker
+            renderInput={(params) => <TextField required {...params} />}
+            label={Translated.byKey("startDate")}
+            value={
+              new Date(
+                `${form.firstPairingDate}T${
+                  form.firstPairingTime || "00:00"
+                }:00.000Z`
+              )
             }
-          }}
-        />
+            ampm={false}
+            onChange={(value: Date) => {
+              try {
+                const dateString = value.toISOString().slice(0, 10);
+                form.changeStartDate(dateString);
+                form.changeEndDate(dateString);
+                form.changeFirstPairingDate(dateString);
+                form.changeFirstPairingTime(value.toISOString().slice(11, 16));
+              } catch (e) {
+                console.error("error while setting date", e);
+              }
+            }}
+          />
+        </LocalizationProvider>
         <TextField
           className={style["ml-lg"]}
           value={form.onlinePairingIntervalN}

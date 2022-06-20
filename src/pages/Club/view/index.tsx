@@ -9,10 +9,7 @@ import { Club } from "../../../context/club";
 import { Col, Row } from "react-bootstrap";
 import Translated from "../../../components/translated";
 import { Tournament } from "../../Tournament/Types";
-import {
-  DataGrid,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import FederationDisplay from "../../../components/FederationDisplay";
 import ReactMarkdown from "react-markdown";
 import xssFilters from "xss-filters";
