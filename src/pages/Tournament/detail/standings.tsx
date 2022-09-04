@@ -287,7 +287,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       </div>
     );
   }
-  function renderMatchScore(params: GridCellParams) {
+  function renderScore(params: GridCellParams) {
     return (
       <div
         style={{
@@ -300,26 +300,8 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
         tournament.show_only_top_nr !== null
           ? params.row.rank > tournament.show_only_top_nr!
             ? ""
-            : params.row.match_score
-          : params.row.match_score}
-      </div>
-    );
-  }
-  function renderGameScore(params: GridCellParams) {
-    return (
-      <div
-        style={{
-          textAlign: "center",
-          fontSize: "20px",
-          fontWeight: 600,
-        }}
-      >
-        {typeof tournament.show_only_top_nr !== "undefined" &&
-        tournament.show_only_top_nr !== null
-          ? params.row.rank > tournament.show_only_top_nr!
-            ? ""
-            : params.row.game_score
-          : params.row.game_score}
+            : params.value
+          : params.value}
       </div>
     );
   }
@@ -358,7 +340,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       align: "center",
       headerAlign: "center",
       width: 200,
-      renderCell: renderMatchScore,
+      renderCell: renderScore,
       hide: tournament.kind === "TeamMonrad",
     },
     {
@@ -369,7 +351,7 @@ const TeamsTable: FunctionComponent<{ visible: boolean }> = ({ visible }) => {
       headerAlign: "center",
       ...commonFields,
       width: 200,
-      renderCell: renderGameScore,
+      renderCell: renderScore,
       hide: tournament.kind === "TeamMonrad",
     },
   ];
