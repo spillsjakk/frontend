@@ -83,6 +83,35 @@ const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
   );
 };
 
+const GenerateNextRoundGamesButton: FunctionComponent<{
+  tournamentId: string;
+}> = (props) => {
+  const notif = useNotification();
+  return (
+    <>
+      <Button
+        variant="primary"
+        className="p-3 mb-3"
+        onClick={() =>
+          fetchCall(
+            `/s/tournament/next-round/${props.tournamentId}/challenges`,
+            "POST",
+            {},
+            () => {
+              notif.notify("success", "Success");
+            },
+            () => {
+              notif.notify("error", "Error");
+            }
+          )
+        }
+      >
+        {Translated.byKey("generate-next-round")}
+      </Button>
+    </>
+  );
+};
+
 function ChangeTime(props: { white: boolean; add: boolean; id: string }) {
   return (
     <button
@@ -921,6 +950,12 @@ class Manage extends Component<
                           (info.tournament.kind === "SwissDutch" ||
                             info.tournament.kind === "TeamSwissDutch") && (
                             <GenerateNextRoundButton
+                              tournamentId={info.tournament.id}
+                            />
+                          )}
+                        {info.tournament.started &&
+                          info.tournament.kind === "TeamMonrad" && (
+                            <GenerateNextRoundGamesButton
                               tournamentId={info.tournament.id}
                             />
                           )}
