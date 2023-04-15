@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import "react-chessground/dist/styles/chessground.css";
 import Chessground from "react-chessground";
-import Chess from "chess.js";
+import { Chess } from "chess.js";
 import { Clock } from "./clock";
 import style from "./style.module.scss";
 import Translated from "../translated";
@@ -59,7 +59,7 @@ const Board: FunctionComponent<Props> = (props) => {
   const [whiteClockRef] = useState<RefObject<Clock>>(createRef());
   const [blackClockRef] = useState<RefObject<Clock>>(createRef());
   const [lastMove, setLastMove] = useState<Array<string>>();
-  const [game, setGame] = useState<typeof Chess>();
+  const [game, setGame] = useState<Chess>();
   const [outcome, setOutcome] = useState<number>();
   const [started, setStarted] = useState(() => {
     if (start) {

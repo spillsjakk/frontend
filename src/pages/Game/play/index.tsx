@@ -12,7 +12,7 @@ import "react-chessground/dist/styles/chessground.css";
 import "./style.scss";
 import "../chessground-theme.css";
 import Chessground from "react-chessground";
-import Chess from "chess.js";
+import { Chess, Square } from "chess.js";
 import { Chess as OpsChess } from "chessops";
 import { parseFen } from "chessops/fen";
 import { Antichess } from "chessops/variant";
@@ -77,7 +77,7 @@ type PlayState = {
   showResignConfirm: boolean;
   showDrawConfirm: boolean;
   outcome: GameOutcome;
-  game: typeof Chess;
+  game: Chess;
   clocksInterval?: number;
   lastMove?: string[];
   check: boolean;
@@ -349,14 +349,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     if (!ws || ws.readyState == WebSocket.CLOSED) this.connect(); // check if websocket instance is closed, if so call `connect` function.
   };
 
-  reconstructGame(b64moves: string) {
+  reconstructGame(b64moves: string): [Chess, [string, string]] {
     const game = new Chess();
     const bstr = atob(b64moves);
     let lastMove;
     for (let i = 0; i < bstr.length; i += 3) {
       if (bstr.charCodeAt(i) === 97) {
         // draw offer
-        game.set_comment(DRAW_OFFER_SIGN);
+        game.setComment(DRAW_OFFER_SIGN);
         continue;
       }
       const from = numToSquare(bstr.charCodeAt(i));
@@ -472,14 +472,13 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
             newState.pendingDrawOffer = 0;
             newState.showDrawConfirm = false;
           }
-          if (game.insufficient_material()) {
+          if (game.isInsufficientMaterial()) {
             fetchJson(
-              `/s/game/move/${
-                this.gameId
+              `/s/game/move/${this.gameId
               }/draw/auto?variant=${this.getVariant()}`,
               "POST",
               undefined,
-              (_) => {}
+              (_) => { }
             );
           }
         }
@@ -539,18 +538,17 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   onMove(source: string, target: string) {
     const target_rank = target.substring(2, 1);
-    const piece = this.state.game.get(source).type;
+    const piece = this.state.game.get(source as Square).type;
     const promoting =
       piece === "p" && (target_rank === "8" || target_rank === "1");
 
     if (!promoting) {
       fetchCall(
-        `/s/game/move/${
-          this.gameId
+        `/s/game/move/${this.gameId
         }/${source}/${target}?variant=${this.getVariant()}`,
         "POST",
         undefined,
-        (_) => {}
+        (_) => { }
       );
     } else {
       if (this.state.autoPromotion) {
@@ -581,8 +579,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     const localSource = source || this.state.promotionTempSource;
     const localTarget = target || this.state.promotionTempTarget;
     fetchJson(
-      `/s/game/move/${
-        this.gameId
+      `/s/game/move/${this.gameId
       }/${localSource}/${localTarget}?promotion=${which}&variant=${this.getVariant()}`,
       "POST",
       undefined,
@@ -669,12 +666,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         ) {
           this.setState({ flagRequestIsSent: true });
           fetchJson(
-            `/s/game/move/${
-              this.gameId
+            `/s/game/move/${this.gameId
             }/flag/flag?variant=${this.getVariant()}`,
             "POST",
             undefined,
-            (_) => {}
+            (_) => { }
           );
         }
       }
@@ -836,29 +832,29 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   getOpponentInfo() {
     return this.state.orientation === "black"
       ? {
-          id: this.state.whiteId,
-          name: this.state.tournament?.show_only_usernames
-            ? this.state.whiteUserName
-            : this.state.whiteName,
-        }
+        id: this.state.whiteId,
+        name: this.state.tournament?.show_only_usernames
+          ? this.state.whiteUserName
+          : this.state.whiteName,
+      }
       : {
-          id: this.state.blackId,
-          name: this.state.tournament?.show_only_usernames
-            ? this.state.blackUserName
-            : this.state.blackName,
-        };
+        id: this.state.blackId,
+        name: this.state.tournament?.show_only_usernames
+          ? this.state.blackUserName
+          : this.state.blackName,
+      };
   }
 
   getSelfInfo() {
     return this.state.orientation !== "black"
       ? {
-          id: this.state.whiteId,
-          name: this.state.whiteName,
-        }
+        id: this.state.whiteId,
+        name: this.state.whiteName,
+      }
       : {
-          id: this.state.blackId,
-          name: this.state.blackName,
-        };
+        id: this.state.blackId,
+        name: this.state.blackName,
+      };
   }
 
   handleTab(event, newValue) {
@@ -1010,27 +1006,23 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           <div className="d-flex flex-row justify-content-around">
             <div id="promotion-dialog">
               <img
-                src={`https://drulpact.sirv.com/sp/pieces/${
-                  this.state.orientation === "black" ? "bQ" : "wQ"
-                }.svg`}
+                src={`https://drulpact.sirv.com/sp/pieces/${this.state.orientation === "black" ? "bQ" : "wQ"
+                  }.svg`}
                 onClick={() => this.doPromotion("q")}
               />
               <img
-                src={`https://drulpact.sirv.com/sp/pieces/${
-                  this.state.orientation === "black" ? "bR" : "wR"
-                }.svg`}
+                src={`https://drulpact.sirv.com/sp/pieces/${this.state.orientation === "black" ? "bR" : "wR"
+                  }.svg`}
                 onClick={() => this.doPromotion("r")}
               />
               <img
-                src={`https://drulpact.sirv.com/sp/pieces/${
-                  this.state.orientation === "black" ? "bB" : "wB"
-                }.svg`}
+                src={`https://drulpact.sirv.com/sp/pieces/${this.state.orientation === "black" ? "bB" : "wB"
+                  }.svg`}
                 onClick={() => this.doPromotion("b")}
               />
               <img
-                src={`https://drulpact.sirv.com/sp/pieces/${
-                  this.state.orientation === "black" ? "bN" : "wN"
-                }.svg`}
+                src={`https://drulpact.sirv.com/sp/pieces/${this.state.orientation === "black" ? "bN" : "wN"
+                  }.svg`}
                 onClick={() => this.doPromotion("n")}
               />
               <span onClick={this.cancelPromotion}>X</span>

@@ -9,7 +9,7 @@ import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import "./chessground-theme.css";
 import { fetchJson, title } from "../../functions";
-import Chess from "chess.js";
+import { Chess } from "chess.js";
 import "./View.css";
 import { UserInfoBox } from "./play/user-info-box";
 import { Tournament } from "../Tournament/Types";
@@ -141,8 +141,8 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             result.game.outcome === 1
               ? GameOutcome.WhiteWins
               : result.game.outcome === -1
-              ? GameOutcome.BlackWins
-              : GameOutcome.Draw,
+                ? GameOutcome.BlackWins
+                : GameOutcome.Draw,
         },
         () => {
           const currentMove = Math.max(
@@ -152,7 +152,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           const moves = this.allMoves.slice(0, currentMove * 3 + 3);
           const [lastMove, game] = this.reconstructGame(moves);
           const fen = game.fen();
-          const check = game.in_check();
+          const check = game.inCheck();
           const turn = game.turn() === "w" ? "white" : "black";
           this.setState({
             pgn: game.pgn(),
@@ -167,13 +167,13 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     });
   }
 
-  reconstructGame(moves: Array<number>) {
+  reconstructGame(moves: Array<number>): [[string, string], Chess] {
     const game = new Chess();
     let lastMove;
     for (let i = 0; i < moves.length; i += 3) {
       if (moves[i] === 97) {
         // draw offer
-        game.set_comment(DRAW_OFFER_SIGN);
+        game.setComment(DRAW_OFFER_SIGN);
         continue;
       }
       const from = numToSquare(moves[i]);
@@ -199,7 +199,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
     const [lastMove, game] = this.reconstructGame(moves);
 
     const fen = game.fen();
-    const check = game.in_check();
+    const check = game.inCheck();
     const turn = game.turn() === "w" ? "white" : "black";
     this.setState({
       fen,
@@ -216,33 +216,33 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   getOpponentInfo() {
     return this.state.orientation === "black"
       ? {
-          id: this.state.whiteId,
-          name: this.state.tournamentData?.show_only_usernames
-            ? this.state.whiteUserName
-            : this.state.whiteName,
-        }
+        id: this.state.whiteId,
+        name: this.state.tournamentData?.show_only_usernames
+          ? this.state.whiteUserName
+          : this.state.whiteName,
+      }
       : {
-          id: this.state.blackId,
-          name: this.state.tournamentData?.show_only_usernames
-            ? this.state.blackUserName
-            : this.state.blackName,
-        };
+        id: this.state.blackId,
+        name: this.state.tournamentData?.show_only_usernames
+          ? this.state.blackUserName
+          : this.state.blackName,
+      };
   }
 
   getSelfInfo() {
     return this.state.orientation !== "black"
       ? {
-          id: this.state.whiteId,
-          name: this.state.tournamentData?.show_only_usernames
-            ? this.state.whiteUserName
-            : this.state.whiteName,
-        }
+        id: this.state.whiteId,
+        name: this.state.tournamentData?.show_only_usernames
+          ? this.state.whiteUserName
+          : this.state.whiteName,
+      }
       : {
-          id: this.state.blackId,
-          name: this.state.tournamentData?.show_only_usernames
-            ? this.state.blackUserName
-            : this.state.blackName,
-        };
+        id: this.state.blackId,
+        name: this.state.tournamentData?.show_only_usernames
+          ? this.state.blackUserName
+          : this.state.blackName,
+      };
   }
 
   getPgn() {
@@ -253,11 +253,10 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       [round "${this.state.round}"]
       [White "${this.state.whiteName}"]
       [Black "${this.state.blackName}"]
-      [Result "${
-        this.state.outcome !== GameOutcome.Ongoing &&
-        (this.state.outcome === GameOutcome.WhiteWins
-          ? "1-0"
-          : this.state.outcome === GameOutcome.BlackWins
+      [Result "${this.state.outcome !== GameOutcome.Ongoing &&
+      (this.state.outcome === GameOutcome.WhiteWins
+        ? "1-0"
+        : this.state.outcome === GameOutcome.BlackWins
           ? "0-1"
           : "1/2-1/2")
       }"]
