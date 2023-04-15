@@ -91,7 +91,7 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
           form.changeTb4((TIEBREAKER as any)[savedTournament.tb4]);
         }
         form.changeRemoveInactive(savedTournament.remove_inactive_participants);
-        form.changeVariant(savedTournament.game_variant);
+        form.changeVariant(savedTournament.game_variant as number);
         setSelectedTemplate(value);
         return;
       }
