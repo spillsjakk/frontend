@@ -5,7 +5,7 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { KIND } from "../../constants";
+import { KIND, VARIANT } from "../../constants";
 
 export interface FormContext {
   show: boolean;
@@ -18,6 +18,8 @@ export interface FormContext {
   changeDescription: (value: string) => void;
   kind: number;
   changeKind: (value: number) => void;
+  variant: number;
+  changeVariant: (value: number) => void;
   defaultGameLocation: number;
   changeDefaultGameLocation: (value: number) => void;
   startDate: string;
@@ -95,6 +97,8 @@ const initalValues = {
   changeDescription: (value: string) => {},
   kind: Object.values(KIND)[0],
   changeKind: (value: number) => {},
+  variant: Object.values(VARIANT)[0],
+  changeVariant: (value: number) => {},
   defaultGameLocation: 0,
   changeDefaultGameLocation: (value: number) => {},
   startDate: "",
@@ -169,6 +173,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [kind, setKind] = useState(Object.values(KIND)[0]);
+  const [variant, setVariant] = useState(Object.values(VARIANT)[0]);
   const [defaultGameLocation, setDefaultGameLocation] = useState(1);
   const [startDate, setStartDate] = useState(
     new Date().toISOString().slice(0, 10)
@@ -226,6 +231,10 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
 
   const changeKind = useCallback((value: number) => {
     setKind(value);
+  }, []);
+
+  const changeVariant = useCallback((value: number) => {
+    setVariant(value);
   }, []);
 
   const changeDefaultGameLocation = useCallback((value: number) => {
@@ -369,6 +378,8 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
         changeDescription,
         kind,
         changeKind,
+        variant,
+        changeVariant,
         defaultGameLocation,
         changeDefaultGameLocation,
         startDate,

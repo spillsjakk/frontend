@@ -17,6 +17,7 @@ import {
   Format,
   Advanced,
   SelectClubOrg,
+  Variant,
 } from "./inputs";
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
 import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
@@ -27,7 +28,7 @@ import Translated from "../../../components/translated";
 
 function ActionButtons({
   onLeftClick,
-  onRightClick = () => {},
+  onRightClick = () => { },
   leftText = Translated.byKey("back"),
   rightText = Translated.byKey("next"),
   rightDisabled = false,
@@ -55,7 +56,7 @@ function ActionButtons({
   );
 }
 
-function SaveButton(props: { form: FormContext }) {
+function SaveButton(props: { form: FormContext; }) {
   const form = props.form;
   function save() {
     const body = {
@@ -93,9 +94,10 @@ function SaveButton(props: { form: FormContext }) {
       organiser_type: form.organiserType,
       chat_enabled: form.chatEnabled,
       remove_inactive_participants: form.removeInactive,
+      game_variant: form.variant,
     };
 
-    fetchJson(`/s/tournament/template/save`, "POST", body, () => {});
+    fetchJson(`/s/tournament/template/save`, "POST", body, () => { });
 
     fetchJson(`/s/tournament/build`, "POST", body, (result) => {
       window.location.assign(`/tournament/view/${result.id}`);
@@ -113,7 +115,7 @@ function SaveButton(props: { form: FormContext }) {
   );
 }
 
-function Label({ text }: { text: string }) {
+function Label({ text }: { text: string; }) {
   return <div className={style.heading}>{text}</div>;
 }
 
@@ -153,6 +155,7 @@ function buildTournament(form: FormContext) {
     organiser_type: form.organiserType,
     chat_enabled: form.chatEnabled,
     remove_inactive_participants: form.removeInactive,
+    game_variant: form.variant,
   };
 
   fetchJson(`/s/tournament/build`, "POST", body, (result) => {
@@ -160,7 +163,7 @@ function buildTournament(form: FormContext) {
   });
 }
 
-function TemplateForm(props: { onCustom: () => void }) {
+function TemplateForm(props: { onCustom: () => void; }) {
   const [activeStep, setActiveStep] = useState(0);
 
   const { selectedTemplate } = useTemplate();
@@ -246,7 +249,7 @@ function TemplateForm(props: { onCustom: () => void }) {
   );
 }
 
-function Form(props: { onTemplate: () => void }) {
+function Form(props: { onTemplate: () => void; }) {
   const [activeStep, setActiveStep] = useState(0);
 
   const form = useForm();
@@ -325,6 +328,7 @@ function Form(props: { onTemplate: () => void }) {
               next();
             }}
           >
+            <Variant />
             <Format />
             <ActionButtons onLeftClick={previous} />
           </form>

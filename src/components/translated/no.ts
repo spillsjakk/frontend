@@ -519,6 +519,8 @@ const no = {
   "tournamentTemplatePlaceholder": "Velg mal",
   "increment": "tillegg",
   "leagues": "Ligaer",
+  "chess": "Chess",
+  "antichess": "Antichess"
 };
 
 export { no };

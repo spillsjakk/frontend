@@ -15,6 +15,7 @@ import Chessground from "react-chessground";
 import Chess from "chess.js";
 import { Chess as OpsChess } from "chessops";
 import { parseFen } from "chessops/fen";
+import { Antichess } from "chessops/variant";
 import { chessgroundDests } from "chessops/compat";
 import { Howl } from "howler";
 import { Modal, Button } from "react-bootstrap";
@@ -105,6 +106,7 @@ type PlayState = {
   promotionPreference: string | null;
   autoPromotion: boolean;
   flagRequestIsSent: boolean;
+  lastUpdateData: any;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -175,6 +177,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       promotionPreference: null,
       autoPromotion: false,
       flagRequestIsSent: false,
+      lastUpdateData: null,
     };
     this.groundRef = React.createRef();
     this.moveSound = new Howl({
@@ -244,11 +247,21 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         undefined,
         (json) => {
           if (json) {
-            this.setState({
-              white_fide_federation: json.white_fide_federation,
-              black_fide_federation: json.black_fide_federation,
-              tournament: json.tournament,
-            });
+            this.setState(
+              {
+                white_fide_federation: json.white_fide_federation,
+                black_fide_federation: json.black_fide_federation,
+                tournament: json.tournament,
+              },
+              () => {
+                if (
+                  json.tournament?.game_variant === "Antichess" &&
+                  this.state.lastUpdateData?.moves
+                ) {
+                  this.updateData(this.state.lastUpdateData);
+                }
+              }
+            );
           }
         }
       );
@@ -282,8 +295,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   connect = () => {
+    const schema = window.location.host === "localhost" ? "ws://" : "wss://";
     const ws = new WebSocket(
-      "wss://" + window.location.host + "/socket/" + this.gameId
+      schema + window.location.host + "/socket/" + this.gameId
     );
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this; // cache the this
@@ -360,7 +374,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   updateData(data: any) {
     if (data.t === "game") {
-      const newState: any = {};
+      const newState: any = { lastUpdateData: data };
 
       const [game, lastMove] = this.reconstructGame(data.moves);
       newState.game = game;
@@ -381,9 +395,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       newState.lastMove = lastMove;
       newState.turn = game.turn() === "w" ? "white" : "black";
 
-      const opsGame = OpsChess.fromSetup(
-        parseFen(newState.fen).unwrap()
-      ).unwrap();
+      const chessLib =
+        this.state.tournament?.game_variant === "Antichess"
+          ? Antichess
+          : OpsChess;
+
+      const opsGame = chessLib
+        .fromSetup(parseFen(newState.fen).unwrap())
+        .unwrap();
 
       newState.check = opsGame.isCheck();
 
@@ -455,7 +474,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
           }
           if (game.insufficient_material()) {
             fetchJson(
-              `/s/game/move/${this.gameId}/draw/auto`,
+              `/s/game/move/${
+                this.gameId
+              }/draw/auto?variant=${this.getVariant()}`,
               "POST",
               undefined,
               (_) => {}
@@ -524,7 +545,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
     if (!promoting) {
       fetchCall(
-        `/s/game/move/${this.gameId}/${source}/${target}`,
+        `/s/game/move/${
+          this.gameId
+        }/${source}/${target}?variant=${this.getVariant()}`,
         "POST",
         undefined,
         (_) => {}
@@ -558,7 +581,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     const localSource = source || this.state.promotionTempSource;
     const localTarget = target || this.state.promotionTempTarget;
     fetchJson(
-      `/s/game/move/${this.gameId}/${localSource}/${localTarget}?promotion=${which}`,
+      `/s/game/move/${
+        this.gameId
+      }/${localSource}/${localTarget}?promotion=${which}&variant=${this.getVariant()}`,
       "POST",
       undefined,
       (_) => {
@@ -577,7 +602,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   resignYes() {
     fetchJson(
-      `/s/game/move/${this.gameId}/resign/resign`,
+      `/s/game/move/${this.gameId}/resign/resign?variant=${this.getVariant()}`,
       "POST",
       undefined,
       (_) => {
@@ -598,7 +623,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
   drawYes() {
     fetchJson(
-      `/s/game/move/${this.gameId}/draw/yes`,
+      `/s/game/move/${this.gameId}/draw/yes?variant=${this.getVariant()}`,
       "POST",
       undefined,
       (_) => {
@@ -608,9 +633,18 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   drawNo() {
-    fetchJson(`/s/game/move/${this.gameId}/draw/no`, "POST", undefined, (_) => {
-      this.setState({ showDrawConfirm: false, pendingDrawOffer: 0 });
-    });
+    fetchJson(
+      `/s/game/move/${this.gameId}/draw/no?variant=${this.getVariant()}`,
+      "POST",
+      undefined,
+      (_) => {
+        this.setState({ showDrawConfirm: false, pendingDrawOffer: 0 });
+      }
+    );
+  }
+
+  getVariant() {
+    return this.state.tournament?.game_variant === "Antichess" ? 1 : 0;
   }
 
   clockTick() {
@@ -630,11 +664,14 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         if (
           newTime < 0 &&
           this.state.isPlayer &&
+          this.state.tournament &&
           !this.state.flagRequestIsSent
         ) {
           this.setState({ flagRequestIsSent: true });
           fetchJson(
-            `/s/game/move/${this.gameId}/flag/flag`,
+            `/s/game/move/${
+              this.gameId
+            }/flag/flag?variant=${this.getVariant()}`,
             "POST",
             undefined,
             (_) => {}
@@ -1034,9 +1071,12 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       rookCastle: false,
                     }}
                     premovable={{
-                      enabled: true,
-                      showDests: true,
-                      castle: true,
+                      enabled:
+                        this.state.tournament?.game_variant !== "Antichess",
+                      showDests:
+                        this.state.tournament?.game_variant !== "Antichess",
+                      castle:
+                        this.state.tournament?.game_variant === "Antichess",
                       events: {
                         set: (orig: any, dest: any) => {
                           this.setState({

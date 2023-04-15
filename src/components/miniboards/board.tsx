@@ -162,7 +162,8 @@ const Board: FunctionComponent<Props> = (props) => {
   }
 
   function connect() {
-    const ws = new WebSocket("wss://" + window.location.host + "/socket/" + id);
+    const schema = window.location.host === "localhost" ? "ws://" : "wss://";
+    const ws = new WebSocket(schema + window.location.host + "/socket/" + id);
 
     // websocket onopen event listener
     ws.onopen = () => {

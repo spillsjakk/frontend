@@ -524,7 +524,9 @@ const en = {
   "tournamentTemplatePlaceholder": "Please Select a Template",
   "increment": "increment",
   "allTournaments": "All Tournaments",
-  "leagues": "Leagues"
+  "leagues": "Leagues",
+  "chess": "Chess",
+  "antichess": "Antichess"
 };
 
 export { en };

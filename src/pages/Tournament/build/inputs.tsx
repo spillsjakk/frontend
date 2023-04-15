@@ -14,7 +14,7 @@ import { useTemplate } from "../../../context/build-tournament-template";
 import style from "./style.module.scss";
 import { DateTimePicker, LocalizationProvider } from "@material-ui/lab";
 import { useForm } from "../../../hocs/tournament-form";
-import { KIND } from "../../../constants";
+import { KIND, VARIANT } from "../../../constants";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdownV2 } from "../../../components/tie-breaker-dropdown";
 import { useOrgsClubs } from "../../../hocs/user-orgs-and-clubs";
@@ -558,6 +558,36 @@ export function Format() {
                 <br />
               </Grid>
             )}
+          </Grid>
+        </Grid>
+      </div>
+    </div>
+  );
+}
+
+export function Variant() {
+  const form = useForm();
+
+  return (
+    <div className={style.content}>
+      <div className={style.inputs}>
+        <Grid container spacing={3}>
+          <Grid item container xs={6} spacing={3}>
+            <Grid item>
+              <NativeSelect
+                id="teams"
+                onChange={(e) => form.changeVariant(Number(e.target.value))}
+                variant="outlined"
+                value={form.variant}
+                fullWidth
+              >
+                {Object.keys(VARIANT).map((v) => (
+                  <option value={VARIANT[v]} key={VARIANT[v]}>
+                    {Translated.byKey(v.replace(/^.{1}/g, v[0].toLowerCase()))}
+                  </option>
+                ))}
+              </NativeSelect>
+            </Grid>
           </Grid>
         </Grid>
       </div>

@@ -13,6 +13,11 @@ export const KIND = {
   TeamRoundRobin: 9,
 };
 
+export const VARIANT = {
+  Chess: 0,
+  Antichess: 1,
+};
+
 export const TIEBREAKER = {
   AverageOpponentRating: 0,
   Buchholz: 1,
