@@ -2,7 +2,7 @@ import React, {
   FunctionComponent,
   useCallback,
   useEffect,
-  useState
+  useState,
 } from "react";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
@@ -91,6 +91,7 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
           form.changeTb4((TIEBREAKER as any)[savedTournament.tb4]);
         }
         form.changeRemoveInactive(savedTournament.remove_inactive_participants);
+        form.changeVariant(savedTournament.game_variant);
         setSelectedTemplate(value);
         return;
       }

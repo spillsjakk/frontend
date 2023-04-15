@@ -39,7 +39,7 @@ export type Tournament = {
   remove_inactive_participants: boolean;
   pinned?: boolean;
   pinned_order?: number;
-  game_variant: string;
+  game_variant: number;
 };
 
 export type Participant = {

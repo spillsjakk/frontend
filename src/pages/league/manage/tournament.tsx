@@ -34,6 +34,7 @@ import {
   Format,
   TimeControl,
   Advanced,
+  Variant,
 } from "../../Tournament/build/inputs";
 
 function SeasonAndCategory() {
@@ -430,6 +431,7 @@ function Form(props: { onTemplate: () => void }) {
               next();
             }}
           >
+            <Variant />
             <Format />
             <ActionButtons onLeftClick={previous} />
           </form>
