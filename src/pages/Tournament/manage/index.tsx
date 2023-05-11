@@ -14,7 +14,7 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { SearchMatchProps } from "react-bootstrap-table2-toolkit";
 import UserLink from "../../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
-import { Chess } from "chess.js";
+import { Chess } from "@spillsjakk/chess.js";
 import { UserContext } from "../../../components/UserContext";
 import {
   Tournament,

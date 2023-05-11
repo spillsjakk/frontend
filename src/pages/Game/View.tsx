@@ -9,7 +9,7 @@ import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import "./chessground-theme.css";
 import { fetchJson, title } from "../../functions";
-import { Chess } from "chess.js";
+import { Chess } from "@spillsjakk/chess.js";
 import "./View.css";
 import { UserInfoBox } from "./play/user-info-box";
 import { Tournament } from "../Tournament/Types";

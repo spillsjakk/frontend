@@ -12,7 +12,7 @@ import "react-chessground/dist/styles/chessground.css";
 import "./style.scss";
 import "../chessground-theme.css";
 import Chessground from "react-chessground";
-import { Chess, Square } from "chess.js";
+import { Chess, Square } from "@spillsjakk/chess.js";
 import { Chess as OpsChess } from "chessops";
 import { parseFen } from "chessops/fen";
 import { Antichess } from "chessops/variant";

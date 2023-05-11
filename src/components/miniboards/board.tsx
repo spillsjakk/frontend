@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import "react-chessground/dist/styles/chessground.css";
 import Chessground from "react-chessground";
-import { Chess } from "chess.js";
+import { Chess } from "@spillsjakk/chess.js";
 import { Clock } from "./clock";
 import style from "./style.module.scss";
 import Translated from "../translated";
