@@ -11,7 +11,7 @@ import { FormInputs } from "./form-inputs";
 import { ShortFormInputs } from "./short-form-inputs";
 import { useTournamentRound } from "../../../context/tournament-round";
 import { useTournament } from "../../../context/tournament";
-import { KIND, TIEBREAKER } from "../../../constants";
+import { KIND, TIEBREAKER, VARIANT } from "../../../constants";
 import { Helmet } from "react-helmet";
 
 const EditTournamentForm: FunctionComponent<{}> = () => {
@@ -83,6 +83,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       banner_picture: form.bannerPicture,
       chat_enabled: form.chatEnabled,
       remove_inactive_participants: form.removeInactive,
+      game_variant: form.variant,
     };
 
     fetchJson(`/s/tournament/${getId()}`, "PUT", body, (result) => {
@@ -130,6 +131,7 @@ const EditTournamentForm: FunctionComponent<{}> = () => {
       form.changeBannerPicture(tournament.banner_picture || "");
       form.changeProfilePicture(tournament.profile_picture || "");
       form.changeRemoveInactive(tournament.remove_inactive_participants);
+      form.changeVariant(VARIANT[tournament.game_variant]);
       if (tournament.per_team_limit) {
         form.changePerTeam!(tournament.per_team_limit);
       }

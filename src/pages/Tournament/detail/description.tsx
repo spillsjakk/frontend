@@ -59,6 +59,8 @@ const Description: FunctionComponent<{}> = () => {
                 />
                 {tournament?.per_team_limit &&
                   ` - ${tournament.per_team_limit} per team`}
+                {tournament?.game_variant !== "Chess" &&
+                  ` - ${tournament?.game_variant}`}
               </p>
             </div>
             <div className={`${style.box} ${style.item}`}>

@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import Translated from "../../components/translated";
 import { useUser } from "../../components/UserContext";
-import { KIND, TIEBREAKER } from "../../constants";
+import { KIND, TIEBREAKER, VARIANT } from "../../constants";
 import { TemplateProvider } from "../../context/build-tournament-template";
 import { fetchJson, generateId } from "../../functions";
 import { useForm } from "../../hocs/tournament-form";
@@ -91,7 +91,7 @@ const WithBuildTournamentTemplate: FunctionComponent = ({ children }) => {
           form.changeTb4((TIEBREAKER as any)[savedTournament.tb4]);
         }
         form.changeRemoveInactive(savedTournament.remove_inactive_participants);
-        form.changeVariant(savedTournament.game_variant as number);
+        form.changeVariant(VARIANT[savedTournament.game_variant]);
         setSelectedTemplate(value);
         return;
       }

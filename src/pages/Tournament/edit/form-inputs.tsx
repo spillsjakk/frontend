@@ -3,7 +3,7 @@ import { useForm } from "../../../hocs/tournament-form";
 import Translated from "../../../components/translated";
 import { TiebreakerDropdown } from "../../../components/tie-breaker-dropdown";
 import { Countdown } from "../../../components/count-down/index";
-import { KIND } from "../../../constants";
+import { KIND, VARIANT } from "../../../constants";
 import { Editor } from "../../../components/markdown";
 import { isTeam } from "../../../functions";
 
@@ -128,6 +128,41 @@ const FormInputs: FunctionComponent<{}> = () => {
         <label className="form-check-label" htmlFor="fide_rated">
           <Translated str="fideRated" />
         </label>
+      </div>
+      <div className="mt-4">
+        <label>
+          <Translated str="variant" />:
+        </label>
+      </div>
+      <div className="d-flex flex-row">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="variant"
+            id="variant1"
+            value={VARIANT.Chess}
+            checked={form.variant === VARIANT.Chess}
+            onChange={(e) => form.changeVariant(VARIANT.Chess)}
+          />
+          <label className="form-check-label" htmlFor="variant1">
+            <Translated str="chess" />
+          </label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="variant"
+            id="variant2"
+            value={VARIANT.Antichess}
+            checked={form.variant === VARIANT.Antichess}
+            onChange={(e) => form.changeVariant(VARIANT.Antichess)}
+          />
+          <label className="form-check-label" htmlFor="variant2">
+            <Translated str="Antichess" />
+          </label>
+        </div>
       </div>
       <div className="mt-4">
         <label>
