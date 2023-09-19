@@ -1,7 +1,4 @@
-import {
-  DataGrid,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 import { Helmet } from "react-helmet";

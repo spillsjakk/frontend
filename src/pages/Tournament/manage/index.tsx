@@ -54,7 +54,7 @@ import { ChangeMemberCount } from "./change-member-count";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { PinTournament } from "../../../components/pin-tournament";
 
-const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string; }> = (
+const GenerateNextRoundButton: FunctionComponent<{ tournamentId: string }> = (
   props
 ) => {
   const notif = useNotification();
@@ -112,7 +112,7 @@ const GenerateNextRoundGamesButton: FunctionComponent<{
   );
 };
 
-function ChangeTime(props: { white: boolean; add: boolean; id: string; }) {
+function ChangeTime(props: { white: boolean; add: boolean; id: string }) {
   return (
     <button
       className="btn-primary"
@@ -125,7 +125,7 @@ function ChangeTime(props: { white: boolean; add: boolean; id: string; }) {
             white: props.white,
             add: props.add,
           },
-          () => { }
+          () => {}
         );
       }}
     >
@@ -143,8 +143,8 @@ type FullTournamentInfo = {
   is_team_tournament: boolean;
   managed_teams?: Team[];
   can_start: boolean;
-  games: { [id: string]: LightGame[]; };
-  tko_separation?: { [id: string]: TKOSeparation; };
+  games: { [id: string]: LightGame[] };
+  tko_separation?: { [id: string]: TKOSeparation };
   self_join_teams?: Team[];
   is_participating: boolean;
   organiser_name: string;
@@ -553,8 +553,9 @@ class Manage extends Component<
 
   getPgn(name: string, start, round, white, black, outcome, moves) {
     const game = this.reconstructGame(moves);
-    return `[Event "${name}"]\n[Site "spillsjakk.no"]\n[Date "${start}"]\n[round "${round}"]\n[White "${white}"]\n[Black "${black}"]\n[Result "${outcome === 1 ? "1-0" : outcome === -1 ? "0-1" : "1/2-1/2"
-      }"]\n\n${game.pgn()}\n\n
+    return `[Event "${name}"]\n[Site "spillsjakk.no"]\n[Date "${start}"]\n[round "${round}"]\n[White "${white}"]\n[Black "${black}"]\n[Result "${
+      outcome === 1 ? "1-0" : outcome === -1 ? "0-1" : "1/2-1/2"
+    }"]\n\n${game.pgn()}\n\n
     `;
   }
 
@@ -569,24 +570,24 @@ class Manage extends Component<
           element.setAttribute(
             "href",
             "data:text/plain;charset=utf-8," +
-            encodeURIComponent(
-              result.games.reduce((acc, val) => {
-                const pgn = `${this.getPgn(
-                  result.name,
-                  val.start,
-                  val.round,
-                  val.white_name,
-                  val.black_name,
-                  val.outcome,
-                  val.moves
-                )}`;
-                if (acc) {
-                  return `${acc}\n${pgn}`;
-                } else {
-                  return pgn;
-                }
-              }, false)
-            )
+              encodeURIComponent(
+                result.games.reduce((acc, val) => {
+                  const pgn = `${this.getPgn(
+                    result.name,
+                    val.start,
+                    val.round,
+                    val.white_name,
+                    val.black_name,
+                    val.outcome,
+                    val.moves
+                  )}`;
+                  if (acc) {
+                    return `${acc}\n${pgn}`;
+                  } else {
+                    return pgn;
+                  }
+                }, false)
+              )
           );
           element.setAttribute(
             "download",
@@ -646,10 +647,10 @@ class Manage extends Component<
           {info.tournament.kind !== "TeamKnockout"
             ? outcomeToStr(pairing.outcome)
             : outcomeToStr(
-              info.tko_separation?.[
-                pairing.round.toString() + "_" + pairing.white
-              ].game1
-            )}
+                info.tko_separation?.[
+                  pairing.round.toString() + "_" + pairing.white
+                ].game1
+              )}
         </td>
       );
 
@@ -728,10 +729,10 @@ class Manage extends Component<
 
       const games =
         info.games[
-        pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
+          pairing.round.toString() + "_" + pairing.white + "_" + pairing.black
         ] ||
         info.games[
-        pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
+          pairing.round.toString() + "_" + pairing.black + "_" + pairing.white
         ] ||
         [];
       const sortedGames = games.sort((a, b) =>
@@ -844,8 +845,8 @@ class Manage extends Component<
             <div className="mt-4">
               {(this.state.info?.tournament.kind === "RoundRobin" ||
                 this.state.info?.tournament.kind === "TeamRoundRobin") && (
-                  <SetupRoundButton roundNumber={i + 1} />
-                )}
+                <SetupRoundButton roundNumber={i + 1} />
+              )}
               <a
                 href={
                   "/s/tournament/printout/boardcards/" +
@@ -1013,8 +1014,9 @@ class Manage extends Component<
                             </Link>
                           ))}
                         <Link
-                          className={`p-3 ml-3 btn btn-primary ${info.pairings.length === 0 ? "ml-5" : ""
-                            } mb-3`}
+                          className={`p-3 ml-3 btn btn-primary ${
+                            info.pairings.length === 0 ? "ml-5" : ""
+                          } mb-3`}
                           to={"/tournament/edit/" + info.tournament.id}
                         >
                           <Translated str="editTournament" />

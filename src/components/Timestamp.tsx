@@ -1,6 +1,6 @@
 import React from "react";
 
-export function TimestampString(time: string) : string {
+export function TimestampString(time: string): string {
   const d = new Date(time);
 
   const month = (d.getMonth() + 1).toString().padStart(2, "0");
@@ -11,7 +11,9 @@ export function TimestampString(time: string) : string {
   const minutes = d.getMinutes().toString().padStart(2, "0");
   const seconds = d.getSeconds().toString().padStart(2, "0");
 
-  return [year, month, day].join("-") + " " + [hours, minutes, seconds].join(":");
+  return (
+    [year, month, day].join("-") + " " + [hours, minutes, seconds].join(":")
+  );
 }
 
 export function Timestamp(props: { time: string }) {

@@ -69,10 +69,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
           {this.getProfilePicture()}
           <h1 className="mt-4 p-3">{info.team.name}</h1>
         </div>
-        <ReactMarkdown
-          linkTarget="_blank"
-          className="scroll-max-70"
-        >
+        <ReactMarkdown linkTarget="_blank" className="scroll-max-70">
           {xssFilters.inHTMLData(info.team.description || "")}
         </ReactMarkdown>
 

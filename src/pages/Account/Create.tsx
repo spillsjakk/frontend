@@ -36,7 +36,7 @@ function SelectClubs(props: {
     <div className={style.select}>
       <div className={style.inputs}>
         <NativeSelect
-         id="selectclub"
+          id="selectclub"
           onChange={(e) => {
             const value = e.target.value;
             props.onChange(value);
@@ -47,9 +47,7 @@ function SelectClubs(props: {
           <option value="" disabled>
             {Translated.byKey("selectClub")}
           </option>
-          <option value="n/a">
-            N/A
-          </option>
+          <option value="n/a">N/A</option>
           {Array.isArray(clubs) &&
             clubs.map((club) => (
               <option key={club.id} value={club.id}>
@@ -94,9 +92,7 @@ const Create: FunctionComponent<{}> = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/profile/" + params.row.id}>
-              {params.row.username}
-            </Link>
+            <Link to={"/profile/" + params.row.id}>{params.row.username}</Link>
           </>
         );
       },
@@ -118,7 +114,6 @@ const Create: FunctionComponent<{}> = () => {
           </>
         );
       },
-
     },
     {
       field: "last_name",
@@ -131,9 +126,7 @@ const Create: FunctionComponent<{}> = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/profile/" + params.row.id}>
-              {params.row.last_name}
-            </Link>
+            <Link to={"/profile/" + params.row.id}>{params.row.last_name}</Link>
           </>
         );
       },
@@ -306,8 +299,8 @@ const Create: FunctionComponent<{}> = () => {
       sex: account.sex,
       email: account.email,
       level: account.level,
-    }
-  })
+    };
+  });
 
   return (
     <>
@@ -411,14 +404,16 @@ const Create: FunctionComponent<{}> = () => {
               id="fideFederationInput"
               name="fide_federation"
               value={fide_federation}
-              onChange={(e) => setFideFederation(e.target.value)} />
+              onChange={(e) => setFideFederation(e.target.value)}
+            />
           </Grid>
           <Grid item xs={12} lg={9} md={8}>
             <MuiTitleDropdown
               id="titleInput"
               name="title"
               value={title}
-              onChange={(e) => setTitle(e.target.value)} />
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </Grid>
           <Grid item xs={12} lg={3} md={4}>
             <NativeSelect
@@ -443,7 +438,8 @@ const Create: FunctionComponent<{}> = () => {
               id="sexInput"
               name="sex"
               value={sex}
-              onChange={(e) => setSex(e.target.value)} />
+              onChange={(e) => setSex(e.target.value)}
+            />
           </Grid>
           <Grid item xs={12} lg={3} md={4}>
             <WithUserOrgsClubs>
@@ -482,13 +478,11 @@ const Create: FunctionComponent<{}> = () => {
         </HelpBox>
         <br />
         <br />
-        {accounts.length ?
-          <DataGrid
-            autoHeight
-            rows={accountData}
-            columns={accountsColumns}
-          /> : ""
-        }
+        {accounts.length ? (
+          <DataGrid autoHeight rows={accountData} columns={accountsColumns} />
+        ) : (
+          ""
+        )}
       </form>
       <h3 className="mt-5">
         <Translated str="passwords" />

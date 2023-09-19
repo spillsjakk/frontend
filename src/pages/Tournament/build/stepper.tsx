@@ -28,7 +28,7 @@ import Translated from "../../../components/translated";
 
 function ActionButtons({
   onLeftClick,
-  onRightClick = () => { },
+  onRightClick = () => {},
   leftText = Translated.byKey("back"),
   rightText = Translated.byKey("next"),
   rightDisabled = false,
@@ -56,7 +56,7 @@ function ActionButtons({
   );
 }
 
-function SaveButton(props: { form: FormContext; }) {
+function SaveButton(props: { form: FormContext }) {
   const form = props.form;
   function save() {
     const body = {
@@ -97,7 +97,7 @@ function SaveButton(props: { form: FormContext; }) {
       game_variant: form.variant,
     };
 
-    fetchJson(`/s/tournament/template/save`, "POST", body, () => { });
+    fetchJson(`/s/tournament/template/save`, "POST", body, () => {});
 
     fetchJson(`/s/tournament/build`, "POST", body, (result) => {
       window.location.assign(`/tournament/view/${result.id}`);
@@ -115,7 +115,7 @@ function SaveButton(props: { form: FormContext; }) {
   );
 }
 
-function Label({ text }: { text: string; }) {
+function Label({ text }: { text: string }) {
   return <div className={style.heading}>{text}</div>;
 }
 
@@ -163,7 +163,7 @@ function buildTournament(form: FormContext) {
   });
 }
 
-function TemplateForm(props: { onCustom: () => void; }) {
+function TemplateForm(props: { onCustom: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
 
   const { selectedTemplate } = useTemplate();
@@ -249,7 +249,7 @@ function TemplateForm(props: { onCustom: () => void; }) {
   );
 }
 
-function Form(props: { onTemplate: () => void; }) {
+function Form(props: { onTemplate: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
 
   const form = useForm();

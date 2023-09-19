@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Helmet } from 'react-helmet';
+import { Helmet } from "react-helmet";
 import { Timestamp } from "../components/Timestamp";
 import Translated from "../components/translated";
 import UserLink from "../components/UserLink";
@@ -15,7 +15,7 @@ type Message = {
   moment: string;
   read: boolean;
   message: string;
-}
+};
 
 class Inbox extends PureComponent<{}, InboxState> {
   constructor(props: {}) {
@@ -24,13 +24,17 @@ class Inbox extends PureComponent<{}, InboxState> {
     this.state = { messages: [] };
   }
 
-
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Inbox";
 
-    fetchJson('/s/messages/get-and-mark-read', "POST", undefined, messages => {
-      this.setState({ messages });
-    });
+    fetchJson(
+      "/s/messages/get-and-mark-read",
+      "POST",
+      undefined,
+      (messages) => {
+        this.setState({ messages });
+      }
+    );
   }
 
   render() {
@@ -39,17 +43,20 @@ class Inbox extends PureComponent<{}, InboxState> {
         <Helmet>
           <title>{title("inbox")}</title>
         </Helmet>
-        <h1 className="mt-5 p-3"><Translated str="inbox" /></h1>
+        <h1 className="mt-5 p-3">
+          <Translated str="inbox" />
+        </h1>
 
-        {this.state.messages.map(msg =>
+        {this.state.messages.map((msg) => (
           <>
-            <p style={ msg.read ? {} : { fontWeight: "bold" }}>
+            <p style={msg.read ? {} : { fontWeight: "bold" }}>
               <Timestamp time={msg.moment} /> -&nbsp;
-              <UserLink ghost={false} id={msg.sender} name={msg.sender_name} />:&nbsp;
+              <UserLink ghost={false} id={msg.sender} name={msg.sender_name} />
+              :&nbsp;
               {msg.message}
             </p>
           </>
-        )}
+        ))}
       </>
     );
   }

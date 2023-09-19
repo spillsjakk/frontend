@@ -75,7 +75,7 @@ const AccountsWithPowersModal: FunctionComponent<Props> = ({ forClub }) => {
       }
     );
   }
-  
+
   function deleteOrgPower(orgId, packageName, userId) {
     fetchCall(
       `/s/account/power/organization/${orgId} `,
@@ -89,7 +89,7 @@ const AccountsWithPowersModal: FunctionComponent<Props> = ({ forClub }) => {
       }
     );
   }
-  
+
   const columns = [
     {
       dataField: "first_name",

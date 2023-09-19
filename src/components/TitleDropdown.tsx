@@ -37,21 +37,23 @@ export function MuiTitleDropdown(props: {
 }) {
   return (
     <NativeSelect
-    variant="outlined"
-    value={props.value}
-    onChange={props.onChange}
-    name={props.name}
-    id={props.id}
-  >
-    <option value="" disabled>{Translated.byKey("title")}</option>
-    <option value="GM">GM</option>
-    <option value="IM">IM</option>
-    <option value="FM">FM</option>
-    <option value="CM">CM</option>
-    <option value="WGM">WGM</option>
-    <option value="WIM">WIM</option>
-    <option value="WFM">WFM</option>
-    <option value="WCM">WCM</option>
-  </NativeSelect>
+      variant="outlined"
+      value={props.value}
+      onChange={props.onChange}
+      name={props.name}
+      id={props.id}
+    >
+      <option value="" disabled>
+        {Translated.byKey("title")}
+      </option>
+      <option value="GM">GM</option>
+      <option value="IM">IM</option>
+      <option value="FM">FM</option>
+      <option value="CM">CM</option>
+      <option value="WGM">WGM</option>
+      <option value="WIM">WIM</option>
+      <option value="WFM">WFM</option>
+      <option value="WCM">WCM</option>
+    </NativeSelect>
   );
 }

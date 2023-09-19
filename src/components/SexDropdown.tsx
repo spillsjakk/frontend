@@ -2,11 +2,11 @@ import { NativeSelect } from "@material-ui/core";
 import React, { ChangeEvent } from "react";
 import Translated from "./translated";
 export default function SexDropdown(props: {
-  className?: string,
-  value?: string,
-  name?: string,
-  id?: string,
-  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void
+  className?: string;
+  value?: string;
+  name?: string;
+  id?: string;
+  onChange?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }) {
   return (
     <select
@@ -35,10 +35,11 @@ export function MuiSexDropdown(props: {
       name={props.name}
       id={props.id}
     >
-      <option value="" disabled>{Translated.byKey("sex")}</option>
+      <option value="" disabled>
+        {Translated.byKey("sex")}
+      </option>
       <option value="M">M</option>
       <option value="F">F</option>
     </NativeSelect>
   );
 }
-

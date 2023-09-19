@@ -27,10 +27,7 @@ const DetailSummaryContent: FunctionComponent<{}> = () => {
           <div className={style.label}>
             {Translated.byKey("manageOrg_aboutOrg")}
           </div>
-          <ReactMarkdown
-            linkTarget="_blank"
-            className={style["scroll-max-70"]}
-          >
+          <ReactMarkdown linkTarget="_blank" className={style["scroll-max-70"]}>
             {xssFilters.inHTMLData(organization.description || "")}
           </ReactMarkdown>
         </>

@@ -32,10 +32,10 @@ const ChangePairingTime: FunctionComponent<Props> = (props) => {
       },
       () => {
         props.onSuccess();
-        notification.notify("success", Translated.byKey("successful"))
+        notification.notify("success", Translated.byKey("successful"));
       },
       (result) => {
-        notification.notify("error", result)
+        notification.notify("error", result);
       }
     );
   }

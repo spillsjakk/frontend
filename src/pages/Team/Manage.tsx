@@ -119,7 +119,9 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
       {
         name: this.state.newName,
         description: this.state.newDescription ? this.state.newDescription : "",
-        profile_picture: this.state.profilePicture ? this.state.profilePicture : "",
+        profile_picture: this.state.profilePicture
+          ? this.state.profilePicture
+          : "",
       },
       (_) => {
         const info = { ...this.state.info! };
@@ -190,7 +192,7 @@ class Manage extends Component<RouteComponentProps<ManageProps>, ManageState> {
               value={this.state.newDescription}
               height={150}
               onChange={(value) => {
-                this.setState({ newDescription:  value });
+                this.setState({ newDescription: value });
               }}
             />
           </div>
