@@ -14,7 +14,7 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { SearchMatchProps } from "react-bootstrap-table2-toolkit";
 import UserLink from "../../../components/UserLink";
 import { Tab, Nav, Button } from "react-bootstrap";
-import { Chess } from "@spillsjakk/chess.js";
+import { Chess, PawnVsPawn } from "@spillsjakk/chess.js";
 import { UserContext } from "../../../components/UserContext";
 import {
   Tournament,
@@ -40,7 +40,7 @@ import { WithTournamentPairing } from "../../../hocs/tournament-pairing";
 import { WithRoundSetupPopup } from "../../../hocs/with-round-setup-popup";
 import { HelpBox, helpboxNames } from "../../../components/help-box";
 import { numToSquare } from "../../Game/play/clock";
-import { DRAW_OFFER_SIGN } from "../../../constants";
+import { DRAW_OFFER_SIGN, VARIANT } from "../../../constants";
 import { Event, Person, TrackChanges } from "@material-ui/icons";
 import {
   useNotification,
@@ -523,7 +523,16 @@ class Manage extends Component<
   }
 
   reconstructGame(moves: Array<number>) {
-    const game = new Chess();
+    const game = (() => {
+      switch (this.state.info.tournament?.game_variant) {
+        case VARIANT[VARIANT.PawnVsPawn]: {
+          return new PawnVsPawn();
+        }
+        default: {
+          return new Chess();
+        }
+      }
+    })();
     for (let i = 0; i < moves.length; i += 3) {
       if (moves[i] === 97) {
         // draw offer
@@ -532,7 +541,7 @@ class Manage extends Component<
       }
       const from = numToSquare(moves[i]);
       const to = numToSquare(moves[i + 1]);
-      let prom: string | null = "-nbrq"[moves[i + 2]];
+      let prom: string | null = "-pnbrq"[moves[i + 2]];
       if (prom === "-") {
         prom = null;
       }

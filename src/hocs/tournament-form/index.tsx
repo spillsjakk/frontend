@@ -18,8 +18,8 @@ export interface FormContext {
   changeDescription: (value: string) => void;
   kind: number;
   changeKind: (value: number) => void;
-  variant: number;
-  changeVariant: (value: number) => void;
+  variant: VARIANT;
+  changeVariant: (value: VARIANT) => void;
   defaultGameLocation: number;
   changeDefaultGameLocation: (value: number) => void;
   startDate: string;
@@ -97,8 +97,8 @@ const initalValues = {
   changeDescription: (value: string) => {},
   kind: Object.values(KIND)[0],
   changeKind: (value: number) => {},
-  variant: Object.values(VARIANT)[0],
-  changeVariant: (value: number) => {},
+  variant: VARIANT.Chess,
+  changeVariant: (value: VARIANT) => {},
   defaultGameLocation: 0,
   changeDefaultGameLocation: (value: number) => {},
   startDate: "",
@@ -173,7 +173,7 @@ const WithTournamentForm: FunctionComponent = ({ children }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [kind, setKind] = useState(Object.values(KIND)[0]);
-  const [variant, setVariant] = useState(Object.values(VARIANT)[0]);
+  const [variant, setVariant] = useState(VARIANT.Chess);
   const [defaultGameLocation, setDefaultGameLocation] = useState(1);
   const [startDate, setStartDate] = useState(
     new Date().toISOString().slice(0, 10)

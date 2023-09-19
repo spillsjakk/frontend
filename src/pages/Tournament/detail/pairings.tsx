@@ -265,7 +265,7 @@ const MiniBoardsView: FunctionComponent<{ round: number }> = memo(
     }
     return (
       <>
-        <Miniboards data={getGameData()} />
+        <Miniboards data={getGameData()} tournament={tournament} />
       </>
     );
   }

@@ -9,11 +9,11 @@ import Chessground from "react-chessground";
 import "react-chessground/dist/styles/chessground.css";
 import "./chessground-theme.css";
 import { fetchJson, title } from "../../functions";
-import { Chess } from "@spillsjakk/chess.js";
+import { Chess, PawnVsPawn } from "@spillsjakk/chess.js";
 import "./View.css";
 import { UserInfoBox } from "./play/user-info-box";
 import { Tournament } from "../Tournament/Types";
-import { DRAW_OFFER_SIGN } from "../../constants";
+import { DRAW_OFFER_SIGN, VARIANT } from "../../constants";
 import { FileCopy } from "@material-ui/icons";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
@@ -168,7 +168,16 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
   }
 
   reconstructGame(moves: Array<number>): [[string, string], Chess] {
-    const game = new Chess();
+    const game = (() => {
+      switch (this.state.tournamentData?.game_variant) {
+        case VARIANT[VARIANT.PawnVsPawn]: {
+          return new PawnVsPawn();
+        }
+        default: {
+          return new Chess();
+        }
+      }
+    })();
     let lastMove;
     for (let i = 0; i < moves.length; i += 3) {
       if (moves[i] === 97) {
@@ -178,7 +187,7 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       }
       const from = numToSquare(moves[i]);
       const to = numToSquare(moves[i + 1]);
-      let prom: string | null = "-nbrq"[moves[i + 2]];
+      let prom: string | null = "-pnbrq"[moves[i + 2]];
       if (prom === "-") {
         prom = null;
       }

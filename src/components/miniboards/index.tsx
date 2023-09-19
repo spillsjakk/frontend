@@ -10,9 +10,10 @@ import style from "./style.module.scss";
 
 interface Props {
   data: any;
+  tournament: any;
 }
 
-const Miniboards: FunctionComponent<Props> = ({ data }) => {
+const Miniboards: FunctionComponent<Props> = ({ data, tournament }) => {
   const [page, setPage] = useState(1);
   const [boardsToShow, setBoardsToShow] = useState([]);
   const [selectedDisplayOption, setSelectedDisplayOption] = useState("default");
@@ -50,7 +51,7 @@ const Miniboards: FunctionComponent<Props> = ({ data }) => {
             <Grid sm={6} md={4} item key={game.id} className={style.board}>
               <div className={style["flex-center"]}>
                 <p id={style.pairingnumber}>{game.boardNumber}</p>
-                <Board game={game} />
+                <Board game={game} tournament={tournament} />
               </div>
             </Grid>
           ))}

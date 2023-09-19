@@ -10,12 +10,13 @@ import React, {
 } from "react";
 import "react-chessground/dist/styles/chessground.css";
 import Chessground from "react-chessground";
-import { Chess } from "@spillsjakk/chess.js";
+import { Chess, PawnVsPawn } from "@spillsjakk/chess.js";
 import { Clock } from "./clock";
 import style from "./style.module.scss";
 import Translated from "../translated";
 import UserLink from "../UserLink";
 import { Link } from "react-router-dom";
+import { VARIANT } from "../../constants";
 
 export function numToSquare(num: number) {
   const file = "abcdefgh"[num % 8];
@@ -44,6 +45,7 @@ type Game = {
 
 interface Props {
   game: Game;
+  tournament: any;
 }
 
 const Board: FunctionComponent<Props> = (props) => {
@@ -51,9 +53,7 @@ const Board: FunctionComponent<Props> = (props) => {
     props.game;
 
   const [ws, setWs] = useState<WebSocket>();
-  const [fen, setFen] = useState(
-    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-  );
+  const [fen, setFen] = useState("");
   const [turn, setTurn] = useState("white");
   const [groundRef] = useState<RefObject<typeof Chessground>>(createRef());
   const [whiteClockRef] = useState<RefObject<Clock>>(createRef());
@@ -75,13 +75,22 @@ const Board: FunctionComponent<Props> = (props) => {
   const [blackClockTemp, setBlackClockTemp] = useState(0);
 
   function reconstructGame(b64moves: string) {
-    const game = new Chess();
+    const game = (() => {
+      switch (props.tournament?.game_variant) {
+        case VARIANT[VARIANT.PawnVsPawn]: {
+          return new PawnVsPawn();
+        }
+        default: {
+          return new Chess();
+        }
+      }
+    })();
     const bstr = atob(b64moves);
     let lastMove;
     for (let i = 0; i < bstr.length; i += 3) {
       const from = numToSquare(bstr.charCodeAt(i));
       const to = numToSquare(bstr.charCodeAt(i + 1));
-      let prom: string | null = "-nbrq"[bstr.charCodeAt(i + 2)];
+      let prom: string | null = "-pnbrq"[bstr.charCodeAt(i + 2)];
       if (prom === "-") {
         prom = null;
       }

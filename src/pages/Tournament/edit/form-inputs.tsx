@@ -153,7 +153,7 @@ const FormInputs: FunctionComponent<{}> = () => {
           <input
             className="form-check-input"
             type="radio"
-            name="variant"
+            name="variant2"
             id="variant2"
             value={VARIANT.Antichess}
             checked={form.variant === VARIANT.Antichess}
@@ -161,6 +161,20 @@ const FormInputs: FunctionComponent<{}> = () => {
           />
           <label className="form-check-label" htmlFor="variant2">
             <Translated str="Antichess" />
+          </label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="variant3"
+            id="variant3"
+            value={VARIANT.PawnVsPawn}
+            checked={form.variant === VARIANT.PawnVsPawn}
+            onChange={(e) => form.changeVariant(VARIANT.PawnVsPawn)}
+          />
+          <label className="form-check-label" htmlFor="variant3">
+            <Translated str="PawnVsPawn" />
           </label>
         </div>
       </div>

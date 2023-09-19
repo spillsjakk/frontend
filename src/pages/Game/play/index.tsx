@@ -12,11 +12,14 @@ import "react-chessground/dist/styles/chessground.css";
 import "./style.scss";
 import "../chessground-theme.css";
 import Chessground from "react-chessground";
-import { Chess, Square } from "@spillsjakk/chess.js";
-import { Chess as OpsChess } from "chessops";
-import { parseFen } from "chessops/fen";
-import { Antichess } from "chessops/variant";
-import { chessgroundDests } from "chessops/compat";
+import { Chess, Square, PawnVsPawn } from "@spillsjakk/chess.js";
+import { Chess as OpsChess } from "@spillsjakk/chessops";
+import { parseFen } from "@spillsjakk/chessops/dist/fen";
+import {
+  Antichess as OpsAntichess,
+  PawnVsPawn as OpsPawnVsPawn,
+} from "@spillsjakk/chessops/dist/variant";
+import { chessgroundDests } from "@spillsjakk/chessops/dist/compat";
 import { Howl } from "howler";
 import { Modal, Button } from "react-bootstrap";
 import { GameChat } from "../../../containers/game-chat";
@@ -24,7 +27,7 @@ import { WithChatService } from "../../../hocs/with-chat-service";
 import { Message } from "../../../context/chat-service";
 import { Clock, numToSquare } from "./clock";
 import UserLink from "../../../components/UserLink";
-import { DRAW_OFFER_SIGN } from "../../../constants";
+import { DRAW_OFFER_SIGN, VARIANT } from "../../../constants";
 import { Tournament } from "../../Tournament/Types";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -123,7 +126,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.gameId = props.match.params.id;
 
     this.state = {
-      fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      fen: "",
       orientation: "white",
       isPlayer: false,
       pendingDrawOffer: 0,
@@ -134,13 +137,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       isPromoting: false,
       promotionTempSource: "",
       promotionTempTarget: "",
-      dests: chessgroundDests(
-        OpsChess.fromSetup(
-          parseFen(
-            "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-          ).unwrap()
-        ).unwrap()
-      ),
+      dests: "",
       whiteId: "",
       whiteName: "",
       whiteUserName: "",
@@ -151,7 +148,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       showResignConfirm: false,
       showDrawConfirm: false,
       outcome: GameOutcome.Ongoing,
-      game: new Chess(),
+      game: {} as any,
       check: false,
       shapes: [],
       showOutcomePopup: false,
@@ -254,8 +251,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                 tournament: json.tournament,
               },
               () => {
+                this.connect();
                 if (
-                  json.tournament?.game_variant === "Antichess" &&
+                  json.tournament?.game_variant ===
+                  VARIANT[VARIANT.Antichess] &&
                   this.state.lastUpdateData?.moves
                 ) {
                   this.updateData(this.state.lastUpdateData);
@@ -283,8 +282,6 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
       this.whiteClockRef = React.createRef();
       this.blackClockRef = React.createRef();
-
-      this.connect();
     });
   }
 
@@ -350,7 +347,16 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   };
 
   reconstructGame(b64moves: string): [Chess, [string, string]] {
-    const game = new Chess();
+    const game = (() => {
+      switch (this.state.tournament?.game_variant) {
+        case VARIANT[VARIANT.PawnVsPawn]: {
+          return new PawnVsPawn();
+        }
+        default: {
+          return new Chess();
+        }
+      }
+    })();
     const bstr = atob(b64moves);
     let lastMove;
     for (let i = 0; i < bstr.length; i += 3) {
@@ -361,7 +367,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       }
       const from = numToSquare(bstr.charCodeAt(i));
       const to = numToSquare(bstr.charCodeAt(i + 1));
-      let prom: string | null = "-nbrq"[bstr.charCodeAt(i + 2)];
+      let prom: string | null = "-pnbrq"[bstr.charCodeAt(i + 2)];
       if (prom === "-") {
         prom = null;
       }
@@ -395,10 +401,23 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       newState.lastMove = lastMove;
       newState.turn = game.turn() === "w" ? "white" : "black";
 
-      const chessLib =
-        this.state.tournament?.game_variant === "Antichess"
-          ? Antichess
-          : OpsChess;
+      const chessLib = (() => {
+        switch (this.state.tournament?.game_variant) {
+          case VARIANT[VARIANT.Antichess]: {
+            return OpsAntichess;
+          }
+          case VARIANT[VARIANT.PawnVsPawn]: {
+            return OpsPawnVsPawn;
+          }
+          default: {
+            return OpsChess;
+          }
+        }
+      })();
+
+      newState.dest = chessgroundDests(
+        chessLib.fromSetup(parseFen(chessLib.startingFen()).unwrap()).unwrap()
+      );
 
       const opsGame = chessLib
         .fromSetup(parseFen(newState.fen).unwrap())
@@ -551,7 +570,9 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
         (_) => { }
       );
     } else {
-      if (this.state.autoPromotion) {
+      if (this.state.tournament?.game_variant === VARIANT[VARIANT.PawnVsPawn]) {
+        this.doPromotion("p", source, target);
+      } else if (this.state.autoPromotion) {
         this.doPromotion(this.state.promotionPreference || "q", source, target);
       } else {
         this.setState({
@@ -641,7 +662,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
   }
 
   getVariant() {
-    return this.state.tournament?.game_variant === "Antichess" ? 1 : 0;
+    return VARIANT[this.state.tournament?.game_variant];
   }
 
   clockTick() {
@@ -1043,50 +1064,55 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               <div className="board-area">
                 <div className="play-box">
                   <div className="user-box">{this.renderOpponentBox()}</div>
-                  <Chessground
-                    fen={this.state.fen}
-                    orientation={this.state.orientation}
-                    turnColor={this.state.turn}
-                    onMove={this.onMove}
-                    ref={this.groundRef}
-                    style={
-                      this.state.isPromoting && {
-                        pointerEvents: "none",
-                        filter: "blur(3px)",
+                  {this.state.fen && (
+                    <Chessground
+                      fen={this.state.fen}
+                      orientation={this.state.orientation}
+                      turnColor={this.state.turn}
+                      onMove={this.onMove}
+                      ref={this.groundRef}
+                      style={
+                        this.state.isPromoting && {
+                          pointerEvents: "none",
+                          filter: "blur(3px)",
+                        }
                       }
-                    }
-                    movable={{
-                      free: false,
-                      color: this.state.myColor,
-                      dests: this.state.dests,
-                      showDests: true,
-                      rookCastle: false,
-                    }}
-                    premovable={{
-                      enabled:
-                        this.state.tournament?.game_variant !== "Antichess",
-                      showDests:
-                        this.state.tournament?.game_variant !== "Antichess",
-                      castle:
-                        this.state.tournament?.game_variant === "Antichess",
-                      events: {
-                        set: (orig: any, dest: any) => {
-                          this.setState({
-                            premove: true,
-                            premoveData: { source: orig, dest },
-                          });
+                      movable={{
+                        free: false,
+                        color: this.state.myColor,
+                        dests: this.state.dests,
+                        showDests: true,
+                        rookCastle: false,
+                      }}
+                      premovable={{
+                        enabled:
+                          this.state.tournament?.game_variant !==
+                          VARIANT[VARIANT.Antichess],
+                        showDests:
+                          this.state.tournament?.game_variant !==
+                          VARIANT[VARIANT.Antichess],
+                        castle:
+                          this.state.tournament?.game_variant ===
+                          VARIANT[VARIANT.Antichess],
+                        events: {
+                          set: (orig: any, dest: any) => {
+                            this.setState({
+                              premove: true,
+                              premoveData: { source: orig, dest },
+                            });
+                          },
+                          unset: () => {
+                            this.setState({
+                              premove: false,
+                              premoveData: { source: "", dest: "" },
+                            });
+                          },
                         },
-                        unset: () => {
-                          this.setState({
-                            premove: false,
-                            premoveData: { source: "", dest: "" },
-                          });
-                        },
-                      },
-                    }}
-                    lastMove={this.state.lastMove}
-                    check={this.state.check}
-                  />
+                      }}
+                      lastMove={this.state.lastMove}
+                      check={this.state.check}
+                    />
+                  )}
                   <div className="user-box self-box">
                     {this.renderSelfBox()}
                   </div>
