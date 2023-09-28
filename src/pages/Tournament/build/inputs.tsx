@@ -581,11 +581,17 @@ export function Variant() {
                 value={form.variant}
                 fullWidth
               >
-                {Object.keys(VARIANT).map((v) => (
-                  <option value={VARIANT[v]} key={VARIANT[v]}>
-                    {Translated.byKey(v.replace(/^.{1}/g, v[0].toLowerCase()))}
-                  </option>
-                ))}
+                {Object.keys(VARIANT)
+                  .filter((key) => isNaN(Number(key)))
+                  .map((v) => {
+                    return (
+                      <option value={VARIANT[v]} key={v}>
+                        {Translated.byKey(
+                          v.replace(/^.{1}/g, v[0].toLowerCase())
+                        )}
+                      </option>
+                    );
+                  })}
               </NativeSelect>
             </Grid>
           </Grid>

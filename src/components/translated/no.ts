@@ -520,7 +520,8 @@ const no = {
   "increment": "tillegg",
   "leagues": "Ligaer",
   "chess": "Chess",
-  "antichess": "Antichess"
+  "antichess": "Antichess",
+  "pawnVsPawn": "Pawn vs Pawn"
 };
 
 export { no };

@@ -526,7 +526,8 @@ const en = {
   "allTournaments": "All Tournaments",
   "leagues": "Leagues",
   "chess": "Chess",
-  "antichess": "Antichess"
+  "antichess": "Antichess",
+  "pawnVsPawn": "Pawn vs Pawn"
 };
 
 export { en };
