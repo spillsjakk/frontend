@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "cross-env TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling react-scripts start",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider TSC_WATCHFILE=UseFsEventsWithFallbackDynamicPolling react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
