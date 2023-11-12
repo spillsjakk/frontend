@@ -54,6 +54,7 @@ function useInterval(callback, delay) {
 
 interface Props {
   startDate: Date;
+  onStop?: () => void;
 }
 
 const STATUS = {
@@ -61,7 +62,10 @@ const STATUS = {
   STOPPED: "Stopped",
 };
 
-const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
+const CircularCountDown: FunctionComponent<Props> = ({
+  startDate,
+  onStop = () => {},
+}) => {
   const [secondsRemaining, setSecondsRemaining] = useState(
     Math.ceil(Math.max(0, startDate.getTime() - new Date().getTime()) / 1000)
   );
@@ -80,6 +84,7 @@ const CircularCountDown: FunctionComponent<Props> = ({ startDate }) => {
       if (secondsRemaining > 0) {
         setSecondsRemaining(secondsRemaining - 1);
       } else {
+        onStop();
         setStatus(STATUS.STOPPED);
       }
     },

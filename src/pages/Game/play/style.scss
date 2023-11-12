@@ -6,6 +6,21 @@
   .clock:not(.running) {
     opacity: 0.3;
   }
+  .block-blur {
+    .cg-wrap {
+      pointer-events: none;
+      filter: blur(5px);
+    }
+  }
+  .block-blur-all {
+    pointer-events: none;
+    filter: blur(5px);
+  }
+  .circular-countdown-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
   .wrapper {
     margin-top: 10px;
     display: flex;

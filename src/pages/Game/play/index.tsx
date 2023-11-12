@@ -44,6 +44,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import { CircularCountDown } from "../../../components/circular-count-down";
 
 type PlayProps = {
   id: string;
@@ -110,6 +111,7 @@ type PlayState = {
   autoPromotion: boolean;
   flagRequestIsSent: boolean;
   lastUpdateData: any;
+  gameStarted: boolean;
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -175,6 +177,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       autoPromotion: false,
       flagRequestIsSent: false,
       lastUpdateData: null,
+      gameStarted: false,
     };
     this.groundRef = React.createRef();
     this.moveSound = new Howl({
@@ -202,6 +205,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     this.handleTab = this.handleTab.bind(this);
     this.TabPanel = this.TabPanel.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.getData = this.getData.bind(this);
   }
 
   onKeyPress(e) {
@@ -219,16 +223,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
     }
   }
 
-  componentDidMount() {
-    document.getElementsByTagName("body")[0].id = "Game-Play";
-
-    document.addEventListener("keydown", this.onKeyPress);
-
-    this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
-
-    const pngArea = document.getElementsByClassName("png-area")[0];
-    if (pngArea) pngArea.scrollLeft += pngArea.scrollWidth;
-
+  getData() {
     fetchJson(`/s/game/play/${this.gameId}`, "GET", undefined, (json) => {
       if (
         json.redirect ||
@@ -283,6 +278,19 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       this.whiteClockRef = React.createRef();
       this.blackClockRef = React.createRef();
     });
+  }
+
+  componentDidMount() {
+    document.getElementsByTagName("body")[0].id = "Game-Play";
+
+    document.addEventListener("keydown", this.onKeyPress);
+
+    this.setState({ clocksInterval: window.setInterval(this.clockTick, 100) });
+
+    const pngArea = document.getElementsByClassName("png-area")[0];
+    if (pngArea) pngArea.scrollLeft += pngArea.scrollWidth;
+
+    this.getData();
   }
 
   componentWillUnmount() {
@@ -430,6 +438,7 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
 
       newState.whiteCountdownTemp = wc;
       newState.blackCountdownTemp = bc;
+      newState.gameStarted = wc - bc !== 20;
       if (newState.turn === "white" && data.wic > 0) {
         newState.showWhiteInitialCountdown = true;
         newState.whiteInitialCountdown = data.wic;
@@ -1062,7 +1071,11 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               lg={8}
             >
               <div className="board-area">
-                <div className="play-box">
+                <div
+                  className={
+                    `play-box ${!this.state.gameStarted && `block-blur`}`
+                  }
+                >
                   <div className="user-box">{this.renderOpponentBox()}</div>
                   {this.state.fen && (
                     <Chessground
@@ -1120,7 +1133,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               </div>
             </Grid>
             <Grid container justifyContent="center" item md={12} lg={4}>
-              <div className="info-area">
+              <div
+                className={`info-area ${!this.state.gameStarted && `block-blur-all`
+                  }`}
+              >
                 {this.getOpponentCountdown()}
 
                 {this.getResult()}
@@ -1319,6 +1335,20 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               </div>
             </Grid>
           </Grid>
+          {this.state.tournament &&
+            !this.state.gameStarted && (
+              <div className="circular-countdown-wrapper">
+                <CircularCountDown
+                  startDate={
+                    new Date(this.state.tournament.current_online_pairing_time)
+                  }
+                  onStop={() => {
+                    this.getData();
+                    this.setState({ gameStarted: true });
+                  }}
+                />
+              </div>
+            )}
           <div className="png-area">
             <div id="move-div">{rows}</div>
           </div>
