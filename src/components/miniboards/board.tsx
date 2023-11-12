@@ -16,7 +16,7 @@ import style from "./style.module.scss";
 import Translated from "../translated";
 import UserLink from "../UserLink";
 import { Link } from "react-router-dom";
-import { VARIANT } from "../../constants";
+import { DRAW_OFFER_SIGN, VARIANT } from "../../constants";
 
 export function numToSquare(num: number) {
   const file = "abcdefgh"[num % 8];
@@ -88,6 +88,11 @@ const Board: FunctionComponent<Props> = (props) => {
     const bstr = atob(b64moves);
     let lastMove;
     for (let i = 0; i < bstr.length; i += 3) {
+      if (bstr.charCodeAt(i) === 97) {
+        // draw offer
+        game.setComment(DRAW_OFFER_SIGN);
+        continue;
+      }
       const from = numToSquare(bstr.charCodeAt(i));
       const to = numToSquare(bstr.charCodeAt(i + 1));
       let prom: string | null = "-pnbrq"[bstr.charCodeAt(i + 2)];
