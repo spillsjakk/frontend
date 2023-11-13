@@ -99,7 +99,11 @@ const Board: FunctionComponent<Props> = (props) => {
       if (prom === "-") {
         prom = null;
       }
-      game.move({ from: from, to: to, promotion: prom });
+      try {
+        game.move({ from: from, to: to, promotion: prom });
+      } catch (e) {
+        console.log(`error while moving`, e);
+      }
       lastMove = [from, to];
     }
 

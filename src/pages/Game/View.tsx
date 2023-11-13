@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import Translated from "../../components/translated";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { GameOutcome } from "./play";
 import { numToSquare } from "./play/clock";
 import { Link, RouteComponentProps } from "react-router-dom";
@@ -47,6 +47,10 @@ type ViewState = {
   startDate?: string;
   tournamentData?: Tournament;
   pgnCopied: boolean;
+  illegalMove: {
+    showPopup: boolean;
+    message: string;
+  };
 };
 
 class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
@@ -73,6 +77,10 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       black_fide_federation: "",
       orientation: "",
       pgnCopied: false,
+      illegalMove: {
+        showPopup: false,
+        message: "",
+      },
     };
 
     this.gameId = props.match.params.id;
@@ -191,7 +199,17 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
       if (prom === "-") {
         prom = null;
       }
-      game.move({ from: from, to: to, promotion: prom });
+      try {
+        game.move({ from: from, to: to, promotion: prom });
+      } catch (e) {
+        console.log(`error while moving`, e);
+        this.setState({
+          illegalMove: {
+            showPopup: true,
+            message: `The player illegally moved from ${from} to ${to}`,
+          },
+        });
+      }
       lastMove = [from, to];
     }
 
@@ -471,6 +489,18 @@ class View extends Component<RouteComponentProps<ViewProps>, ViewState> {
             </span>
           </OverlayTrigger>
         </div>
+        <Modal
+          id="outcome-popup"
+          show={this.state.illegalMove.showPopup}
+          onHide={() =>
+            this.setState({ illegalMove: { showPopup: false, message: "" } })
+          }
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Illegal Move</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.illegalMove.message}</Modal.Body>
+        </Modal>
       </>
     );
   }
