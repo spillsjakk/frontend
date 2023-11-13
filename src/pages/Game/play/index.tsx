@@ -112,6 +112,10 @@ type PlayState = {
   flagRequestIsSent: boolean;
   lastUpdateData: any;
   gameStarted: boolean;
+  illegalMove: {
+    showPopup: boolean;
+    message: string;
+  };
 };
 
 class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
@@ -178,6 +182,10 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       flagRequestIsSent: false,
       lastUpdateData: null,
       gameStarted: false,
+      illegalMove: {
+        showPopup: false,
+        message: "",
+      },
     };
     this.groundRef = React.createRef();
     this.moveSound = new Howl({
@@ -379,7 +387,17 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
       if (prom === "-") {
         prom = null;
       }
-      game.move({ from: from, to: to, promotion: prom });
+      try {
+        game.move({ from: from, to: to, promotion: prom });
+      } catch (e) {
+        console.log(`error while moving`, e);
+        this.setState({
+          illegalMove: {
+            showPopup: true,
+            message: `The player illegally moved from ${from} to ${to}`,
+          },
+        });
+      }
       lastMove = [from, to];
     }
 
@@ -1335,20 +1353,19 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               </div>
             </Grid>
           </Grid>
-          {this.state.tournament &&
-            !this.state.gameStarted && (
-              <div className="circular-countdown-wrapper">
-                <CircularCountDown
-                  startDate={
-                    new Date(this.state.tournament.current_online_pairing_time)
-                  }
-                  onStop={() => {
-                    this.getData();
-                    this.setState({ gameStarted: true });
-                  }}
-                />
-              </div>
-            )}
+          {this.state.tournament && !this.state.gameStarted && (
+            <div className="circular-countdown-wrapper">
+              <CircularCountDown
+                startDate={
+                  new Date(this.state.tournament.current_online_pairing_time)
+                }
+                onStop={() => {
+                  this.getData();
+                  this.setState({ gameStarted: true });
+                }}
+              />
+            </div>
+          )}
           <div className="png-area">
             <div id="move-div">{rows}</div>
           </div>
@@ -1379,6 +1396,18 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
               {Translated.byKey("nextGame")}
             </Button>
           </Modal.Footer>
+        </Modal>
+        <Modal
+          id="outcome-popup"
+          show={this.state.illegalMove.showPopup}
+          onHide={() =>
+            this.setState({ illegalMove: { showPopup: false, message: "" } })
+          }
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Illegal Move</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.illegalMove.message}</Modal.Body>
         </Modal>
       </>
     );
