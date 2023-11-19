@@ -1118,13 +1118,19 @@ class Play extends Component<RouteComponentProps<PlayProps>, PlayState> {
                       premovable={{
                         enabled:
                           this.state.tournament?.game_variant !==
-                          VARIANT[VARIANT.Antichess],
+                          VARIANT[VARIANT.Antichess] &&
+                          this.state.tournament?.game_variant !==
+                          VARIANT[VARIANT.PawnVsPawn],
                         showDests:
                           this.state.tournament?.game_variant !==
-                          VARIANT[VARIANT.Antichess],
+                          VARIANT[VARIANT.Antichess] &&
+                          this.state.tournament?.game_variant !==
+                          VARIANT[VARIANT.PawnVsPawn],
                         castle:
-                          this.state.tournament?.game_variant ===
-                          VARIANT[VARIANT.Antichess],
+                          this.state.tournament?.game_variant !==
+                          VARIANT[VARIANT.Antichess] &&
+                          this.state.tournament?.game_variant !==
+                          VARIANT[VARIANT.PawnVsPawn],
                         events: {
                           set: (orig: any, dest: any) => {
                             this.setState({
