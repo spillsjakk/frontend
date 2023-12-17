@@ -205,30 +205,6 @@ const TournamentSchedule: FunctionComponent<{ userId?: string }> = ({
 
   return (
     <>
-      {tournamentDetail &&
-        Array.isArray(tournamentDetail.participants) &&
-        tournamentDetail.participants.length <= participantLimit && (
-          <>
-            <div className="header">
-              {Translated.byKey("recentTournament").toUpperCase()}:
-            </div>
-            <TournamentDetailProvider value={{ ...tournamentDetail, rounds }}>
-              <div
-                style={{
-                  color: "black",
-                  display: "flex",
-                  marginTop: "10px",
-                  flexDirection: "column",
-                }}
-              >
-                <Pairings
-                  showHeader={false}
-                  defaultMiniboards={!tournamentDetail.tournament?.default_otb}
-                />
-              </div>
-            </TournamentDetailProvider>
-          </>
-        )}
       <div className="header">
         {Translated.byKey("tournamentSchedule").toUpperCase()}:
       </div>

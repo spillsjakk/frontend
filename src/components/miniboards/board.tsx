@@ -302,7 +302,7 @@ const Board: FunctionComponent<Props> = (props) => {
           )}
         </div>
       </div>
-      <Link to={`/game/play/${id}`} target="_blank" className={style.board}>
+      <Link to={`/game/play/${id}`} className={style.board}>
         <Chessground
           fen={fen}
           orientation={"white"}
