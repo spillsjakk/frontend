@@ -46,6 +46,7 @@ type Game = {
 interface Props {
   game: Game;
   tournament: any;
+  realtimegame: any;
 }
 
 const Board: FunctionComponent<Props> = (props) => {
@@ -179,33 +180,6 @@ const Board: FunctionComponent<Props> = (props) => {
     }
   }
 
-  function connect() {
-    const schema = window.location.host === "localhost" ? "ws://" : "wss://";
-    const ws = new WebSocket(schema + window.location.host + "/socket/" + id);
-
-    // websocket onopen event listener
-    ws.onopen = () => {
-      console.log("connected websocket");
-      setWs(ws);
-    };
-
-    ws.onmessage = (evt) => {
-      // listen to data sent from the websocket server
-      updateData(JSON.parse(evt.data));
-    };
-
-    // websocket onerror event listener
-    ws.onerror = (err: any) => {
-      console.error(
-        "Socket encountered error: ",
-        err.message,
-        "Closing socket"
-      );
-
-      ws.close();
-    };
-  }
-
   function clockTick() {
     if (!finished && whiteClockRef && blackClockRef) {
       const side = game.turn();
@@ -255,13 +229,9 @@ const Board: FunctionComponent<Props> = (props) => {
 
   useEffect(() => {
     if (!finished) {
-      connect();
-
-      return () => {
-        if (ws) {
-          ws.close();
-        }
-      };
+      if (props.realtimegame) {
+        updateData(props.realtimegame);
+      }
     } else {
       let outcome;
       if (props.game.outcome === -1) {
@@ -275,7 +245,7 @@ const Board: FunctionComponent<Props> = (props) => {
       }
       setOutcome(outcome);
     }
-  }, []);
+  }, [props.realtimegame, props.game]);
 
   function getWhoWon() {
     if (outcome === GameOutcome.WhiteWins) {
