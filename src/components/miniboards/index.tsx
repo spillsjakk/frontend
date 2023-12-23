@@ -27,6 +27,8 @@ export type RealTimeGame = {
   result: number;
 };
 
+const MINIBOARDS_PER_PAGE = 12;
+
 const Miniboards: FunctionComponent<Props> = ({ data, tournament }) => {
   const [page, setPage] = useState(1);
   const [boardsToShow, setBoardsToShow] = useState([]);
@@ -81,13 +83,16 @@ const Miniboards: FunctionComponent<Props> = ({ data, tournament }) => {
             return true;
           })
           .filter((game, index) => {
-            if ((page - 1) * 6 <= index && index < page * 6) {
+            if (
+              (page - 1) * MINIBOARDS_PER_PAGE <= index &&
+              index < page * MINIBOARDS_PER_PAGE
+            ) {
               return true;
             }
           })
           .map((game, index) => ({
             ...game,
-            boardNumber: (page - 1) * 6 + index + 1,
+            boardNumber: (page - 1) * MINIBOARDS_PER_PAGE + index + 1,
           }))
       );
     }
@@ -114,7 +119,9 @@ const Miniboards: FunctionComponent<Props> = ({ data, tournament }) => {
           ))}
       </Grid>
       <Pagination
-        count={Array.isArray(data) ? Math.ceil(data.length / 6) : 0}
+        count={
+          Array.isArray(data) ? Math.ceil(data.length / MINIBOARDS_PER_PAGE) : 0
+        }
         page={page}
         onChange={(e, value) => setPage(value)}
         className={style.pagination}
