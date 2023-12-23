@@ -35,21 +35,22 @@ const Miniboards: FunctionComponent<Props> = ({ data, tournament }) => {
 
   useEffect(() => {
     if (!tournament.id) return;
-    // opening a connection to the server to begin receiving events from it
     const eventSource = new EventSource(
       `/s-tournament/tournament/listen-data/${tournament.id}`
     );
 
-    // attaching a handler to receive message events
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data);
-    };
-
     eventSource.addEventListener("game-update", (e: MessageEvent) => {
       try {
         const data = JSON.parse(e.data);
-        // todo: update realtimegames
+        setRealTimeGames((prev) =>
+          prev
+            ? prev.map((rtg) =>
+                rtg.black === data.black && rtg.white === data.white
+                  ? { ...rtg, ...data }
+                  : rtg
+              )
+            : []
+        );
       } catch (error) {
         console.error("error while parsing game update event");
       }
@@ -64,7 +65,6 @@ const Miniboards: FunctionComponent<Props> = ({ data, tournament }) => {
       }
     });
 
-    // terminating the connection on component unmount
     return () => eventSource.close();
   }, [tournament]);
 

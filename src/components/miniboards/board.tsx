@@ -53,7 +53,6 @@ const Board: FunctionComponent<Props> = (props) => {
   const { id, whiteName, blackName, finished, start, white, black } =
     props.game;
 
-  const [ws, setWs] = useState<WebSocket>();
   const [fen, setFen] = useState("");
   const [turn, setTurn] = useState("white");
   const [groundRef] = useState<RefObject<typeof Chessground>>(createRef());
