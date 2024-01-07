@@ -24,6 +24,7 @@ import nbLocale from "date-fns/locale/nb";
 import enLocale from "date-fns/locale/en-GB";
 
 import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+import { readCookie } from "@mehmetsefabalik/cookie-helper/dist";
 
 export function TemplateSelection() {
   const {
@@ -69,7 +70,7 @@ export function StartDate() {
       <div className={style.inputs}>
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
-          locale={localStorage.getItem("lang") === "NO" ? nbLocale : enLocale}
+          locale={readCookie("lang") === "no" ? nbLocale : enLocale}
         >
           <DateTimePicker
             ampm={false}
@@ -242,7 +243,7 @@ export function StartDateInterval() {
       <div className={style.inputs}>
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
-          locale={localStorage.getItem("lang") === "NO" ? nbLocale : enLocale}
+          locale={readCookie("lang") === "no" ? nbLocale : enLocale}
         >
           <DateTimePicker
             renderInput={(params) => <TextField required {...params} />}

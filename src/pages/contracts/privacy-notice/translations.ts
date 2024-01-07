@@ -12,10 +12,10 @@ export function getDictionary(lang: string) {
       try {
         result = dictionary[lang][key];
         if (!(key in dictionary[lang])) {
-          result = dictionary.EN[key];
+          result = dictionary.en[key];
         }
       } catch (e) {
-        result = dictionary.EN[key];
+        result = dictionary.en[key];
       }
       return result;
     },

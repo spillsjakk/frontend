@@ -3,6 +3,7 @@ import { en } from "./en";
 import { no } from "./no";
 
 import LangContext from "../LangContext";
+import { readCookie } from "@mehmetsefabalik/cookie-helper/dist";
 
 type TranslatedProps = {
   str: string;
@@ -15,15 +16,15 @@ class Translated extends PureComponent<TranslatedProps, {}> {
   private static getStr(key: string, lang: string) {
     if (key in (STRINGS as any)[lang]) {
       return (STRINGS as any)[lang][key];
-    } else if (key in STRINGS.EN) {
-      return (STRINGS as any).EN[key];
+    } else if (key in STRINGS.en) {
+      return (STRINGS as any).en[key];
     } else {
       return key;
     }
   }
 
   static byKey(key: string) {
-    const lang = localStorage.getItem("lang") ?? "EN";
+    const lang = readCookie("lang") ?? "en";
     return Translated.getStr(key, lang);
   }
 
@@ -35,8 +36,8 @@ class Translated extends PureComponent<TranslatedProps, {}> {
 }
 
 const STRINGS = {
-  EN: en,
-  NO: no,
+  en,
+  no,
 };
 
 export default Translated;

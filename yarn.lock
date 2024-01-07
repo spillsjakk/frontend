@@ -2313,7 +2313,7 @@
 
 "@mehmetsefabalik/cookie-helper@^1.0.3":
   version "1.0.3"
-  resolved "https://registry.npmjs.org/@mehmetsefabalik/cookie-helper/-/cookie-helper-1.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/@mehmetsefabalik/cookie-helper/-/cookie-helper-1.0.3.tgz#f8b53fcde3ae7256389102f7d706c572143672bb"
   integrity sha512-Dyoc4qpCed3A9eji8/Y8sJA3GIRt9n3Azze1OifCsnwoSHftELO3VDgHBwbu4JTFU/NxV4ob4GagxtM/SFqtAA==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":

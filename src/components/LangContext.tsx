@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 const LangContext = React.createContext({
-  lang: "EN",
+  lang: "en",
   setLang: (_: string) => {},
 });
 

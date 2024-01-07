@@ -6,12 +6,16 @@ import LangContext from "./LangContext";
 
 const LangSwitcher = () => {
   const { lang, setLang } = useContext(LangContext);
-  const otherLang = lang === "EN" ? "NO" : "EN";
+  const otherLang = lang === "en" ? "NO" : "EN";
   return (
     <div className="link">
-      {lang}
+      {lang.toUpperCase()}
       <div className="menu">
-        <Link to="#" onClick={() => setLang(otherLang)} className="item">
+        <Link
+          to="#"
+          onClick={() => setLang(otherLang.toLowerCase())}
+          className="item"
+        >
           {otherLang}
         </Link>
       </div>
@@ -22,14 +26,14 @@ const LangSwitcher = () => {
 const MobileLangSwitcher = () => {
   const [open, setOpen] = useState(false);
   const { lang, setLang } = useContext(LangContext);
-  const otherLang = lang === "EN" ? "NO" : "EN";
+  const otherLang = lang === "en" ? "NO" : "EN";
   return (
     <div
       className="link"
       id="navigation-lang-icon"
       onClick={() => setOpen(true)}
     >
-      {lang}
+      {lang.toUpperCase()}
       <Menu
         anchorEl={document.getElementById("navigation-lang-icon")}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -44,7 +48,7 @@ const MobileLangSwitcher = () => {
         <MenuItem
           onClick={(e) => {
             setOpen(false);
-            setLang(otherLang);
+            setLang(otherLang.toLowerCase());
             e.stopPropagation();
           }}
         >

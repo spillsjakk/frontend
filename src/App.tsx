@@ -10,6 +10,7 @@ import { WithTheme } from "./hocs/with-theme";
 import { WithNotification } from "./hocs/with-notification";
 import "./index.css";
 import { Helmet } from "react-helmet";
+import { createCookie, readCookie } from "@mehmetsefabalik/cookie-helper/dist";
 
 type AppState = {
   lang: string;
@@ -20,7 +21,7 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      lang: localStorage.getItem("lang") ?? "EN",
+      lang: readCookie("lang") ?? "en",
       user: {
         authenticated: null,
       },
@@ -42,7 +43,7 @@ class App extends Component<{}, AppState> {
     const htmlLang = this.state.lang === "EN" ? "en-GB" : "nb-NO";
     const setLangWithLocalStorage = (newLang: string) => {
       this.setState({ lang: newLang });
-      localStorage.setItem("lang", newLang);
+      createCookie("lang", newLang);
     };
     const langProviderValue = {
       lang: this.state.lang,
