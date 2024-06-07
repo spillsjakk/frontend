@@ -143,6 +143,7 @@ export function isTeam(kind: number) {
   return (
     kind === KIND.TeamKonrad ||
     kind === KIND.TeamRoundRobin ||
-    kind === KIND.TeamSwissDutch
+    kind === KIND.TeamSwissDutch ||
+    kind === KIND.LimitedPlayerTeam
   );
 }

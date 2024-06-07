@@ -29,6 +29,7 @@ type TeamPlayersProps = {
 
 type TeamPlayersState = {
   loaded: boolean;
+  isWithinFiveMins: boolean;
   info?: {
     tournament: Tournament;
     participating: string[];
@@ -39,20 +40,20 @@ type TeamPlayersState = {
 
 const DragHandle = SortableHandle(() => <Dehaze className="dehaze" />);
 
-const SortableItem = SortableElement(({ value, id, remove, playerIndex }) => (
-  <ListItem>
-    <span className="playerIndex">{playerIndex}</span>
-    <ListItemIcon>
-      <DragHandle />
-    </ListItemIcon>
-    <ListItemText>
-      <UserLink id={id} name={value} ghost={false} />
-    </ListItemText>
-    <IconButton edge="end" aria-label="delete" onClick={() => remove(id)}>
-      <Delete />
-    </IconButton>
-  </ListItem>
-));
+const SortableItem = SortableElement(
+  ({ value, id, remove, playerIndex, hideHandle }) => (
+    <ListItem>
+      <span className="playerIndex">{playerIndex}</span>
+      <ListItemIcon>{!hideHandle && <DragHandle />}</ListItemIcon>
+      <ListItemText>
+        <UserLink id={id} name={value} ghost={false} />
+      </ListItemText>
+      <IconButton edge="end" aria-label="delete" onClick={() => remove(id)}>
+        <Delete />
+      </IconButton>
+    </ListItem>
+  )
+);
 
 const AddListItem = ({ value, id, add }) => (
   <ListItem>
@@ -69,17 +70,29 @@ const SortableList = SortableContainer(({ children }) => {
   return <List>{children}</List>;
 });
 
+function isWithinFiveMinutes(currentOnlinePairingTime: string): boolean {
+  const pairingTime = new Date(currentOnlinePairingTime);
+
+  const now = new Date();
+
+  const diff = pairingTime.getTime() - now.getTime();
+
+  // Check if the difference is less than 5 minutes (5 * 60 * 1000 milliseconds)
+  return diff > 0 && diff <= 5 * 60 * 1000;
+}
+
 class TeamPlayers extends Component<
   RouteComponentProps<TeamPlayersProps>,
   TeamPlayersState
 > {
   tournamentId: string;
   teamId: string;
+  intervalId: any;
 
   constructor(props: RouteComponentProps<TeamPlayersProps>) {
     super(props);
 
-    this.state = { loaded: false };
+    this.state = { loaded: false, isWithinFiveMins: false };
     this.tournamentId = this.props.match.params.tournamentId;
     this.teamId = this.props.match.params.teamId;
 
@@ -88,7 +101,20 @@ class TeamPlayers extends Component<
     this.changeSeed = this.changeSeed.bind(this);
     this.onSortEnd = this.onSortEnd.bind(this);
     this.fetchInfo = this.fetchInfo.bind(this);
+    this.intervalId = null;
   }
+
+  checkTime = (info?: any) => {
+    const pairingTime = new Date(
+      info?.tournament?.current_online_pairing_time ||
+        this.state.info?.tournament?.current_online_pairing_time
+    );
+    const now = new Date();
+    const diff = pairingTime.getTime() - now.getTime();
+    this.setState({
+      isWithinFiveMins: diff > 0 && diff <= 5 * 60 * 1000,
+    });
+  };
 
   fetchInfo() {
     fetchJson(
@@ -97,6 +123,7 @@ class TeamPlayers extends Component<
       undefined,
       (result) => {
         this.setState({ loaded: true, info: result });
+        this.checkTime(result);
       }
     );
   }
@@ -104,6 +131,13 @@ class TeamPlayers extends Component<
   componentDidMount() {
     document.getElementsByTagName("body")[0].id = "Tournament-TeamPlayers";
     this.fetchInfo();
+    this.intervalId = setInterval(this.checkTime, 10 * 1000);
+  }
+
+  componentWillUnmount() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   addParticipant(uid: string) {
@@ -191,7 +225,6 @@ class TeamPlayers extends Component<
         <h3 className="mt-4">
           <Translated str="participating" />
         </h3>
-
         <SortableList onSortEnd={this.onSortEnd} useDragHandle>
           {info.participating.map((player, index) => (
             <SortableItem
@@ -201,6 +234,10 @@ class TeamPlayers extends Component<
               value={player[1] + " " + player[2]}
               remove={this.removeParticipant}
               index={index}
+              hideHandle={
+                this.state.info?.tournament?.kind === "LimitedPlayerTeam" &&
+                this.state.isWithinFiveMins
+              }
             />
           ))}
         </SortableList>

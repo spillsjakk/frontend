@@ -246,6 +246,20 @@ const FormInputs: FunctionComponent<{}> = () => {
             className="form-check-input"
             type="radio"
             name="kind"
+            id="kind10"
+            value={KIND.LimitedPlayerTeam}
+            checked={form.kind === KIND.LimitedPlayerTeam}
+            onChange={(e) => form.changeKind(KIND.LimitedPlayerTeam)}
+          />
+          <label className="form-check-label" htmlFor="kind10">
+            <Translated str="limitedPlayerTeam" />
+          </label>
+        </div>
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="kind"
             id="kind4"
             value={KIND.TeamMonrad}
             checked={form.kind === KIND.TeamMonrad}

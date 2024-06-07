@@ -25,6 +25,7 @@ import { useTemplate } from "../../../context/build-tournament-template";
 import { FormContext, useForm } from "../../../hocs/tournament-form";
 import { fetchJson } from "../../../functions";
 import Translated from "../../../components/translated";
+import { KIND } from "../../../constants";
 
 function ActionButtons({
   onLeftClick,
@@ -86,7 +87,7 @@ function SaveButton(props: { form: FormContext }) {
       tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
       rounds: form.rounds,
       fide_rated: form.fideRated,
-      per_team: form.perTeam,
+      per_team: form.kind === KIND.LimitedPlayerTeam ? 4 : form.perTeam,
       show_only_usernames: form.showOnlyUsernames,
       profile_picture: form.profilePicture,
       banner_picture: form.bannerPicture,
@@ -147,7 +148,7 @@ function buildTournament(form: FormContext) {
     tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
     rounds: form.rounds,
     fide_rated: form.fideRated,
-    per_team: form.perTeam,
+    per_team: form.kind === KIND.LimitedPlayerTeam ? 4 : form.perTeam,
     show_only_usernames: form.showOnlyUsernames,
     profile_picture: form.profilePicture,
     banner_picture: form.bannerPicture,

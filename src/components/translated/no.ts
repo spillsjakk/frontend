@@ -521,7 +521,8 @@ const no = {
   "leagues": "Ligaer",
   "chess": "Chess",
   "antichess": "Antichess",
-  "pawnVsPawn": "Pawn vs Pawn"
+  "pawnVsPawn": "Pawn vs Pawn",
+  "limitedPlayerTeam": "Four Player Team"
 };
 
 export { no };

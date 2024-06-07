@@ -36,6 +36,7 @@ import {
   Advanced,
   Variant,
 } from "../../Tournament/build/inputs";
+import { KIND } from "../../../constants";
 
 function SeasonAndCategory() {
   const form = useForm();
@@ -151,7 +152,7 @@ function SaveButton(props: { form: FormContext }) {
       tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
       rounds: form.rounds,
       fide_rated: form.fideRated,
-      per_team: form.perTeam,
+      per_team: form.kind === KIND.LimitedPlayerTeam ? 4 : form.perTeam,
       show_only_usernames: form.showOnlyUsernames,
       profile_picture: form.profilePicture,
       banner_picture: form.bannerPicture,
@@ -213,7 +214,7 @@ function buildTournament(form: FormContext) {
     tb4: form.tb4 !== "" ? parseInt(form.tb4!, 10) : undefined,
     rounds: form.rounds,
     fide_rated: form.fideRated,
-    per_team: form.perTeam,
+    per_team: form.kind === KIND.LimitedPlayerTeam ? 4 : form.perTeam,
     show_only_usernames: form.showOnlyUsernames,
     profile_picture: form.profilePicture,
     banner_picture: form.bannerPicture,
