@@ -208,7 +208,7 @@ class TeamPlayers extends Component<
         </h1>
 
         <p className="mt-2">
-          <Link to={"/tournament/manage/" + info.tournament.id}>
+          <Link to={"/tournament/view/" + info.tournament.id}>
             <Translated str="backToTournament" />
           </Link>
         </p>
